@@ -1,6 +1,6 @@
 # config datasource
 spring:
-  datasource:
+  datasource:       # 数据源配置
     url:
       jdbc:mysql://localhost:3306/lab?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username:
@@ -9,11 +9,15 @@ spring:
       123456
     driver-class-name:
       com.mysql.cj.jdbc.Driver
-  thymeleaf:
+  thymeleaf:        # thymeleaf模板
     mode: HTML
     encoding: UTF-8
     content-type: text/html
     cache: false    # 开发时暂时把缓存关闭掉，开发完成后再打开缓存
+  redis:            # 配置redis缓存
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2000
 
 # config mybatis
 mybatis:

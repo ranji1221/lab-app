@@ -1,32 +1,30 @@
-package com.ranji.lab.mapper;
+package com.ranji.lab.service;
 
-import com.github.pagehelper.PageHelper;
 import com.ranji.lab.entity.User;
+import com.ranji.lab.service.prototype.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * UserMapper单元测试类
+ * UserService单元测试类
  * @author RanJi
  */
 @SpringBootTest
-public class UserMapperTests {
+public class UserServiceTests {
     @Resource
-    private UserMapper userMapper;
+    private IUserService userService;
 
     @Test
     public void testSave(){
-        User u = new User("wang","123456",1);
-        userMapper.save(u);
+        userService.save(new User("kai","hallo",1));
     }
 
     @Test
     public void testFind(){
-        PageHelper.startPage(1,2);
-        List<User> users = userMapper.findAll();
-        for (User u : users) {
+        List<User> users = userService.getAllUsers();
+        for (User u: users) {
             System.out.println(u);
         }
     }
