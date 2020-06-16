@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  用户业务接口实现类
@@ -45,5 +46,16 @@ public class UserServiceImpl implements IUserService {
     @Cacheable(value = "users")
     public List<User> getAllUsers() {
         return userMapper.findAll();
+    }
+
+    /**
+     * 根据不定参数条件查询用户数据
+     * @param params
+     * @return
+     */
+    @Override
+    @Cacheable(value = "users")
+    public List<User> getUsers(Map<String, Object> params) {
+        return userMapper.find(params);
     }
 }
