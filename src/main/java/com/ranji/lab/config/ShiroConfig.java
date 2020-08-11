@@ -36,7 +36,8 @@ public class ShiroConfig {
         filterMap.put("/js/**","anon");
         filterMap.put("/login","anon");
         filterMap.put("/logout","logout");  //配置退出过滤器,其中的具体的退出代码Shiro已经实现
-        filterMap.put("/**","authc");
+        //filterMap.put("/**","authc");     //暂时注释掉权限认证
+        filterMap.put("/**","anon");
         //-- 4. 设置拦截参数
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;

@@ -38,20 +38,12 @@ public class CorsConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         //-- 第一种映射静态资源的方法
-        /*
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/resources/")
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/public/")
         ;
-        */
-        //-- 第二种映射静态资源的方法
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("classpath:/static/css/");
-        registry.addResourceHandler("/js/**")
-                .addResourceLocations("classpath:/static/js/");
-        registry.addResourceHandler("/image/**")
-                .addResourceLocations("classpath:/static/image/");
+
 
         //-- 处理Swagger接口文档无法访问的问题
         registry.addResourceHandler("swagger-ui.html")

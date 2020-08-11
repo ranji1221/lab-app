@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class MainController {
-    @RequiresPermissions(value = {"user:delete","user:edit","user:list"},logical = Logical.OR)
+    //@RequiresPermissions(value = {"user:delete","user:edit","user:list"},logical = Logical.OR)
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
         //String user = SecurityUtils.getSubject().getPrincipal().toString();
