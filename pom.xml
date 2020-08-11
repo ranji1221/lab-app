@@ -111,11 +111,13 @@
             <version>${swagger.version}</version>
         </dependency>
         <!-- Flowable Workflow Engine -->
+        <!-- 暂时注解掉工作流引擎
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter</artifactId>
             <version>6.5.0</version>
         </dependency>
+        -->
     </dependencies>
 
     <build>
