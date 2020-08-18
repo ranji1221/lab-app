@@ -19,4 +19,10 @@ public class MainController {
         //System.out.println(user);
         return "index";
     }
+    @RequestMapping(value = "/indexx", method = RequestMethod.GET)
+    public String indexx(){
+        //String user = SecurityUtils.getSubject().getPrincipal().toString();
+        //System.out.println(user);
+        return "indexx";
+    }
 }

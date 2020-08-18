@@ -6,7 +6,7 @@ spring:
     username:
       root
     password:
-      123456
+      root
     driver-class-name:
       com.mysql.cj.jdbc.Driver
   thymeleaf:        # thymeleaf模板
@@ -18,6 +18,23 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 2000
+
+# 上传下载
+
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+logging:
+  file:
+    path: D:/test/
+web:
+  upload-path: D:/testUplpad/
+
+
 
 # config mybatis
 mybatis:
@@ -42,5 +59,7 @@ server:
 # flowable workflow engine
 flowable:
   async-executor-activate: false #关闭定时任务JOB
+
+
 
 

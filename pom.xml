@@ -19,6 +19,7 @@
         <swagger.version>2.9.2</swagger.version>
     </properties>
 
+
     <!--3. Project Dependencies -->
     <dependencies>
         <!-- SpringBoot JDBC -->
@@ -118,6 +119,13 @@
             <version>6.5.0</version>
         </dependency>
         -->
+
+        <!-- MyBatis PageHelper分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.12</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -128,5 +136,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
