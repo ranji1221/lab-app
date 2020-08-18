@@ -10,7 +10,7 @@ import java.util.Map;
  * UserMapper类
  */
 public interface UserMapper {
-    @Insert("insert into t_user(name,password,enable) values(#{name},#{password},#{enable})")
+    @Insert("insert into t_user(name,password,enable) values (#{name},#{password},#{enable})")
     void save(User u);
     @Select("select * from t_user")
     List<User> findAll();

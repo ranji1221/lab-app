@@ -16,15 +16,13 @@ import java.util.Date;
 public class ConsumeCustody implements Serializable {
     private int id;
     @NonNull
-    private String name;
+    private int consumeId;
     @NonNull
     private String recipient;
     @NonNull
     private String date;
     @NonNull
     private int count;
-    @NonNull
-    private int surplusNum;
     @NonNull
     private String status;
 

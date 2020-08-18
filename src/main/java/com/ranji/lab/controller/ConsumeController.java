@@ -6,14 +6,13 @@ import com.ranji.lab.service.prototype.IConsumeCustodyService;
 import com.ranji.lab.service.prototype.IConsumeInformService;
 import com.ranji.lab.service.prototype.IConsumeNormService;
 import com.ranji.lab.service.prototype.IConsumePurchaseService;
-import io.swagger.annotations.Api;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,22 +32,26 @@ public class ConsumeController {
     @Resource
     private IConsumeNormService iConsumeNormService;
 
+    /**
+     * 插入设备信息
+     * @return
+     */
+    @ApiOperation(value="插入设备信息", notes="根据传过来的设备信息来插入设备信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源(教务处)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "发布时间(xxxx-xx-xx)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
     @PostMapping(value="/insertconsumeinform",produces = "text/plain;charset=utf-8")
-    public String insertConsumeInform(HttpServletRequest request){
+    public String insertConsumeInform(ConsumeInform consumeInform){
         Map<Object,Object> insertConsumeInformMap = new HashMap<>();
-
-        String name = request.getParameter("");
-        String brand = request.getParameter("");
-        int num = Integer.parseInt(request.getParameter(""));
-        String facid = request.getParameter("");
-        String factime = request.getParameter("");
-        String proid = request.getParameter("");
-        String supid = request.getParameter("");
-
-        ConsumeInform consumeInform = new ConsumeInform(name,brand,num,facid,factime,proid,supid);
-
         int i = iConsumeInformService.insertConsumeInform(consumeInform);
-
         if(i<1){
             insertConsumeInformMap.put("status","failure");
             return JSON.toJSONString(insertConsumeInformMap);
@@ -58,22 +61,9 @@ public class ConsumeController {
         }
     }
     @PostMapping(value="/updateconsumeinform",produces = "text/plain;charset=utf-8")
-    public String updateConsumeInform(HttpServletRequest request){
+    public String updateConsumeInform(ConsumeInform consumeInform){
         Map<Object,Object> updateConsumeInformMap = new HashMap<>();
-
-        String name = request.getParameter("");
-        String brand = request.getParameter("");
-        int num = Integer.parseInt(request.getParameter(""));
-        String facid = request.getParameter("");
-        String factime = request.getParameter("");
-        String proid = request.getParameter("");
-        String supid = request.getParameter("");
-        int id = Integer.parseInt(request.getParameter(""));
-
-        ConsumeInform consumeInform = new ConsumeInform(id,name,brand,num,facid,factime,proid,supid);
-
         int i = iConsumeInformService.updateConsumeInform(consumeInform);
-
         if(i<1){
             updateConsumeInformMap.put("status","failure");
             return JSON.toJSONString(updateConsumeInformMap);
@@ -109,17 +99,9 @@ public class ConsumeController {
     }
 
     @PostMapping(value = "/insertconsumepurchase",produces = "text/plain;chartset=utf-8")
-    public String insertConsumePurchase(HttpServletRequest request){
+    public String insertConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> insertConsumePurchaseMap = new HashMap<>();
-
-        String name = request.getParameter("");
-        int num = Integer.parseInt(request.getParameter(""));
-        String date = request.getParameter("");
-        String applicant = request.getParameter("");
-        ConsumePurchase consumePurchase = new ConsumePurchase(name,num,date,applicant);
-
         int i = iConsumePurchaseService.insertConsumePurchase(consumePurchase);
-
         if(i<1){
             insertConsumePurchaseMap.put("status","failure");
             return JSON.toJSONString(insertConsumePurchaseMap);
@@ -130,15 +112,8 @@ public class ConsumeController {
     }
 
     @PostMapping(value = "/updateconsumepurchase",produces = "text/plain;chartset=utf-8")
-    public String updateConsumePurchase(HttpServletRequest request){
+    public String updateConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> updateConsumePurchaseMap = new HashMap<>();
-
-        String name = request.getParameter("");
-        int num = Integer.parseInt(request.getParameter(""));
-        String date = request.getParameter("");
-        String applicant = request.getParameter("");
-        int id = Integer.parseInt(request.getParameter(""));
-        ConsumePurchase consumePurchase = new ConsumePurchase(id,name,num,date,applicant);
 
         int i = iConsumePurchaseService.updateConsumePurchase(consumePurchase);
 
@@ -177,16 +152,8 @@ public class ConsumeController {
     }
 
     @PostMapping(value = "/insertconsumenorm",produces = "text/plain;chartset=utf-8")
-    public String insertConsumeNorm(HttpServletRequest request){
+    public String insertConsumeNorm(ConsumeNorm consumeNorm){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
-
-        String title = request.getParameter("");
-        String informationSource = request.getParameter("");
-        String author = request.getParameter("");
-        String time = request.getParameter("");
-        String content = request.getParameter("");
-
-        ConsumeNorm consumeNorm = new ConsumeNorm(title,informationSource,author,time,content);
         int i = iConsumeNormService.insertConsumeNorm(consumeNorm);
         if(i<1){
             insertConsumeNormMap.put("status","failure");
@@ -198,17 +165,8 @@ public class ConsumeController {
     }
 
     @PostMapping(value = "/updateconsumenorm",produces = "text/plain;chartset=utf-8")
-    public String updateConsumeNorm(HttpServletRequest request){
+    public String updateConsumeNorm(ConsumeNorm consumeNorm){
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
-
-        String title = request.getParameter("");
-        String informationSource = request.getParameter("");
-        String author = request.getParameter("");
-        String time = request.getParameter("");
-        String content = request.getParameter("");
-        int id = Integer.parseInt(request.getParameter(""));
-        ConsumeNorm consumeNorm = new ConsumeNorm(id,title,informationSource,author,time,content);
-
         int i = iConsumeNormService.updateConsumeNorm(consumeNorm);
         if(i<1){
             updateConsumeNormMap.put("status","failure");
@@ -247,22 +205,8 @@ public class ConsumeController {
     }
 
     @PostMapping(value = "insertConsumeCustody",produces = "text/plain;chartset=utf-8")
-    public String insertConsumeCustody(HttpServletRequest request){
+    public String insertConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
-        //耗材名称
-        String name = request.getParameter("");
-        //领用人
-        String recipient = request.getParameter("");
-        String date = request.getParameter("");
-        int count = Integer.parseInt(request.getParameter(""));
-        int surplusNum =  Integer.parseInt(request.getParameter(""));
-        String status = request.getParameter("");
-
-        /*if(count > surplusNum){
-            insertConsumeCustodyMap.put("status","failure");
-            return JSON.toJSONString(insertConsumeCustodyMap);
-        }*/
-        ConsumeCustody consumeCustody = new ConsumeCustody(name,recipient,date,count,surplusNum,status);
         int i = iConsumeCustodyService.insertConsumeCustody(consumeCustody);
         if(i<1){
             insertConsumeCustodyMap.put("status","failure");
@@ -275,23 +219,8 @@ public class ConsumeController {
     }
 
     @PostMapping(value = "updateConsumeCustody",produces = "text/plain;chartset=utf-8")
-    public String updateConsumeCustody(HttpServletRequest request){
+    public String updateConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> updateConsumeCustodyMap = new HashMap<>();
-        //耗材名称
-        String name = request.getParameter("");
-        //领用人
-        String recipient = request.getParameter("");
-        String date = request.getParameter("");
-        int count = Integer.parseInt(request.getParameter(""));
-        int surplusNum =  Integer.parseInt(request.getParameter(""));
-        String status = request.getParameter("");
-        int id =  Integer.parseInt(request.getParameter(""));
-
-        if(count > surplusNum){
-            updateConsumeCustodyMap.put("status","failure");
-            return JSON.toJSONString(updateConsumeCustodyMap);
-        }
-        ConsumeCustody consumeCustody = new ConsumeCustody(id,name,recipient,date,count,surplusNum,status);
         int i = iConsumeCustodyService.updateConsumeCustody(consumeCustody);
         if(i<1){
             updateConsumeCustodyMap.put("status","failure");

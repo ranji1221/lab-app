@@ -14,7 +14,7 @@ import java.util.List;
  *  4.查询所有的幻灯片
  */
 public interface BannerMapper {
-    @Insert("insert into banner (imageId) valules (#{imageId})")
+    @Insert("insert into banner (imageId) values (#{imageId})")
     int insertBanner(int imageId);
     @Select("select Max(id) from banner")
     int latestBannerData();
