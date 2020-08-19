@@ -17,4 +17,6 @@ public interface INoticeService {
     Map<Object,Object> findAllNotice(int pageNum, int pageSize);
 
     Notice findById(int id);
+
+    Map<Object,Object> findNoticeNextToNext(int noticeId);
 }

@@ -3,6 +3,7 @@ package com.ranji.lab.service.prototype;
 import com.ranji.lab.entity.Regime;
 import com.ranji.lab.entity.Study;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,6 @@ public interface IStudyService {
     Map<Object,Object> findAllStudy(int pageNum, int pageSize);
 
     Study findById(int id);
+
+    Map<Object,Object> findStudyNextToNext(int studyId);
 }

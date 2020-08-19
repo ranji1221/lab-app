@@ -2,7 +2,6 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.entity.News;
 import com.ranji.lab.mapper.NewsMapper;
 import com.ranji.lab.service.prototype.INewsService;
@@ -19,8 +18,8 @@ public class NewsServiceImpl implements INewsService {
     @Resource
     private NewsMapper newsMapper;
     @Override
-    public int insertNews(NewsDto newsdto) {
-        return newsMapper.insertNews(newsdto);
+    public int insertNews(News news) {
+        return newsMapper.insertNews(news);
     }
 
     @Override
@@ -50,5 +49,13 @@ public class NewsServiceImpl implements INewsService {
     @Override
     public News findById(int id) {
         return newsMapper.findById(id);
+    }
+
+    @Override
+    public Map<Object, Object> findNewsNextToNext(int newsId) {
+        List<News> newsNextToNext = newsMapper.findNewsNextToNext(newsId);
+        Map<Object,Object> newsNextToNextMap = new HashMap<>();
+        newsNextToNextMap.put("data",newsNextToNext);
+        return newsNextToNextMap;
     }
 }

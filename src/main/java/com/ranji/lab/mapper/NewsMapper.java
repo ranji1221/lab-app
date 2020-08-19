@@ -1,11 +1,9 @@
 package com.ranji.lab.mapper;
 
-import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.entity.News;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,11 +16,13 @@ import java.util.List;
  */
 public interface NewsMapper {
     @Insert("insert into news (title,information_source,author,time,content) values (#{title},#{informationSource},#{author},#{time},#{content})")
-    int insertNews(NewsDto newsdto);
+    int insertNews(News news);
     @Update("update news set title = #{title}, author = #{author} ,information_source = #{informationSource}, time = #{time},content = #{content} where id = #{id}")
     int updateNews(News news);
     @Select("select news.* from news order by time desc")
     List<News> findAll();
     @Select("select news.* from news where news.id = #{id}")
     News findById(int id);
+    @Select("select news.* from news order by time desc limit #{newsId},2")
+    List<News> findNewsNextToNext(int newsId);
 }

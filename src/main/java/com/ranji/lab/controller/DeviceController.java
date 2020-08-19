@@ -1,11 +1,14 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.ranji.lab.entity.*;
+import com.ranji.lab.entity.Code;
+import com.ranji.lab.entity.Device;
+import com.ranji.lab.entity.LabInformation;
+import com.ranji.lab.entity.Monitaring;
 import com.ranji.lab.service.prototype.IDeviceService;
 import com.ranji.lab.service.prototype.ILabInformationService;
 import com.ranji.lab.service.prototype.IMonitaringService;
-import io.swagger.annotations.Api;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,20 +33,23 @@ public class DeviceController {
     /*
     通过前台表单的数据插入设备信息
      */
+    @ApiOperation(value="插入设备信息", notes="根据传过来的设备信息来插入设备信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "设备数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
     @PostMapping(value="insertdevice",produces = "text/plain;charset=utf-8")
-    public String insertDevice(HttpServletRequest request){
+    public String insertDevice(Device device){
         Map<Object,Object> insertDeviceMap = new HashMap<>();
-
-        String deviceName = request.getParameter("");
-        String brand = request.getParameter("");
-        String conid = request.getParameter("");
-        int num = Integer.parseInt(request.getParameter(""));
-        String roomnames = request.getParameter("");
-        String facid = request.getParameter("");
-        String factime = request.getParameter("");
-        String proid = request.getParameter("");
-        String supid = request.getParameter("");
-        Device device = new Device(deviceName, brand, conid, num, roomnames, facid, factime, proid, supid);
         int i = iDeviceService.insertDevice(device);
         if(i<1){
             insertDeviceMap.put("status","failure");
@@ -56,6 +62,21 @@ public class DeviceController {
     /*
     通过前台表单的数据更新设备信息
      */
+    @ApiOperation(value="更新设备信息", notes="根据传过来的设备信息来更新设备信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "设备数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "更新设备id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
     @PostMapping(value="updatedevice",produces = "text/plain;charset=utf-8")
     public String updateDevice(HttpServletRequest request){
         Map<Object,Object> updateDeviceMap = new HashMap<>();
@@ -84,6 +105,8 @@ public class DeviceController {
     /*
     前台通过请求获得设备信息
      */
+
+    @ApiOperation(value="获取所有设备信息", notes="调用接口直接返回所有设备信息")
     @GetMapping(value = "/alldevice",produces = "text/plain;charset=utf-8")
     public String allDevice(){
         List<Device> allDevice = iDeviceService.findAllDevice();
@@ -97,9 +120,25 @@ public class DeviceController {
             return JSON.toJSONString(allDeviceMap);
         }
     }
+    @GetMapping(value = "/alldevices",produces = "text/plain;charset=utf-8")
+    public String allDevices(int page,int limit){
+        Map<Object,Object> allDeviceMap = iDeviceService.findAllDevice(page,limit);
+        if(!allDeviceMap.isEmpty()){
+            allDeviceMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(allDeviceMap);
+        }else{
+            allDeviceMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allDeviceMap);
+        }
+    }
     /*
     前台通过请求获得分页后的设备信息
     */
+    @ApiOperation(value="获取分页后的设备信息", notes="根据传过来的分页信息来查询设备信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
+    })
     @GetMapping(value = "/alldevice/{pagenum}/{pagesize}",produces = "text/plain;charset=utf-8")
     public String allDeviceOnPaging(@PathVariable("pagenum") int pageNum, @PathVariable("pagesize") int pageSize){
         Map<Object,Object> allDeviceOnPaging = iDeviceService.findAllDevice(pageNum,pageSize);

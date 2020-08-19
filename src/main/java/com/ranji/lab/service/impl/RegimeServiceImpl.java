@@ -2,9 +2,11 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.entity.News;
 import com.ranji.lab.entity.Regime;
 import com.ranji.lab.mapper.RegimeMapper;
 import com.ranji.lab.service.prototype.IRegimeService;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,6 +52,14 @@ public class RegimeServiceImpl implements IRegimeService{
     @Override
     public Regime findById(int id) {
         return regimeMapper.findById(id);
+    }
+
+    @Override
+    public Map<Object, Object> findRegimeNextToNext(int regimeId) {
+        List<News> regimeNextToNext = regimeMapper.findRegimeNextToNext(regimeId);
+        HashMap<Object, Object> regimeNextToNextMap = new HashMap<>();
+        regimeNextToNextMap.put("data",regimeNextToNext);
+        return regimeNextToNextMap;
     }
 
 }

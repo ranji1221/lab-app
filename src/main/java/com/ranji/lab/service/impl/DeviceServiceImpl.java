@@ -3,6 +3,7 @@ package com.ranji.lab.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.entity.Device;
+import com.ranji.lab.mapper.DeviceMapper;
 import com.ranji.lab.service.prototype.IDeviceService;
 import org.springframework.stereotype.Service;
 
@@ -14,26 +15,26 @@ import java.util.Map;
 @Service
 public class DeviceServiceImpl implements IDeviceService {
     @Resource
-    private IDeviceService iDeviceService;
+    private DeviceMapper deviceMapper;
     @Override
     public int insertDevice(Device device) {
-        return iDeviceService.insertDevice(device);
+        return deviceMapper.insertDevice(device);
     }
 
     @Override
     public int updateDevice(Device device) {
-        return iDeviceService.updateDevice(device);
+        return deviceMapper.updateDevice(device);
     }
 
     @Override
     public List<Device> findAllDevice() {
-        return iDeviceService.findAllDevice();
+        return deviceMapper.findAll();
     }
 
     @Override
     public Map<Object,Object> findAllDevice(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Device> allDevice = iDeviceService.findAllDevice();
+        List<Device> allDevice = deviceMapper.findAll();
 
         PageInfo<Device> allDevicePaging = new PageInfo<>(allDevice);
         long total = allDevicePaging.getTotal();
@@ -46,6 +47,6 @@ public class DeviceServiceImpl implements IDeviceService {
 
     @Override
     public Device findById(int id) {
-        return iDeviceService.findById(id);
+        return deviceMapper.findById(id);
     }
 }

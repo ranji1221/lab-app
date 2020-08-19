@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.entity.News;
 import com.ranji.lab.entity.Notice;
 import com.ranji.lab.mapper.NoticeMapper;
 import com.ranji.lab.service.prototype.INoticeService;
@@ -47,5 +48,13 @@ public class NoticeServiceImpl implements INoticeService {
     @Override
     public Notice findById(int id) {
         return noticeMapper.findById(id);
+    }
+
+    @Override
+    public Map<Object, Object> findNoticeNextToNext(int noticeId) {
+        List<News> noticeNextToNext = noticeMapper.findNoticeNextToNext(noticeId);
+        Map<Object,Object> noticeNextToNextMap = new HashMap<>();
+        noticeNextToNextMap.put("data",noticeNextToNext);
+        return noticeNextToNextMap;
     }
 }

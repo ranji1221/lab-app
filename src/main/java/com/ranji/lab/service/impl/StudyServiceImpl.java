@@ -50,4 +50,12 @@ public class StudyServiceImpl implements IStudyService {
     public Study findById(int id) {
         return studyMapper.findById(id);
     }
+
+    @Override
+    public Map<Object, Object> findStudyNextToNext(int studyId) {
+        List<Study> studyNextToNext = studyMapper.findStudyNextToNext(studyId);
+        HashMap<Object, Object> studyNextToNextMap = new HashMap<>();
+        studyNextToNextMap.put("data",studyNextToNext);
+        return studyNextToNextMap;
+    }
 }
