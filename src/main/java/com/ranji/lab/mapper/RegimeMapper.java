@@ -1,6 +1,5 @@
 package com.ranji.lab.mapper;
 
-import com.ranji.lab.entity.News;
 import com.ranji.lab.entity.Notice;
 import com.ranji.lab.entity.Regime;
 import org.apache.ibatis.annotations.Insert;
@@ -18,10 +17,6 @@ public interface RegimeMapper {
 
     @Select("select regime.* from regime order by time desc")
     List<Regime> findAll();
-
     @Select("select regime.* from regime where regime.id = #{id}")
     Regime findById(int id);
-
-    @Select("select regime.* from news order by time desc limit #{regimeId},2")
-    List<News> findRegimeNextToNext(int regimeId);
 }

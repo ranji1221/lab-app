@@ -32,18 +32,4 @@ public class ConsumePurchase implements Serializable {
     public Date getDate(){
         return DateUtil.StringToDate(this.date,"yyyy-MM-dd");
     }
-
-    /*public ConsumePurchase(int id , ConsumePurchaseDto consumePurchaseDto){
-        this.id = id;
-        this.consumeId = consumePurchaseDto.getConsumeId();
-        this.num = consumePurchaseDto.getNum();
-        this.date = DateUtil.DateToString(consumePurchaseDto.getDate(),"yyyy-MM-dd");
-        this.applicant = consumePurchaseDto.getApplicant();
-    }
-    public ConsumePurchase(ConsumePurchaseDto consumePurchaseDto){
-        this.consumeId = consumePurchaseDto.getConsumeId();
-        this.num = consumePurchaseDto.getNum();
-        this.date = DateUtil.DateToString(consumePurchaseDto.getDate(),"yyyy-MM-dd");
-        this.applicant = consumePurchaseDto.getApplicant();
-    }*/
 }

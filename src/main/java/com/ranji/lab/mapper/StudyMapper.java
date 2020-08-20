@@ -17,11 +17,6 @@ public interface StudyMapper {
 
     @Select("select study.* from study order by time desc")
     List<Study> findAll();
-
     @Select("select study.* from study where study.id = #{id}")
     Study findById(int id);
-
-    @Select("select study.* from study order by time desc limit #{studyId},2")
-    List<Study> findStudyNextToNext(int studyId);
-
 }

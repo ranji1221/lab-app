@@ -1,20 +1,15 @@
-package com.ranji.lab.entity;
+package com.ranji.lab.dto;
 
 import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 首页新闻实体类
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class News implements Serializable {
-    private int id;
+public class NewsDto {
+
     @NonNull
     private String title;
     @NonNull
@@ -32,4 +27,5 @@ public class News implements Serializable {
     public Date getTime(){
         return DateUtil.StringToDate(this.time,"yyyy-MM-dd");
     }
+
 }

@@ -1,6 +1,5 @@
 package com.ranji.lab.service.prototype;
 
-import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumePurchase;
 
 import java.util.List;
@@ -14,13 +13,7 @@ public interface IConsumePurchaseService {
 
     Map<Object,Object> findAllConsumePurchase(int pageNum , int pageSize);
 
-    List<ConsumePurchase> findAllConsumePurchases(int pageNum , int pageSize);
-
     List<ConsumePurchase> findAllConsumePurchase();
 
     ConsumePurchase findById(int id);
-
-    ConsumePurchaseDto findNameById(int id);
-
-    int getCount();
 }
