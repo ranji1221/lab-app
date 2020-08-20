@@ -3,13 +3,12 @@ package com.ranji.lab.controller;
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.ConsumeCustodyDto;
 import com.ranji.lab.dto.ConsumePurchaseDto;
+import com.ranji.lab.dto.ConsumeTypeDto;
+import com.ranji.lab.dto.DeviceTypeDto;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import com.ranji.lab.util.DateUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +37,9 @@ public class ConsumeController {
 
     @Resource
     private IConsumeNormContentService iConsumeNormContentService;
+
+    @Resource
+    private IConsumeTypeService iConsumeTypeService;
 
     /**
      * 插入设备信息
@@ -281,7 +283,7 @@ public class ConsumeController {
         }
     }
 
-    @PostMapping(value="/allconsumenormcontent",produces = "text/plain;charset=utf-8")
+    @GetMapping(value="/allconsumenormcontent",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNormContent(){
         Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.consumeContent();
         return JSON.toJSONString(consumeNormContentMap);
@@ -377,8 +379,60 @@ public class ConsumeController {
     }
 
 
+    @ApiOperation(value="插入耗材类型信息", notes="根据传过来的设备信息来插入耗材类型信息")
+    @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
     @PostMapping(value = "/insertconsumetype",produces = "text/plain;charset=utf-8")
-    public String aaa(){
-        return JSON.toJSONString("");
+    public String insertConsumeType(ConsumeTypeDto consumeTypeDto){
+        Map<Object,Object> insertConsumeTypeMap = new HashMap<>();
+        int i = iConsumeTypeService.insertConsumeType(consumeTypeDto);
+        if(i<1){
+            insertConsumeTypeMap.put("status","failure");
+            return JSON.toJSONString(insertConsumeTypeMap);
+        }else{
+            insertConsumeTypeMap.put("status","success");
+            return JSON.toJSONString(insertConsumeTypeMap);
+        }
     }
+
+    @ApiOperation(value="更新耗材类型信息", notes="根据传过来的设备信息来更新耗材类型信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "耗材类型id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @PostMapping(value = "/updateconsumetype",produces = "text/plain;charset=utf-8")
+    public String updateConsumeType(ConsumeType consumeType){
+        Map<Object,Object> updateConsumeTypeMap = new HashMap<>();
+        int i = iConsumeTypeService.updateConsumeType(consumeType);
+        if(i<1){
+            updateConsumeTypeMap.put("status","failure");
+            return JSON.toJSONString(updateConsumeTypeMap);
+        }else{
+            updateConsumeTypeMap.put("status","success");
+            return JSON.toJSONString(updateConsumeTypeMap);
+        }
+    }
+
+    @ApiOperation(value="查找所有耗材类型信息", notes="根据传过来的设备信息来查询耗材类型信息")
+    @GetMapping(value="allconsumetype",produces = "text/plain;charset=utf-8")
+    public String allConsumeType(){
+        Map<Object, Object> objectObjectMap = iConsumeTypeService.allConsumeType();
+        if(!objectObjectMap.isEmpty()){
+            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }else{
+            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }
+    }
+
+
+
 }

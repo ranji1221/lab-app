@@ -183,8 +183,11 @@ public class DeviceController {
     通过前台表单的数据更新设备类型信息
      */
     @ApiOperation(value="更新设备类型信息", notes="根据传过来的设备信息来更新设备类型信息")
-    @ApiImplicitParam(name = "typeName", value = "设备类型名称", required = true, dataType = "String")
-    @ApiResponses({
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeName", value = "设备类型名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "设备类型id", required = true, dataType = "String")
+    })
+       @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })

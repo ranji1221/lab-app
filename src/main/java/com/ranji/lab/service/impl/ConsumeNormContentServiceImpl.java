@@ -20,19 +20,24 @@ public class ConsumeNormContentServiceImpl implements IConsumeNormContentService
     @Override
     public Map<Object, Object> consumeContent() {
         Map<Object,Object> data = new HashMap<>();
-
         List<List<Object>> allData = new ArrayList<>();
+
+
         List<ConsumeNorm> all = consumeNormMapper.findAll();
         for (ConsumeNorm consumeNorm : all) {
             Map<String,Object> map = new HashMap<>();
             List<Object> list = new ArrayList<>();
+
             int contentId = consumeNorm.getId();
             List<String> content = consumeNormContentMapper.findContentById(contentId);
+
             map.put("consumeNorm",consumeNorm);
             map.put("content",content);
+
             list.add(map);
             allData.add(list);
         }
+
 
         data.put("data",allData);
         return data;

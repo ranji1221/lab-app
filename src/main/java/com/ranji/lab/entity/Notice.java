@@ -26,8 +26,8 @@ public class Notice implements Serializable {
     @NonNull
     private String content;
 
-    public void setTime(Date time){
-        this.time= DateUtil.DateToString(time,"yyyy-MM-dd");
+    public void setTime(String time){
+        this.time= time;
     }
     public Date getTime(){
         return DateUtil.StringToDate(this.time,"yyyy-MM-dd");
