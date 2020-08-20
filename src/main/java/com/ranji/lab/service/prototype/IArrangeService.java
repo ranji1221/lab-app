@@ -1,0 +1,24 @@
+package com.ranji.lab.service.prototype;
+
+import com.ranji.lab.dto.ArrangeDto;
+import com.ranji.lab.entity.Arrange;
+
+import java.util.List;
+import java.util.Map;
+
+public interface IArrangeService {
+    //新增
+    int insertArrange(Arrange arrange);
+
+    //查询全部
+    List<ArrangeDto> findAllArrange();
+    //分页查询全部
+    Map<Object,Object> pageFindAllArrange(int pageNum,int pageSize);
+    //按照id查询项目
+    ArrangeDto idFindArrange(int id);
+    //修改该项目信息
+    int updArrange(Arrange arrange);
+
+    //验证是否可以预约
+    List<ArrangeDto>yesOrNoArrange(Arrange arrange);
+}

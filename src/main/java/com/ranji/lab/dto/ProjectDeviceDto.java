@@ -8,7 +8,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class ProjectDeviceDto implements Serializable {
+public class ProjectDeviceDto {
     private int id;
     @NonNull
     private int experimentDeviceId;

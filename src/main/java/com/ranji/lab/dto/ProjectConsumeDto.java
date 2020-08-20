@@ -8,7 +8,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class ProjectConsumeDto implements Serializable {
+public class ProjectConsumeDto {
     private Integer id;
     @NonNull
     private Integer experimentConsumeId;

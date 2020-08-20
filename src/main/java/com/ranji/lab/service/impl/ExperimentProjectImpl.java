@@ -3,21 +3,30 @@ package com.ranji.lab.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ExperimentProjectDto;
 import com.ranji.lab.dto.ProjectConsumeDto;
 import com.ranji.lab.dto.ProjectDeviceDto;
+import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ExperimentProject;
 import com.ranji.lab.entity.ProjectDevice;
 import com.ranji.lab.mapper.ExperimentProjectMapper;
 import com.ranji.lab.mapper.ProjectConsumeMapper;
 import com.ranji.lab.mapper.ProjectDeviceMapper;
 import com.ranji.lab.service.prototype.IExperimentProjectService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ExperimentProjectImpl implements IExperimentProjectService {
@@ -29,7 +38,6 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
     @Resource
     ProjectDeviceMapper projectDeviceMapper;
     //插入
-
     /**
      *
      * @param experimentProject
@@ -68,6 +76,20 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
         }
         return allExperimentProject;
     }
+    //分页查询
+    @Override
+    public Map<Object,Object> pageExperimentProject(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findAllExperimentProject();
+
+        PageInfo<ExperimentProjectDto> objectPageInfo = new PageInfo<>(allExperimentProject);
+        long total = objectPageInfo.getTotal();
+        Map<Object,Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("data",allExperimentProject);
+        return map;
+    }
+
     //按照id查询
     @Override
     public ExperimentProjectDto idFindExperiment_project(int id) {
@@ -81,10 +103,17 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
     public List<ExperimentProjectDto> noDelExperimentProject() {
         return experimentProjectMapper.noDelExperimentProject();
     }
-    //按照分类查询
+    //按照分类分页查询
     @Override
-    public List<ExperimentProjectDto> typeExperimentProject(int status) {
-        return experimentProjectMapper.typeExperimentProject(status);
+    public Map<Object, Object> typeExperimentProject(int pageNum, int pageSize, int status) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ExperimentProjectDto> allExperimentProject =  experimentProjectMapper.typeExperimentProject(status);
+        PageInfo<ExperimentProjectDto> objectPageInfo = new PageInfo<>(allExperimentProject);
+        long total = objectPageInfo.getTotal();
+        Map<Object,Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("data",allExperimentProject);
+        return map;
     }
 
     /**
