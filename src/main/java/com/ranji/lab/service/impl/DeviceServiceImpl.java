@@ -2,10 +2,12 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.mapper.DeviceMapper;
 import com.ranji.lab.service.prototype.IDeviceService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -17,8 +19,8 @@ public class DeviceServiceImpl implements IDeviceService {
     @Resource
     private DeviceMapper deviceMapper;
     @Override
-    public int insertDevice(Device device) {
-        return deviceMapper.insertDevice(device);
+    public int insertDevice(DeviceDto deviceDto) {
+        return deviceMapper.insertDevice(deviceDto);
     }
 
     @Override

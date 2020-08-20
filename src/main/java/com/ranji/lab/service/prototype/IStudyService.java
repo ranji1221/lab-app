@@ -13,7 +13,7 @@ public interface IStudyService {
 
     int updateStudy(Study study);
 
-    List<Study> findAllStudy();
+    Map<Object,Object> findAllStudy();
 
     Map<Object,Object> findAllStudy(int pageNum, int pageSize);
 

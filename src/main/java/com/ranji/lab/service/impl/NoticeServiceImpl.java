@@ -7,6 +7,7 @@ import com.ranji.lab.entity.Notice;
 import com.ranji.lab.mapper.NoticeMapper;
 import com.ranji.lab.service.prototype.INoticeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -29,8 +30,14 @@ public class NoticeServiceImpl implements INoticeService {
     }
 
     @Override
-    public List<Notice> findAllNotice() {
-        return noticeMapper.findAll();
+    @Transactional
+    public Map<Object,Object> findAllNotice() {
+        List<Notice> all = noticeMapper.findAll();
+        int total = noticeMapper.count();
+        Map<Object,Object> allNotice = new HashMap<>();
+        allNotice.put("total",total);
+        allNotice.put("data",all);
+        return allNotice;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.ranji.lab.entity.Study;
 import com.ranji.lab.mapper.StudyMapper;
 import com.ranji.lab.service.prototype.IStudyService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -28,8 +29,14 @@ public class StudyServiceImpl implements IStudyService {
     }
 
     @Override
-    public List<Study> findAllStudy() {
-        return studyMapper.findAll();
+    @Transactional
+    public Map<Object,Object> findAllStudy() {
+        List<Study> all = studyMapper.findAll();
+        int total = studyMapper.count();
+        Map<Object,Object> allStudy = new HashMap<>();
+        allStudy.put("data",all);
+        allStudy.put("total",total);
+        return allStudy;
     }
 
     @Override

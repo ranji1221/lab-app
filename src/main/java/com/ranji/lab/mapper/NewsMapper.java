@@ -25,4 +25,6 @@ public interface NewsMapper {
     News findById(int id);
     @Select("select news.* from news order by time desc limit #{newsId},2")
     List<News> findNewsNextToNext(int newsId);
+    @Select("select count(*) from news")
+    int count();
 }

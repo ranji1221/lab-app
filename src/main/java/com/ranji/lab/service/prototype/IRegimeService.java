@@ -11,7 +11,7 @@ public interface IRegimeService {
 
     int updateRegime(Regime regime);
 
-    List<Regime> findAllRegime();
+    Map<Object,Object> findAllRegime();
 
     Map<Object,Object> findAllRegime(int pageNum, int pageSize);
 

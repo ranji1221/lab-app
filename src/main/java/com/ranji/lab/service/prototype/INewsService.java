@@ -14,7 +14,7 @@ public interface INewsService {
 
     int updateNews(News news);
 
-    List<News> findAllNews();
+    Map<Object,Object> findAllNews();
 
     Map<Object,Object> findAllNews(int pageNum, int pageSize);
 

@@ -375,4 +375,10 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeCustodyMap);
         }
     }
+
+
+    @PostMapping(value = "/insertconsumetype",produces = "text/plain;charset=utf-8")
+    public String aaa(){
+        return JSON.toJSONString("");
+    }
 }

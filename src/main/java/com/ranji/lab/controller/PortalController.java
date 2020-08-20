@@ -3,16 +3,13 @@ package com.ranji.lab.controller;
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
-import com.ranji.lab.util.DateUtil;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,6 +61,7 @@ public class PortalController {
     })
     @PostMapping(value = "/insertnews",produces = "text/plain;charset=utf-8")
     public String insertNews(News news){
+        System.out.println(news);
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iNewsService.insertNews(news);
         if(i<1){
@@ -110,17 +108,9 @@ public class PortalController {
     @ApiOperation(value="查询所有新闻", notes="前端通过访问接口获得所有新闻")
     @GetMapping(value = "/allnews",produces = "text/plain;charset=utf-8")
     public String allNews(){
-        List<News> allNews = iNewsService.findAllNews();
-        for(News news:allNews){
-            Date time = news.getTime();
-            String date = DateUtil.DateToString(time, "yyyy-MM-dd");
-            news.setTime(date);
-        }
-        System.out.println(allNews);
-        Map<Object,Object> newsMap = new HashMap<>();
-        if(!allNews.isEmpty()) {
+        Map<Object,Object> newsMap = iNewsService.findAllNews();
+        if(!newsMap.isEmpty()) {
             newsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            newsMap.put("data", allNews);
             return JSON.toJSONString(newsMap);
         }else{
             newsMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
@@ -132,6 +122,7 @@ public class PortalController {
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
     })
+
     @GetMapping(value = "/allnewss",produces = "text/plain;charset=utf-8")
     public Object allNewss(int page,int limit){
         Map<Object, Object> allNewss = iNewsService.findAllNews(page, limit);
@@ -271,11 +262,9 @@ public class PortalController {
     @ApiOperation(value="查询所有通知公告", notes="前端通过访问接口获得所需通知公告")
     @GetMapping(value = "/allnotice",produces = "text/plain;charset=utf-8")
     public String allNotice(){
-        List<Notice> allNotice = iNoticeService.findAllNotice();
-        Map<Object,Object> noticeMap = new HashMap<>();
-        if(!allNotice.isEmpty()) {
+        Map<Object,Object> noticeMap = iNoticeService.findAllNotice();
+        if(!noticeMap.isEmpty()) {
             noticeMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            noticeMap.put("data", allNotice);
             return JSON.toJSONString(noticeMap);
         }else{
             noticeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
@@ -406,11 +395,9 @@ public class PortalController {
     @ApiOperation(value="查询由时间排序以及分页后的实验制度", notes="前端通过访问接口获得所有实验制度")
     @GetMapping(value = "/allregime",produces = "text/plain;charset=utf-8")
     public String allRegime(){
-        List<Regime> allRegime = iRegimeService.findAllRegime();
-        Map<Object,Object> regimeMap = new HashMap<>();
-        if(!allRegime.isEmpty()) {
+        Map<Object,Object> regimeMap = iRegimeService.findAllRegime();
+        if(!regimeMap.isEmpty()) {
             regimeMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            regimeMap.put("data", allRegime);
             return JSON.toJSONString(regimeMap);
         }else {
             regimeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
@@ -555,11 +542,9 @@ public class PortalController {
     @ApiOperation(value="查询由所有的教学科研", notes="前端通过访问接口获得所需教学科研")
     @GetMapping(value = "/allstudy",produces = "text/plain;charset=utf-8")
     public String allStudy(){
-        List<Study> allStudy = iStudyService.findAllStudy();
-        Map<Object,Object> studyMap = new HashMap<>();
-        if(!allStudy.isEmpty()) {
+        Map<Object,Object> studyMap = iStudyService.findAllStudy();
+        if(!studyMap.isEmpty()) {
             studyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            studyMap.put("data", allStudy);
             return JSON.toJSONString(studyMap);
         }else{
             studyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());

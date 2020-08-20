@@ -24,4 +24,6 @@ public interface StudyMapper {
     @Select("select study.* from study order by time desc limit #{studyId},2")
     List<Study> findStudyNextToNext(int studyId);
 
+    @Select("select count(*) from study")
+    int count();
 }

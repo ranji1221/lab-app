@@ -18,6 +18,8 @@ public interface NoticeMapper {
     List<Notice> findAll();
     @Select("select notice.* from notice where notice.id = #{id}")
     Notice findById(int id);
-    @Select("select notice.* from news order by time desc limit #{noticeId},2")
+    @Select("select notice.* from notice order by time desc limit #{noticeId},2")
     List<News> findNoticeNextToNext(int noticeId);
+    @Select("select count(*) from notice")
+    int count();
 }

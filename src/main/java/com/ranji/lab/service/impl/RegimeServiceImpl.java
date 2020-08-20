@@ -8,6 +8,7 @@ import com.ranji.lab.mapper.RegimeMapper;
 import com.ranji.lab.service.prototype.IRegimeService;
 import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -30,8 +31,14 @@ public class RegimeServiceImpl implements IRegimeService{
     }
 
     @Override
-    public List<Regime> findAllRegime() {
-        return regimeMapper.findAll();
+    @Transactional
+    public Map<Object,Object> findAllRegime() {
+        List<Regime> all = regimeMapper.findAll();
+        int total = regimeMapper.count();
+        Map<Object,Object> allRegime = new HashMap<>();
+        allRegime.put("data",all);
+        allRegime.put("total",total);
+        return allRegime;
     }
 
     @Override

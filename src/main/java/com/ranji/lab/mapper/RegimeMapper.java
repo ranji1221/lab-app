@@ -22,6 +22,9 @@ public interface RegimeMapper {
     @Select("select regime.* from regime where regime.id = #{id}")
     Regime findById(int id);
 
-    @Select("select regime.* from news order by time desc limit #{regimeId},2")
+    @Select("select regime.* from regime order by time desc limit #{regimeId},2")
     List<News> findRegimeNextToNext(int regimeId);
+
+    @Select("select count(*) from regime")
+    int count();
 }

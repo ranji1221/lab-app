@@ -1,11 +1,11 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.ranji.lab.entity.Code;
-import com.ranji.lab.entity.Device;
-import com.ranji.lab.entity.LabInformation;
-import com.ranji.lab.entity.Monitaring;
+import com.ranji.lab.dto.DeviceDto;
+import com.ranji.lab.dto.DeviceTypeDto;
+import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.IDeviceService;
+import com.ranji.lab.service.prototype.IDeviceTypeService;
 import com.ranji.lab.service.prototype.ILabInformationService;
 import com.ranji.lab.service.prototype.IMonitaringService;
 import io.swagger.annotations.*;
@@ -29,6 +29,8 @@ public class DeviceController {
     private IMonitaringService iMonitaringService;
     @Resource
     private ILabInformationService iLabInformationService;
+    @Resource
+    private IDeviceTypeService iDeviceTypeService;
 
     /*
     通过前台表单的数据插入设备信息
@@ -41,16 +43,18 @@ public class DeviceController {
             @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String")
+            @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String")
+
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value="insertdevice",produces = "text/plain;charset=utf-8")
-    public String insertDevice(Device device){
+    public String insertDevice(DeviceDto deviceDto){
         Map<Object,Object> insertDeviceMap = new HashMap<>();
-        int i = iDeviceService.insertDevice(device);
+        int i = iDeviceService.insertDevice(deviceDto);
         if(i<1){
             insertDeviceMap.put("status","failure");
             return JSON.toJSONString(insertDeviceMap);
@@ -71,7 +75,8 @@ public class DeviceController {
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "更新设备id", required = true, dataType = "String")
+            @ApiImplicitParam(name = "id", value = "更新设备id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -120,6 +125,7 @@ public class DeviceController {
             return JSON.toJSONString(allDeviceMap);
         }
     }
+    @ApiOperation(value="获取所有设备信息(?x=a&y=b)", notes="调用接口直接返回所有设备信息")
     @GetMapping(value = "/alldevices",produces = "text/plain;charset=utf-8")
     public String allDevices(int page,int limit){
         Map<Object,Object> allDeviceMap = iDeviceService.findAllDevice(page,limit);
@@ -134,7 +140,7 @@ public class DeviceController {
     /*
     前台通过请求获得分页后的设备信息
     */
-    @ApiOperation(value="获取分页后的设备信息", notes="根据传过来的分页信息来查询设备信息")
+    @ApiOperation(value="获取分页后的设备信息(/a/b)", notes="根据传过来的分页信息来查询设备信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
@@ -152,8 +158,65 @@ public class DeviceController {
     }
 
     /*
-    通过前台表单的数据插入项目信息
+    通过前台表单的数据插入设备类型信息
      */
+    @ApiOperation(value="插入设备类型信息", notes="根据传过来的设备信息来插入设备类型信息")
+    @ApiImplicitParam(name = "typeName", value = "设备类型名称", required = true, dataType = "String")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @PostMapping(value="insertdevicetype",produces = "text/plain;charset=utf-8")
+    public String insertDeviceType(DeviceTypeDto deviceTypeDto){
+        Map<Object,Object> insertDeviceTypeMap = new HashMap<>();
+        int i = iDeviceTypeService.insertDeviceType(deviceTypeDto);
+        if(i<1){
+            insertDeviceTypeMap.put("status","failure");
+            return JSON.toJSONString(insertDeviceTypeMap);
+        }else{
+            insertDeviceTypeMap.put("status","success");
+            return JSON.toJSONString(insertDeviceTypeMap);
+        }
+    }
+
+    /*
+    通过前台表单的数据更新设备类型信息
+     */
+    @ApiOperation(value="更新设备类型信息", notes="根据传过来的设备信息来更新设备类型信息")
+    @ApiImplicitParam(name = "typeName", value = "设备类型名称", required = true, dataType = "String")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @PostMapping(value="updatedevicetype",produces = "text/plain;charset=utf-8")
+    public String updateDeviceType(DeviceType deviceType){
+        Map<Object,Object> updateDeviceTypeMap = new HashMap<>();
+        int i = iDeviceTypeService.updateDeviceType(deviceType);
+        if(i<1){
+            updateDeviceTypeMap.put("status","failure");
+            return JSON.toJSONString(updateDeviceTypeMap);
+        }else{
+            updateDeviceTypeMap.put("status","success");
+            return JSON.toJSONString(updateDeviceTypeMap);
+        }
+    }
+
+    @ApiOperation(value="查找所有设备类型信息", notes="根据传过来的设备信息来查询设备类型信息")
+    @GetMapping(value="alldevicetype",produces = "text/plain;charset=utf-8")
+    public String allDeviceType(){
+        Map<Object, Object> objectObjectMap = iDeviceTypeService.allDeviceType();
+        if(!objectObjectMap.isEmpty()){
+            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }else{
+            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }
+    }
+
+   /* *//*
+    通过前台表单的数据插入项目信息
+     *//*
     @PostMapping(value="insertlabinformation",produces = "text/plain;charset=utf-8")
     public String insertLabInformation(HttpServletRequest request){
         Map<Object,Object> insertLabInformationMap = new HashMap<>();
@@ -175,9 +238,9 @@ public class DeviceController {
             return JSON.toJSONString(insertLabInformationMap);
         }
     }
-    /*
+    *//*
     通过前台表单的数据更新项目信息
-     */
+     *//*
     @PostMapping(value="updatelabinformation",produces = "text/plain;charset=utf-8")
     public String updateLabInformation(HttpServletRequest request){
         Map<Object,Object> updateLabInformationMap = new HashMap<>();
@@ -200,9 +263,9 @@ public class DeviceController {
             return JSON.toJSONString(updateLabInformationMap);
         }
     }
-    /*
+    *//*
     前台通过请求获得经由时间排序处理后的设备信息
-     */
+     *//*
     @GetMapping(value = "/alllabinformation",produces = "text/plain;charset=utf-8")
     public String allLabInformation(){
         List<LabInformation> allLabInformation = iLabInformationService.findAllLabInformation();
@@ -216,9 +279,9 @@ public class DeviceController {
             return JSON.toJSONString(allLabInformationMap);
         }
     }
-    /*
+    *//*
     前台通过请求获得经由时间排序处理后并且分页后的设备信息
-     */
+     *//*
     @GetMapping(value = "/alllabinformation/{pagenum}/{pagesize}",produces = "text/plain;charset=utf-8")
     public String allLabInformationOnPaging(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
         Map<Object,Object> allLabInformationOnPaging = iLabInformationService.findAllLabInformation(pageNum,pageSize);
@@ -231,9 +294,9 @@ public class DeviceController {
         }
     }
 
-    /*
+    *//*
     通过前台表单的数据插入智能监控信息
-     */
+     *//*
     @PostMapping(value="insertmonitaring",produces = "text/plain;charset=utf-8")
     public String insertMonitaring(HttpServletRequest request){
         Map<Object,Object> insertMonitaringMap = new HashMap<>();
@@ -255,9 +318,9 @@ public class DeviceController {
             return JSON.toJSONString(insertMonitaringMap);
         }
     }
-    /*
+    *//*
     通过前台表单的数据更新智能监控信息
-     */
+     *//*
     @PostMapping(value="updatemonitaring",produces = "text/plain;charset=utf-8")
     public String updateMonitaring(HttpServletRequest request){
         Map<Object,Object> updateMonitaringMap = new HashMap<>();
@@ -280,9 +343,9 @@ public class DeviceController {
             return JSON.toJSONString(updateMonitaringMap);
         }
     }
-    /*
+    *//*
     前台通过请求获得经由时间排序处理后智能监控信息
-     */
+     *//*
     @GetMapping(value = "/allmonitaring",produces = "text/plain;charset=utf-8")
     public String allMonitaring(){
         List<Monitaring> allMonitaring = iMonitaringService.findAllMonitaring();
@@ -296,9 +359,9 @@ public class DeviceController {
             return JSON.toJSONString(allMonitaringMap);
         }
     }
-    /*
+    *//*
     前台通过请求获得经由时间排序处理后并且分页后的智能监控信息
-     */
+     *//*
     @GetMapping(value = "/allmonitaring/{pagenum}/{pagesize}",produces = "text/plain;charset=utf-8")
     public String allMonitaring(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
         Map<Object,Object> allMonitaringOnPaging = iMonitaringService.findAllMonitaring(pageNum,pageSize);
@@ -309,5 +372,5 @@ public class DeviceController {
             allMonitaringOnPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allMonitaringOnPaging);
         }
-    }
+    }*/
 }

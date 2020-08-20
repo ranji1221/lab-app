@@ -1,6 +1,5 @@
-package com.ranji.lab.entity;
+package com.ranji.lab.dto;
 
-import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
@@ -12,9 +11,8 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
-public class Device implements Serializable {
+public class DeviceDto implements Serializable {
     private int id;
     @NonNull
     private String deviceName;
@@ -33,7 +31,8 @@ public class Device implements Serializable {
     @NonNull
     private String type;
 
-    public Device(int id, String deviceName, String brand, String conid, int num, String roomnames, String facid, String factime, String proid, String supid) {
+
+    public DeviceDto(int id, String deviceName, String brand, String conid, int num, String roomnames, String facid, String factime, String proid, String supid) {
     }
 
     public void setFactime(String factime){
@@ -41,14 +40,5 @@ public class Device implements Serializable {
     }
     public Date getFactime(){
         return DateUtil.StringToDate(this.factime,"yyyy-MM-dd");
-    }
-
-    public Device(int id, DeviceDto deviceDto){
-        this.id = id;
-        this.num = deviceDto.getId();
-        this.facid = deviceDto.getFacid();
-        this.factime = DateUtil.DateToString(deviceDto.getFactime(),"yyyy-MM-dd");
-        this.proid = deviceDto.getProid();
-        this.supid = deviceDto.getSupid();
     }
 }

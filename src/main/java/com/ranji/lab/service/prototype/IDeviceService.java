@@ -1,5 +1,6 @@
 package com.ranji.lab.service.prototype;
 
+import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.News;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public interface IDeviceService {
 
-    int insertDevice(Device device);
+    int insertDevice(DeviceDto deviceDto);
 
     int updateDevice(Device device);
 

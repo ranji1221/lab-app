@@ -12,7 +12,7 @@ public interface INoticeService {
 
     int updateNotice(Notice notice);
 
-    List<Notice> findAllNotice();
+    Map<Object,Object> findAllNotice();
 
     Map<Object,Object> findAllNotice(int pageNum, int pageSize);
 

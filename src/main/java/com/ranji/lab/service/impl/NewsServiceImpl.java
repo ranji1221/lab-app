@@ -6,6 +6,7 @@ import com.ranji.lab.entity.News;
 import com.ranji.lab.mapper.NewsMapper;
 import com.ranji.lab.service.prototype.INewsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -28,8 +29,14 @@ public class NewsServiceImpl implements INewsService {
     }
 
     @Override
-    public List<News> findAllNews() {
-        return newsMapper.findAll();
+    @Transactional
+    public Map<Object,Object> findAllNews() {
+        List<News> allnews = newsMapper.findAll();
+        int total = newsMapper.count();
+        HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
+        objectObjectHashMap.put("total",total);
+        objectObjectHashMap.put("data",allnews);
+        return objectObjectHashMap;
     }
 
     @Override
