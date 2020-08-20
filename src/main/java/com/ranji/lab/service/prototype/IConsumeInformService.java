@@ -1,5 +1,6 @@
 package com.ranji.lab.service.prototype;
 
+import com.ranji.lab.dto.ConsumeInformDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.entity.ConsumeInform;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public interface IConsumeInformService {
 
-    int insertConsumeInform(ConsumeInform consumeInform);
+    int insertConsumeInform(ConsumeInformDto consumeInformDto);
 
     int updateConsumeInform(ConsumeInform consumeInform);
 

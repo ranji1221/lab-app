@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ConsumeInformDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.entity.ConsumeInform;
 import com.ranji.lab.mapper.ConsumeCustodyMapper;
@@ -20,8 +21,8 @@ public class ConsumeInformServiceImpl implements IConsumeInformService {
     private ConsumeInformMapper consumeInformMapper;
 
     @Override
-    public int insertConsumeInform(ConsumeInform consumeInform) {
-        return consumeInformMapper.insertConsumeInform(consumeInform);
+    public int insertConsumeInform(ConsumeInformDto consumeInformDto) {
+        return consumeInformMapper.insertConsumeInform(consumeInformDto);
     }
 
     @Override

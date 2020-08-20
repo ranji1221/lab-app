@@ -1,5 +1,6 @@
 package com.ranji.lab.entity;
 
+import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
@@ -33,7 +34,7 @@ public class News implements Serializable {
         return DateUtil.StringToDate(this.time,"yyyy-MM-dd");
     }
 
-    /*public News(int id, NewsDto newsDto){
+    public News(int id, NewsDto newsDto){
         this.id = id;
         this.title = newsDto.getTitle();
         this.informationSource = newsDto.getInformationSource();
@@ -47,6 +48,6 @@ public class News implements Serializable {
         this.author = newsDto.getAuthor();
         this.time = DateUtil.DateToString(newsDto.getTime(),"yyyy-MM-dd");
         this.content = newsDto.getContent();
-    }*/
+    }
 
 }

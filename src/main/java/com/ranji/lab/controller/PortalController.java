@@ -1,6 +1,7 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import io.swagger.annotations.*;
@@ -60,10 +61,10 @@ public class PortalController {
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value = "/insertnews",produces = "text/plain;charset=utf-8")
-    public String insertNews(News news){
-        System.out.println(news);
+    public String insertNews(NewsDto newsDto){
+        System.out.println(newsDto);
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iNewsService.insertNews(news);
+        int i = iNewsService.insertNews(newsDto);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);

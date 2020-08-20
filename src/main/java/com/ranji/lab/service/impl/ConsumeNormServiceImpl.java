@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ConsumeNormDto;
 import com.ranji.lab.entity.ConsumeNorm;
 import com.ranji.lab.mapper.ConsumeNormMapper;
 import com.ranji.lab.service.prototype.IConsumeNormService;
@@ -18,8 +19,8 @@ public class ConsumeNormServiceImpl implements IConsumeNormService {
     private ConsumeNormMapper consumeNormMapper;
 
     @Override
-    public int insertConsumeNorm(ConsumeNorm consumeNorm) {
-        return consumeNormMapper.insertConsumeNorm(consumeNorm);
+    public int insertConsumeNorm(ConsumeNormDto consumeNormDto) {
+        return consumeNormMapper.insertConsumeNorm(consumeNormDto);
     }
 
     @Override

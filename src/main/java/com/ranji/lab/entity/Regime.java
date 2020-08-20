@@ -1,5 +1,7 @@
 package com.ranji.lab.entity;
 
+import com.ranji.lab.dto.NoticeDto;
+import com.ranji.lab.dto.RegimeDto;
 import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
@@ -32,4 +34,21 @@ public class Regime implements Serializable {
     public Date getTime(){
         return DateUtil.StringToDate(this.time,"yyyy-MM-dd");
     }
+
+    public Regime(int id, RegimeDto regimeDto){
+        this.id = id;
+        this.title = regimeDto.getTitle();
+        this.informationSource = regimeDto.getInformationSource();
+        this.author = regimeDto.getAuthor();
+        this.time = DateUtil.DateToString(regimeDto.getTime(),"yyyy-MM-dd");
+        this.content = regimeDto.getContent();
+    }
+    public Regime(RegimeDto regimeDto){
+        this.title = regimeDto.getTitle();
+        this.informationSource = regimeDto.getInformationSource();
+        this.author = regimeDto.getAuthor();
+        this.time = DateUtil.DateToString(regimeDto.getTime(),"yyyy-MM-dd");
+        this.content = regimeDto.getContent();
+    }
+
 }

@@ -1,10 +1,7 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.ranji.lab.dto.ConsumeCustodyDto;
-import com.ranji.lab.dto.ConsumePurchaseDto;
-import com.ranji.lab.dto.ConsumeTypeDto;
-import com.ranji.lab.dto.DeviceTypeDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import com.ranji.lab.util.DateUtil;
@@ -42,23 +39,24 @@ public class ConsumeController {
     private IConsumeTypeService iConsumeTypeService;
 
     /**
-     * 插入设备信息
+     * 插入耗材信息
      * @return
      */
-    /*@ApiOperation(value="插入耗材信息", notes="根据传过来的设备信息来插入耗材信息")
+    @ApiOperation(value="插入耗材信息", notes="根据传过来的设备信息来插入耗材信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "num", value = "设备数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "耗材数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String")
-    })*/
+            @ApiImplicitParam(name = "proid", value = "生产厂家编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "type", value = "耗材类型", required = true, dataType = "String")
+    })
     @PostMapping(value="/insertconsumeinform",produces = "text/plain;charset=utf-8")
-    public String insertConsumeInform(ConsumeInform consumeInform){
+    public String insertConsumeInform(ConsumeInformDto consumeInformDto){
         Map<Object,Object> insertConsumeInformMap = new HashMap<>();
-        int i = iConsumeInformService.insertConsumeInform(consumeInform);
+        int i = iConsumeInformService.insertConsumeInform(consumeInformDto);
         if(i<1){
             insertConsumeInformMap.put("status","failure");
             return JSON.toJSONString(insertConsumeInformMap);
@@ -67,17 +65,18 @@ public class ConsumeController {
             return JSON.toJSONString(insertConsumeInformMap);
         }
     }
-    /*@ApiOperation(value="更新耗材信息", notes="根据传过来的设备信息来更新耗材信息")
+    @ApiOperation(value="更新耗材信息", notes="根据传过来的设备信息来更新耗材信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "num", value = "设备数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "耗材数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "proid", value = "生产厂家编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "更新设备id", required = true, dataType = "String")
-    })*/
+            @ApiImplicitParam(name = "type", value = "耗材类型", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "耗材id", required = true, dataType = "String")
+    })
     @PostMapping(value="/updateconsumeinform",produces = "text/plain;charset=utf-8")
     public String updateConsumeInform(ConsumeInform consumeInform){
         Map<Object,Object> updateConsumeInformMap = new HashMap<>();
@@ -109,11 +108,11 @@ public class ConsumeController {
             return JSON.toJSONString(consumeInformMap);
         }
     }
-    /*@ApiOperation(value="获取分页后的耗材信息", notes="根据传过来的分页信息来查询耗材信息")
+    @ApiOperation(value="获取分页后的耗材信息", notes="根据传过来的分页信息来查询耗材信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
-    })*/
+    })
     @GetMapping(value = "/allconsumeinform/pagenum/pagesize",produces = "text/plain;charset=utf-8")
     public String findAllConsumeInform(@PathVariable("pagenum") int pageNum , @PathVariable("pagesize") int pageSize){
         Map<Object,Object> allConsumeInform = iConsumeInformService.findAllConsumeInform(pageNum,pageSize);
@@ -142,6 +141,13 @@ public class ConsumeController {
         }
     }
 
+    @ApiOperation(value="插入耗材信息", notes="根据传过来的设备信息来插入耗材信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "consumeId", value = "购置耗材id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "购置数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "购置日期", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "applicant", value = "购置申请人", required = true, dataType = "String"),
+    })
     @PostMapping(value = "/insertconsumepurchase",produces = "text/plain;chartset=utf-8")
     public String insertConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> insertConsumePurchaseMap = new HashMap<>();
@@ -154,13 +160,11 @@ public class ConsumeController {
             return JSON.toJSONString(insertConsumePurchaseMap);
         }
     }
-
+    @ApiOperation(value="更新耗材信息", notes="根据传过来的设备信息来更新耗材信息")
     @PostMapping(value = "/updateconsumepurchase",produces = "text/plain;chartset=utf-8")
     public String updateConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> updateConsumePurchaseMap = new HashMap<>();
-
         int i = iConsumePurchaseService.updateConsumePurchase(consumePurchase);
-
         if(i<1){
             updateConsumePurchaseMap.put("status","failure");
             return JSON.toJSONString(updateConsumePurchaseMap);
@@ -169,7 +173,7 @@ public class ConsumeController {
             return JSON.toJSONString(updateConsumePurchaseMap);
         }
     }
-
+    @ApiOperation(value="获取所有申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
     @GetMapping(value = "/allconsumepurchase",produces = "text/plain;charset=utf-8")
     public String findAllConsumePurchase(){
         List<ConsumePurchase> allConsumePurchase = iConsumePurchaseService.findAllConsumePurchase();
@@ -183,12 +187,14 @@ public class ConsumeController {
             return JSON.toJSONString(consumePurchaseMap);
         }
     }
-
+    @ApiOperation(value="获取所有申请购置信息(包含name)", notes="根据传过来的设备信息来获得申请购置信息(包含id)")
     @GetMapping(value = "/allconsumepurchases",produces = "text/plain;charset=utf-8")
     public String findAllConsumePurchases(int page,int limit){
         Map<Object,Object> map = new HashMap<>();
         List<ConsumePurchase> allConsumePurchases = iConsumePurchaseService.findAllConsumePurchases(page, limit);
-
+        /**
+         * 通过id查询名字并传至前台
+         */
         List<ConsumePurchaseDto> allConsumePurchasess = new ArrayList<>();
         if(!allConsumePurchases.isEmpty()){
 
@@ -217,7 +223,12 @@ public class ConsumeController {
             return JSON.toJSONString(map);
         }
     }
+    @ApiOperation(value="分页获取申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
 
+    })
     @GetMapping(value = "/allconsumepurchase/pagenum/pagesize",produces = "text/plain;charset=utf-8")
     public String findAllConsumePurchase(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
         Map<Object,Object> consumePurchaseMap = iConsumePurchaseService.findAllConsumePurchase(pageNum,pageSize);
@@ -230,10 +241,17 @@ public class ConsumeController {
         }
     }
 
+    @ApiOperation(value="插入管理标准", notes="根据传过来的设备信息来插入管理标准")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
+    })*/
     @PostMapping(value = "/insertconsumenorm",produces = "text/plain;chartset=utf-8")
-    public String insertConsumeNorm(ConsumeNorm consumeNorm){
+    public String insertConsumeNorm(ConsumeNormDto consumeNormDto){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
-        int i = iConsumeNormService.insertConsumeNorm(consumeNorm);
+        int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
         if(i<1){
             insertConsumeNormMap.put("status","failure");
             return JSON.toJSONString(insertConsumeNormMap);
@@ -242,7 +260,13 @@ public class ConsumeController {
             return JSON.toJSONString(insertConsumeNormMap);
         }
     }
-
+    @ApiOperation(value="更新管理标准", notes="根据传过来的设备信息来更新管理标准")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
+    })*/
     @PostMapping(value = "/updateconsumenorm",produces = "text/plain;chartset=utf-8")
     public String updateConsumeNorm(ConsumeNorm consumeNorm){
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
@@ -256,7 +280,7 @@ public class ConsumeController {
         }
     }
 
-
+    /*@ApiOperation(value="所有的管理标准", notes="根据传过来的设备信息来获取管理标准")
     @GetMapping(value = "/allconsumenorm",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNorm(){
         List<ConsumeNorm> allConsumeNorm = iConsumeNormService.findAll();
@@ -269,8 +293,12 @@ public class ConsumeController {
             allConsumeNormPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allConsumeNormPaging);
         }
-    }
-
+    }*/
+    @ApiOperation(value="分页查找管理标准", notes="根据传过来的设备信息来获取管理标准")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
+    })
     @GetMapping(value = "/allconsumenorm/pagenum/pagesize",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNorm(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
         Map<Object,Object> allConsumeNormMap = iConsumeNormService.findAll(pageNum,pageSize);
@@ -282,14 +310,20 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeNormMap);
         }
     }
-
+    @ApiOperation(value="所有的管理标准及内容", notes="根据传过来的设备信息来获取管理标准及内容")
     @GetMapping(value="/allconsumenormcontent",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNormContent(){
         Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.consumeContent();
         return JSON.toJSONString(consumeNormContentMap);
     }
 
-
+    @ApiOperation(value="插入保管领用", notes="根据传过来的设备信息来插入保管领用")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
+    })*/
     @PostMapping(value = "insertConsumeCustody",produces = "text/plain;chartset=utf-8")
     public String insertConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
@@ -303,7 +337,13 @@ public class ConsumeController {
         }
 
     }
-
+    @ApiOperation(value="更新保管领用", notes="根据传过来的设备信息来更新保管领用")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
+    })*/
     @PostMapping(value = "updateConsumeCustody",produces = "text/plain;chartset=utf-8")
     public String updateConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> updateConsumeCustodyMap = new HashMap<>();
@@ -330,12 +370,14 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeCustodyPaging);
         }
     }
-
+    @ApiOperation(value="获得保管领用包括ID", notes="根据传过来的设备信息来获得")
     @GetMapping(value = "/allconsumecustodys",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustodys(int page,int limit){
         Map<Object,Object> map = new HashMap<>();
         List<ConsumeCustody> allConsumeCustodys = iConsumeCustodyService.findAllConsumeCustodys(page, limit);
-
+            /**
+             * 通过id查询名字，并将名字传递至前台
+             */
         List<ConsumeCustodyDto> allConsumeCustodyss = new ArrayList<>();
         if(!allConsumeCustodys.isEmpty()){
 
@@ -365,7 +407,7 @@ public class ConsumeController {
         }
     }
 
-
+    @ApiOperation(value="获得保管领用", notes="根据传过来的设备信息来获得保管领用")
     @GetMapping(value = "/allconsumecustody/pagenum/pagesize",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustody(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
         Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.findAll(pageNum,pageSize);

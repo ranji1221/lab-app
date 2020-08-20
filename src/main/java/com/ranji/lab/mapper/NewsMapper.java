@@ -1,5 +1,6 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.entity.News;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface NewsMapper {
     @Insert("insert into news (title,information_source,author,time,content) values (#{title},#{informationSource},#{author},#{time},#{content})")
-    int insertNews(News news);
+    int insertNews(NewsDto newsDto);
     @Update("update news set title = #{title}, author = #{author} ,information_source = #{informationSource}, time = #{time},content = #{content} where id = #{id}")
     int updateNews(News news);
     @Select("select news.* from news order by time desc")

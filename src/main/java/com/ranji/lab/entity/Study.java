@@ -1,5 +1,7 @@
 package com.ranji.lab.entity;
 
+import com.ranji.lab.dto.RegimeDto;
+import com.ranji.lab.dto.StudyDto;
 import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
@@ -31,5 +33,22 @@ public class Study implements Serializable {
     }
     public Date getTime(){
         return DateUtil.StringToDate(this.time,"yyyy-MM-dd");
+    }
+
+
+    public Study(int id, StudyDto studyDto){
+        this.id = id;
+        this.title = studyDto.getTitle();
+        this.informationSource = studyDto.getInformationSource();
+        this.author = studyDto.getAuthor();
+        this.time = DateUtil.DateToString(studyDto.getTime(),"yyyy-MM-dd");
+        this.content = studyDto.getContent();
+    }
+    public Study(StudyDto studyDto){
+        this.title = studyDto.getTitle();
+        this.informationSource = studyDto.getInformationSource();
+        this.author = studyDto.getAuthor();
+        this.time = DateUtil.DateToString(studyDto.getTime(),"yyyy-MM-dd");
+        this.content = studyDto.getContent();
     }
 }
