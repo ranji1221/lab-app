@@ -2,7 +2,6 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumePurchase;
 import com.ranji.lab.mapper.ConsumePurchaseMapper;
 import com.ranji.lab.service.prototype.IConsumePurchaseService;
@@ -45,13 +44,6 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
     }
 
     @Override
-    public List<ConsumePurchase> findAllConsumePurchases(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<ConsumePurchase> all = consumePurchaseMapper.findAll();
-        return all;
-    }
-
-    @Override
     public List<ConsumePurchase> findAllConsumePurchase() {
         return consumePurchaseMapper.findAll();
     }
@@ -59,15 +51,5 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
     @Override
     public ConsumePurchase findById(int id) {
         return consumePurchaseMapper.findById(id);
-    }
-
-    @Override
-    public ConsumePurchaseDto findNameById(int id) {
-        return consumePurchaseMapper.findNameById(id);
-    }
-
-    @Override
-    public int getCount() {
-        return consumePurchaseMapper.getCount();
     }
 }

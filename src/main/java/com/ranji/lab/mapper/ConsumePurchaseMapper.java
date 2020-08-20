@@ -1,6 +1,5 @@
 package com.ranji.lab.mapper;
 
-import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumePurchase;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -17,9 +16,4 @@ public interface ConsumePurchaseMapper {
     List<ConsumePurchase> findAll();
     @Select("select consume_purchase.* from consume_purchase where id = #{id}")
     ConsumePurchase findById(int id);
-    @Select("select cp.*,ci.name as consume_name from consume_purchase cp join consume_inform ci on ci.id = cp.consume_id where cp.id = #{id}")
-    ConsumePurchaseDto findNameById(int id);
-
-    @Select("select count(*) from consume_purchase")
-    int getCount();
 }

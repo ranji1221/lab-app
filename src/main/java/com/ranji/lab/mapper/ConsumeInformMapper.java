@@ -12,7 +12,7 @@ public interface ConsumeInformMapper {
     int insertConsumeInform(ConsumeInform consumeInform);
     @Update("update consume_inform set (name=#{name},brand=#{brand},num=#{num},facid=#{facid},factime=#{factime},proid=#{proid},supid=#{supid}) where id =#{id}")
     int updateConsumeInform(ConsumeInform consumeInform);
-    @Select("select consume_inform.* from consume_inform")
+    @Select("select consume_inform.* from consume_inform ")
     List<ConsumeInform> findAll();
     @Select("select consume_inform.* from consume_inform where consume_inform.id = #{id}")
     ConsumeInform findById(int id);

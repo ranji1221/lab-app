@@ -17,5 +17,5 @@ public interface LabInformationMapper {
     @Select("select lab_information.* from lab_information order by ldate desc")
     List<LabInformation> findAll();
     @Select("select lab_information.* from lab_information where lab_information.id = #{id}")
-    LabInformation findById(int id);
+    Device findById(int id);
 }

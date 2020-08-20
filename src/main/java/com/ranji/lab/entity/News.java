@@ -32,21 +32,4 @@ public class News implements Serializable {
     public Date getTime(){
         return DateUtil.StringToDate(this.time,"yyyy-MM-dd");
     }
-
-    /*public News(int id, NewsDto newsDto){
-        this.id = id;
-        this.title = newsDto.getTitle();
-        this.informationSource = newsDto.getInformationSource();
-        this.author = newsDto.getAuthor();
-        this.time = DateUtil.DateToString(newsDto.getTime(),"yyyy-MM-dd");
-        this.content = newsDto.getContent();
-    }
-    public News(NewsDto newsDto){
-        this.title = newsDto.getTitle();
-        this.informationSource = newsDto.getInformationSource();
-        this.author = newsDto.getAuthor();
-        this.time = DateUtil.DateToString(newsDto.getTime(),"yyyy-MM-dd");
-        this.content = newsDto.getContent();
-    }*/
-
 }

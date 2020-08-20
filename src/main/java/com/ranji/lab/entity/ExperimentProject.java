@@ -22,7 +22,5 @@ public class ExperimentProject implements Serializable {
     @NonNull
     private String experimentProcess;
     @NonNull
-    private String experimentInstrument;
-    @NonNull
-    private String experimentReagent;
+    private int status;
 }
