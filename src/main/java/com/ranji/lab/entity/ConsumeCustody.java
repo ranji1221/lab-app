@@ -32,4 +32,18 @@ public class ConsumeCustody implements Serializable {
     public Date getDate(){
         return DateUtil.StringToDate(this.date,"yyyy-MM-dd");
     }
+
+    /*public ConsumeCustody(int id, ConsumeCustodyDto consumeCustodyDto){
+        this.id = id;
+        this.consumeId = consumeCustodyDto.getConsumeId();
+        this.recipient = consumeCustodyDto.getRecipient();
+        this.date = DateUtil.DateToString(consumeCustodyDto.getDate(),"yyyy-MM-dd");
+        this.count = consumeCustodyDto.getCount();
+    }
+    public ConsumeCustody(ConsumeCustodyDto consumeCustodyDto){
+        this.consumeId = consumeCustodyDto.getConsumeId();
+        this.recipient = consumeCustodyDto.getRecipient();
+        this.date = DateUtil.DateToString(consumeCustodyDto.getDate(),"yyyy-MM-dd");
+        this.count = consumeCustodyDto.getCount();
+    }*/
 }

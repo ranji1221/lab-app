@@ -16,4 +16,6 @@ public interface IRegimeService {
     Map<Object,Object> findAllRegime(int pageNum, int pageSize);
 
     Regime findById(int id);
+
+    Map<Object,Object> findRegimeNextToNext(int regimeId);
 }

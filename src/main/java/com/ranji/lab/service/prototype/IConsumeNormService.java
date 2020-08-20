@@ -11,7 +11,7 @@ public interface IConsumeNormService {
 
     int updateConsumeNorm(ConsumeNorm consumeNorm);
 
-    Map<Object, Object> findAll(int pageNum,int pageSize);
+    Map<Object, Object> findAll(int pageNum, int pageSize);
 
     List<ConsumeNorm> findAll();
 

@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ConsumeCustodyDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.mapper.ConsumeCustodyMapper;
 import com.ranji.lab.service.prototype.IConsumeCustodyService;
@@ -42,6 +43,13 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     }
 
     @Override
+    public List<ConsumeCustody> findAllConsumeCustodys(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ConsumeCustody> all = consumeCustodyMapper.findAll();
+        return all;
+    }
+
+    @Override
     public List<ConsumeCustody> findAll() {
         return consumeCustodyMapper.findAll();
     }
@@ -49,5 +57,15 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     @Override
     public ConsumeCustody findById(int id) {
         return consumeCustodyMapper.findById(id);
+    }
+
+    @Override
+    public ConsumeCustodyDto findNameById(int id) {
+        return consumeCustodyMapper.findNameById(id);
+    }
+
+    @Override
+    public int getCount() {
+        return consumeCustodyMapper.getCount();
     }
 }

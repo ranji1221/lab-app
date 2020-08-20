@@ -34,6 +34,26 @@ public class ConsumeInform implements Serializable {
         this.factime=factime;
     }
     public Date getFactime(){
-        return DateUtil.StringToDate(this.factime,"yyyy-MM_dd");
+        return DateUtil.StringToDate(this.factime,"yyyy-MM-dd");
     }
+
+    /*public ConsumeInform(int id, ConsumeInformDto consumeInformDto){
+        this.id = id;
+        this.name = consumeInformDto.getName();
+        this.brand = consumeInformDto.getBrand();
+        this.num = consumeInformDto.getNum();
+        this.facid = consumeInformDto.getFacid();
+        this.factime = DateUtil.DateToString(consumeInformDto.getFactime(),"yyyy-MM-dd");
+        this.proid = consumeInformDto.getProid();
+        this.supid = consumeInformDto.getSupid();
+    }
+    public ConsumeInform(ConsumeInformDto consumeInformDto){
+        this.name = consumeInformDto.getName();
+        this.brand = consumeInformDto.getBrand();
+        this.num = consumeInformDto.getNum();
+        this.facid = consumeInformDto.getFacid();
+        this.factime = DateUtil.DateToString(consumeInformDto.getFactime(),"yyyy-MM-dd");
+        this.proid = consumeInformDto.getProid();
+        this.supid = consumeInformDto.getSupid();
+    }*/
 }

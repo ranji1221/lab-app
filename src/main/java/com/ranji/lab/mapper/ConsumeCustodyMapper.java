@@ -1,5 +1,7 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.ConsumeCustodyDto;
+import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -16,4 +18,10 @@ public interface ConsumeCustodyMapper {
     List<ConsumeCustody> findAll();
     @Select("select consume_custody.* from consume_custody where consume_custody.id = #{id}")
     ConsumeCustody findById(int id);
+
+    @Select("select cc.*,ci.name as consume_name from consume_custody cc join consume_inform ci on ci.id = cc.consume_id where cc.id = #{id}")
+    ConsumeCustodyDto findNameById(int id);
+
+    @Select("select count(*) from consume_custody")
+    int getCount();
 }

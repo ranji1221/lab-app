@@ -14,7 +14,7 @@ public interface IConsumeInformService {
 
     List<ConsumeInform> findAllConsumeInform();
 
-    Map<Object,Object> findAllConsumeInform(int pageNum , int pageSize);
+    Map<Object,Object> findAllConsumeInform(int pageNum, int pageSize);
 
     ConsumeInform findConsumeInformById(int id);
 }
