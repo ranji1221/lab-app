@@ -18,7 +18,7 @@ public class ConsumeNormContentServiceImpl implements IConsumeNormContentService
     @Resource
     ConsumeNormContentMapper consumeNormContentMapper;
     @Override
-    public Map<Object, Object> consumeContent() {
+    public Map<Object, Object> allConsumeContent() {
         Map<Object,Object> data = new HashMap<>();
         List<List<Object>> allData = new ArrayList<>();
 
@@ -42,4 +42,11 @@ public class ConsumeNormContentServiceImpl implements IConsumeNormContentService
         data.put("data",allData);
         return data;
     }
+
+    @Override
+    public int maxConsumeContentId() {
+        return consumeNormContentMapper.findMaxContentId();
+    }
+
+
 }

@@ -313,7 +313,7 @@ public class ConsumeController {
     @ApiOperation(value="所有的管理标准及内容", notes="根据传过来的设备信息来获取管理标准及内容")
     @GetMapping(value="/allconsumenormcontent",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNormContent(){
-        Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.consumeContent();
+        Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.allConsumeContent();
         return JSON.toJSONString(consumeNormContentMap);
     }
 
