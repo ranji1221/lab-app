@@ -11,9 +11,9 @@ public interface IArrangeService {
     int insertArrange(Arrange arrange);
 
     //查询全部
-    List<ArrangeDto> findAllArrange();
+    List<ArrangeDto> findAllArrange(Integer status);
     //分页查询全部
-    Map<Object,Object> pageFindAllArrange(int pageNum,int pageSize);
+    Map<Object,Object> pageFindAllArrange(int pageNum,int pageSize,Integer status);
     //按照id查询项目
     ArrangeDto idFindArrange(int id);
     //修改该项目信息

@@ -13,20 +13,21 @@ import java.util.List;
  * 实验项目mapper
  */
 public interface ExperimentProjectMapper {
+    //新增
     @Insert("insert into experiment_project (experiment_name,experiment_target,experiment_content,experiment_process,status) values (#{experimentName},#{experimentTarget},#{experimentContent},#{experimentProcess},0)")
     int insertExperimentProject(ExperimentProject experimentProject);
     @Select("select Max(id) from experiment_project")
     int latestExperimentProjectData();
 
     //查询全部
-    @Select("select * from experiment_project")
-    List<ExperimentProjectDto> findAllExperimentProject();
-    //过滤掉删除的
-    @Select("select * from experiment_project where status != 2")
-    List<ExperimentProjectDto> noDelExperimentProject();
-    //分类查询
-    @Select("select * from experiment_project where status = #{status}")
-    List<ExperimentProjectDto> typeExperimentProject(int status);
+    @Select("<script>" +
+            "select * from experiment_project  where status != 2 " +
+            "<if test = 'status != null '> " +
+            "and status = #{status}" +
+            "</if>" +
+            "</script>")
+    List<ExperimentProjectDto> findAllExperimentProject(Integer status);
+
     //按照id查询项目
     @Select("select * from experiment_project where id = #{id}")
     ExperimentProjectDto idFindExperimentProject(int id);

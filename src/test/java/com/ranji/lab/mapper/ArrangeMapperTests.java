@@ -1,6 +1,7 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ArrangeDto;
+import com.ranji.lab.entity.Arrange;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,10 +15,20 @@ public class ArrangeMapperTests {
 
     @Test
     public void testLatestImage(){
-        List<ArrangeDto> arrangeDtos = arrangeMapper.yesOrNoArrange(1, "2020-8-20", "11:00:00", "15:00:00");
+        Arrange arrange = new Arrange();
+        arrange.setLaboratoryId(1);
+        arrange.setDate("2020-8-20");
+        arrange.setTimeStart("14:00");
+        arrange.setTimeStop("16:00");
+        List<ArrangeDto> arrangeDtos = arrangeMapper.yesOrNoArrange(arrange);
         for (ArrangeDto arrangeDto : arrangeDtos) {
             System.out.println(arrangeDto);
         }
+
+    }
+    @Test
+    public void findAllArrange(){
+        List<ArrangeDto> arrangeDtos = arrangeMapper.findAllArrange(1);
 
     }
 }

@@ -43,7 +43,7 @@ public class ExperimentProjectTests {
     }
     @Test
     public void testFindAll(){
-        List<ExperimentProjectDto> allExperimentProject = experimentProjectService.findAllExperimentProject();
+        List<ExperimentProjectDto> allExperimentProject = experimentProjectService.findAllExperimentProject(1);
         for (ExperimentProjectDto experimentProjectDto : allExperimentProject) {
             System.out.print("id:"+experimentProjectDto.getId()+"\t");
             System.out.print("id:"+experimentProjectDto.getExperimentContent()+"\t");

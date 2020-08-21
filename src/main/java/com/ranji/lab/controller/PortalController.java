@@ -190,9 +190,9 @@ public class PortalController {
      */
     @ApiOperation(value="查询由时间排序的连续两条的新闻", notes="前端通过访问接口获得所需新闻")
     @ApiImplicitParam(name = "newsOffsetId", value = "第几篇", required = true, dataType = "String")
-    @GetMapping(value = "/findnewsnexttonext/{newsOffsetId}",produces = "text/plain;charset=utf-8")
-    public String findNewsNextToNext(@PathVariable("newsOffsetId") int newsOffsetId){
-        Map<Object, Object> newsNextToNext = iNewsService.findNewsNextToNext(newsOffsetId-1);
+    @GetMapping(value = "/findnewsnexttonext",produces = "text/plain;charset=utf-8")
+    public String findNewsNextToNext(int newsOffsetId){
+        Map<Object, Object> newsNextToNext = iNewsService.findNewsNextToNext(newsOffsetId);
         if(!newsNextToNext.isEmpty()){
             newsNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(newsNextToNext);

@@ -61,8 +61,8 @@ public class ArrangeController {
      */
     @ApiOperation(value="查询所有预约", notes="前端通过访问接口获得所有预约信息")
     @GetMapping(value = "/findAllArrange",produces = "text/plain;charset=utf-8")
-    public String findAllArrange(){
-        List<ArrangeDto> allArrange = iArrangeService.findAllArrange();
+    public String findAllArrange(Integer status){
+        List<ArrangeDto> allArrange = iArrangeService.findAllArrange(status);
         Map<Object,Object> newsMap = new HashMap<>();
         if(!allArrange.isEmpty()) {
             newsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
@@ -86,8 +86,8 @@ public class ArrangeController {
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
     })
     @GetMapping(value = "/pageFindAllArrange",produces = "text/plain;charset=utf-8")
-    public Object pageFindAllArrange(int page,int limit){
-        Map<Object, Object> pageExperimentProject = iArrangeService.pageFindAllArrange(page,limit);
+    public Object pageFindAllArrange(int page,int limit,Integer status){
+        Map<Object, Object> pageExperimentProject = iArrangeService.pageFindAllArrange(page,limit,status);
         if(!pageExperimentProject.isEmpty()) {
             pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(pageExperimentProject);
@@ -132,5 +132,44 @@ public class ArrangeController {
             insertNewsMap.put("status","success");
             return JSON.toJSONString(insertNewsMap);
         }
+    }
+
+    //验证是否可以预约
+    @ApiOperation(value="验证是否可以预约", notes="根据传过来的信息验证是否可以预约")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "预约实验日期", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "timeStart", value = "开始时间", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "timeStop", value = "结束时间", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @PostMapping(value = "yesOrNoArrange")
+    @ResponseBody
+    public String yesOrNoArrange(Arrange arrange){
+        List<ArrangeDto> arrangeDtos = iArrangeService.yesOrNoArrange(arrange);
+        if(arrangeDtos.size()>0){
+            return "no";
+        }
+        return "ok";
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value="按照id查询的预约信息", notes="前端通过访问接口获得预约信息")
+    @GetMapping(value = "/idFindArrange",produces = "text/plain;charset=utf-8")
+    public String abc(int id){
+        ArrangeDto arrangeDto = iArrangeService.idFindArrange(id);
+        Map<Object,Object> newsMap = new HashMap<>();
+        if(arrangeDto!=null){
+            newsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            newsMap.put("data", arrangeDto);
+        }
+        return JSON.toJSONString(newsMap);
     }
 }

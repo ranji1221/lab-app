@@ -32,15 +32,15 @@ public class ArrangeServiceImpl implements IArrangeService {
     }
 
     @Override
-    public List<ArrangeDto> findAllArrange() {
-        return arrangeMapper.findAllArrange();
+    public List<ArrangeDto> findAllArrange(Integer status) {
+        return arrangeMapper.findAllArrange(status);
     }
 
     //分页查询所有的预约实验项目
     @Override
-    public Map<Object, Object> pageFindAllArrange(int pageNum, int pageSize) {
+    public Map<Object, Object> pageFindAllArrange(int pageNum, int pageSize,Integer status) {
         PageHelper.startPage(pageNum,pageSize);
-        List<ArrangeDto> allArrange = arrangeMapper.findAllArrange();
+        List<ArrangeDto> allArrange = arrangeMapper.findAllArrange(status);
         for (ArrangeDto arrangeDto : allArrange) {
             StringBuffer consumes = new StringBuffer();
             StringBuffer devices = new StringBuffer();
@@ -63,6 +63,11 @@ public class ArrangeServiceImpl implements IArrangeService {
         return map;
     }
 
+    /**
+     * 按照id查询
+     * @param id
+     * @return
+     */
     @Override
     public ArrangeDto idFindArrange(int id) {
         return arrangeMapper.idFindArrange(id);
@@ -75,6 +80,7 @@ public class ArrangeServiceImpl implements IArrangeService {
 
     @Override
     public List<ArrangeDto> yesOrNoArrange(Arrange arrange) {
-        return null;
+        List<ArrangeDto> arrangeDtos = arrangeMapper.yesOrNoArrange(arrange);
+        return arrangeDtos;
     }
 }

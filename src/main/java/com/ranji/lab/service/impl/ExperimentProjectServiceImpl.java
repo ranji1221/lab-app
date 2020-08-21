@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ExperimentProjectImpl implements IExperimentProjectService {
+public class ExperimentProjectServiceImpl implements IExperimentProjectService {
 
     @Resource
     ExperimentProjectMapper experimentProjectMapper;
@@ -41,18 +41,18 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
     /**
      *
      * @param experimentProject
-     * @param p1 耗材信息
-     * @param p2 设备信息
+     * @param projectConsumeLists 耗材信息
+     * @param projectDeviceLists 设备信息
      * @return
      */
     @Override
     @Transactional
-    public int insertExperimentProject(ExperimentProject experimentProject, String p1, String p2) {
+    public int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists, String projectDeviceLists) {
         experimentProjectMapper.insertExperimentProject(experimentProject);
         int i = experimentProjectMapper.latestExperimentProjectData();
         if(i>0){
-            List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(p1, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
-            List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(p2, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
+            List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(projectConsumeLists, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
+            List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(projectDeviceLists, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
                 projectDeviceDto.setProjectId(i);
                 projectDeviceMapper.insertProjectDevice(projectDeviceDto);
@@ -66,8 +66,8 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
     }
     //查询全部
     @Override
-    public List<ExperimentProjectDto> findAllExperimentProject() {
-        List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findAllExperimentProject();
+    public List<ExperimentProjectDto> findAllExperimentProject(Integer status) {
+        List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findAllExperimentProject(status);
         for (ExperimentProjectDto experimentProjectDto : allExperimentProject) {
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(experimentProjectDto.getId());
             experimentProjectDto.setProjectConsumeList(projectConsumeDtos);
@@ -78,9 +78,9 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
     }
     //分页查询
     @Override
-    public Map<Object,Object> pageExperimentProject(int pageNum, int pageSize) {
+    public Map<Object,Object> pageExperimentProject(int pageNum, int pageSize,Integer status) {
         PageHelper.startPage(pageNum,pageSize);
-        List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findAllExperimentProject();
+        List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findAllExperimentProject(status);
         for (ExperimentProjectDto experimentProjectDto : allExperimentProject) {
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(experimentProjectDto.getId());
             StringBuffer projectConsumeLists = new StringBuffer();
@@ -92,8 +92,12 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
                 projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+"、");
             }
-            experimentProjectDto.setProjectConsumeLists(projectConsumeLists.toString());
-            experimentProjectDto.setProjectDeviceLists(projectDeviceLists.toString());
+            if(projectConsumeLists.toString().length()>0){
+                experimentProjectDto.setProjectConsumeLists(projectConsumeLists.toString().substring(0,projectConsumeLists.toString().length()-1));
+            }
+            if(projectDeviceLists.toString().length()>0){
+                experimentProjectDto.setProjectDeviceLists(projectDeviceLists.toString().substring(0,projectDeviceLists.toString().length()-1));
+            }
         }
         PageInfo<ExperimentProjectDto> objectPageInfo = new PageInfo<>(allExperimentProject);
         long total = objectPageInfo.getTotal();
@@ -110,23 +114,6 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
         experimentProjectDto.setProjectDeviceList(projectDeviceMapper.projectIdFindAllProjectDevice(id));
         experimentProjectDto.setProjectConsumeList(projectConsumeMapper.projectIdFindAllProjectConsume(id));
         return experimentProjectDto;
-    }
-    //过滤已删除数据
-    @Override
-    public List<ExperimentProjectDto> noDelExperimentProject() {
-        return experimentProjectMapper.noDelExperimentProject();
-    }
-    //按照分类分页查询
-    @Override
-    public Map<Object, Object> typeExperimentProject(int pageNum, int pageSize, int status) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<ExperimentProjectDto> allExperimentProject =  experimentProjectMapper.typeExperimentProject(status);
-        PageInfo<ExperimentProjectDto> objectPageInfo = new PageInfo<>(allExperimentProject);
-        long total = objectPageInfo.getTotal();
-        Map<Object,Object> map = new HashMap<>();
-        map.put("total",total);
-        map.put("data",allExperimentProject);
-        return map;
     }
 
     /**

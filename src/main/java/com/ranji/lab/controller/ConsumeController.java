@@ -486,7 +486,4 @@ public class ConsumeController {
             return JSON.toJSONString(AllConsumeByTypeIdMap);
         }
     }
-
-
-
 }
