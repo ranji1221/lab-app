@@ -17,4 +17,6 @@ public interface DeviceMapper {
     List<Device> findAll();
     @Select("select device.* from device where device.id = #{id}")
     Device findById(int id);
+    @Select("select device.* from device where type = #{type}")
+    List<DeviceDto> findAllDeviceByTypeId(int type);
 }

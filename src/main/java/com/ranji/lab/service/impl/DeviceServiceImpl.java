@@ -1,5 +1,6 @@
 package com.ranji.lab.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.DeviceDto;
@@ -50,5 +51,13 @@ public class DeviceServiceImpl implements IDeviceService {
     @Override
     public Device findById(int id) {
         return deviceMapper.findById(id);
+    }
+
+    @Override
+    public Map<Object,Object> findAllDeviceByTypeId(int type) {
+        List<DeviceDto> allDeviceByTypeId = deviceMapper.findAllDeviceByTypeId(type);
+        Map<Object,Object> allDeviceByTypeIdMap = new HashMap<>();
+        allDeviceByTypeIdMap.put("data",allDeviceByTypeId);
+        return allDeviceByTypeIdMap;
     }
 }

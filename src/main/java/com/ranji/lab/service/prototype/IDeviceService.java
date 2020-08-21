@@ -18,4 +18,6 @@ public interface IDeviceService {
     Map<Object,Object> findAllDevice(int pageNum, int pageSize);
 
     Device findById(int id);
+
+    Map<Object,Object> findAllDeviceByTypeId(int type);
 }

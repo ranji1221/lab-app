@@ -9,5 +9,5 @@ import lombok.*;
 public class ConsumeType {
     private int id;
     @NonNull
-    private String type_name;
+    private String typeName;
 }

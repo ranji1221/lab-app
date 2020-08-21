@@ -1,6 +1,7 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ConsumeInformDto;
+import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.ConsumeInform;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -17,4 +18,7 @@ public interface ConsumeInformMapper {
     List<ConsumeInform> findAll();
     @Select("select consume_inform.* from consume_inform where consume_inform.id = #{id}")
     ConsumeInform findById(int id);
+
+    @Select("select consume_inform.* from consume_inform where type = #{type}")
+    List<ConsumeInformDto> findAllConsumeInformByTypeId(int type);
 }

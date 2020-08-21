@@ -18,4 +18,6 @@ public interface IConsumeInformService {
     Map<Object,Object> findAllConsumeInform(int pageNum, int pageSize);
 
     ConsumeInform findConsumeInformById(int id);
+
+    Map<Object,Object> findAllConfumeInformByTypeId(int type);
 }

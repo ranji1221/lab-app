@@ -474,6 +474,18 @@ public class ConsumeController {
             return JSON.toJSONString(objectObjectMap);
         }
     }
+    @ApiOperation(value="通过id查找所有耗材类型信息", notes="根据传过来的id来查询耗材类型信息")
+    @GetMapping(value="alldevicebytype",produces = "text/plain;charset=utf-8")
+    public String allDeviceByType(int type){
+        Map<Object, Object> AllDeviceByTypeIdMap = iConsumeInformService.findAllConfumeInformByTypeId(type);
+        if(!AllDeviceByTypeIdMap.isEmpty()){
+            AllDeviceByTypeIdMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(AllDeviceByTypeIdMap);
+        }else{
+            AllDeviceByTypeIdMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(AllDeviceByTypeIdMap);
+        }
+    }
 
 
 

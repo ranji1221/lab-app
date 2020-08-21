@@ -217,6 +217,21 @@ public class DeviceController {
         }
     }
 
+    @ApiOperation(value="通过id查找所有设备类型信息", notes="根据传过来的id来查询设备类型信息")
+    @GetMapping(value="alldevicebytype",produces = "text/plain;charset=utf-8")
+    public String allDeviceByType(int type){
+        Map<Object, Object> AllDeviceByTypeIdMap = iDeviceService.findAllDeviceByTypeId(type);
+        if(!AllDeviceByTypeIdMap.isEmpty()){
+            AllDeviceByTypeIdMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(AllDeviceByTypeIdMap);
+        }else{
+            AllDeviceByTypeIdMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(AllDeviceByTypeIdMap);
+        }
+    }
+
+
+
    /* *//*
     通过前台表单的数据插入项目信息
      *//*
