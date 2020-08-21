@@ -527,19 +527,8 @@ public class PortalController {
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value = "/insertstudy",produces = "text/plain;charset=utf-8")
-    public String insertStudy(HttpServletRequest request){
+    public String insertStudy(Study study){
         Map<Object,Object> insertStudyMap = new HashMap<>();
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        String title = request.getParameter("title");
-        String informationSource = request.getParameter("informationsource");
-        String author = request.getParameter("author");
-        String time = request.getParameter("time");
-        String content = request.getParameter("content");
-        Study study = new Study(title,informationSource,author,time,content);
         int i = iStudyService.insertStudy(study);
         if(i<1){
             insertStudyMap.put("status","failure");

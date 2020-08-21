@@ -1,6 +1,5 @@
 package com.ranji.lab.entity;
 
-import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.dto.NoticeDto;
 import com.ranji.lab.util.DateUtil;
 import lombok.*;
