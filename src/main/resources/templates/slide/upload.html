@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" th:src="@{/js/jquery/jquery-3.5.1.min.js}"></script>
+		<title>Files UpLoad</title>
+	</head>
+<body>
+	<div id="uploadForm">
+		<select id="slide">
+			<option value="1">轮播图1</option>
+			<option value="2">轮播图2</option>
+			<option value="3">轮播图3</option>
+		</select><br>
+		<label>图片名称</label><input id="name"><br><br>
+		<!-- multiple属性定义该文件框可以输入多个值 -->
+		<label>上传图片</label><input id="file" type="file" multiple><br>
+		<button id="upload" type="button" onclick="upload();">UpLoad</button>
+	</div>
+	<script type="text/javascript">
+		let length;
+		$('#file').change(function(){
+			length = this.files.length;
+			console.log(length);
+		});
+		function upload(){
+			let formData = new FormData();
+			for(let i=0;i<length;i++){
+				formData.append('file',$('#file')[0].files[i]);
+			}
+			formData.append('id',$('#slide option:selected').val());
+			formData.append('name',$('#name').val());
+			console.log(formData.getAll("file"));
+			$.ajax({
+				url:'/lab/upload',
+				type:'post',
+				data:formData,
+				processData:false,
+				contentType:false,
+				success:function(data){
+					alert(data);
+				},
+				error:function(res){
+					alert('upload failure');
+				}
+			});
+		}
+		
+	</script>
+</body>
+</html>

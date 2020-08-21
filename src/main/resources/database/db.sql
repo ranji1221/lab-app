@@ -44,3 +44,10 @@ insert into t_role_auth(role_id,auth_id) values(1,3);
 insert into t_role_auth(role_id,auth_id) values(1,4);
 insert into t_role_auth(role_id,auth_id) values(2,1);
 insert into t_role_auth(role_id,auth_id) values(2,2);
+
+# slide 轮播图表
+create table t_slide(
+    id int primary key auto_increment,
+    name varchar(100),
+    url varchar(250)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
