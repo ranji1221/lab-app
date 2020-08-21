@@ -74,7 +74,7 @@ public class ExperimentProjectController {
      * @param limit
      * @return
      */
-    @ApiOperation(value="查询所有实验项目", notes="根据传过来的信息来查询实验项目")
+    @ApiOperation(value="分页查询所有实验项目", notes="根据传过来的信息来查询实验项目")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
@@ -96,7 +96,7 @@ public class ExperimentProjectController {
      * @param limit
      * @return
      */
-    @ApiOperation(value="查询所有实验项目", notes="根据传过来的信息来查询实验项目")
+    @ApiOperation(value="分类分页查询实验项目", notes="根据传过来的信息来查询实验项目")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),

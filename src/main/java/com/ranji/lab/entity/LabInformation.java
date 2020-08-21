@@ -1,4 +1,3 @@
-/*
 package com.ranji.lab.entity;
 
 import com.ranji.lab.util.DateUtil;
@@ -7,10 +6,10 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
 
-*/
+
 /**
  * 项目信息实体类
- *//*
+ */
 
 @Data
 @NoArgsConstructor
@@ -39,4 +38,4 @@ public class LabInformation implements Serializable {
         return DateUtil.StringToDate(this.ldate,"yyyy-MM-dd");
     }
 }
-*/
+

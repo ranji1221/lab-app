@@ -26,6 +26,9 @@ public class ExperimentProjectDto implements Serializable {
     private String experimentProcess;       //实验流程
     private List<ProjectConsumeDto> projectConsumeList;         //实验所用消耗品及数量
     private List<ProjectDeviceDto> projectDeviceList;           //实验所用设备姐设备及数量
+
+    private String projectConsumeLists;         //实验所用消耗品及数量
+    private String projectDeviceLists;           //实验所用设备姐设备及数量
     @NonNull
     private int status;                   //实验项目状态
 }

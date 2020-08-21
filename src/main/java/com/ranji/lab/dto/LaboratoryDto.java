@@ -10,7 +10,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class LaboratoryDto {
     @NonNull
-    private String laboratoryName;
+    private String laboratoryName;   //
     @NonNull
     private String faculty;
     @NonNull

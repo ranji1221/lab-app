@@ -81,7 +81,20 @@ public class ExperimentProjectImpl implements IExperimentProjectService {
     public Map<Object,Object> pageExperimentProject(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findAllExperimentProject();
-
+        for (ExperimentProjectDto experimentProjectDto : allExperimentProject) {
+            List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(experimentProjectDto.getId());
+            StringBuffer projectConsumeLists = new StringBuffer();
+            StringBuffer projectDeviceLists = new StringBuffer();
+            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                projectConsumeLists.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+"、");
+            }
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindAllProjectDevice(experimentProjectDto.getId());
+            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+"、");
+            }
+            experimentProjectDto.setProjectConsumeLists(projectConsumeLists.toString());
+            experimentProjectDto.setProjectDeviceLists(projectDeviceLists.toString());
+        }
         PageInfo<ExperimentProjectDto> objectPageInfo = new PageInfo<>(allExperimentProject);
         long total = objectPageInfo.getTotal();
         Map<Object,Object> map = new HashMap<>();

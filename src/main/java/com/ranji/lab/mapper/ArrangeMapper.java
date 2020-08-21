@@ -17,7 +17,7 @@ public interface ArrangeMapper {
     int insertArrange(Arrange arrange);
 
     //查询全部
-    @Select("select a.*,l.laboratory_name,ep.experiment_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id")
+    @Select("select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id")
     List<ArrangeDto> findAllArrange();
 
     //验证当前时间，该实验室是否已经预约
@@ -25,7 +25,7 @@ public interface ArrangeMapper {
     List<ArrangeDto>yesOrNoArrange(int laboratoryId,String date,String timeStart,String timeStop);
 
     //按照id查询
-    @Select("select a.*,l.laboratory_name,ep.experiment_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id where id = #{id}")
+    @Select("select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id where id = #{id}")
     ArrangeDto idFindArrange(int id);
     //修改该项目信息
     @Update("update arrange set laboratory_id=#{laboratoryId},project_id=#{projectId},num=#{num},arrange_time=#{arrangeTime},date=#{date},time_start=#{timeStart},time_stop=#{timeStop},responsibility=#{responsibility},status=#{status} where id = #{id}")
