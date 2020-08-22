@@ -8,9 +8,11 @@ import java.util.List;
 
 @Service
 public interface IBannerService {
-    int insertBannerAndImagesAndGetLatestBannerId(Images images);
+    int insertOrUpdateBannerAndImages(int bannerId,Images images);
 
     Banner findBannerById(int bannerId);
 
     List<Banner> findAllBanner();
+
+    Images findBannerImageByBannerId(int bannerId);
 }

@@ -21,12 +21,21 @@ public class BannerServiceImpl implements IBannerService {
 
     @Override
     @Transactional
-    public int insertBannerAndImagesAndGetLatestBannerId(Images images) {
-        imageMapper.insertImage(images);
-        int imageId = imageMapper.latestImageData();
-        bannerMapper.insertBanner(imageId);
-        int bannerId = bannerMapper.latestBannerData();
-        return bannerId;
+    public int insertOrUpdateBannerAndImages(int bannerId,Images images) {
+        Banner sureBanner = bannerMapper.findSureIdBanner(bannerId);
+        if(sureBanner==null){
+            imageMapper.insertImage(images);
+            int imageId = imageMapper.latestImageData();
+            Banner banner = new Banner(bannerId,imageId);
+            int i = bannerMapper.insertBanner(banner);
+            return i;
+        }else{
+            int imagesId = bannerMapper.findBannerImageIdByBannerId(bannerId);
+            images.setId(imagesId);
+            int i = imageMapper.updateImage(images);
+            return i;
+        }
+
     }
 
     @Override
@@ -38,4 +47,12 @@ public class BannerServiceImpl implements IBannerService {
     public List<Banner> findAllBanner() {
         return bannerMapper.findAllBanner();
     }
+
+    @Override
+    public Images findBannerImageByBannerId(int bannerId) {
+        int imagesId= bannerMapper.findBannerImageIdByBannerId(bannerId);
+        Images images = imageMapper.findImagesById(imagesId);
+        return images;
+    }
+
 }
