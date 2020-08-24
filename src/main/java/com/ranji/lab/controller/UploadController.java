@@ -47,7 +47,9 @@ public class UploadController {
         String rootDirectory = System.getProperty("user.dir");
         //-- 2. 创建存放上传资源的目录
         File resourceDirectory = new File(rootDirectory+File.separator+"upload"+File.separator+"banner");
-        if(!resourceDirectory.exists()) resourceDirectory.mkdir();
+        if(!resourceDirectory.exists()) {
+            resourceDirectory.mkdirs();
+        }
         //-- 3. 处理上传路径
         for (MultipartFile file : files) {
             String path = resourceDirectory.getAbsolutePath()+File.separator+file.getOriginalFilename();

@@ -46,14 +46,14 @@ public class ArrangeServiceImpl implements IArrangeService {
             StringBuffer devices = new StringBuffer();
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
             for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
-                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum());
+                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+"、");
             }
-            arrangeDto.setConsumes(consumes.toString());
+            arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
             List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindAllProjectDevice(arrangeDto.getProjectId());
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum());
+                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+"、");
             }
-            arrangeDto.setDevices(devices.toString());
+            arrangeDto.setDevices(devices.toString().substring(devices.toString().length()-1));
         }
         PageInfo<ArrangeDto> arrangeDtoPageInfo = new PageInfo<>(allArrange);
         long total = arrangeDtoPageInfo.getTotal();
