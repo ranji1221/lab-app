@@ -21,8 +21,6 @@ public class Device implements Serializable {
     @NonNull
     private String brand;
     @NonNull
-    private int num;
-    @NonNull
     private String facid;
     @NonNull
     private String factime;
@@ -32,9 +30,10 @@ public class Device implements Serializable {
     private String supid;
     @NonNull
     private String type;
-
-    public Device(int id, String deviceName, String brand, String conid, int num, String roomnames, String facid, String factime, String proid, String supid) {
-    }
+    @NonNull
+    private String unitName;
+    @NonNull
+    private int lifetime;
 
     public void setFactime(String factime){
         this.factime=factime;
@@ -45,7 +44,6 @@ public class Device implements Serializable {
 
     public Device(int id, DeviceDto deviceDto){
         this.id = id;
-        this.num = deviceDto.getId();
         this.facid = deviceDto.getFacid();
         this.factime = DateUtil.DateToString(deviceDto.getFactime(),"yyyy-MM-dd");
         this.proid = deviceDto.getProid();

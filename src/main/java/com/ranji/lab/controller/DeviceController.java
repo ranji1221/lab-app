@@ -34,12 +34,13 @@ public class DeviceController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "num", value = "设备数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String")
+            @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "lifetime", value = "使用周期", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "unitName", value = "单位", required = true, dataType = "String")
 
     })
     @ApiResponses({
@@ -92,7 +93,7 @@ public class DeviceController {
         String supid = request.getParameter("");
         int id = Integer.parseInt(request.getParameter(""));
 
-        Device device = new Device(id,deviceName, brand, conid, num, roomnames, facid, factime, proid, supid);
+        Device device = new Device();
         int i = iDeviceService.updateDevice(device);
         if(i<1){
             updateDeviceMap.put("status","failure");

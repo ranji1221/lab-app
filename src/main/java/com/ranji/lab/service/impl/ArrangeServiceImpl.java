@@ -1,5 +1,8 @@
 package com.ranji.lab.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ArrangeDto;
@@ -11,8 +14,10 @@ import com.ranji.lab.mapper.ProjectConsumeMapper;
 import com.ranji.lab.mapper.ProjectDeviceMapper;
 import com.ranji.lab.service.prototype.IArrangeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +32,12 @@ public class ArrangeServiceImpl implements IArrangeService {
     ProjectDeviceMapper projectDeviceMapper;
 
     @Override
-    public int insertArrange(Arrange arrange) {
+    @Transactional
+    public int insertArrange(Arrange arrange,String devices) {
+        List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
+        for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+
+        }
         return arrangeMapper.insertArrange(arrange);
     }
 

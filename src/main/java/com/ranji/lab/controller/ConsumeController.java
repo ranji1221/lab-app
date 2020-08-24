@@ -6,10 +6,7 @@ import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import com.ranji.lab.util.DateUtil;
 import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -477,9 +474,14 @@ public class ConsumeController {
         }
     }
     @ApiOperation(value="通过id查找所有耗材类型信息", notes="根据传过来的id来查询耗材类型信息")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
     @GetMapping(value="allconsumebytype",produces = "text/plain;charset=utf-8")
-    public String allConsumeByType(int type){
-        Map<Object, Object> AllConsumeByTypeIdMap = iConsumeInformService.findAllConfumeInformByTypeId(type);
+    @ResponseBody
+    public String allConsumeByType(int id){
+        Map<Object, Object> AllConsumeByTypeIdMap = iConsumeInformService.findAllConfumeInformByTypeId(id);
         if(!AllConsumeByTypeIdMap.isEmpty()){
             AllConsumeByTypeIdMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(AllConsumeByTypeIdMap);

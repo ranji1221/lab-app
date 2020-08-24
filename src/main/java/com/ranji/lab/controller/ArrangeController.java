@@ -35,7 +35,8 @@ public class ArrangeController {
             @ApiImplicitParam(name = "date", value = "预约日期", required = true, dataType = "String"),
             @ApiImplicitParam(name = "timeStart", value = "开始时间", required = true, dataType = "String"),
             @ApiImplicitParam(name = "timeStop", value = "结束时间", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "responsibility", value = "管理员", required = true, dataType = "String")
+            @ApiImplicitParam(name = "responsibility", value = "管理员", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "devices", value = "设备信息", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -43,9 +44,9 @@ public class ArrangeController {
     })
     @PostMapping(value = "insertArrange")
     @ResponseBody
-    public String insertArrange(Arrange arrange){
+    public String insertArrange(Arrange arrange,String devices){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iArrangeService.insertArrange(arrange);
+        int i = iArrangeService.insertArrange(arrange,devices);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);

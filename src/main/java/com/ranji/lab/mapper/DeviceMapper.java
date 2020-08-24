@@ -10,9 +10,9 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 public interface DeviceMapper {
-    @Insert("insert into device (device_name,brand,num,facid,factime,proid,supid,type) values (#{deviceName},#{brand},#{num},#{facid},#{factime},#{proid},#{supid},#{type})")
+    @Insert("insert into device (device_name,brand,facid,factime,proid,supid,type,unit_name,lifetime) values (#{deviceName},#{brand},#{facid},#{factime},#{proid},#{supid},0,#{unitName},#{lifetime})")
     int insertDevice(DeviceDto deviceDto);
-    @Update("update device set device_name = #{deviceName},brand = #{brand},conid =#{conid},num=#{num},roomnames=#{roomnames},facid=#{facid},factime=#{factime},proid=#{proid},supid=#{supid} where id = #{id}")
+    @Update("update device set device_name = #{deviceName},brand = #{brand},conid =#{conid},roomnames=#{roomnames},facid=#{facid},factime=#{factime},proid=#{proid},supid=#{supid},unit_name=#{unitName},lifetime=#{lifetime} where id = #{id}")
     int updateDevice(Device device);
     @Select("select device.* from device")
     List<Device> findAll();

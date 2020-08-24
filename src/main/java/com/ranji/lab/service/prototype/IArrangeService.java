@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface IArrangeService {
     //新增
-    int insertArrange(Arrange arrange);
+    int insertArrange(Arrange arrange,String devices);
 
     //查询全部
     List<ArrangeDto> findAllArrange(Integer status);

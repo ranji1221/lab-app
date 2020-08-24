@@ -9,9 +9,27 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 public interface ConsumePurchaseMapper {
-    @Insert("insert into consume_purchase (consume_id,num,date,applicant,status) values (#{consume_id},#{num},#{date},#{applicant},#{status})")
+    @Insert("insert into consume_purchase (consume_id,num,date,applicant,status) values (#{consumeId},#{num},#{date},#{applicant},#{status})")
     int insertConsumePurchase(ConsumePurchase consumePurchase);
-    @Update("update consume_purchase set (consume_id=#{consume_id},num=#{num},date=#{date},applicant=#{applicant},status = #{status}) where id = #{id}")
+    @Update("<script>" +
+            "update consume_purchase set " +
+            "<if test = 'num != null '>"+
+            "consume_id = #{consumeId}" +
+            "</if>" +
+            "<if test = 'num != null '>"+
+            ",num=#{num}" +
+            "</if>" +
+            "<if test = 'date != null '>"+
+            ",date=#{date}" +
+            "</if>" +
+            "<if test = 'applicant != null '>"+
+            ",applicant=#{applicant}" +
+            "</if>" +
+            "<if test = 'status != null '>"+
+            ",status = #{status}" +
+            "</if>" +
+            "where id = #{id}" +
+            "</script>")
     int updateConsumePurchase(ConsumePurchase consumePurchase);
     @Select("select consume_purchase.* from consume_purchase order by date desc")
     List<ConsumePurchase> findAll();

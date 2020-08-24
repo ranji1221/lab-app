@@ -59,7 +59,7 @@ public class ConsumeInformServiceImpl implements IConsumeInformService {
     public Map<Object,Object> findAllConfumeInformByTypeId(int type) {
         List<ConsumeInformDto> allConsumeInformByTypeId = consumeInformMapper.findAllConsumeInformByTypeId(type);
         Map<Object,Object> allConsumeInformByTypeIdMap = new HashMap<>();
-        allConsumeInformByTypeIdMap.put("data",allConsumeInformByTypeIdMap);
+        allConsumeInformByTypeIdMap.put("data",allConsumeInformByTypeId);
         return allConsumeInformByTypeIdMap;
     }
 

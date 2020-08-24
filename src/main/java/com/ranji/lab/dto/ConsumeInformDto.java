@@ -32,7 +32,7 @@ public class ConsumeInformDto {
         this.factime=factime;
     }
     public Date getFactime(){
-        return DateUtil.StringToDate(this.factime,"yyyy-MM_dd");
+        return DateUtil.StringToDate(this.factime,"yyyy-MM-dd");
     }
 
 }

@@ -27,9 +27,13 @@ public class DeviceDto implements Serializable {
     @NonNull
     private String proid;
     @NonNull
+    private int lifetime;
+    @NonNull
     private String supid;
     @NonNull
     private String type;
+    @NonNull
+    private String unitName;
 
 
     public DeviceDto(int id, String deviceName, String brand, String conid, int num, String roomnames, String facid, String factime, String proid, String supid) {
