@@ -17,6 +17,9 @@
 		<label>上传图片</label><input id="file" type="file" multiple><br>
 		<label>图片描述</label><input id="description"><br><br>
 		<button id="upload" type="button" onclick="upload();">UpLoad</button>
+		<p></p>
+		<label>上传图片</label><input id="files" type="file" multiple><br>
+		<button id="uploads" type="button" onclick="uploads();">UpLoads</button>
 	</div>
 	<script type="text/javascript">
 		let length;
@@ -46,6 +49,25 @@
 					alert('upload failure');
 				}
 			});
+		}
+		function uploads(){
+			let formData = new FormData();
+			for(let i=0;i<length;i++){
+				formData.append('file',$('#files')[0].files[i]);
+			}
+			$.ajax({
+				url:'/lab/insertimages',
+				type:'post',
+				data:formData,
+				processData:false,
+				contentType:false,
+				success:function(data){
+					alert(data);
+				},
+				error:function(res){
+					alert('upload failure');
+				}
+			})
 		}
 		
 	</script>

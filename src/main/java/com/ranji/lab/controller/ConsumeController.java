@@ -486,4 +486,19 @@ public class ConsumeController {
             return JSON.toJSONString(AllConsumeByTypeIdMap);
         }
     }
+
+    @ApiOperation(value="查询所有耗材和耗材类型", notes="查询所有耗材和耗材类型")
+    @GetMapping(value = "allconsumeandconsumename",produces = "text/plain;charset=utf-8")
+    public String allConsumeAndConsumeName(){
+        Map<Object,Object> allConsumeAndConsumeNameMap = new HashMap<>();
+        List<ConsumeInformAndConsumeTypeNameDto> consumeAndConsumeName = iConsumeInformService.findConsumeAndConsumeName();
+        if(!consumeAndConsumeName.isEmpty()){
+            allConsumeAndConsumeNameMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            allConsumeAndConsumeNameMap.put("data",consumeAndConsumeName);
+            return JSON.toJSONString(allConsumeAndConsumeNameMap);
+        }else{
+            allConsumeAndConsumeNameMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allConsumeAndConsumeNameMap);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.ConsumeInformAndConsumeTypeNameDto;
 import com.ranji.lab.dto.ConsumeInformDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.ConsumeInform;
@@ -21,4 +22,7 @@ public interface ConsumeInformMapper {
 
     @Select("select consume_inform.* from consume_inform where type = #{type}")
     List<ConsumeInformDto> findAllConsumeInformByTypeId(int type);
+
+    @Select("select ci.*,ct.type_name from consume_inform ci left join consume_type ct on ct.id = ci.type")
+    List<ConsumeInformAndConsumeTypeNameDto> findConsumeAndConsumeName();
 }

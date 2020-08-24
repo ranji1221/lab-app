@@ -1,5 +1,6 @@
 package com.ranji.lab.service.prototype;
 
+import com.ranji.lab.dto.ConsumeInformAndConsumeTypeNameDto;
 import com.ranji.lab.dto.ConsumeInformDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.entity.ConsumeInform;
@@ -20,4 +21,6 @@ public interface IConsumeInformService {
     ConsumeInform findConsumeInformById(int id);
 
     Map<Object,Object> findAllConfumeInformByTypeId(int type);
+
+    List<ConsumeInformAndConsumeTypeNameDto> findConsumeAndConsumeName();
 }

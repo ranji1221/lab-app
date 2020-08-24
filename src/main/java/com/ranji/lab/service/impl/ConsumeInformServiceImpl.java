@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ConsumeInformAndConsumeTypeNameDto;
 import com.ranji.lab.dto.ConsumeInformDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.entity.ConsumeInform;
@@ -60,5 +61,10 @@ public class ConsumeInformServiceImpl implements IConsumeInformService {
         Map<Object,Object> allConsumeInformByTypeIdMap = new HashMap<>();
         allConsumeInformByTypeIdMap.put("data",allConsumeInformByTypeIdMap);
         return allConsumeInformByTypeIdMap;
+    }
+
+    @Override
+    public List<ConsumeInformAndConsumeTypeNameDto> findConsumeAndConsumeName() {
+        return consumeInformMapper.findConsumeAndConsumeName();
     }
 }

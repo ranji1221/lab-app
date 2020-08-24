@@ -1,5 +1,6 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.Device;
 import org.apache.ibatis.annotations.Insert;
@@ -19,4 +20,6 @@ public interface DeviceMapper {
     Device findById(int id);
     @Select("select device.* from device where type = #{type}")
     List<DeviceDto> findAllDeviceByTypeId(int type);
+    @Select("select d.*,dt.type_name from device d left join device_type dt on dt.id = d.type")
+    List<DeviceAndDeviceTypeNameDto> findDeviceAndDeviceName();
 }

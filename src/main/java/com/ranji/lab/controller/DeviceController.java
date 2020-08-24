@@ -1,6 +1,7 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.dto.DeviceTypeDto;
 import com.ranji.lab.entity.*;
@@ -217,7 +218,7 @@ public class DeviceController {
         }
     }
 
-    @ApiOperation(value="通过id查找所有设备类型信息", notes="根据传过来的id来查询设备类型信息")
+    @ApiOperation(value="通过id查找所有设备信息", notes="根据传过来的id来查询设备类型信息")
     @GetMapping(value="alldevicebytype",produces = "text/plain;charset=utf-8")
     public String allDeviceByType(int type){
         Map<Object, Object> AllDeviceByTypeIdMap = iDeviceService.findAllDeviceByTypeId(type);
@@ -229,166 +230,18 @@ public class DeviceController {
             return JSON.toJSONString(AllDeviceByTypeIdMap);
         }
     }
-
-
-
-   /* *//*
-    通过前台表单的数据插入项目信息
-     *//*
-    @PostMapping(value="insertlabinformation",produces = "text/plain;charset=utf-8")
-    public String insertLabInformation(HttpServletRequest request){
-        Map<Object,Object> insertLabInformationMap = new HashMap<>();
-
-        String ltitle = request.getParameter("");
-        String lfaculty = request.getParameter("");
-        String ldevice = request.getParameter("");
-        String lteacher = request.getParameter("");
-        String ldate = request.getParameter("");
-        String ltime = request.getParameter("");
-        String lstatus = request.getParameter("");
-        LabInformation labInformation = new LabInformation(ltitle, lfaculty, ldevice, lteacher, ldate, ltime, lstatus);
-        int i = iLabInformationService.insertLabInformation(labInformation);
-        if(i<1){
-            insertLabInformationMap.put("status","failure");
-            return JSON.toJSONString(insertLabInformationMap);
+    @ApiOperation(value="查询所有设备和设备类型", notes="查询所有设备和设备类型")
+    @GetMapping(value = "alldeviceanddevicename",produces = "text/plain;charset=utf-8")
+    public String allDeviceAndDeviceName(){
+        Map<Object,Object> allDeviceAndDeviceNameMap = new HashMap<>();
+        List<DeviceAndDeviceTypeNameDto> deviceAndDeviceName = iDeviceService.findDeviceAndDeviceName();
+        if(!deviceAndDeviceName.isEmpty()){
+            allDeviceAndDeviceNameMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            allDeviceAndDeviceNameMap.put("data",deviceAndDeviceName);
+            return JSON.toJSONString(allDeviceAndDeviceNameMap);
         }else{
-            insertLabInformationMap.put("status","success");
-            return JSON.toJSONString(insertLabInformationMap);
+            allDeviceAndDeviceNameMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allDeviceAndDeviceNameMap);
         }
     }
-    *//*
-    通过前台表单的数据更新项目信息
-     *//*
-    @PostMapping(value="updatelabinformation",produces = "text/plain;charset=utf-8")
-    public String updateLabInformation(HttpServletRequest request){
-        Map<Object,Object> updateLabInformationMap = new HashMap<>();
-
-        String ltitle = request.getParameter("");
-        String lfaculty = request.getParameter("");
-        String ldevice = request.getParameter("");
-        String lteacher = request.getParameter("");
-        String ldate = request.getParameter("");
-        String ltime = request.getParameter("");
-        String lstatus = request.getParameter("");
-        int id = Integer.parseInt(request.getParameter(""));
-        LabInformation labInformation = new LabInformation(id,ltitle, lfaculty, ldevice, lteacher, ldate, ltime, lstatus);
-        int i = iLabInformationService.updateLabInformation(labInformation);
-        if(i<1){
-            updateLabInformationMap.put("status","failure");
-            return JSON.toJSONString(updateLabInformationMap);
-        }else{
-            updateLabInformationMap.put("status","success");
-            return JSON.toJSONString(updateLabInformationMap);
-        }
-    }
-    *//*
-    前台通过请求获得经由时间排序处理后的设备信息
-     *//*
-    @GetMapping(value = "/alllabinformation",produces = "text/plain;charset=utf-8")
-    public String allLabInformation(){
-        List<LabInformation> allLabInformation = iLabInformationService.findAllLabInformation();
-        Map<Object,Object> allLabInformationMap = new HashMap<>();
-        if(!allLabInformation.isEmpty()) {
-            allLabInformationMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            allLabInformationMap.put("data", allLabInformation);
-            return JSON.toJSONString(allLabInformationMap);
-        }else{
-            allLabInformationMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allLabInformationMap);
-        }
-    }
-    *//*
-    前台通过请求获得经由时间排序处理后并且分页后的设备信息
-     *//*
-    @GetMapping(value = "/alllabinformation/{pagenum}/{pagesize}",produces = "text/plain;charset=utf-8")
-    public String allLabInformationOnPaging(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
-        Map<Object,Object> allLabInformationOnPaging = iLabInformationService.findAllLabInformation(pageNum,pageSize);
-        if(!allLabInformationOnPaging.isEmpty()) {
-            allLabInformationOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            return JSON.toJSONString(allLabInformationOnPaging);
-        }else{
-            allLabInformationOnPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allLabInformationOnPaging);
-        }
-    }
-
-    *//*
-    通过前台表单的数据插入智能监控信息
-     *//*
-    @PostMapping(value="insertmonitaring",produces = "text/plain;charset=utf-8")
-    public String insertMonitaring(HttpServletRequest request){
-        Map<Object,Object> insertMonitaringMap = new HashMap<>();
-
-        String laboratoryName = request.getParameter("");
-        String faculty = request.getParameter("");
-        String experimentName = request.getParameter("");
-        String experimentTime = request.getParameter("");
-        String time = request.getParameter("");
-        String responsibility = request.getParameter("");
-        String status = request.getParameter("");
-        Monitaring monitaring = new Monitaring(laboratoryName, faculty, experimentName, experimentTime, time, responsibility, status);
-        int i = iMonitaringService.insertMonitaring(monitaring);
-        if(i<1){
-            insertMonitaringMap.put("status","failure");
-            return JSON.toJSONString(insertMonitaringMap);
-        }else{
-            insertMonitaringMap.put("status","success");
-            return JSON.toJSONString(insertMonitaringMap);
-        }
-    }
-    *//*
-    通过前台表单的数据更新智能监控信息
-     *//*
-    @PostMapping(value="updatemonitaring",produces = "text/plain;charset=utf-8")
-    public String updateMonitaring(HttpServletRequest request){
-        Map<Object,Object> updateMonitaringMap = new HashMap<>();
-
-        String laboratoryName = request.getParameter("");
-        String faculty = request.getParameter("");
-        String experimentName = request.getParameter("");
-        String experimentTime = request.getParameter("");
-        String time = request.getParameter("");
-        String responsibility = request.getParameter("");
-        String status = request.getParameter("");
-        int id = Integer.parseInt(request.getParameter(""));
-        Monitaring monitaring = new Monitaring(id,laboratoryName, faculty, experimentName, experimentTime, time, responsibility, status);
-        int i = iMonitaringService.updateMonitaring(monitaring);
-        if(i<1){
-            updateMonitaringMap.put("status","failure");
-            return JSON.toJSONString(updateMonitaringMap);
-        }else{
-            updateMonitaringMap.put("status","success");
-            return JSON.toJSONString(updateMonitaringMap);
-        }
-    }
-    *//*
-    前台通过请求获得经由时间排序处理后智能监控信息
-     *//*
-    @GetMapping(value = "/allmonitaring",produces = "text/plain;charset=utf-8")
-    public String allMonitaring(){
-        List<Monitaring> allMonitaring = iMonitaringService.findAllMonitaring();
-        Map<Object,Object> allMonitaringMap = new HashMap<>();
-        if(!allMonitaring.isEmpty()) {
-            allMonitaringMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            allMonitaringMap.put("data", allMonitaring);
-            return JSON.toJSONString(allMonitaringMap);
-        }else{
-            allMonitaringMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allMonitaringMap);
-        }
-    }
-    *//*
-    前台通过请求获得经由时间排序处理后并且分页后的智能监控信息
-     *//*
-    @GetMapping(value = "/allmonitaring/{pagenum}/{pagesize}",produces = "text/plain;charset=utf-8")
-    public String allMonitaring(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
-        Map<Object,Object> allMonitaringOnPaging = iMonitaringService.findAllMonitaring(pageNum,pageSize);
-        if(!allMonitaringOnPaging.isEmpty()) {
-            allMonitaringOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            return JSON.toJSONString(allMonitaringOnPaging);
-        }else{
-            allMonitaringOnPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allMonitaringOnPaging);
-        }
-    }*/
 }
