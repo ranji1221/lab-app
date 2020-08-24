@@ -345,9 +345,9 @@ public class PortalController {
          */
     @ApiOperation(value="查询由时间排序的连续两条的通知公告", notes="前端通过访问接口获得所需通知公告")
     @ApiImplicitParam(name = "noticeOffsetId", value = "第几篇", required = true, dataType = "String")
-    @GetMapping(value = "/findnoticenexttonext/{noticeOffsetId}",produces = "text/plain;charset=utf-8")
-    public String findNoticeNextToNext(@PathVariable("noticeOffsetId") int noticeOffsetId){
-        Map<Object, Object> newsNoticeNextToNext = iNewsService.findNewsNextToNext(noticeOffsetId-1);
+    @GetMapping(value = "/findnoticenexttonext",produces = "text/plain;charset=utf-8")
+    public String findNoticeNextToNext(int noticeOffsetId){
+        Map<Object, Object> newsNoticeNextToNext = iNewsService.findNewsNextToNext(noticeOffsetId);
         if(!newsNoticeNextToNext.isEmpty()){
             newsNoticeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(newsNoticeNextToNext);
@@ -498,9 +498,9 @@ public class PortalController {
     */
     @ApiOperation(value="查询由时间排序的连续两条的实验制度", notes="前端通过访问接口获得所需实验制度")
     @ApiImplicitParam(name = "regimeOffsetId", value = "第几篇", required = true, dataType = "String")
-    @GetMapping(value = "/findregimenexttonext/{regimeOffsetId}",produces = "text/plain;charset=utf-8")
-    public String findRegimeNextToNext(@PathVariable("regimeOffsetId") int regimeOffsetId){
-        Map<Object, Object> newsRegimeNextToNext = iNewsService.findNewsNextToNext(regimeOffsetId-1);
+    @GetMapping(value = "/findregimenexttonext",produces = "text/plain;charset=utf-8")
+    public String findRegimeNextToNext(int regimeOffsetId){
+        Map<Object, Object> newsRegimeNextToNext = iNewsService.findNewsNextToNext(regimeOffsetId);
         if(!newsRegimeNextToNext.isEmpty()){
             newsRegimeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(newsRegimeNextToNext);
@@ -652,9 +652,9 @@ public class PortalController {
     */
     @ApiOperation(value="查询由时间排序的连续两条的教学科研", notes="前端通过访问接口获得所需教学科研")
     @ApiImplicitParam(name = "studyOffsetId", value = "第几篇", required = true, dataType = "String")
-    @GetMapping(value = "/findstudynexttonext/{studyOffsetId}",produces = "text/plain;charset=utf-8")
-    public String findStudyNextToNext(@PathVariable("studyOffsetId") int studyOffsetId){
-        Map<Object, Object> newsStudyNextToNext = iNewsService.findNewsNextToNext(studyOffsetId-1);
+    @GetMapping(value = "/findstudynexttonext",produces = "text/plain;charset=utf-8")
+    public String findStudyNextToNext(int studyOffsetId){
+        Map<Object, Object> newsStudyNextToNext = iNewsService.findNewsNextToNext(studyOffsetId);
         if(!newsStudyNextToNext.isEmpty()){
             newsStudyNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(newsStudyNextToNext);
