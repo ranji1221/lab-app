@@ -7,8 +7,6 @@ import com.ranji.lab.dto.DeviceTypeDto;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.IDeviceService;
 import com.ranji.lab.service.prototype.IDeviceTypeService;
-import com.ranji.lab.service.prototype.ILabInformationService;
-import com.ranji.lab.service.prototype.IMonitaringService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +24,6 @@ import java.util.Map;
 public class DeviceController {
     @Resource
     private IDeviceService iDeviceService;
-    @Resource
-    private IMonitaringService iMonitaringService;
-    @Resource
-    private ILabInformationService iLabInformationService;
     @Resource
     private IDeviceTypeService iDeviceTypeService;
 
@@ -219,9 +213,13 @@ public class DeviceController {
     }
 
     @ApiOperation(value="通过id查找所有设备信息", notes="根据传过来的id来查询设备类型信息")
-    @GetMapping(value="alldevicebytype",produces = "text/plain;charset=utf-8")
-    public String allDeviceByType(int type){
-        Map<Object, Object> AllDeviceByTypeIdMap = iDeviceService.findAllDeviceByTypeId(type);
+    @GetMapping(value="alldevicebyid",produces = "text/plain;charset=utf-8")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    public String allDeviceById(int id){
+        Map<Object, Object> AllDeviceByTypeIdMap = iDeviceService.findAllDeviceByTypeId(id);
         if(!AllDeviceByTypeIdMap.isEmpty()){
             AllDeviceByTypeIdMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(AllDeviceByTypeIdMap);

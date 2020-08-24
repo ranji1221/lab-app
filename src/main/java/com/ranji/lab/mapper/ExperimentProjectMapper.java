@@ -4,6 +4,7 @@ import com.ranji.lab.dto.ExperimentProjectDto;
 import com.ranji.lab.entity.Banner;
 import com.ranji.lab.entity.ExperimentProject;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -34,4 +35,13 @@ public interface ExperimentProjectMapper {
     //修改该项目信息
     @Update("update experiment_project set experiment_name = #{experimentName}, experiment_target = #{experimentTarget} ,experiment_content = #{experimentContent}, experiment_process = #{experimentProcess},status = #{status} where id = #{id}")
     int updExperimentProject(ExperimentProject experimentProject);
+
+    //模糊查询
+    @Select("<script>" +
+            "select * from experiment_project  where status != 2 " +
+            "and experiment_name like '%${like}%' or " +
+            "experiment_target like '%${like}%' or " +
+            "experiment_content like '%${like}%' " +
+            "</script>")
+    List<ExperimentProjectDto> findLikeExperimentProject(@Param("like") String like);
 }

@@ -29,6 +29,10 @@ public class ConsumeInform implements Serializable {
     private String proid;
     @NonNull
     private String supid;
+    @NonNull
+    private String unitName;
+    @NonNull
+    private int type;
 
     public void setFactime(String factime){
         this.factime=factime;

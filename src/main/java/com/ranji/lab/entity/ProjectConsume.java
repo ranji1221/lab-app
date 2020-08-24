@@ -19,4 +19,6 @@ public class ProjectConsume implements Serializable {
     private int projectId;
     @NonNull
     private int consumeNum;
+    @NonNull
+    private String unitName;
 }

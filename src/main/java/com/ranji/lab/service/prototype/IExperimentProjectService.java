@@ -21,4 +21,6 @@ public interface IExperimentProjectService {
     ExperimentProjectDto idFindExperiment_project(int id);
     //修改该项目信息
     int updExperimentProject(ExperimentProject experimentProject, String p1, String p2);
+    //模糊查询
+    Map<Object,Object> findLikeExperimentProject(String like,int pageNum, int pageSize);
 }

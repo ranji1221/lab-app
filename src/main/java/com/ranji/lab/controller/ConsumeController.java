@@ -51,7 +51,8 @@ public class ConsumeController {
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "proid", value = "生产厂家编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "type", value = "耗材类型", required = true, dataType = "String")
+            @ApiImplicitParam(name = "type", value = "耗材类型", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "unitName", value = "耗材单位", required = true, dataType = "String")
     })
     @PostMapping(value="/insertconsumeinform",produces = "text/plain;charset=utf-8")
     public String insertConsumeInform(ConsumeInformDto consumeInformDto){
@@ -75,7 +76,8 @@ public class ConsumeController {
             @ApiImplicitParam(name = "proid", value = "生产厂家编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "type", value = "耗材类型", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "耗材id", required = true, dataType = "String")
+            @ApiImplicitParam(name = "id", value = "耗材id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "unitName", value = "耗材单位", required = true, dataType = "String")
     })
     @PostMapping(value="/updateconsumeinform",produces = "text/plain;charset=utf-8")
     public String updateConsumeInform(ConsumeInform consumeInform){

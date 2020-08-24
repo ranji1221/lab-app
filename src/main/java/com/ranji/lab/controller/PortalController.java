@@ -347,13 +347,13 @@ public class PortalController {
     @ApiImplicitParam(name = "noticeOffsetId", value = "第几篇", required = true, dataType = "String")
     @GetMapping(value = "/findnoticenexttonext",produces = "text/plain;charset=utf-8")
     public String findNoticeNextToNext(int noticeOffsetId){
-        Map<Object, Object> newsNoticeNextToNext = iNewsService.findNewsNextToNext(noticeOffsetId);
-        if(!newsNoticeNextToNext.isEmpty()){
-            newsNoticeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(newsNoticeNextToNext);
+        Map<Object, Object> noticeNextToNext = iNoticeService.findNoticeNextToNext(noticeOffsetId);
+        if(!noticeNextToNext.isEmpty()){
+            noticeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(noticeNextToNext);
         }else {
-            newsNoticeNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(newsNoticeNextToNext);
+            noticeNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(noticeNextToNext);
         }
     }
 
@@ -500,13 +500,13 @@ public class PortalController {
     @ApiImplicitParam(name = "regimeOffsetId", value = "第几篇", required = true, dataType = "String")
     @GetMapping(value = "/findregimenexttonext",produces = "text/plain;charset=utf-8")
     public String findRegimeNextToNext(int regimeOffsetId){
-        Map<Object, Object> newsRegimeNextToNext = iNewsService.findNewsNextToNext(regimeOffsetId);
-        if(!newsRegimeNextToNext.isEmpty()){
-            newsRegimeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(newsRegimeNextToNext);
+        Map<Object, Object> regimeNextToNext = iRegimeService.findRegimeNextToNext(regimeOffsetId);
+        if(!regimeNextToNext.isEmpty()){
+            regimeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(regimeNextToNext);
         }else {
-            newsRegimeNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(newsRegimeNextToNext);
+            regimeNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(regimeNextToNext);
         }
     }
 
@@ -648,19 +648,19 @@ public class PortalController {
     }
 
     /*
-    查询连续两条的教学科研
+        查询连续两条的教学科研
     */
     @ApiOperation(value="查询由时间排序的连续两条的教学科研", notes="前端通过访问接口获得所需教学科研")
     @ApiImplicitParam(name = "studyOffsetId", value = "第几篇", required = true, dataType = "String")
     @GetMapping(value = "/findstudynexttonext",produces = "text/plain;charset=utf-8")
     public String findStudyNextToNext(int studyOffsetId){
-        Map<Object, Object> newsStudyNextToNext = iNewsService.findNewsNextToNext(studyOffsetId);
-        if(!newsStudyNextToNext.isEmpty()){
-            newsStudyNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(newsStudyNextToNext);
+        Map<Object, Object> studyNextToNext = iStudyService.findStudyNextToNext(studyOffsetId);
+        if(!studyNextToNext.isEmpty()){
+            studyNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(studyNextToNext);
         }else {
-            newsStudyNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(newsStudyNextToNext);
+            studyNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(studyNextToNext);
         }
     }
 }
