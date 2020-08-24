@@ -44,7 +44,7 @@ public class UploadController {
             @ApiImplicitParam(name = "id", value = "轮播图id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "name", value = "图片名字", required = true, dataType = "String"),
             @ApiImplicitParam(name = "description", value = "图片描述", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "files",value = "图片文件(无法在swagger上进行测试，需要自写接口验证)",dataType = "String")
+            @ApiImplicitParam(name = "files",value = "图片文件(无法在swagger上进行测试，需要自写前端页面验证)",dataType = "String")
     })
     @PostMapping(value = "/uploadbanner",produces = "text/plain;charset=utf-8")
     @ResponseBody
@@ -85,10 +85,11 @@ public class UploadController {
 
         return null;
     }
-
-    @PostMapping(value = "/insertimages",produces = "text/plain;charset=utf-8")
+    @ApiOperation(value = "插入jpg格式的图片",notes = "通过传来的文件插入jpg格式的图片")
+    @ApiImplicitParam(name = "files",value = "图片文件(无法在swagger上进行测试，需要自写前端页面验证)",dataType = "String")
+    @PostMapping(value = "/insertimagesjpg",produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String uploadImages(@RequestParam("file") MultipartFile[] files){
+    public String uploadImagesJpg(@RequestParam("file") MultipartFile[] files){
         //-- 0. 返回map
         Map<Object,Object> imagesMap = new HashMap<>();
         //-- 1. 获取项目的根目录
@@ -99,21 +100,24 @@ public class UploadController {
         if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
         int i = 1;
         for(MultipartFile file : files){
+            String jpgname = file.getOriginalFilename();
+            if(jpgname.substring(jpgname.indexOf(".")+1,jpgname.length()).equals("jpg")) {
 
-            String path = resourceDirectory.getAbsolutePath()+File.separator+file.getOriginalFilename();
-            try {
-                file.transferTo(new File(path));
-            } catch (IOException e) {
-                e.printStackTrace();
+                String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
+                try {
+                    file.transferTo(new File(path));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String description = "description";
+                Images images = new Images(jpgname, path, description);
+                iImageService.insertImage(images);
+
+                imagesMap.put("image" + i++, path);
+            }else{
+                return "{status:jpg plz}";
             }
-            String name = file.getOriginalFilename();
-            String description = "description";
-            Images images = new Images(name,path,description);
-            iImageService.insertImage(images);
-
-            imagesMap.put("image"+i++,"path");
         }
-        System.out.println(imagesMap);
         if(!imagesMap.isEmpty()){
             imagesMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(imagesMap);
@@ -122,5 +126,7 @@ public class UploadController {
             return JSON.toJSONString(imagesMap);
         }
     }
+
+
 
 }
