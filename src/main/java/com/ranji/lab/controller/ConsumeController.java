@@ -140,7 +140,7 @@ public class ConsumeController {
         }
     }
 
-    @ApiOperation(value="插入耗材信息", notes="根据传过来的设备信息来插入耗材信息")
+    @ApiOperation(value="插入申请购置信息", notes="根据传过来的设备信息来插入申请购置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "consumeId", value = "购置耗材id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "num", value = "购置数量", required = true, dataType = "String"),
@@ -159,7 +159,7 @@ public class ConsumeController {
             return JSON.toJSONString(insertConsumePurchaseMap);
         }
     }
-    @ApiOperation(value="更新耗材信息", notes="根据传过来的设备信息来更新耗材信息")
+    @ApiOperation(value="更新申请购置信息", notes="根据传过来的设备信息来更新申请购置信息")
     @PostMapping(value = "/updateconsumepurchase",produces = "text/plain;chartset=utf-8")
     public String updateConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> updateConsumePurchaseMap = new HashMap<>();

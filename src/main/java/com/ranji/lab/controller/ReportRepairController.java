@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ReportRepair;
 import com.ranji.lab.service.prototype.IReportRepairService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api(tags = "设备维修接口")
 @RestController
 public class ReportRepairController {
     @Resource

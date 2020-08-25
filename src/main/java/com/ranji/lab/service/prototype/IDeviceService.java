@@ -1,6 +1,7 @@
 package com.ranji.lab.service.prototype;
 
 import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
+import com.ranji.lab.dto.DeviceAndModelDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.News;
@@ -23,4 +24,6 @@ public interface IDeviceService {
     Map<Object,Object> findAllDeviceByTypeId(int type);
 
     List<DeviceAndDeviceTypeNameDto> findDeviceAndDeviceName();
+
+    Map<Object,Object> findDeviceAndModel(int pageNum,int pageSize);
 }

@@ -28,7 +28,7 @@ public interface ArrangeMapper {
     List<ArrangeDto> findAllArrange(@Param("status")Integer status);
 
     //验证当前时间，该实验室是否已经预约
-    @Select("select * from arrange where status = 0 and laboratory_id = #{laboratoryId} and date = #{date} and ( #{timeStart}>=time_start and #{timeStart}<=time_stop or #{timeStop}>=time_start and #{timeStop}<=time_stop ) ")
+    @Select("select * from arrange where status = 0 and laboratory_id = #{laboratoryId} and date = #{date} and (#{timeStart}>=time_start and #{timeStart}<=time_stop or #{timeStop}>=time_start and #{timeStop}<=time_stop)")
     List<ArrangeDto> yesOrNoArrange(Arrange arrange);
 
     //按照id查询

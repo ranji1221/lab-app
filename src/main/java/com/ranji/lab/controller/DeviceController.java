@@ -79,21 +79,8 @@ public class DeviceController {
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value="updatedevice",produces = "text/plain;charset=utf-8")
-    public String updateDevice(HttpServletRequest request){
+    public String updateDevice(Device device){
         Map<Object,Object> updateDeviceMap = new HashMap<>();
-
-        String deviceName = request.getParameter("");
-        String brand = request.getParameter("");
-        String conid = request.getParameter("");
-        int num = Integer.parseInt(request.getParameter(""));
-        String roomnames = request.getParameter("");
-        String facid = request.getParameter("");
-        String factime = request.getParameter("");
-        String proid = request.getParameter("");
-        String supid = request.getParameter("");
-        int id = Integer.parseInt(request.getParameter(""));
-
-        Device device = new Device();
         int i = iDeviceService.updateDevice(device);
         if(i<1){
             updateDeviceMap.put("status","failure");
@@ -124,7 +111,7 @@ public class DeviceController {
     @ApiOperation(value="获取所有设备信息(?x=a&y=b)", notes="调用接口直接返回所有设备信息")
     @GetMapping(value = "/alldevices",produces = "text/plain;charset=utf-8")
     public String allDevices(int page,int limit){
-        Map<Object,Object> allDeviceMap = iDeviceService.findAllDevice(page,limit);
+        Map<Object,Object> allDeviceMap = iDeviceService.findDeviceAndModel(page,limit);
         if(!allDeviceMap.isEmpty()){
             allDeviceMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(allDeviceMap);

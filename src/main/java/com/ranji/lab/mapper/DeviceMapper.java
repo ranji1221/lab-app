@@ -7,6 +7,7 @@ import com.ranji.lab.entity.Device;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface DeviceMapper {
     //查询全部
     @Select("select device.* from device")
     List<Device> findAll();
+    @Select("select * from device d left join device_model dm on dm.id=d.device_model_id")
+    List<DeviceAndModelDto> findAllDeviceAndModel();
     //按照id查询
     @Select("select device.* from device where device.id = #{id}")
     Device findById(int id);
