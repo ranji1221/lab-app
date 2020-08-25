@@ -47,6 +47,11 @@ public class ArrangeServiceImpl implements IArrangeService {
     }
 
     @Override
+    public int insertArrange(Arrange arrange) {
+        return arrangeMapper.insertArrange(arrange);
+    }
+
+    @Override
     public List<ArrangeDto> findAllArrange(Integer status) {
         return arrangeMapper.findAllArrange(status);
     }

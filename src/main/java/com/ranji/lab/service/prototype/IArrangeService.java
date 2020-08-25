@@ -10,6 +10,8 @@ public interface IArrangeService {
     //新增
     int insertArrange(Arrange arrange,String devices);
 
+    int insertArrange(Arrange arrange);
+
     //查询全部
     List<ArrangeDto> findAllArrange(Integer status);
     //分页查询全部

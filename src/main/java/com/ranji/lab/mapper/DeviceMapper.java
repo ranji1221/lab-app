@@ -1,6 +1,7 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
+import com.ranji.lab.dto.DeviceAndModelDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.Device;
 import org.apache.ibatis.annotations.Insert;

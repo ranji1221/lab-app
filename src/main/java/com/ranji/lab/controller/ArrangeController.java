@@ -26,7 +26,7 @@ public class ArrangeController {
      * 添加实验项目信息
      * @return
      */
-    @ApiOperation(value="插入预约信息", notes="根据传过来的信息来插入预约项目信息")
+    @ApiOperation(value="插入预约信息0000", notes="根据传过来的信息来插入预约项目信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "projectId", value = "实验项目id", required = true, dataType = "String"),
@@ -42,11 +42,41 @@ public class ArrangeController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "insertArrange")
+    @PostMapping(value = "insertArrange1")
     @ResponseBody
-    public String insertArrange(Arrange arrange,String devices){
+    public String insertArrange1(Arrange arrange,String devices){
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iArrangeService.insertArrange(arrange,devices);
+        if(i<1){
+            insertNewsMap.put("status","failure");
+            return JSON.toJSONString(insertNewsMap);
+        }else{
+            insertNewsMap.put("status","success");
+            return JSON.toJSONString(insertNewsMap);
+        }
+    }
+
+    @ApiOperation(value="插入预约信息1111", notes="根据传过来的信息来插入预约项目信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "projectId", value = "实验项目id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "实验人数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "arrangeTime", value = "当前时间", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "预约日期", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "timeStart", value = "开始时间", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "timeStop", value = "结束时间", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "responsibility", value = "管理员", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "status", value = "状态", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @PostMapping(value = "insertArrange")
+    @ResponseBody
+    public String insertArrange(Arrange arrange){
+        Map<Object,Object> insertNewsMap = new HashMap<>();
+        int i = iArrangeService.insertArrange(arrange);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);
