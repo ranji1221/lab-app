@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 设备信息实体类
@@ -17,23 +18,11 @@ import java.util.Date;
 public class Device implements Serializable {
     private int id;
     @NonNull
-    private String deviceName;
+    private int deviceModelId;
     @NonNull
-    private String brand;
-    @NonNull
-    private String facid;
+    private String uuid;
     @NonNull
     private String factime;
-    @NonNull
-    private String proid;
-    @NonNull
-    private String supid;
-    @NonNull
-    private String type;
-    @NonNull
-    private String unitName;
-    @NonNull
-    private int lifetime;
 
     public void setFactime(String factime){
         this.factime=factime;
@@ -44,9 +33,6 @@ public class Device implements Serializable {
 
     public Device(int id, DeviceDto deviceDto){
         this.id = id;
-        this.facid = deviceDto.getFacid();
         this.factime = DateUtil.DateToString(deviceDto.getFactime(),"yyyy-MM-dd");
-        this.proid = deviceDto.getProid();
-        this.supid = deviceDto.getSupid();
     }
 }

@@ -21,8 +21,9 @@ public class DeviceServiceImpl implements IDeviceService {
     @Resource
     private DeviceMapper deviceMapper;
     @Override
-    public int insertDevice(DeviceDto deviceDto) {
-        return deviceMapper.insertDevice(deviceDto);
+    public int insertDevice(Device device) {
+
+        return deviceMapper.insertDevice(device);
     }
 
     @Override

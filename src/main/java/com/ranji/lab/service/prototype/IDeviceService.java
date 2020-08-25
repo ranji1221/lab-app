@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface IDeviceService {
 
-    int insertDevice(DeviceDto deviceDto);
+    int insertDevice(Device device);
 
     int updateDevice(Device device);
 

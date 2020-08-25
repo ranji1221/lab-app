@@ -17,12 +17,10 @@ public interface ProjectDeviceMapper {
     //插入
     @Insert("insert into project_device (experiment_device_id,project_id,device_num,status) values (#{experimentDeviceId},#{projectId},#{deviceNum},0)")
     int insertProjectDevice(ProjectDeviceDto projectDeviceDto);
-    //查询全部
-    @Select("select pd.*,d.device_name from project_device pd LEFT JOIN device d on pd.experiment_device_id = d.id where pd.project_id = #{projectId} and status != 1")
-    List<ProjectDeviceDto> projectIdFindAllProjectDevice(int projectId);
-    //分类查询
-    @Select("select pd.*,d.device_name from project_device pd LEFT JOIN device d on pd.experiment_device_id = d.id where pd.project_id = #{projectId} and pd.status = #{status}")
-    List<ProjectDeviceDto> typeProjectIdFindAllProjectDevice(int projectId,int status);
+
+    //按照项目id查询实验所用设备信息及总数
+    @Select("select pd.*,dm.device_name,count(*) deviceNum,dm.unit_name unitName from project_device pd LEFT JOIN device d on pd.experiment_device_id = d.id LEFT JOIN device_model dm on dm.id = d.device_model_id where pd.project_id = #{projectId} GROUP BY dm.device_name ")
+    List<ProjectDeviceDto> projectIdFindProjectDeviceNum(int projectId);
     //修改信息
     @Update("update project_device set device_num = #{deviceNum}, status = #{status} where id = #{id}")
     int updProjectDevice(ProjectDeviceDto projectDeviceDto);

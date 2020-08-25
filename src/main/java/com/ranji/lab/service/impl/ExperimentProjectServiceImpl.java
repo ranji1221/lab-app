@@ -71,7 +71,7 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
         for (ExperimentProjectDto experimentProjectDto : allExperimentProject) {
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(experimentProjectDto.getId());
             experimentProjectDto.setProjectConsumeList(projectConsumeDtos);
-            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindAllProjectDevice(experimentProjectDto.getId());
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(experimentProjectDto.getId());
             experimentProjectDto.setProjectDeviceList(projectDeviceDtos);
         }
         return allExperimentProject;
@@ -88,9 +88,9 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
             for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
                 projectConsumeLists.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
             }
-            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindAllProjectDevice(experimentProjectDto.getId());
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(experimentProjectDto.getId());
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+"、");
+                projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
             }
             if(projectConsumeLists.toString().length()>0){
                 experimentProjectDto.setProjectConsumeLists(projectConsumeLists.toString().substring(0,projectConsumeLists.toString().length()-1));
@@ -111,7 +111,7 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
     @Override
     public ExperimentProjectDto idFindExperiment_project(int id) {
         ExperimentProjectDto experimentProjectDto = experimentProjectMapper.idFindExperimentProject(id);
-        experimentProjectDto.setProjectDeviceList(projectDeviceMapper.projectIdFindAllProjectDevice(id));
+        experimentProjectDto.setProjectDeviceList(projectDeviceMapper.projectIdFindProjectDeviceNum(id));
         experimentProjectDto.setProjectConsumeList(projectConsumeMapper.projectIdFindAllProjectConsume(id));
         return experimentProjectDto;
     }
@@ -152,9 +152,9 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
             for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
                 projectConsumeLists.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
             }
-            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindAllProjectDevice(experimentProjectDto.getId());
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(experimentProjectDto.getId());
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+"、");
+                projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
             }
             if(projectConsumeLists.toString().length()>0){
                 experimentProjectDto.setProjectConsumeLists(projectConsumeLists.toString().substring(0,projectConsumeLists.toString().length()-1));

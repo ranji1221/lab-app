@@ -1,7 +1,6 @@
 package com.ranji.lab.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,10 +8,12 @@ import com.ranji.lab.dto.ArrangeDto;
 import com.ranji.lab.dto.ProjectConsumeDto;
 import com.ranji.lab.dto.ProjectDeviceDto;
 import com.ranji.lab.entity.Arrange;
+import com.ranji.lab.entity.Device;
 import com.ranji.lab.mapper.ArrangeMapper;
 import com.ranji.lab.mapper.ProjectConsumeMapper;
 import com.ranji.lab.mapper.ProjectDeviceMapper;
 import com.ranji.lab.service.prototype.IArrangeService;
+import com.ranji.lab.service.prototype.IDeviceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +31,15 @@ public class ArrangeServiceImpl implements IArrangeService {
     ProjectConsumeMapper projectConsumeMapper;
     @Resource
     ProjectDeviceMapper projectDeviceMapper;
+    @Resource
+    IDeviceService iDeviceService;
 
+    //插入预约设备信息
     @Override
     @Transactional
     public int insertArrange(Arrange arrange,String devices) {
         List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
+
         for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
 
         }
@@ -59,11 +64,11 @@ public class ArrangeServiceImpl implements IArrangeService {
                 consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+"、");
             }
             arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
-            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindAllProjectDevice(arrangeDto.getProjectId());
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+"、");
+                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
             }
-            arrangeDto.setDevices(devices.toString().substring(devices.toString().length()-1));
+            arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
         }
         PageInfo<ArrangeDto> arrangeDtoPageInfo = new PageInfo<>(allArrange);
         long total = arrangeDtoPageInfo.getTotal();

@@ -17,6 +17,7 @@ public interface ConsumeInformMapper {
     int updateConsumeInform(ConsumeInform consumeInform);
     @Select("select consume_inform.* from consume_inform")
     List<ConsumeInform> findAll();
+
     //按照id查询耗材信息
     @Select("select consume_inform.* from consume_inform where consume_inform.id = #{id}")
     ConsumeInform findById(int id);

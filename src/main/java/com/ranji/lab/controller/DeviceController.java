@@ -48,9 +48,9 @@ public class DeviceController {
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value="insertdevice",produces = "text/plain;charset=utf-8")
-    public String insertDevice(DeviceDto deviceDto){
+    public String insertDevice(Device device){
         Map<Object,Object> insertDeviceMap = new HashMap<>();
-        int i = iDeviceService.insertDevice(deviceDto);
+        int i = iDeviceService.insertDevice(device);
         if(i<1){
             insertDeviceMap.put("status","failure");
             return JSON.toJSONString(insertDeviceMap);

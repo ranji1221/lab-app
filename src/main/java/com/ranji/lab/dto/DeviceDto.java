@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 设备信息实体类
@@ -15,25 +16,11 @@ import java.util.Date;
 public class DeviceDto implements Serializable {
     private int id;
     @NonNull
-    private String deviceName;
-    @NonNull
-    private String brand;
-    @NonNull
-    private int num;
-    @NonNull
-    private String facid;
-    @NonNull
     private String factime;
     @NonNull
-    private String proid;
+    private int deviceModelId;
     @NonNull
-    private int lifetime;
-    @NonNull
-    private String supid;
-    @NonNull
-    private String type;
-    @NonNull
-    private String unitName;
+    private String uuid;
 
 
     public DeviceDto(int id, String deviceName, String brand, String conid, int num, String roomnames, String facid, String factime, String proid, String supid) {
