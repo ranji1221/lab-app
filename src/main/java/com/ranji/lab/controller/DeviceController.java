@@ -2,6 +2,7 @@ package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
+import com.ranji.lab.dto.DeviceAndModelDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.dto.DeviceTypeDto;
 import com.ranji.lab.entity.*;
@@ -35,22 +36,22 @@ public class DeviceController {
             @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "count", value = "数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "lifetime", value = "使用周期", required = true, dataType = "String"),
             @ApiImplicitParam(name = "unitName", value = "单位", required = true, dataType = "String")
-
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value="insertdevice",produces = "text/plain;charset=utf-8")
-    public String insertDevice(Device device){
+    public String insertDevice(DeviceAndModelDto deviceAndModelDto){
         Map<Object,Object> insertDeviceMap = new HashMap<>();
-        int i = iDeviceService.insertDevice(device);
+        int i = iDeviceService.insertDeviceAndDeviceModel(deviceAndModelDto);
         if(i<1){
             insertDeviceMap.put("status","failure");
             return JSON.toJSONString(insertDeviceMap);
@@ -66,22 +67,24 @@ public class DeviceController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deviceName", value = "设备名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "brand", value = "品牌型号", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "num", value = "设备数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "count", value = "数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "facid", value = "出厂编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "factime", value = "出厂日期(xxxx-xx-xx)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "proid", value = "生产厂商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "supid", value = "供应商编号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "id", value = "更新设备id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String")
+            @ApiImplicitParam(name = "lifetime", value = "使用周期", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "type", value = "设备类型id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "unitName", value = "单位", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
     @PostMapping(value="updatedevice",produces = "text/plain;charset=utf-8")
-    public String updateDevice(Device device){
+    public String updateDevice(DeviceAndModelDto deviceAndModelDto){
         Map<Object,Object> updateDeviceMap = new HashMap<>();
-        int i = iDeviceService.updateDevice(device);
+        int i = iDeviceService.updateDeviceAndDeviceModel(deviceAndModelDto);
         if(i<1){
             updateDeviceMap.put("status","failure");
             return JSON.toJSONString(updateDeviceMap);

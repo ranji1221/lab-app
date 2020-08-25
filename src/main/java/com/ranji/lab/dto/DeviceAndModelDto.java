@@ -7,10 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 public class DeviceAndModelDto {
     @NonNull
-    private int deviceModelId;
-    @NonNull
-    private String uuid;
-    @NonNull
     private String factime;
     @NonNull
     private String deviceName;

@@ -14,7 +14,7 @@ import java.util.List;
 public interface DeviceMapper {
 
     //插入
-    @Insert("insert into device (factime,device_model_id,uuid) values (#{factime},#{deviceModelId},#{uuid}")
+    @Insert("insert into device (factime,device_model_id,uuid) values (#{factime},#{deviceModelId},#{uuid})")
     int insertDevice(Device device);
     //修改
     @Update("update device set factime = #{factime},device_model_id = #{deviceModelId},uuid = #{uuid}  where id = #{id}")

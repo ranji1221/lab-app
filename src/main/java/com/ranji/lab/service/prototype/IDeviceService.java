@@ -26,4 +26,8 @@ public interface IDeviceService {
     List<DeviceAndDeviceTypeNameDto> findDeviceAndDeviceName();
 
     Map<Object,Object> findDeviceAndModel(int pageNum,int pageSize);
+
+    int insertDeviceAndDeviceModel(DeviceAndModelDto deviceAndModelDto);
+
+    int updateDeviceAndDeviceModel(DeviceAndModelDto deviceAndModelDto);
 }

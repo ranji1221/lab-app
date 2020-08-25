@@ -1,11 +1,8 @@
 package com.ranji.lab.entity;
 
-import com.ranji.lab.dto.DeviceDto;
-import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 设备信息实体类
