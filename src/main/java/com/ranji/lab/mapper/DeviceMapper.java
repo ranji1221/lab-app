@@ -31,6 +31,6 @@ public interface DeviceMapper {
     @Select("select device.* from device where type = #{type}")
     List<DeviceDto> findAllDeviceByTypeId(int type);
 
-    @Select("select d.*,dt.type_name from device d left join device_type dt on dt.id = d.type")
+    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type=dt.type_name")
     List<DeviceAndDeviceTypeNameDto> findDeviceAndDeviceName();
 }
