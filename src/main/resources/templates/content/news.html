@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布新闻</title>
+    <link rel="stylesheet" href="" th:href="@{/js/layui/css/layui.css}">
+    <script src="" th:src="@{/js/layui/layui.js}"></script>
+</head>
+<body>
+    <form class="layui-form" action="">
+        <!-- 新闻标题 -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <!-- 新闻内容 -->
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea id="newsContent" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="publishNews">发布</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use(['layer','form','layedit','jquery'],function () {
+            //-- 1. 定义模块变量
+            var layer = layui.layer,
+                form = layui.form,
+                $ = layui.jquery,
+                layedit = layui.layedit;
+
+            //-- 2. 设置富文本框的图片上传的接口
+            layedit.set({
+                uploadImage: {
+                    url: '/lab/uploadNewsImage', //接口url
+                    type: 'post' //默认post
+                }
+            });
+            //-- 3. textArea转变为富文本框
+            var index = layedit.build('newsContent');
+            //-- 4. 表单提交
+            form.on('submit(publishNews)',function(data){
+                var title = data.field['title'];
+                var content = layedit.getContent(index);
+                //-- layer.msg(title+":"+content);
+                $.ajax({
+                    url:"/lab/addnews",
+                    async : false,
+                    type : "POST",
+                    dataType:"json",
+                    data : {"title":title,"content":content},
+                    success : function(res){
+                        alert('aaaaa');
+                        console.log('aaaaa');
+                    },
+                    error : function (res) {
+                        console.log('bbbbb');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

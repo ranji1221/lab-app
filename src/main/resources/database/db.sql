@@ -51,3 +51,20 @@ create table t_slide(
     name varchar(100),
     url varchar(250)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# news 新闻表
+create table t_news(
+    id int primary key auto_increment,
+    title varchar(300),
+    content text,
+    create_time timestamp,
+    last_time timestamp
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# news_image 新闻图片表
+create table t_news_image(
+    id int primary key auto_increment,
+    title varchar(200),
+    url varchar(500)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

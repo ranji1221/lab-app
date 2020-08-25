@@ -8,19 +8,14 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 轮播图实体类
- * 代表可以上传到服务器图片资源
- * @RanJi
- * @RanJi
+ * 新闻所对应的图片实体类
  */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Slide implements Serializable {
-    @NonNull
+public class NewsImage implements Serializable {
     private int id;
+    private String title;
     @NonNull
-    private String name;
-    @NonNull
-    private String url;
+    private String url; //-- 保存图片的路径
 }

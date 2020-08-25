@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看新闻详情</title>
+    <link rel="stylesheet" href="./layui/css/layui.css" th:href="@{/js/layui/css/layui.css}">
+    <script src="./layui/layui.js" th:src="@{/js/layui/layui.js}"></script>
+</head>
+<body>
+    <div id="newsdetail">
+        <span id="title"></span>
+        <span id="content"></span>
+    </div>
+    <script>
+        layui.use(['jquery'],function () {
+            var $ = layui.jquery;
+            $.ajax({
+                url:"http://192.168.0.135:8080/lab/news",
+                async : false,
+                type : "GET",
+                dataType:"json",
+                data: {id:5},
+                success : function(data){
+                    console.log(data);
+					$('#title').html(data['title']);
+					$('#content').html(data['content']);
+                },
+                error : function (res) {
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>
