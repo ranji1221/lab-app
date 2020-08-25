@@ -200,7 +200,7 @@ public class ExperimentProjectController {
     }
 
     @ApiOperation(value="查询所有实验室", notes="查询所有实验室")
-    @PostMapping(value = "alllaboratory",produces = "text/plain;charset=utf-8")
+    @GetMapping(value = "alllaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String findAllLaboratory(){
         Map<Object, Object> allLaboratory = iLaboratoryService.findAllLaboratory();

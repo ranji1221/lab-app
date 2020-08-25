@@ -1,18 +1,20 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ReportRepair;
 import com.ranji.lab.service.prototype.IReportRepairService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.experimental.Accessors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class ReportRepairController {
@@ -57,6 +59,20 @@ public class ReportRepairController {
         }else{
             updateReportRepairMap.put("status","success");
             return JSON.toJSONString(updateReportRepairMap);
+        }
+    }
+
+    @ApiOperation(value="查询所有设备维修", notes="查询所有设备维修")
+    @GetMapping(value = "allreportrepair",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String findAllReportRepair(){
+        Map<Object, Object> reportRepairMap = reportRepairService.AllReportRepair();
+        if(!reportRepairMap.isEmpty()){
+            reportRepairMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(reportRepairMap);
+        }else{
+            reportRepairMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(reportRepairMap);
         }
     }
 
