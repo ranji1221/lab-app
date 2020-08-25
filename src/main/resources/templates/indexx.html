@@ -29,8 +29,12 @@
             })
         }function find4() {
             $.ajax({
-                url:"/lab/allnotice/1/10",
+                url:"http://192.168.0.117:8080/lab/allconsumenormcontent",
+                type:"POST",
                 success:function (e) {
+                    console.log(e)
+                },
+                error:function (e) {
                     console.log(e)
                 }
             })
@@ -48,9 +52,9 @@
 
 </head>
 <body>
-    <button id="find1" onclick="find1()">findall1</button>
+    <!--<button id="find1" onclick="find1()">findall1</button>
     <button id="find2" onclick="find2()">findall2</button>
-    <button id="find3" onclick="find3()">findall3</button>
+    <button id="find3" onclick="find3()">findall3</button>-->
     <button id="find4" onclick="find4()">findall4</button>
     <!--<button id="up" onclick="up()">up</button>-->
 

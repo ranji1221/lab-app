@@ -5,9 +5,11 @@ import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import io.swagger.annotations.*;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.annotation.Resources;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,9 @@ public class ExperimentProjectController {
 
     @Resource
     private IExperimentProjectService iExperimentProjectService;
+
+    @Resource
+    private ILaboratoryService iLaboratoryService;
     /**
      * 添加实验项目信息
      * @return
@@ -161,6 +166,50 @@ public class ExperimentProjectController {
         }else{
             likeExperimentProjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(likeExperimentProjectMap);
+        }
+    }
+
+    @ApiOperation(value="插入实验室", notes="根基传过来的信息插入实验室")
+    @PostMapping(value = "insertlaboratory",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String insertLaboratory(LaboratoryDto laboratoryDto){
+        Map laboratoryMap = new HashMap<>();
+        int i = iLaboratoryService.insertLaboratory(laboratoryDto);
+        if(i<1){
+            laboratoryMap.put("status","failure");
+            return JSON.toJSONString(laboratoryMap);
+        }else{
+            laboratoryMap.put("status","success");
+            return JSON.toJSONString(laboratoryMap);
+        }
+    }
+
+    @ApiOperation(value="更新实验室", notes="根据传过来的信息更新实验室")
+    @PostMapping(value = "updatelaboratory",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String updateLaboratory(Laboratory laboratory){
+        Map laboratoryMap = new HashMap<>();
+        int i = iLaboratoryService.updateLaboratory(laboratory);
+        if(i<1){
+            laboratoryMap.put("status","failure");
+            return JSON.toJSONString(laboratoryMap);
+        }else{
+            laboratoryMap.put("status","success");
+            return JSON.toJSONString(laboratoryMap);
+        }
+    }
+
+    @ApiOperation(value="查询所有实验室", notes="查询所有实验室")
+    @GetMapping(value = "alllaboratory",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String findAllLaboratory(){
+        Map<Object, Object> allLaboratory = iLaboratoryService.findAllLaboratory();
+        if(!allLaboratory.isEmpty()){
+            allLaboratory.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }else{
+            allLaboratory.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allLaboratory);
         }
     }
 }
