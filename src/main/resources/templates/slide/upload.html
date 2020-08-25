@@ -22,10 +22,12 @@
 		<button id="uploads" type="button" onclick="uploads();">UpLoads</button>
 	</div>
 	<script type="text/javascript">
-		let length;
+		let lengths,length;
+		$('#files').change(function(){
+			lengths = this.files.length;
+		});
 		$('#file').change(function(){
 			length = this.files.length;
-			console.log(length);
 		});
 		function upload(){
 			let formData = new FormData();
@@ -52,9 +54,10 @@
 		}
 		function uploads(){
 			let formData = new FormData();
-			for(let i=0;i<length;i++){
+			for(let i=0;i<lengths;i++){
 				formData.append('file',$('#files')[0].files[i]);
 			}
+			console.log("length = " + lengths)
 			$.ajax({
 				url:'/lab/insertimages',
 				type:'post',

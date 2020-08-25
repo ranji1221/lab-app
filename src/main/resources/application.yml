@@ -19,22 +19,6 @@ spring:
     port: 6379
     timeout: 2000
 
-# 上传下载
-
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 100MB
-      max-request-size: 100MB
-logging:
-  file:
-    path: D:/test/
-web:
-  upload-path: D:/testUplpad/
-
-
 
 # config mybatis
 mybatis:
