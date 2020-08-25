@@ -29,7 +29,7 @@ public interface ArrangeMapper {
 
     //验证当前时间，该实验室是否已经预约
     @Select("select * from arrange where status = 0 and laboratory_id = #{laboratoryId} and date = #{date} and ( #{timeStart}>=time_start and #{timeStart}<=time_stop or #{timeStop}>=time_start and #{timeStop}<=time_stop ) ")
-    List<ArrangeDto>yesOrNoArrange(Arrange arrange);
+    List<ArrangeDto> yesOrNoArrange(Arrange arrange);
 
     //按照id查询
     @Select("select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id where a.id = #{id}")
