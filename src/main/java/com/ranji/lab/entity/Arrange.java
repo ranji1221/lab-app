@@ -19,7 +19,7 @@ public class Arrange implements Serializable {
     @NonNull
     private int laboratoryId;
     @NonNull
-    private String projectId;
+    private int projectId;
     @NonNull
     private int num;
     @NonNull

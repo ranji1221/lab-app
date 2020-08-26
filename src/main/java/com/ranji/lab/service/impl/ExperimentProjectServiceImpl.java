@@ -42,21 +42,15 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
      *
      * @param experimentProject
      * @param projectConsumeLists 耗材信息
-     * @param projectDeviceLists 设备信息
      * @return
      */
     @Override
     @Transactional
-    public int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists, String projectDeviceLists) {
+    public int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists) {
         experimentProjectMapper.insertExperimentProject(experimentProject);
         int i = experimentProjectMapper.latestExperimentProjectData();
         if(i>0){
             List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(projectConsumeLists, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
-            List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(projectDeviceLists, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
-            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                projectDeviceDto.setProjectId(i);
-                projectDeviceMapper.insertProjectDevice(projectDeviceDto);
-            }
             for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
                 projectConsumeDto.setProjectId(i);
                 projectConsumeMapper.insertProjectConsume(projectConsumeDto);
@@ -121,16 +115,9 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
      */
     @Override
     @Transactional
-    public int updExperimentProject(ExperimentProject experimentProject, String p1, String p2) {
+    public int updExperimentProject(ExperimentProject experimentProject, String p1) {
             List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(p1, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
-            List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(p2, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
-            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                if(projectDeviceDto.getStatus()==0){
-                    projectDeviceMapper.insertProjectDevice(projectDeviceDto);
-                }else if(projectDeviceDto.getStatus()==1){
-                    projectDeviceMapper.updProjectDevice(projectDeviceDto);
-                }
-            }
+
             for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
                 if(projectConsumeDto.getStatus()==0){
                     projectConsumeMapper.insertProjectConsume(projectConsumeDto);

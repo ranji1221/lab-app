@@ -34,4 +34,9 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         allLaboratory.put("data",all);
         return allLaboratory;
     }
+
+    @Override
+    public List<Laboratory> dateFindAll(String date, String timeStart, String timeStop) {
+        return laboratoryMapper.dateFindAll(date,timeStart,timeStop);
+    }
 }

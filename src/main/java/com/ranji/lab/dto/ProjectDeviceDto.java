@@ -19,4 +19,5 @@ public class ProjectDeviceDto {
     private String deviceName;
     private Integer status;       //类型，0新增，1修改
     private String unitName;
+    private int deviceModelId;
 }

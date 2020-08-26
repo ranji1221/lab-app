@@ -6,6 +6,7 @@ import com.ranji.lab.dto.DeviceAndModelDto;
 import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.dto.DeviceTypeDto;
 import com.ranji.lab.entity.*;
+import com.ranji.lab.service.prototype.IDeviceModelService;
 import com.ranji.lab.service.prototype.IDeviceService;
 import com.ranji.lab.service.prototype.IDeviceTypeService;
 import io.swagger.annotations.*;
@@ -27,6 +28,8 @@ public class DeviceController {
     private IDeviceService iDeviceService;
     @Resource
     private IDeviceTypeService iDeviceTypeService;
+    @Resource
+    private IDeviceModelService iDeviceModelService;
 
     /*
     通过前台表单的数据插入设备信息
@@ -231,6 +234,47 @@ public class DeviceController {
         }else{
             allDeviceAndDeviceNameMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allDeviceAndDeviceNameMap);
+        }
+    }
+    @ApiOperation(value="按照设备类型查询所有设备型号", notes="按照设备类型查询所有设备型号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "设备类型id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "allDeviceModelByType",produces = "text/plain;charset=utf-8")
+    public String allDeviceModelByType(int id){
+        Map<Object,Object> allDeviceAndDeviceNameMap = new HashMap<>();
+        List<DeviceModel> deviceModels = iDeviceModelService.allDeviceModelByType(id);
+        if(!deviceModels.isEmpty()){
+            allDeviceAndDeviceNameMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            allDeviceAndDeviceNameMap.put("data",deviceModels);
+            return JSON.toJSONString(allDeviceAndDeviceNameMap);
+        }else{
+            allDeviceAndDeviceNameMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allDeviceAndDeviceNameMap);
+        }
+    }
+
+    /*
+        前台通过请求获得智能分析的设备信息
+    */
+    @ApiOperation(value="获取分页后的智能分析设备信息(/a/b)", notes="根据传过来的分页信息来查询智能分析设备信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
+    })
+    @GetMapping(value = "/findIntelligentAnalyze",produces = "text/plain;charset=utf-8")
+    public String findIntelligentAnalyze(int pageNum,int pageSize){
+        Map<Object,Object> allDeviceOnPaging = iDeviceService.findIntelligentAnalyze(pageNum,pageSize);
+        if(!allDeviceOnPaging.isEmpty()) {
+            allDeviceOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(allDeviceOnPaging);
+        }else{
+            allDeviceOnPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allDeviceOnPaging);
         }
     }
 }

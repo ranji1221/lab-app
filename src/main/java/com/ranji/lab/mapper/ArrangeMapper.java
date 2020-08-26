@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ArrangeMapper {
     //新增预约信息
-    @Insert("insert into arrange (laboratory_id,project_id,num,arrange_time,date,time_start,time_stop,responsibility,status) values (#{laboratoryId},#{projectId},#{num},#{arrangeTime},#{date},#{timeStart},#{timeStop},#{responsibility},0)")
+    @Insert("insert into arrange (laboratory_id,project_id,num,arrange_time,date,time_start,time_stop,responsibility,status) values (#{laboratoryId},#{projectId},#{num},now(),#{date},#{timeStart},#{timeStop},#{responsibility},0)")
     int insertArrange(Arrange arrange);
 
     //查询全部

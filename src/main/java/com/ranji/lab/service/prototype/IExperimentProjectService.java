@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public interface IExperimentProjectService {
     //插入
-    int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists, String projectDeviceLists);
+    int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists);
     //查询全部
     List<ExperimentProjectDto> findAllExperimentProject(Integer status);
     //分页查询
@@ -20,7 +20,7 @@ public interface IExperimentProjectService {
     //按照id查询
     ExperimentProjectDto idFindExperiment_project(int id);
     //修改该项目信息
-    int updExperimentProject(ExperimentProject experimentProject, String p1, String p2);
+    int updExperimentProject(ExperimentProject experimentProject, String p1);
     //模糊查询
     Map<Object,Object> findLikeExperimentProject(String like,int pageNum, int pageSize);
 }

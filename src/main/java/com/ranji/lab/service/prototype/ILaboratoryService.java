@@ -3,6 +3,7 @@ package com.ranji.lab.service.prototype;
 import com.ranji.lab.dto.LaboratoryDto;
 import com.ranji.lab.entity.Laboratory;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ILaboratoryService {
@@ -11,4 +12,6 @@ public interface ILaboratoryService {
     int updateLaboratory(Laboratory laboratory);
 
     Map<Object,Object> findAllLaboratory();
+
+    List<Laboratory> dateFindAll(String date, String timeStart, String timeStop);
 }

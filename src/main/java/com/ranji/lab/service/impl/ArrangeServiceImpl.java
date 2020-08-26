@@ -9,11 +9,14 @@ import com.ranji.lab.dto.ProjectConsumeDto;
 import com.ranji.lab.dto.ProjectDeviceDto;
 import com.ranji.lab.entity.Arrange;
 import com.ranji.lab.entity.Device;
+import com.ranji.lab.entity.LaboratoryDevice;
 import com.ranji.lab.mapper.ArrangeMapper;
+import com.ranji.lab.mapper.LaboratoryDeviceMapper;
 import com.ranji.lab.mapper.ProjectConsumeMapper;
 import com.ranji.lab.mapper.ProjectDeviceMapper;
 import com.ranji.lab.service.prototype.IArrangeService;
 import com.ranji.lab.service.prototype.IDeviceService;
+import com.ranji.lab.service.prototype.ILaboratoryDeviceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +35,23 @@ public class ArrangeServiceImpl implements IArrangeService {
     @Resource
     ProjectDeviceMapper projectDeviceMapper;
     @Resource
-    IDeviceService iDeviceService;
+    LaboratoryDeviceMapper laboratoryDeviceMapper;
 
-    //插入预约设备信息
+    //插入预约信息
     @Override
     @Transactional
     public int insertArrange(Arrange arrange,String devices) {
         List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
-
+        int laboratoryId = arrange.getLaboratoryId();
         for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-
+            List<LaboratoryDevice> laboratoryDevice = laboratoryDeviceMapper.findLaboratoryDevice(laboratoryId, projectDeviceDto.getDeviceModelId(), projectDeviceDto.getDeviceNum());
+            for (LaboratoryDevice device : laboratoryDevice) {
+                ProjectDeviceDto projectDeviceDto1 = new ProjectDeviceDto();
+                projectDeviceDto1.setDeviceNum(1);
+                projectDeviceDto1.setProjectId(arrange.getProjectId());
+                projectDeviceDto1.setExperimentDeviceId(device.getDeviceId());
+                projectDeviceMapper.insertProjectDevice(projectDeviceDto1);
+            }
         }
         return arrangeMapper.insertArrange(arrange);
     }
@@ -66,7 +76,7 @@ public class ArrangeServiceImpl implements IArrangeService {
             StringBuffer devices = new StringBuffer();
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
             for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
-                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+"、");
+                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
             }
             arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
             List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());

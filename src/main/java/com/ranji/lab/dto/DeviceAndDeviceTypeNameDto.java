@@ -19,7 +19,7 @@ public class DeviceAndDeviceTypeNameDto {
     @NonNull
     private String brand;
     @NonNull
-    private int num;
+    private int count;
     @NonNull
     private String facid;
     @NonNull

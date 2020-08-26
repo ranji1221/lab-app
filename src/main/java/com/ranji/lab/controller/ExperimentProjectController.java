@@ -42,9 +42,9 @@ public class ExperimentProjectController {
     })
     @PostMapping(value = "insertExperimentProject")
     @ResponseBody
-    public String insertExperimentProject(ExperimentProject experimentProject,String projectConsumeLists, String projectDeviceLists){
+    public String insertExperimentProject(ExperimentProject experimentProject,String projectConsumeLists){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iExperimentProjectService.insertExperimentProject(experimentProject,projectConsumeLists, projectDeviceLists);
+        int i = iExperimentProjectService.insertExperimentProject(experimentProject,projectConsumeLists);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);
@@ -133,9 +133,9 @@ public class ExperimentProjectController {
     })
     @PostMapping(value = "updExperimentProject")
     @ResponseBody
-    public String updExperimentProject(ExperimentProject experimentProject,String p1,String p2){
+    public String updExperimentProject(ExperimentProject experimentProject,String p1){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iExperimentProjectService.updExperimentProject(experimentProject,p1,p2);
+        int i = iExperimentProjectService.updExperimentProject(experimentProject,p1);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);

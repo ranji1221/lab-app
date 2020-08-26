@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ProjectDeviceMapper {
     //插入
-    @Insert("insert into project_device (experiment_device_id,project_id,device_num,status) values (#{experimentDeviceId},#{projectId},#{deviceNum},0)")
+    @Insert("insert into project_device (experiment_device_id,project_id,device_num,status) values (#{experimentDeviceId},#{projectId},1,0)")
     int insertProjectDevice(ProjectDeviceDto projectDeviceDto);
 
     //按照项目id查询实验所用设备信息及总数

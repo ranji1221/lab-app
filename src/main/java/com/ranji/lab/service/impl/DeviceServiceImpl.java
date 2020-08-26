@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
 import com.ranji.lab.dto.DeviceAndModelDto;
 import com.ranji.lab.dto.DeviceDto;
+import com.ranji.lab.dto.DeviceIntelligentAnalyzeDto;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.DeviceModel;
 import com.ranji.lab.mapper.DeviceMapper;
@@ -183,6 +184,21 @@ public class DeviceServiceImpl implements IDeviceService {
             return 1;
         }
 
+    }
+
+    @Override
+    public Map<Object, Object> findIntelligentAnalyze(int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<DeviceIntelligentAnalyzeDto> intelligentAnalyze = deviceMapper.findIntelligentAnalyze();
+
+        PageInfo deviceAndDeviceNamePaging = new PageInfo(intelligentAnalyze);
+        long total = deviceAndDeviceNamePaging.getTotal();
+
+        Map<Object,Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("data",intelligentAnalyze);
+
+        return map;
     }
 
 }

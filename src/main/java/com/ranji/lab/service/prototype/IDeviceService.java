@@ -3,6 +3,7 @@ package com.ranji.lab.service.prototype;
 import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
 import com.ranji.lab.dto.DeviceAndModelDto;
 import com.ranji.lab.dto.DeviceDto;
+import com.ranji.lab.dto.DeviceIntelligentAnalyzeDto;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.News;
 
@@ -30,4 +31,6 @@ public interface IDeviceService {
     int insertDeviceAndDeviceModel(DeviceAndModelDto deviceAndModelDto);
 
     int updateDeviceAndDeviceModel(DeviceAndModelDto deviceAndModelDto);
+
+    Map<Object,Object> findIntelligentAnalyze(int pageNum,int pageSize);
 }

@@ -14,4 +14,7 @@ public interface LaboratoryDeviceMapper {
     int updateLaboratoryDevice(LaboratoryDevice laboratoryDevice);
     @Select("select * from laboratory_device")
     List<LaboratoryDevice> allLaboratoryDevice();
+    //按照实验室id、设备型号和需要数量查询实验室对应设备信息
+    @Select("SELECT * FROM laboratory_device WHERE STATUS=0 AND laboratory_id= #{laboratoryId} AND device_id IN (SELECT id FROM device WHERE device_model_id= #{deviceModelId}) LIMIT #{pageSize}")
+    List<LaboratoryDevice> findLaboratoryDevice(int laboratoryId,int deviceModelId,int pageSize);
 }

@@ -37,7 +37,7 @@ public class ExperimentProjectTests {
             l1.add(p1);
             l2.add(p2);
         }
-        int i = experimentProjectService.insertExperimentProject(e, JSON.toJSONString(l1),JSON.toJSONString(l2));
+        int i = experimentProjectService.insertExperimentProject(e, JSON.toJSONString(l1));
         System.out.println(i);
 
     }
