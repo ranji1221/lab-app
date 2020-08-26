@@ -5,7 +5,6 @@ import com.ranji.lab.entity.Notice;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 

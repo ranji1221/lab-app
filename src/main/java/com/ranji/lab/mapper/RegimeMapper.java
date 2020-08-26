@@ -1,7 +1,6 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.entity.News;
-import com.ranji.lab.entity.Notice;
 import com.ranji.lab.entity.Regime;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

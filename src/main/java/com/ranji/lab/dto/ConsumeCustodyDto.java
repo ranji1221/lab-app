@@ -1,7 +1,9 @@
 package com.ranji.lab.dto;
 
 import com.ranji.lab.util.DateUtil;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 

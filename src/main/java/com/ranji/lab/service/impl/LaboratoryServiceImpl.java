@@ -1,6 +1,8 @@
 package com.ranji.lab.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.LaboratoryDto;
 import com.ranji.lab.entity.Laboratory;
 import com.ranji.lab.mapper.LaboratoryMapper;
@@ -35,8 +37,25 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         return allLaboratory;
     }
 
+
     @Override
     public List<Laboratory> dateFindAll(String date, String timeStart, String timeStop) {
         return laboratoryMapper.dateFindAll(date,timeStart,timeStop);
+    }
+
+    @Override
+    public Map<Object, Object> findAllLaboratory(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Laboratory> all = laboratoryMapper.findAll();
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap =  new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
+
     }
 }

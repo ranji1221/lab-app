@@ -1,6 +1,5 @@
 package com.ranji.lab.mapper;
 
-import com.ranji.lab.entity.Regime;
 import com.ranji.lab.entity.Study;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

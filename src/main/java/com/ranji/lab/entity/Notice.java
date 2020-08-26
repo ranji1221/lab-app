@@ -17,15 +17,15 @@ import java.util.Date;
 public class Notice implements Serializable {
     private int id;
     @NonNull
-    private String title;
+    private String title;//通知公告发布题目
     @NonNull
-    private String informationSource;
+    private String informationSource;//通知公告发布信息来源
     @NonNull
-    private String author;
+    private String author;//通知公告发布作者
     @NonNull
-    private String time;
+    private String time;//通知公告发布时间
     @NonNull
-    private String content;
+    private String content;//通知公告发布内容
 
     public void setTime(String time){
         this.time= time;

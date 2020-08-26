@@ -16,23 +16,23 @@ import java.util.Date;
 public class ConsumeInform implements Serializable {
     private int id;
     @NonNull
-    private String name;
+    private String name;//耗材名称
     @NonNull
-    private String brand;
+    private String brand;//耗材品牌
     @NonNull
-    private int num;
+    private int num;//耗材数量
     @NonNull
-    private String facid;
+    private String facid;//出厂编号
     @NonNull
-    private String factime;
+    private String factime;//出厂日期
     @NonNull
-    private String proid;
+    private String proid;//生产厂家编号
     @NonNull
-    private String supid;
+    private String supid;//供应商编号
     @NonNull
-    private String unitName;
+    private String unitName;//耗材单位
     @NonNull
-    private int type;
+    private int type;//耗材类型
 
     public void setFactime(String factime){
         this.factime=factime;
@@ -41,23 +41,4 @@ public class ConsumeInform implements Serializable {
         return DateUtil.StringToDate(this.factime,"yyyy-MM-dd");
     }
 
-    /*public ConsumeInform(int id, ConsumeInformDto consumeInformDto){
-        this.id = id;
-        this.name = consumeInformDto.getName();
-        this.brand = consumeInformDto.getBrand();
-        this.num = consumeInformDto.getNum();
-        this.facid = consumeInformDto.getFacid();
-        this.factime = DateUtil.DateToString(consumeInformDto.getFactime(),"yyyy-MM-dd");
-        this.proid = consumeInformDto.getProid();
-        this.supid = consumeInformDto.getSupid();
-    }
-    public ConsumeInform(ConsumeInformDto consumeInformDto){
-        this.name = consumeInformDto.getName();
-        this.brand = consumeInformDto.getBrand();
-        this.num = consumeInformDto.getNum();
-        this.facid = consumeInformDto.getFacid();
-        this.factime = DateUtil.DateToString(consumeInformDto.getFactime(),"yyyy-MM-dd");
-        this.proid = consumeInformDto.getProid();
-        this.supid = consumeInformDto.getSupid();
-    }*/
 }

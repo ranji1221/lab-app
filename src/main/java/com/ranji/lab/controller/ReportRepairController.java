@@ -78,4 +78,18 @@ public class ReportRepairController {
         }
     }
 
+    @ApiOperation(value="分页查询所有设备维修", notes="分页查询所有设备维修")
+    @GetMapping(value = "allreportrepairpaging",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String findAllReportRepairPaging(int page,int limit){
+        Map<Object, Object> reportRepairMap = reportRepairService.AllReportRepair(page,limit);
+        if(!reportRepairMap.isEmpty()){
+            reportRepairMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(reportRepairMap);
+        }else{
+            reportRepairMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(reportRepairMap);
+        }
+    }
+
 }

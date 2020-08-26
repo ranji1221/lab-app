@@ -52,4 +52,20 @@ public class ConsumeNormServiceImpl implements IConsumeNormService {
     public ConsumeNorm findById(int id) {
         return consumeNormMapper.findById(id);
     }
+
+    @Override
+    public Map<Object, Object> findAllConsumeNormPaging(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ConsumeNorm> all = consumeNormMapper.findAllConsumeNorm();
+
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object, Object> allMap= new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
+    }
 }

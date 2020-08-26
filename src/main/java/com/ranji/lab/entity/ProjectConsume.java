@@ -14,11 +14,11 @@ import java.io.Serializable;
 public class ProjectConsume implements Serializable {
     private int id;
     @NonNull
-    private int experimentConsumeId;
+    private int experimentConsumeId;//实验耗材id
     @NonNull
-    private int projectId;
+    private int projectId;//实验项目id
     @NonNull
-    private int consumeNum;
+    private int consumeNum;//实验所需耗材数量
     @NonNull
-    private String unitName;
+    private String unitName;//耗材单位
 }

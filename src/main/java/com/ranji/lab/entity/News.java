@@ -17,15 +17,15 @@ import java.util.Date;
 public class News implements Serializable {
     private int id;
     @NonNull
-    private String title;
+    private String title;//新闻发布题目
     @NonNull
-    private String informationSource;
+    private String informationSource;//新闻发布信息来源
     @NonNull
-    private String author;
+    private String author;//新闻发布作者
     @NonNull
-    private String time;
+    private String time;//新闻发布时间
     @NonNull
-    private String content;
+    private String content;//新闻发布内容
 
     public void setTime(String time){
         this.time = time;

@@ -17,4 +17,7 @@ public interface ConsumeNormMapper {
     List<ConsumeNorm> findAll();
     @Select("select consume_norm.* from consume_norm where id = #{id}")
     ConsumeNorm findById(int id);
+
+    @Select("select * from consume_norm order by time desc")
+    List<ConsumeNorm> findAllConsumeNorm();
 }

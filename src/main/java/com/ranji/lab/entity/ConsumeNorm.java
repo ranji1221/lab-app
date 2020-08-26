@@ -16,15 +16,15 @@ import java.util.Date;
 public class ConsumeNorm implements Serializable {
     private int id;
     @NonNull
-    private String title;
+    private String title;//耗材管理发布题目
     @NonNull
-    private String informationSource;
+    private String informationSource;//耗材管理发布来源
     @NonNull
-    private String author;
+    private String author;//耗材管理发布作者
     @NonNull
-    private String time;
+    private String time;//耗材管理发布时间
     @NonNull
-    private String content;
+    private String content;//耗材管理发布内容
 
     public void setTime(String time){
         this.time = time;

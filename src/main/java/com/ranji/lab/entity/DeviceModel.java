@@ -5,7 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * 设备信息实体类
+ * 设备类型实体类
  */
 @Data
 @NoArgsConstructor
@@ -14,22 +14,22 @@ import java.io.Serializable;
 public class DeviceModel implements Serializable {
     private int id;
     @NonNull
-    private String deviceName;
+    private String deviceName;//耗材名字
     @NonNull
-    private String brand;
+    private String brand;//耗材型号
     @NonNull
-    private String facid;
+    private String facid;//耗材出厂编号
     @NonNull
-    private String proid;
+    private String proid;//耗材生厂厂家编号
     @NonNull
-    private String supid;
+    private String supid;//设备供应商编号
     @NonNull
-    private String type;
+    private String type;//设备类型
     @NonNull
-    private String unitName;
+    private String unitName;//设备单位
     @NonNull
-    private int lifetime;
+    private int lifetime;//设备使用时长
     @NonNull
-    private int count;
+    private int count;//设备总数
 
 }

@@ -17,15 +17,15 @@ import java.util.Date;
 public class Regime implements Serializable {
     private int id;
     @NonNull
-    private String title;
+    private String title;//实体制度发布题目
     @NonNull
-    private String informationSource;
+    private String informationSource;//实体制度发布信息来源
     @NonNull
-    private String author;
+    private String author;//实体制度发布作者
     @NonNull
-    private String time;
+    private String time;//实体制度发布时间
     @NonNull
-    private String content;
+    private String content;//实体制度发布内容
 
     public void setTime(String time){
         this.time= time;

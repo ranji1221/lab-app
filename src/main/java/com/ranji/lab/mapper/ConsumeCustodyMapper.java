@@ -1,7 +1,6 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ConsumeCustodyDto;
-import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

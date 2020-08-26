@@ -1,11 +1,6 @@
 package com.ranji.lab.mapper;
 
-import com.ranji.lab.dto.ExperimentProjectDto;
 import com.ranji.lab.dto.ProjectConsumeDto;
-import com.ranji.lab.dto.ProjectDeviceDto;
-import com.ranji.lab.entity.ExperimentProject;
-import com.ranji.lab.entity.ProjectConsume;
-import com.ranji.lab.entity.ProjectDevice;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

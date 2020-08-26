@@ -212,4 +212,18 @@ public class ExperimentProjectController {
             return JSON.toJSONString(allLaboratory);
         }
     }
+
+    @ApiOperation(value="分页查询所有实验室", notes="分页查询所有实验室")
+    @GetMapping(value = "alllaboratorypaging",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String findAllLaboratorypaging(int page,int limit){
+        Map<Object, Object> allLaboratory = iLaboratoryService.findAllLaboratory(page,limit);
+        if(!allLaboratory.isEmpty()){
+            allLaboratory.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }else{
+            allLaboratory.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }
+    }
 }

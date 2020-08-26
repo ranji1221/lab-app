@@ -1,11 +1,8 @@
 package com.ranji.lab.entity;
 
-import com.ranji.lab.util.DateUtil;
 import lombok.*;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
 
 /**
  * 预约安排实体类
@@ -17,23 +14,23 @@ import java.util.Date;
 public class Arrange implements Serializable {
     private int id;
     @NonNull
-    private int laboratoryId;
+    private int laboratoryId;//实验室id
     @NonNull
-    private int projectId;
+    private int projectId;//项目id
     @NonNull
-    private int num;
+    private int num;//预约人数
     @NonNull
-    private String arrangeTime;
+    private String arrangeTime;//预约时间(当前时间)
     @NonNull
-    private String date;
+    private String date;//预约项目日期
     @NonNull
-    private String timeStart;
+    private String timeStart;//项目项目开始时间
     @NonNull
-    private String timeStop;
+    private String timeStop;//预约项目结束时间
     @NonNull
-    private String responsibility;
+    private String responsibility;//预约项目负责人
     @NonNull
-    private String status;
+    private String status;//预约状态
 
    /* public void setDate(String date){
         this.date = date;

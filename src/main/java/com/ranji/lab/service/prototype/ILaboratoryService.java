@@ -13,5 +13,8 @@ public interface ILaboratoryService {
 
     Map<Object,Object> findAllLaboratory();
 
+    Map<Object,Object> findAllLaboratory(int pageNum,int pageSize);
+
     List<Laboratory> dateFindAll(String date, String timeStart, String timeStop);
+
 }

@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class ProjectDevice implements Serializable {
     private int id;
     @NonNull
-    private int experimentDeviceId;
+    private int experimentDeviceId;//实验设备id
     @NonNull
-    private int projectId;
+    private int projectId;//实验项目id
     @NonNull
-    private int deviceNum;
+    private int deviceNum;//实验所需设备数量
 }

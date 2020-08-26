@@ -1,7 +1,6 @@
 package com.ranji.lab.dto;
 
 import com.ranji.lab.util.DateUtil;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

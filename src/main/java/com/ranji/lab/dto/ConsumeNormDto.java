@@ -1,7 +1,10 @@
 package com.ranji.lab.dto;
 
 import com.ranji.lab.util.DateUtil;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Date;
 @Data
@@ -17,7 +20,7 @@ public class ConsumeNormDto {
     @NonNull
     private String time;
     @NonNull
-    private int contentId;
+    private String content;
 
     public void setTime(String time){
         this.time = time;

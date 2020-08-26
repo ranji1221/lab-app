@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class Images implements Serializable {
     private int id;
     @NonNull
-    private String imgName;
+    private String imgName;//图片名字
     @NonNull
-    private String imgAddr;
+    private String imgAddr;//图片地址
     @NonNull
-    private String imgDescription;
+    private String imgDescription;//图片描述
 }

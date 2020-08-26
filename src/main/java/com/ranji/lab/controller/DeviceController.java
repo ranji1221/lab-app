@@ -102,7 +102,7 @@ public class DeviceController {
 
     @ApiOperation(value="获取所有设备信息", notes="调用接口直接返回所有设备信息")
     @GetMapping(value = "/alldevice",produces = "text/plain;charset=utf-8")
-    public String allDevice(){
+    public String allDevicess(){
         List<Device> allDevice = iDeviceService.findAllDevice();
         Map<Object,Object> allDeviceMap = new HashMap<>();
         if(!allDevice.isEmpty()) {
@@ -114,7 +114,7 @@ public class DeviceController {
             return JSON.toJSONString(allDeviceMap);
         }
     }
-    @ApiOperation(value="获取所有设备信息(?x=a&y=b)", notes="调用接口直接返回所有设备信息")
+    @ApiOperation(value="分页查询所有设备信息(?x=a&y=b)", notes="调用接口直接返回所有设备信息")
     @GetMapping(value = "/alldevices",produces = "text/plain;charset=utf-8")
     public String allDevices(int page,int limit){
         Map<Object,Object> allDeviceMap = iDeviceService.findDeviceAndModel(page,limit);
@@ -129,13 +129,13 @@ public class DeviceController {
     /*
     前台通过请求获得分页后的设备信息
     */
-    @ApiOperation(value="获取分页后的设备信息(/a/b)", notes="根据传过来的分页信息来查询设备信息")
+    @ApiOperation(value="分页查询分页后的设备信息(/a/b)", notes="根据传过来的分页信息来查询设备信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
     })
-    @GetMapping(value = "/alldevice/{pagenum}/{pagesize}",produces = "text/plain;charset=utf-8")
-    public String allDeviceOnPaging(@PathVariable("pagenum") int pageNum, @PathVariable("pagesize") int pageSize){
+    @GetMapping(value = "/alldevicepaging",produces = "text/plain;charset=utf-8")
+    public String allDeviceOnPagings(int pageNum,int pageSize){
         Map<Object,Object> allDeviceOnPaging = iDeviceService.findAllDevice(pageNum,pageSize);
         if(!allDeviceOnPaging.isEmpty()) {
             allDeviceOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());

@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * 实验室实体类
+ */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -11,9 +14,9 @@ import java.io.Serializable;
 public class Laboratory implements Serializable {
     private int id;
     @NonNull
-    private String laboratoryName;
+    private String laboratoryName;//实验室名字
     @NonNull
-    private String faculty;
+    private String faculty;//实验室所属系别
     @NonNull
-    private String laboratoryResponsibility;
+    private String laboratoryResponsibility;//实验室负责人
 }

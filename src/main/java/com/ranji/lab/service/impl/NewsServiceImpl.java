@@ -66,4 +66,19 @@ public class NewsServiceImpl implements INewsService {
         newsNextToNextMap.put("data",newsNextToNext);
         return newsNextToNextMap;
     }
+
+    @Override
+    public Map<Object, Object> findLikeNews(String like, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<News> all = newsMapper.findLikeNews(like);
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
+    }
 }

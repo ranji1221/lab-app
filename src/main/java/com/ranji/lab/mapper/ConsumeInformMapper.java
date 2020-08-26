@@ -2,7 +2,6 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ConsumeInformAndConsumeTypeNameDto;
 import com.ranji.lab.dto.ConsumeInformDto;
-import com.ranji.lab.dto.DeviceDto;
 import com.ranji.lab.entity.ConsumeInform;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

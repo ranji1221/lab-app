@@ -139,13 +139,13 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序以及分页后的新闻
      */
-    @ApiOperation(value="查询由时间排序以及分页后的新闻", notes="前端通过访问接口获得所需新闻")
+    @ApiOperation(value="分页查询新闻", notes="前端通过访问接口获得所需新闻")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "几条数据", required = true, dataType = "String"),
     })
-    @GetMapping(value = "/allnews/{pageNum}/{pageSize}",produces = "text/plain;charset=utf-8")
-    public String allNewsOnPaging(@PathVariable("pageNum") int pageNum,@PathVariable("pageSize") int pageSize){
+    @GetMapping(value = "/allnewspaging",produces = "text/plain;charset=utf-8")
+    public String allNewsOnPaging(int pageNum,int pageSize){
         Map<Object,Object> allNews = iNewsService.findAllNews(pageNum, pageSize);
         if(!allNews.isEmpty()) {
             allNews.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
@@ -156,7 +156,7 @@ public class PortalController {
         }
     }
 
-    @ApiOperation(value="查询所有新闻", notes="根据传过来的新闻信息来查询新闻")
+    @ApiOperation(value="分页查询所有新闻", notes="根据传过来的新闻信息来查询新闻")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
@@ -174,7 +174,7 @@ public class PortalController {
     }
 
 
-    @ApiOperation(value="查询本id的新闻", notes="前端通过访问接口获得所需新闻")
+    @ApiOperation(value="通过id查询新闻", notes="前端通过访问接口获得所需新闻")
     @ApiImplicitParam(name = "id", value = "第几条新闻", required = true, dataType = "String")
     @PostMapping(value = "/findnewsbyid/{id}",produces = "text/plain;charset=utf-8")
     public String findNewsById(@PathVariable("id") int id){
@@ -295,13 +295,13 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序以及分页后的通知公告
      */
-    @ApiOperation(value="查询由时间排序以及分页后的通知公告", notes="前端通过访问接口获得所需通知公告")
+    @ApiOperation(value="分页查询由时间排序以及分页后的通知公告", notes="前端通过访问接口获得所需通知公告")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "几条数据", required = true, dataType = "String"),
     })
-    @GetMapping(value = "/allnotice/{pageNum}/{pageSize}",produces = "text/plain;charset=utf-8")
-    public String allNoticeOnPaging(@PathVariable("pageNum") int pageNum,@PathVariable("pageSize") int pageSize){
+    @GetMapping(value = "/allnoticepaging",produces = "text/plain;charset=utf-8")
+    public String allNoticeOnPaging(int pageNum,int pageSize){
         Map<Object,Object> allNoticeOnPaging = iNoticeService.findAllNotice(pageNum,pageSize);
         if(!allNoticeOnPaging.isEmpty()) {
             allNoticeOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
@@ -312,7 +312,7 @@ public class PortalController {
         }
     }
 
-    @ApiOperation(value="查询所有通知公告", notes="前端通过访问接口获得所需通知公告")
+    @ApiOperation(value="分页查询所有通知公告", notes="前端通过访问接口获得所需通知公告")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "需要几条数据", required = true, dataType = "String"),
@@ -330,7 +330,7 @@ public class PortalController {
     }
 
 
-    @ApiOperation(value="查询由时间排序以及分页后的通知公告", notes="前端通过访问接口获得所需通知公告")
+    @ApiOperation(value="通过id查询通知公告", notes="前端通过访问接口获得所需通知公告")
     @ApiImplicitParam(name = "id", value = "第几条", required = true, dataType = "String")
     @PostMapping(value = "/findnoticebyid/{id}",produces = "text/plain;charset=utf-8")
     public String findNoticeById(@PathVariable("id") int id){
@@ -415,7 +415,7 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序的实验制度
      */
-    @ApiOperation(value="查询由时间排序以及分页后的实验制度", notes="前端通过访问接口获得所有实验制度")
+    @ApiOperation(value="查询所有由时间排序以及分页后的实验制度", notes="前端通过访问接口获得所有实验制度")
     @GetMapping(value = "/allregime",produces = "text/plain;charset=utf-8")
     public String allRegime(){
         Map<Object,Object> regimeMap = iRegimeService.findAllRegime();
@@ -431,7 +431,7 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序以及分前五的实验制度
      */
-    @ApiOperation(value="查询由前五条的实验制度", notes="前端通过访问接口获得所需实验制度")
+    @ApiOperation(value="查询前五条的实验制度", notes="前端通过访问接口获得所需实验制度")
     @GetMapping(value = "/allregimelatestfive",produces = "text/plain;charset=utf-8")
     public String allRegimeLimitFive() {
         Map<Object, Object> allRegimeOnPaging = iRegimeService.findAllRegime(1, 5);
@@ -447,13 +447,13 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序以及分页后的实验制度
      */
-    @ApiOperation(value="查询由前五条的实验制度", notes="前端通过访问接口获得所需实验制度")
+    @ApiOperation(value="分页查询实验制度", notes="前端通过访问接口获得所需实验制度")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "几条数据", required = true, dataType = "String"),
     })
-    @GetMapping(value = "/allregime/{pageNum}/{pageSize}",produces = "text/plain;charset=utf-8")
-    public String allRegimeOnPaging(@PathVariable("pageNum") int pageNum,@PathVariable("pageSize") int pageSize) {
+    @GetMapping(value = "/allregimepaging",produces = "text/plain;charset=utf-8")
+    public String allRegimeOnPaging(int pageNum,int pageSize) {
         Map<Object, Object> allRegimeOnPaging = iRegimeService.findAllRegime(pageNum, pageSize);
         if (!allRegimeOnPaging.isEmpty()) {
             allRegimeOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
@@ -464,7 +464,7 @@ public class PortalController {
         }
     }
 
-    @ApiOperation(value="查询所有实验制度", notes="前端通过访问接口获得所需实验制度")
+    @ApiOperation(value="分页查询所有实验制度", notes="前端通过访问接口获得所需实验制度")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "需要几条数据", required = true, dataType = "String"),
@@ -482,7 +482,7 @@ public class PortalController {
     }
 
 
-    @ApiOperation(value="查询具体id的实验制度", notes="前端通过访问接口获得所需实验制度")
+    @ApiOperation(value="通过id查询实验制度", notes="前端通过访问接口获得所需实验制度")
     @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "String")
     @PostMapping(value = "/findregimebyid/{id}",produces = "text/plain;charset=utf-8")
     public String findRegimeById(@PathVariable("id") int id){
@@ -570,7 +570,7 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序的教学科研
      */
-    @ApiOperation(value="查询由所有的教学科研", notes="前端通过访问接口获得所需教学科研")
+    @ApiOperation(value="查询所有的教学科研", notes="前端通过访问接口获得所需教学科研")
     @GetMapping(value = "/allstudy",produces = "text/plain;charset=utf-8")
     public String allStudy(){
         Map<Object,Object> studyMap = iStudyService.findAllStudy();
@@ -585,7 +585,7 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序以及前五条的教学科研
      */
-    @ApiOperation(value="查询由前五条的教学科研", notes="前端通过访问接口获得所需教学科研")
+    @ApiOperation(value="查询前五条的教学科研", notes="前端通过访问接口获得所需教学科研")
     @GetMapping(value = "/allstudylatestfive",produces = "text/plain;charset=utf-8")
     public String allStudyLimitFive(){
         Map<Object,Object> allStudyeOnPaging = iStudyService.findAllStudy(1,5);
@@ -601,13 +601,13 @@ public class PortalController {
     /*
     前台通过请求获得经由时间排序以及分页后的教学科研
      */
-    @ApiOperation(value="查询分页后的的教学科研", notes="前端通过访问接口获得所需教学科研")
+    @ApiOperation(value="分页查询教学科研", notes="前端通过访问接口获得所需教学科研")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "几条数据", required = true, dataType = "String"),
     })
-    @GetMapping(value = "/allstudy/{pageNum}/{pageSize}",produces = "text/plain;charset=utf-8")
-    public String allStudyOnPaging(@PathVariable("pageNum") int pageNum,@PathVariable("pageSize") int pageSize){
+    @GetMapping(value = "/allstudypaging",produces = "text/plain;charset=utf-8")
+    public String allStudyOnPaging(int pageNum,int pageSize){
         Map<Object,Object> allStudyeOnPaging = iStudyService.findAllStudy(pageNum,pageSize);
         if(!allStudyeOnPaging.isEmpty()) {
             allStudyeOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
@@ -618,7 +618,7 @@ public class PortalController {
         }
     }
 
-    @ApiOperation(value="查询所有教学科研", notes="前端通过访问接口获得所需教学科研")
+    @ApiOperation(value="分页查询所有教学科研", notes="前端通过访问接口获得所需教学科研")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "需要几条数据", required = true, dataType = "String"),
@@ -663,4 +663,29 @@ public class PortalController {
             return JSON.toJSONString(studyNextToNext);
         }
     }
+
+
+    /**
+     * 模糊查找
+     */
+
+    //模糊查找新闻
+    @ApiOperation(value="模糊查找新闻", notes="模糊查找新闻")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "like", value = "id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "page", value = "id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "id", required = true, dataType = "String")
+    })
+
+    @GetMapping(value = "/likenews",produces = "text/plain;charset=utf-8")
+    public String findLikeNews(String like,int page,int limit){
+        Map<Object, Object> likeNews = iNewsService.findLikeNews(like,page,limit);
+        if(!likeNews.isEmpty()){
+            likeNews.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else{
+            likeNews.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        }
+        return JSON.toJSONString(likeNews);
+    }
+
 }

@@ -1,8 +1,10 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.ExperimentProjectDto;
 import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.entity.News;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -28,4 +30,14 @@ public interface NewsMapper {
     List<News> findNewsNextToNext(int newsId);
     @Select("select count(*) from news")
     int count();
+
+    //模糊查询
+    @Select("<script>" +
+            "select * from news where " +
+            "title like '%${like}%' or " +
+            "information_source like '%${like}%' or " +
+            "author like '%${like}%' or " +
+            "content like '%${like}%'" +
+            "</script>")
+    List<News> findLikeNews(@Param("like") String like);
 }

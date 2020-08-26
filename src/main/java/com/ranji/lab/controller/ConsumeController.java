@@ -107,13 +107,13 @@ public class ConsumeController {
             return JSON.toJSONString(consumeInformMap);
         }
     }
-    @ApiOperation(value="获取分页后的耗材信息", notes="根据传过来的分页信息来查询耗材信息")
+    @ApiOperation(value="分页查询耗材信息", notes="根据传过来的分页信息来查询耗材信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
     })
-    @GetMapping(value = "/allconsumeinform/pagenum/pagesize",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeInform(@PathVariable("pagenum") int pageNum , @PathVariable("pagesize") int pageSize){
+    @GetMapping(value = "/allconsumeinformpaging",produces = "text/plain;charset=utf-8")
+    public String findAllConsumeInformPaging(int pageNum , int pageSize){
         Map<Object,Object> allConsumeInform = iConsumeInformService.findAllConsumeInform(pageNum,pageSize);
         if(!allConsumeInform.isEmpty()){
             allConsumeInform.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
@@ -222,14 +222,14 @@ public class ConsumeController {
             return JSON.toJSONString(map);
         }
     }
-    @ApiOperation(value="分页获取申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
+    @ApiOperation(value="分页查询申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
 
     })
-    @GetMapping(value = "/allconsumepurchase/pagenum/pagesize",produces = "text/plain;charset=utf-8")
-    public String findAllConsumePurchase(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
+    @GetMapping(value = "/allconsumepurchasepaging",produces = "text/plain;charset=utf-8")
+    public String findAllConsumePurchasePaging(int pageNum,int pageSize){
         Map<Object,Object> consumePurchaseMap = iConsumePurchaseService.findAllConsumePurchase(pageNum,pageSize);
         if(!consumePurchaseMap.isEmpty()){
             consumePurchaseMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
@@ -240,15 +240,9 @@ public class ConsumeController {
         }
     }
 
-    @ApiOperation(value="插入管理标准", notes="根据传过来的设备信息来插入管理标准")
-    /*@ApiImplicitParams({
-            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
-    })*/
-    @PostMapping(value = "/insertconsumenorm",produces = "text/plain;chartset=utf-8")
-    public String insertConsumeNorm(ConsumeNormDto consumeNormDto){
+    @ApiOperation(value="插入管理标准bug", notes="根据传过来的设备信息来插入管理标准")
+    @PostMapping(value = "/insertconsumenormbug",produces = "text/plain;chartset=utf-8")
+    public String insertConsumeNormBug(ConsumeNormDto consumeNormDto){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
         if(i<1){
@@ -259,15 +253,9 @@ public class ConsumeController {
             return JSON.toJSONString(insertConsumeNormMap);
         }
     }
-    @ApiOperation(value="更新管理标准", notes="根据传过来的设备信息来更新管理标准")
-    /*@ApiImplicitParams({
-            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
-    })*/
-    @PostMapping(value = "/updateconsumenorm",produces = "text/plain;chartset=utf-8")
-    public String updateConsumeNorm(ConsumeNorm consumeNorm){
+    @ApiOperation(value="更新管理标准bug", notes="根据传过来的设备信息来更新管理标准")
+    @PostMapping(value = "/updateconsumenormbug",produces = "text/plain;chartset=utf-8")
+    public String updateConsumeNormBug(ConsumeNorm consumeNorm){
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.updateConsumeNorm(consumeNorm);
         if(i<1){
@@ -293,13 +281,13 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeNormPaging);
         }
     }*/
-    @ApiOperation(value="分页查找管理标准", notes="根据传过来的设备信息来获取管理标准")
+    @ApiOperation(value="分页查找管理标准bug", notes="根据传过来的设备信息来获取管理标准")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
     })
-    @GetMapping(value = "/allconsumenorm/pagenum/pagesize",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeNorm(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
+    @GetMapping(value = "/allconsumenormbug",produces = "text/plain;charset=utf-8")
+    public String findAllConsumeNormBug(int pageNum,int pageSize){
         Map<Object,Object> allConsumeNormMap = iConsumeNormService.findAll(pageNum,pageSize);
         if(!allConsumeNormMap.isEmpty()){
             allConsumeNormMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
@@ -309,9 +297,9 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeNormMap);
         }
     }
-    @ApiOperation(value="所有的管理标准及内容", notes="根据传过来的设备信息来获取管理标准及内容")
-    @GetMapping(value="/allconsumenormcontent",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeNormContent(){
+    @ApiOperation(value="所有的管理标准及内容bug", notes="根据传过来的设备信息来获取管理标准及内容")
+    @GetMapping(value="/allconsumenormcontentbug",produces = "text/plain;charset=utf-8")
+    public String findAllConsumeNormContentBug(){
         Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.allConsumeContent();
         return JSON.toJSONString(consumeNormContentMap);
     }
@@ -356,6 +344,7 @@ public class ConsumeController {
         }
 
     }
+    @ApiOperation(value="查找所有的保管领用", notes="根据传过来的设备信息来更新保管领用")
     @GetMapping(value = "/allconsumecustody",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustody(){
         List<ConsumeCustody> allConsumeCustody = iConsumeCustodyService.findAll();
@@ -369,7 +358,7 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeCustodyPaging);
         }
     }
-    @ApiOperation(value="获得保管领用包括ID", notes="根据传过来的设备信息来获得")
+    @ApiOperation(value="获得保管领用包括name", notes="根据传过来的设备信息来获得")
     @GetMapping(value = "/allconsumecustodys",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustodys(int page,int limit){
         Map<Object,Object> map = new HashMap<>();
@@ -406,9 +395,9 @@ public class ConsumeController {
         }
     }
 
-    @ApiOperation(value="获得保管领用", notes="根据传过来的设备信息来获得保管领用")
-    @GetMapping(value = "/allconsumecustody/pagenum/pagesize",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeCustody(@PathVariable("pagenum") int pageNum,@PathVariable("pagesize") int pageSize){
+    @ApiOperation(value="分页查询保管领用", notes="根据传过来的设备信息来获得保管领用")
+    @GetMapping(value = "/allconsumecustodypaging",produces = "text/plain;charset=utf-8")
+    public String findAllConsumeCustodyPaging(int pageNum,int pageSize){
         Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.findAll(pageNum,pageSize);
         if(!allConsumeCustodyMap.isEmpty()){
             allConsumeCustodyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
@@ -504,5 +493,70 @@ public class ConsumeController {
             allConsumeAndConsumeNameMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allConsumeAndConsumeNameMap);
         }
+    }
+
+
+    @ApiOperation(value="插入管理标准", notes="根据传过来的设备信息来插入管理标准")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
+    })*/
+    @PostMapping(value = "/insertconsumenorm",produces = "text/plain;chartset=utf-8")
+    public String insertConsumeNorm(ConsumeNormDto consumeNormDto){
+        Map<Object, Object> insertConsumeNormMap = new HashMap<>();
+        int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
+        if(i<1){
+            insertConsumeNormMap.put("status","failure");
+            return JSON.toJSONString(insertConsumeNormMap);
+        }else{
+            insertConsumeNormMap.put("status","success");
+            return JSON.toJSONString(insertConsumeNormMap);
+        }
+    }
+
+    @ApiOperation(value="更新管理标准", notes="根据传过来的设备信息来更新管理标准")
+    /*@ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
+    })*/
+    @PostMapping(value = "/updateconsumenorm",produces = "text/plain;chartset=utf-8")
+    public String updateConsumeNorm(ConsumeNorm consumeNorm){
+        Map<Object, Object> updateConsumeNormMap = new HashMap<>();
+        int i = iConsumeNormService.updateConsumeNorm(consumeNorm);
+        if(i<1){
+            updateConsumeNormMap.put("status","failure");
+            return JSON.toJSONString(updateConsumeNormMap);
+        }else{
+            updateConsumeNormMap.put("status","success");
+            return JSON.toJSONString(updateConsumeNormMap);
+        }
+    }
+
+    @ApiOperation(value="分页查找管理标准", notes="根据传过来的设备信息来获取管理标准")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "每页几条", required = true, dataType = "String")
+    })
+    @GetMapping(value = "/consumenormpaging",produces = "text/plain;charset=utf-8")
+    public String findAllConsumeNormpaging(int page,int limit){
+        Map<Object,Object> allConsumeNormMap = iConsumeNormService.findAllConsumeNormPaging(page,limit);
+        if(!allConsumeNormMap.isEmpty()){
+            allConsumeNormMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(allConsumeNormMap);
+        }else{
+            allConsumeNormMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allConsumeNormMap);
+        }
+    }
+
+    @ApiOperation(value="所有的管理标准及内容", notes="根据传过来的设备信息来获取管理标准及内容")
+    @GetMapping(value="/consumenormcontent",produces = "text/plain;charset=utf-8")
+    public String findAllConsumeNormContent(){
+        Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.allConsumeContent();
+        return JSON.toJSONString(consumeNormContentMap);
     }
 }

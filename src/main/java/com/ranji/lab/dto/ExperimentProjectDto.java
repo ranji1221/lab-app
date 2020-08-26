@@ -1,7 +1,5 @@
 package com.ranji.lab.dto;
 
-import com.ranji.lab.entity.ProjectConsume;
-import com.ranji.lab.entity.ProjectDevice;
 import lombok.*;
 
 import java.io.Serializable;

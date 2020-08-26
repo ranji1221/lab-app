@@ -14,5 +14,5 @@ import java.io.Serializable;
 public class Banner implements Serializable {
     private int id;
     @NonNull
-    private int imageId;
+    private int imageId;//图片id
 }

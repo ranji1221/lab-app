@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * 设备信息实体类
@@ -18,11 +17,11 @@ import java.util.UUID;
 public class Device implements Serializable {
     private int id;
     @NonNull
-    private int deviceModelId;
+    private int deviceModelId;//设备类型id
     @NonNull
-    private String uuid;
+    private String uuid;//设备类型uuid唯一标识
     @NonNull
-    private String factime;
+    private String factime;//设备出厂日期
 
     public void setFactime(String factime){
         this.factime=factime;

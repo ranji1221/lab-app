@@ -11,4 +11,6 @@ public interface IReportRepairService {
     int updateReportRepair(ReportRepair reportRepair);
 
     Map<Object,Object> AllReportRepair();
+
+    Map<Object,Object> AllReportRepair(int pageNum,int pageSize);
 }

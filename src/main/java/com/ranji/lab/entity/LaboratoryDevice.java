@@ -2,6 +2,9 @@ package com.ranji.lab.entity;
 
 import lombok.*;
 
+/**
+ * 实验室设备关联实体类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,9 +12,9 @@ import lombok.*;
 public class LaboratoryDevice {
     private int id;
     @NonNull
-    private int laboratoryId;
+    private int laboratoryId;//实验室id
     @NonNull
-    private int deviceId;
+    private int deviceId;//设备id
     @NonNull
-    private String status;
+    private String status;//实验室状态
 }

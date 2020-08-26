@@ -1,7 +1,6 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ExperimentProjectDto;
-import com.ranji.lab.entity.Banner;
 import com.ranji.lab.entity.ExperimentProject;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;

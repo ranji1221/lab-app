@@ -16,15 +16,15 @@ import java.util.Date;
 public class ConsumeCustody implements Serializable {
     private int id;
     @NonNull
-    private int consumeId;
+    private int consumeId;//耗材id
     @NonNull
-    private String recipient;
+    private String recipient;//领用人
     @NonNull
-    private String date;
+    private String date;//领用日期
     @NonNull
-    private int count;
+    private int count;//领用数量
     @NonNull
-    private String status;
+    private String status;//领用状态
 
     public void setDate(String date){
         this.date = date;
@@ -32,18 +32,4 @@ public class ConsumeCustody implements Serializable {
     public Date getDate(){
         return DateUtil.StringToDate(this.date,"yyyy-MM-dd");
     }
-
-    /*public ConsumeCustody(int id, ConsumeCustodyDto consumeCustodyDto){
-        this.id = id;
-        this.consumeId = consumeCustodyDto.getConsumeId();
-        this.recipient = consumeCustodyDto.getRecipient();
-        this.date = DateUtil.DateToString(consumeCustodyDto.getDate(),"yyyy-MM-dd");
-        this.count = consumeCustodyDto.getCount();
-    }
-    public ConsumeCustody(ConsumeCustodyDto consumeCustodyDto){
-        this.consumeId = consumeCustodyDto.getConsumeId();
-        this.recipient = consumeCustodyDto.getRecipient();
-        this.date = DateUtil.DateToString(consumeCustodyDto.getDate(),"yyyy-MM-dd");
-        this.count = consumeCustodyDto.getCount();
-    }*/
 }

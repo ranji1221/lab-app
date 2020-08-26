@@ -2,8 +2,6 @@ package com.ranji.lab.dto;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

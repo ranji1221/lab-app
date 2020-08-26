@@ -16,15 +16,15 @@ import java.util.Date;
 public class ConsumePurchase implements Serializable {
     private int id;
     @NonNull
-    private int consumeId;
+    private int consumeId;//购置耗材id
     @NonNull
-    private int num;
+    private int num;//购置耗材数量
     @NonNull
-    private String date;
+    private String date;//购置耗材日期
     @NonNull
-    private String applicant;
+    private String applicant;//购置耗材申请人
     @NonNull
-    private String status;
+    private String status;//购置耗材状态
 
     public void setDate(String date){
         this.date = date;

@@ -22,4 +22,6 @@ public interface INewsService {
     News findById(int id);
 
     Map<Object,Object> findNewsNextToNext(int newsId);
+    //模糊查找
+    Map<Object,Object> findLikeNews(String like,int pageNum, int pageSize);
 }
