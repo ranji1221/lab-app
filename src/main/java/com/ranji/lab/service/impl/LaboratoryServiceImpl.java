@@ -21,6 +21,7 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     private LaboratoryMapper laboratoryMapper;
     @Override
     public int insertLaboratory(LaboratoryDto laboratoryDto) {
+
         return laboratoryMapper.insertLaboratory(laboratoryDto);
     }
 
@@ -47,7 +48,6 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     public Map<Object, Object> findAllLaboratory(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Laboratory> all = laboratoryMapper.findAll();
-
         PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();
 

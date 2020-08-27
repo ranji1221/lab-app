@@ -30,6 +30,8 @@ public class ConsumeInformAndConsumeTypeNameDto implements Serializable {
     private String supid;
     @NonNull
     private String typeName;
+    @NonNull
+    private String unitName;
 
     public void setFactime(String factime){
         this.factime=factime;

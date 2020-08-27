@@ -19,6 +19,7 @@ public class ConsumeCustodyDto {
     private String date;
     private int count;
     private String status;
+    private String unitName;
 
     public void setDate(String date){
         this.date = date;

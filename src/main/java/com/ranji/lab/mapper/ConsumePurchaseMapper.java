@@ -31,11 +31,11 @@ public interface ConsumePurchaseMapper {
             "where id = #{id}" +
             "</script>")
     int updateConsumePurchase(ConsumePurchase consumePurchase);
-    @Select("select consume_purchase.* from consume_purchase order by date desc")
+    @Select("select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id order by date desc")
     List<ConsumePurchase> findAll();
-    @Select("select consume_purchase.* from consume_purchase where id = #{id}")
+    @Select("select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id where id = #{id}")
     ConsumePurchase findById(int id);
-    @Select("select cp.*,ci.name as consume_name from consume_purchase cp join consume_inform ci on ci.id = cp.consume_id where cp.id = #{id}")
+    @Select("select cp.*,ci.name as consume_name,ci.unit_name unitName from consume_purchase cp join consume_inform ci on ci.id = cp.consume_id where cp.id = #{id}")
     ConsumePurchaseDto findNameById(int id);
 
     @Select("select count(*) from consume_purchase")

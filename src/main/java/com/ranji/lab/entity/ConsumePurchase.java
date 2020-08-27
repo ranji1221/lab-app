@@ -25,6 +25,10 @@ public class ConsumePurchase implements Serializable {
     private String applicant;//购置耗材申请人
     @NonNull
     private String status;//购置耗材状态
+    @NonNull
+    private String unitName;
+    @NonNull
+    private String consumeName;
 
     public void setDate(String date){
         this.date = date;

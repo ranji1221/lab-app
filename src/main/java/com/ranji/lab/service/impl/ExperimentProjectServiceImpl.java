@@ -41,21 +41,12 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
     /**
      *
      * @param experimentProject
-     * @param projectConsumeLists 耗材信息
      * @return
      */
     @Override
     @Transactional
-    public int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists) {
-        experimentProjectMapper.insertExperimentProject(experimentProject);
-        int i = experimentProjectMapper.latestExperimentProjectData();
-        if(i>0){
-            List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(projectConsumeLists, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
-            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
-                projectConsumeDto.setProjectId(i);
-                projectConsumeMapper.insertProjectConsume(projectConsumeDto);
-            }
-        }
+    public int insertExperimentProject(ExperimentProject experimentProject) {
+        int i = experimentProjectMapper.insertExperimentProject(experimentProject);
         return i;
     }
     //查询全部
@@ -118,13 +109,13 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
     public int updExperimentProject(ExperimentProject experimentProject, String p1) {
             List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(p1, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
 
-            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+            /*for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
                 if(projectConsumeDto.getStatus()==0){
                     projectConsumeMapper.insertProjectConsume(projectConsumeDto);
                 }else if(projectConsumeDto.getStatus()==1){
                     projectConsumeMapper.updProjectConsume(projectConsumeDto);
                 }
-            }
+            }*/
         return experimentProjectMapper.updExperimentProject(experimentProject);
     }
 

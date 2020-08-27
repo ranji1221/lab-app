@@ -2,10 +2,7 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ExperimentProjectDto;
 import com.ranji.lab.entity.ExperimentProject;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
  */
 public interface ExperimentProjectMapper {
     //新增
+    @Options(useGeneratedKeys=true,keyColumn="id",keyProperty = "id")
     @Insert("insert into experiment_project (experiment_name,experiment_target,experiment_content,experiment_process,status) values (#{experimentName},#{experimentTarget},#{experimentContent},#{experimentProcess},0)")
     int insertExperimentProject(ExperimentProject experimentProject);
     @Select("select Max(id) from experiment_project")
@@ -32,7 +30,25 @@ public interface ExperimentProjectMapper {
     @Select("select * from experiment_project where id = #{id}")
     ExperimentProjectDto idFindExperimentProject(int id);
     //修改该项目信息
-    @Update("update experiment_project set experiment_name = #{experimentName}, experiment_target = #{experimentTarget} ,experiment_content = #{experimentContent}, experiment_process = #{experimentProcess},status = #{status} where id = #{id}")
+    @Update("<script>" +
+            "update experiment_project set " +
+            "<if test = 'experimentName != null '>" +
+            "experiment_name = #{experimentName}," +
+            "</if>" +
+            "<if test = 'experimentTarget != null '>" +
+            "experiment_target = #{experimentTarget} ," +
+            "</if>" +
+            "<if test = 'experimentContent != null '>" +
+            "experiment_content = #{experimentContent}, " +
+            "</if>" +
+            "<if test = 'experimentProcess != null '>" +
+            "experiment_process = #{experimentProcess}," +
+            "</if>" +
+            "<if test = 'status != null '>" +
+            "status = #{status} " +
+            "</if>" +
+            "where id = #{id}" +
+            "</script>")
     int updExperimentProject(ExperimentProject experimentProject);
 
     //模糊查询

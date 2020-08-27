@@ -32,6 +32,10 @@ public class DeviceAndDeviceTypeNameDto {
     private String type;
     @NonNull
     private String typeName;
+    @NonNull
+    private String unitName;
+    @NonNull
+    private int lifetime;
 
     public void setFactime(String factime){
         this.factime=factime;

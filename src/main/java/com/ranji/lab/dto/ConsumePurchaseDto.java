@@ -15,4 +15,5 @@ public class ConsumePurchaseDto {
     private String applicant;
     private String status;
     private String consumeName;
+    private String unitName;
 }

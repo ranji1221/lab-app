@@ -1,18 +1,24 @@
 package com.ranji.lab.dto;
 
+import com.ranji.lab.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 设备信息实体类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeviceIntelligentAnalyzeDto {
+public class LaboratoryDeviceNumDto implements Serializable {
     private int id;
+    @NonNull
     private String deviceName;
-    private String brand;
-    private int status;
+    @NonNull
     private int count;
-    private String laboratoryName;
-    private String unitName;
 }

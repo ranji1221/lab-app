@@ -10,6 +10,7 @@ import com.ranji.lab.dto.ProjectDeviceDto;
 import com.ranji.lab.entity.Arrange;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.LaboratoryDevice;
+import com.ranji.lab.entity.ProjectDevice;
 import com.ranji.lab.mapper.ArrangeMapper;
 import com.ranji.lab.mapper.LaboratoryDeviceMapper;
 import com.ranji.lab.mapper.ProjectConsumeMapper;
@@ -40,30 +41,40 @@ public class ArrangeServiceImpl implements IArrangeService {
     //插入预约信息
     @Override
     @Transactional
-    public int insertArrange(Arrange arrange,String devices) {
+    public int insertArrange(Arrange arrange,String devices,String consumes) {
         List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
+        List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(consumes, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
         int laboratoryId = arrange.getLaboratoryId();
+        int i = arrangeMapper.insertArrange(arrange);
         for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
             List<LaboratoryDevice> laboratoryDevice = laboratoryDeviceMapper.findLaboratoryDevice(laboratoryId, projectDeviceDto.getDeviceModelId(), projectDeviceDto.getDeviceNum());
             for (LaboratoryDevice device : laboratoryDevice) {
                 ProjectDeviceDto projectDeviceDto1 = new ProjectDeviceDto();
                 projectDeviceDto1.setDeviceNum(1);
-                projectDeviceDto1.setProjectId(arrange.getProjectId());
+                projectDeviceDto1.setArrangeProjectId(arrange.getId());
                 projectDeviceDto1.setExperimentDeviceId(device.getDeviceId());
                 projectDeviceMapper.insertProjectDevice(projectDeviceDto1);
             }
         }
-        return arrangeMapper.insertArrange(arrange);
-    }
-
-    @Override
-    public int insertArrange(Arrange arrange) {
-        return arrangeMapper.insertArrange(arrange);
+        for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+            projectConsumeDto.setArrangeProjectId(arrange.getId());
+            projectConsumeMapper.insertProjectConsume(projectConsumeDto);
+        }
+        return i;
     }
 
     @Override
     public List<ArrangeDto> findAllArrange(Integer status) {
-        return arrangeMapper.findAllArrange(status);
+        List<ArrangeDto> allArrange = arrangeMapper.findAllArrange(status);
+        for (ArrangeDto arrangeDto : allArrange) {
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());
+            StringBuffer devices = new StringBuffer();
+            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
+            }
+            arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
+        }
+        return allArrange;
     }
 
     //分页查询所有的预约实验项目

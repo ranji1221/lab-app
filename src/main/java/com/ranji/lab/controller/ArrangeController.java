@@ -39,7 +39,8 @@ public class ArrangeController {
             @ApiImplicitParam(name = "timeStart", value = "开始时间", required = true, dataType = "String"),
             @ApiImplicitParam(name = "timeStop", value = "结束时间", required = true, dataType = "String"),
             @ApiImplicitParam(name = "responsibility", value = "管理员", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "devices", value = "设备信息", required = true, dataType = "String")
+            @ApiImplicitParam(name = "devices", value = "设备信息", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "consumes", value = "耗材信息", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -47,9 +48,9 @@ public class ArrangeController {
     })
     @PostMapping(value = "insertArrange")
     @ResponseBody
-    public String insertArrange1(Arrange arrange,String devices){
+    public String insertArrange1(Arrange arrange,String devices,String consumes){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iArrangeService.insertArrange(arrange,devices);
+        int i = iArrangeService.insertArrange(arrange,devices,consumes);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);
@@ -144,7 +145,7 @@ public class ArrangeController {
      */
     @ApiOperation(value="按照id查询的预约信息", notes="按照id查询的预约信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "预约实验日期", required = true, dataType = "String")
+            @ApiImplicitParam(name = "id", value = "预约接口", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),

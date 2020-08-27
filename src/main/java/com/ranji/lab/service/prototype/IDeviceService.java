@@ -1,11 +1,9 @@
 package com.ranji.lab.service.prototype;
 
-import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
-import com.ranji.lab.dto.DeviceAndModelDto;
-import com.ranji.lab.dto.DeviceDto;
-import com.ranji.lab.dto.DeviceIntelligentAnalyzeDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.News;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +31,10 @@ public interface IDeviceService {
     int updateDeviceAndDeviceModel(DeviceAndModelDto deviceAndModelDto);
 
     Map<Object,Object> findIntelligentAnalyze(int pageNum,int pageSize);
+
+    //没有分配实验室的设备的数量
+    List<LaboratoryDeviceNumDto> findNoAllocationDeviceTypeNum();
+
+    //按照实验室查询拥有设备数量
+    List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int id);
 }

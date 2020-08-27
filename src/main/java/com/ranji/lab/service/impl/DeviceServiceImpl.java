@@ -2,10 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
-import com.ranji.lab.dto.DeviceAndModelDto;
-import com.ranji.lab.dto.DeviceDto;
-import com.ranji.lab.dto.DeviceIntelligentAnalyzeDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.DeviceModel;
 import com.ranji.lab.mapper.DeviceMapper;
@@ -199,6 +196,16 @@ public class DeviceServiceImpl implements IDeviceService {
         map.put("data",intelligentAnalyze);
 
         return map;
+    }
+
+    @Override
+    public List<LaboratoryDeviceNumDto> findNoAllocationDeviceTypeNum() {
+        return deviceMapper.findNoAllocationDeviceTypeNum();
+    }
+
+    @Override
+    public List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int id) {
+        return deviceMapper.laboratoryIdFindDevice(id);
     }
 
 }

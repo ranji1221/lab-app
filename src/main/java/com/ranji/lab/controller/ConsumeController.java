@@ -209,7 +209,7 @@ public class ConsumeController {
                 consumePurchaseDto.setNum(allConsumePurchase.getNum());
                 consumePurchaseDto.setStatus(allConsumePurchase.getStatus());
                 consumePurchaseDto.setId(allConsumePurchase.getId());
-
+                consumePurchaseDto.setUnitName(allConsumePurchase.getUnitName());
                 allConsumePurchasess.add(consumePurchaseDto);
             }
             int total = iConsumePurchaseService.getCount();
@@ -381,7 +381,8 @@ public class ConsumeController {
                 consumeCustodyDto.setDate(DateUtil.DateToString(allConsumecustody.getDate(),"yyyy-MM-dd"));
                 consumeCustodyDto.setStatus(allConsumecustody.getStatus());
                 consumeCustodyDto.setId(allConsumecustody.getId());
-
+                consumeCustodyDto.setUnitName(allConsumecustody.getUnitName());
+                consumeCustodyDto.setCount(allConsumecustody.getCount());
                 allConsumeCustodyss.add(consumeCustodyDto);
             }
             int total = iConsumeCustodyService.getCount();
@@ -556,7 +557,9 @@ public class ConsumeController {
     @ApiOperation(value="所有的管理标准及内容", notes="根据传过来的设备信息来获取管理标准及内容")
     @GetMapping(value="/consumenormcontent",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNormContent(){
-        Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.allConsumeContent();
-        return JSON.toJSONString(consumeNormContentMap);
+        List<ConsumeNorm> all = iConsumeNormService.findAll();
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",all);
+        return JSON.toJSONString(map);
     }
 }

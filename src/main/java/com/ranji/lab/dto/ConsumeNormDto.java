@@ -21,6 +21,8 @@ public class ConsumeNormDto {
     private String time;
     @NonNull
     private String content;
+    @NonNull
+    private String unitName;
 
     public void setTime(String time){
         this.time = time;

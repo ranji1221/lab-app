@@ -2,10 +2,7 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ArrangeDto;
 import com.ranji.lab.entity.Arrange;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
  */
 public interface ArrangeMapper {
     //新增预约信息
+    @Options(useGeneratedKeys=true,keyColumn="id",keyProperty = "id")
     @Insert("insert into arrange (laboratory_id,project_id,num,arrange_time,date,time_start,time_stop,responsibility,status) values (#{laboratoryId},#{projectId},#{num},now(),#{date},#{timeStart},#{timeStop},#{responsibility},0)")
     int insertArrange(Arrange arrange);
 

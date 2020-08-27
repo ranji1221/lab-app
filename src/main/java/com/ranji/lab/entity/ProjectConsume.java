@@ -16,7 +16,7 @@ public class ProjectConsume implements Serializable {
     @NonNull
     private int experimentConsumeId;//实验耗材id
     @NonNull
-    private int projectId;//实验项目id
+    private int arrangeProjectId;//实验项目id
     @NonNull
     private int consumeNum;//实验所需耗材数量
     @NonNull

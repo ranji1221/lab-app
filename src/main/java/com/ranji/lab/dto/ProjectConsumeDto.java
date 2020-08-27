@@ -11,7 +11,7 @@ public class ProjectConsumeDto {
     @NonNull
     private Integer experimentConsumeId;
     @NonNull
-    private Integer projectId;
+    private Integer arrangeProjectId;
     @NonNull
     private Integer consumeNum;
     @NonNull

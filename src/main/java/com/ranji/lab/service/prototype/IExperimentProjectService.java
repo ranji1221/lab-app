@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public interface IExperimentProjectService {
     //插入
-    int insertExperimentProject(ExperimentProject experimentProject, String projectConsumeLists);
+    int insertExperimentProject(ExperimentProject experimentProject);
     //查询全部
     List<ExperimentProjectDto> findAllExperimentProject(Integer status);
     //分页查询

@@ -1,22 +1,19 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.ranji.lab.dto.DeviceAndDeviceTypeNameDto;
-import com.ranji.lab.dto.DeviceAndModelDto;
-import com.ranji.lab.dto.DeviceDto;
-import com.ranji.lab.dto.DeviceTypeDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.IDeviceModelService;
 import com.ranji.lab.service.prototype.IDeviceService;
 import com.ranji.lab.service.prototype.IDeviceTypeService;
 import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +111,7 @@ public class DeviceController {
             return JSON.toJSONString(allDeviceMap);
         }
     }
-    @ApiOperation(value="分页查询所有设备信息(?x=a&y=b)", notes="调用接口直接返回所有设备信息")
+    @ApiOperation(value="分页查询所有设备信息", notes="调用接口直接返回所有设备信息")
     @GetMapping(value = "/alldevices",produces = "text/plain;charset=utf-8")
     public String allDevices(int page,int limit){
         Map<Object,Object> allDeviceMap = iDeviceService.findDeviceAndModel(page,limit);
@@ -129,7 +126,7 @@ public class DeviceController {
     /*
     前台通过请求获得分页后的设备信息
     */
-    @ApiOperation(value="分页查询分页后的设备信息(/a/b)", notes="根据传过来的分页信息来查询设备信息")
+    @ApiOperation(value="分页查询分页后的设备信息", notes="根据传过来的分页信息来查询设备信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
@@ -261,20 +258,60 @@ public class DeviceController {
     /*
         前台通过请求获得智能分析的设备信息
     */
-    @ApiOperation(value="获取分页后的智能分析设备信息(/a/b)", notes="根据传过来的分页信息来查询智能分析设备信息")
+    @ApiOperation(value="获取分页后的智能分析设备信息", notes="根据传过来的分页信息来查询智能分析设备信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
+            @ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "每页几条", required = true, dataType = "String")
     })
     @GetMapping(value = "/findIntelligentAnalyze",produces = "text/plain;charset=utf-8")
-    public String findIntelligentAnalyze(int pageNum,int pageSize){
-        Map<Object,Object> allDeviceOnPaging = iDeviceService.findIntelligentAnalyze(pageNum,pageSize);
+    public String findIntelligentAnalyze(int page,int limit){
+        Map<Object,Object> allDeviceOnPaging = iDeviceService.findIntelligentAnalyze(page,limit);
         if(!allDeviceOnPaging.isEmpty()) {
             allDeviceOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(allDeviceOnPaging);
         }else{
             allDeviceOnPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allDeviceOnPaging);
+        }
+    }
+    /*
+        没有分配实验室的设备的数量
+    */
+    @ApiOperation(value="查询没有分配实验室的设备的数量", notes="查询没有分配实验室的设备的数量")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/findNoAllocationDeviceTypeNum",produces = "text/plain;charset=utf-8")
+    public String findNoAllocationDeviceTypeNum(){
+
+        List<LaboratoryDeviceNumDto> noAllocationDeviceTypeNum = iDeviceService.findNoAllocationDeviceTypeNum();
+        if(!noAllocationDeviceTypeNum.isEmpty()) {
+            return JSON.toJSONString(noAllocationDeviceTypeNum);
+        }else{
+            return JSON.toJSONString(noAllocationDeviceTypeNum);
+        }
+    }
+
+    /*
+        按照实验室查询拥有设备数量
+    */
+    @ApiOperation(value="查询没有分配实验室的设备的数量", notes="查询没有分配实验室的设备的数量")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "页数", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/laboratoryIdFindDevice",produces = "text/plain;charset=utf-8")
+    public String laboratoryIdFindDevice(int laboratoryId){
+
+        List<LaboratoryDeviceNumDto> noAllocationDeviceTypeNum = iDeviceService.laboratoryIdFindDevice(laboratoryId);
+        if(!noAllocationDeviceTypeNum.isEmpty()) {
+            return JSON.toJSONString(noAllocationDeviceTypeNum);
+        }else{
+            return JSON.toJSONString(noAllocationDeviceTypeNum);
         }
     }
 }

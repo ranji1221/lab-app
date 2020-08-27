@@ -7,9 +7,12 @@ import com.ranji.lab.service.prototype.*;
 import io.swagger.annotations.*;
 import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.annotation.Resources;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +36,6 @@ public class ExperimentProjectController {
             @ApiImplicitParam(name = "experimentTarget", value = "实验目标", required = true, dataType = "String"),
             @ApiImplicitParam(name = "experimentContent", value = "实验内容", required = true, dataType = "String"),
             @ApiImplicitParam(name = "experimentProcess", value = "实验流程", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "projectConsumeList", value = "需要的耗材信息", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "projectDeviceList", value = "需要的设备信息", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -42,9 +43,9 @@ public class ExperimentProjectController {
     })
     @PostMapping(value = "insertExperimentProject")
     @ResponseBody
-    public String insertExperimentProject(ExperimentProject experimentProject,String projectConsumeLists){
+    public String insertExperimentProject(ExperimentProject experimentProject){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iExperimentProjectService.insertExperimentProject(experimentProject,projectConsumeLists);
+        int i = iExperimentProjectService.insertExperimentProject(experimentProject);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);
@@ -124,8 +125,7 @@ public class ExperimentProjectController {
             @ApiImplicitParam(name = "experimentTarget", value = "实验目标", required = true, dataType = "String"),
             @ApiImplicitParam(name = "experimentContent", value = "实验内容", required = true, dataType = "String"),
             @ApiImplicitParam(name = "experimentProcess", value = "实验流程", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "projectConsumeList", value = "需要的耗材信息", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "projectDeviceList", value = "需要的设备信息", required = true, dataType = "String")
+            @ApiImplicitParam(name = "projectConsumeList", value = "需要的耗材信息", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -133,9 +133,9 @@ public class ExperimentProjectController {
     })
     @PostMapping(value = "updExperimentProject")
     @ResponseBody
-    public String updExperimentProject(ExperimentProject experimentProject,String p1){
+    public String updExperimentProject(ExperimentProject experimentProject,String projectConsumeLists){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iExperimentProjectService.updExperimentProject(experimentProject,p1);
+        int i = iExperimentProjectService.updExperimentProject(experimentProject,projectConsumeLists);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);
@@ -169,11 +169,30 @@ public class ExperimentProjectController {
         }
     }
 
-    @ApiOperation(value="插入实验室", notes="根基传过来的信息插入实验室")
+    @ApiOperation(value="插入实验室", notes="根据传过来的信息插入实验室")
     @PostMapping(value = "insertlaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String insertLaboratory(LaboratoryDto laboratoryDto){
+    public String insertLaboratory(LaboratoryDto laboratoryDto,@RequestParam("file")MultipartFile[] files,String devices){
         Map laboratoryMap = new HashMap<>();
+        //-- 1. 获取项目的根目录
+        String rootDirectory = System.getProperty("user.dir");
+        //-- 2. 创建存放上传资源的目录
+        File resourceDirectory = new File(rootDirectory+File.separator+"upload"+File.separator+"image");
+        if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
+        for(MultipartFile file : files){
+            String jpgname = file.getOriginalFilename();
+            if(jpgname.substring(jpgname.indexOf(".")+1,jpgname.length()).equals("jpg")) {
+                String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
+                try {
+                    file.transferTo(new File(path));
+                    laboratoryDto.setImgSrc(path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                return "{status:jpg plz}";
+            }
+        }
         int i = iLaboratoryService.insertLaboratory(laboratoryDto);
         if(i<1){
             laboratoryMap.put("status","failure");

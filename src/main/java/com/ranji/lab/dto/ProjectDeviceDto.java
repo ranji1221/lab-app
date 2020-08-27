@@ -11,7 +11,7 @@ public class ProjectDeviceDto {
     @NonNull
     private int experimentDeviceId;
     @NonNull
-    private int projectId;
+    private int arrangeProjectId;
     @NonNull
     private int deviceNum;
     private String deviceName;
