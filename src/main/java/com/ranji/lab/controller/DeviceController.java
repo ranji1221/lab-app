@@ -256,7 +256,7 @@ public class DeviceController {
     }
 
     /*
-        前台通过请求获得智能分析的设备信息
+        前台通过请求获得分页后智能分析的设备信息
     */
     @ApiOperation(value="获取分页后的智能分析设备信息", notes="根据传过来的分页信息来查询智能分析设备信息")
     @ApiImplicitParams({
@@ -266,6 +266,21 @@ public class DeviceController {
     @GetMapping(value = "/findIntelligentAnalyze",produces = "text/plain;charset=utf-8")
     public String findIntelligentAnalyze(int page,int limit){
         Map<Object,Object> allDeviceOnPaging = iDeviceService.findIntelligentAnalyze(page,limit);
+        if(!allDeviceOnPaging.isEmpty()) {
+            allDeviceOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(allDeviceOnPaging);
+        }else{
+            allDeviceOnPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allDeviceOnPaging);
+        }
+    }
+    /*
+        前台通过请求获得智能分析的设备的全部信息
+    */
+    @ApiOperation(value="获取智能分析设备信息", notes="根据传过来的分页信息来查询智能分析设备信息")
+    @GetMapping(value = "/findAllIntelligentAnalyze",produces = "text/plain;charset=utf-8")
+    public String findAllIntelligentAnalyze(){
+        Map<Object,Object> allDeviceOnPaging = iDeviceService.findAllIntelligentAnalyze();
         if(!allDeviceOnPaging.isEmpty()) {
             allDeviceOnPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(allDeviceOnPaging);

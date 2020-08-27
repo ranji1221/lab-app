@@ -32,6 +32,8 @@ public interface IDeviceService {
 
     Map<Object,Object> findIntelligentAnalyze(int pageNum,int pageSize);
 
+    Map<Object,Object> findAllIntelligentAnalyze();
+
     //没有分配实验室的设备的数量
     List<LaboratoryDeviceNumDto> findNoAllocationDeviceTypeNum();
 

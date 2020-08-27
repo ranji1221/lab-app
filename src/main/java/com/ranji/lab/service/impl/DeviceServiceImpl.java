@@ -199,6 +199,14 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
+    public Map<Object, Object> findAllIntelligentAnalyze() {
+        List<DeviceIntelligentAnalyzeDto> intelligentAnalyze = deviceMapper.findIntelligentAnalyze();
+        Map<Object,Object> map = new HashMap<>();
+        map.put("data",intelligentAnalyze);
+        return map;
+    }
+
+    @Override
     public List<LaboratoryDeviceNumDto> findNoAllocationDeviceTypeNum() {
         return deviceMapper.findNoAllocationDeviceTypeNum();
     }
