@@ -2,6 +2,7 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.LaboratoryDto;
 import com.ranji.lab.dto.LaboratoryStatusMonitoringDto;
+import com.ranji.lab.dto.StatusMonitoringDto;
 import com.ranji.lab.entity.Laboratory;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
@@ -25,5 +26,6 @@ public interface LaboratoryMapper {
 
     //实验状态监控
     @Select("SELECT a.id, a.date, a.time_start, a.time_stop, ep.experiment_name, a.responsibility, a. STATUS, l.faculty, l.laboratory_name, a.laboratory_id,l.img_src FROM arrange a LEFT JOIN experiment_project ep ON ep.id = a.project_id LEFT JOIN laboratory l ON l.id = a.laboratory_id WHERE a.laboratory_id = #{laboratoryId} AND a. STATUS = 0 ORDER BY a.date ASC, a.time_start ASC, a.time_stop ASC LIMIT 1")
-    LaboratoryStatusMonitoringDto laboratoryStatusMonitoring(int laboratoryId);
+    StatusMonitoringDto laboratoryStatusMonitoring(int laboratoryId);
+
 }

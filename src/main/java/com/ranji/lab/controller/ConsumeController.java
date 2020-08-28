@@ -60,6 +60,7 @@ public class ConsumeController {
             return JSON.toJSONString(insertConsumeInformMap);
         }
     }
+
     @ApiOperation(value="更新耗材信息", notes="根据传过来的设备信息来更新耗材信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
@@ -264,37 +265,6 @@ public class ConsumeController {
         }
     }
 
-    /*@ApiOperation(value="所有的管理标准", notes="根据传过来的设备信息来获取管理标准")
-    @GetMapping(value = "/allconsumenorm",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeNorm(){
-        List<ConsumeNorm> allConsumeNorm = iConsumeNormService.findAll();
-        Map<Object,Object> allConsumeNormPaging = new HashMap<>();
-        if(!allConsumeNorm.isEmpty()) {
-            allConsumeNormPaging.put("data", allConsumeNorm);
-            allConsumeNormPaging.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            return JSON.toJSONString(allConsumeNormPaging);
-        }else{
-            allConsumeNormPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allConsumeNormPaging);
-        }
-    }*/
-    @ApiOperation(value="分页查找管理标准bug", notes="根据传过来的设备信息来获取管理标准")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
-    })
-    @GetMapping(value = "/allconsumenormbug",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeNormBug(int pageNum,int pageSize){
-        Map<Object,Object> allConsumeNormMap = iConsumeNormService.findAll(pageNum,pageSize);
-        if(!allConsumeNormMap.isEmpty()){
-            allConsumeNormMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(allConsumeNormMap);
-        }else{
-            allConsumeNormMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allConsumeNormMap);
-        }
-    }
-
     @ApiOperation(value="插入保管领用", notes="根据传过来的设备信息来插入保管领用")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
@@ -474,6 +444,10 @@ public class ConsumeController {
     }
 
     @ApiOperation(value="查询所有耗材和耗材类型", notes="查询所有耗材和耗材类型")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
     @GetMapping(value = "allconsumeandconsumename",produces = "text/plain;charset=utf-8")
     public String allConsumeAndConsumeName(){
         Map<Object,Object> allConsumeAndConsumeNameMap = new HashMap<>();
@@ -485,6 +459,23 @@ public class ConsumeController {
         }else{
             allConsumeAndConsumeNameMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allConsumeAndConsumeNameMap);
+        }
+    }
+    //分页查询
+    @ApiOperation(value="分页查询查询所有耗材和耗材类型", notes="查询所有耗材和耗材类型")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "耗材类型id", required = true, dataType = "String")
+    })
+    @GetMapping(value = "pageFindConsumeAndConsumeName",produces = "text/plain;charset=utf-8")
+    public String pageFindConsumeAndConsumeName(int page,int limit){
+        Map<Object, Object> objectObjectMap = iConsumeInformService.pageFindConsumeAndConsumeName(page, limit);
+        if(!objectObjectMap.isEmpty()){
+            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }else{
+            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(objectObjectMap);
         }
     }
 
@@ -549,9 +540,25 @@ public class ConsumeController {
     @ApiOperation(value="所有的管理标准及内容", notes="根据传过来的设备信息来获取管理标准及内容")
     @GetMapping(value="/consumenormcontent",produces = "text/plain;charset=utf-8")
     public String findAllConsumeNormContent(){
-        List<ConsumeNorm> all = iConsumeNormService.findAll();
+        ConsumeNorm all = iConsumeNormService.findAll();
         Map<String,Object> map = new HashMap<>();
         map.put("data",all);
+        return JSON.toJSONString(map);
+    }
+    //按照预约id查询实验耗材
+    @ApiOperation(value="按照预约id查询实验耗材", notes="按照预约id查询实验耗材")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "arrangeProjectId", value = "预约id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value="/arrangeProjectIdFindconsumeInform",produces = "text/plain;charset=utf-8")
+    public String arrangeProjectIdFindconsumeInform(int arrangeProjectId){
+        List<ConsumeInform> consumeInformList = iConsumeInformService.arrangeProjectIdFindconsumeInform(arrangeProjectId);
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",consumeInformList);
         return JSON.toJSONString(map);
     }
 }

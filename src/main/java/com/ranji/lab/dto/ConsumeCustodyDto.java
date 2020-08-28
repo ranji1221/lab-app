@@ -18,7 +18,7 @@ public class ConsumeCustodyDto {
     private String recipient;
     private String date;
     private int count;
-    private String status;
+    private int status;
     private String unitName;
 
     public void setDate(String date){

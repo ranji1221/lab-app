@@ -28,23 +28,9 @@ public class ConsumeNormServiceImpl implements IConsumeNormService {
         return consumeNormMapper.updateConsumeNorm(consumeNorm);
     }
 
-    @Override
-    public Map<Object, Object> findAll(int pageNum, int pageSize) {
-
-        PageHelper.startPage(pageNum,pageSize);
-        List<ConsumeNorm> allConsumeNorm = consumeNormMapper.findAll();
-
-        PageInfo<ConsumeNorm> allConsumeNormPaging = new PageInfo<>(allConsumeNorm);
-        long total = allConsumeNormPaging.getTotal();
-
-        Map<Object,Object> allConsumeNormOnPaging = new HashMap<>();
-        allConsumeNormOnPaging.put("data",allConsumeNorm);
-        allConsumeNormOnPaging.put("total",total);
-        return allConsumeNormOnPaging;
-    }
 
     @Override
-    public List<ConsumeNorm> findAll() {
+    public ConsumeNorm findAll() {
         return consumeNormMapper.findAll();
     }
 
@@ -68,4 +54,5 @@ public class ConsumeNormServiceImpl implements IConsumeNormService {
 
         return allMap;
     }
+
 }

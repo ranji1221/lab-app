@@ -24,10 +24,8 @@ public class ConsumeCustody implements Serializable {
     @NonNull
     private int count;//领用数量
     @NonNull
-    private String status;//领用状态
-    @NonNull
+    private int status;//领用状态
     private String unitName;
-    @NonNull
     private String consumeName;
 
     public void setDate(String date){
