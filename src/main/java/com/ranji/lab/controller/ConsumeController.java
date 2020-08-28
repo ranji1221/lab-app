@@ -30,9 +30,6 @@ public class ConsumeController {
     private IConsumeNormService iConsumeNormService;
 
     @Resource
-    private IConsumeNormContentService iConsumeNormContentService;
-
-    @Resource
     private IConsumeTypeService iConsumeTypeService;
 
     /**
@@ -297,20 +294,15 @@ public class ConsumeController {
             return JSON.toJSONString(allConsumeNormMap);
         }
     }
-    @ApiOperation(value="所有的管理标准及内容bug", notes="根据传过来的设备信息来获取管理标准及内容")
-    @GetMapping(value="/allconsumenormcontentbug",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeNormContentBug(){
-        Map<Object, Object> consumeNormContentMap = iConsumeNormContentService.allConsumeContent();
-        return JSON.toJSONString(consumeNormContentMap);
-    }
 
     @ApiOperation(value="插入保管领用", notes="根据传过来的设备信息来插入保管领用")
-    /*@ApiImplicitParams({
-            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
-    })*/
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "recipient", value = "领用人", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "领用日期", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "count", value = "领用数量", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "status", value = "状态", dataType = "String")
+    })
     @PostMapping(value = "insertConsumeCustody",produces = "text/plain;chartset=utf-8")
     public String insertConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
