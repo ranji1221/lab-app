@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ILaboratoryService {
-    int insertLaboratory(LaboratoryDto laboratoryDto);
+    int insertLaboratory(LaboratoryDto laboratoryDto,String devices);
 
     int updateLaboratory(Laboratory laboratory);
 

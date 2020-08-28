@@ -16,5 +16,5 @@ public class LaboratoryDevice {
     @NonNull
     private int deviceId;//设备id
     @NonNull
-    private String status;//实验室状态
+    private int status;//实验室状态
 }

@@ -1,12 +1,14 @@
 package com.ranji.lab.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ranji.lab.dto.LaboratoryDto;
-import com.ranji.lab.dto.LaboratoryStatusMonitoringDto;
-import com.ranji.lab.dto.StatusMonitoringDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.Laboratory;
+import com.ranji.lab.entity.LaboratoryDevice;
+import com.ranji.lab.mapper.LaboratoryDeviceMapper;
 import com.ranji.lab.mapper.LaboratoryMapper;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import org.springframework.stereotype.Service;
@@ -22,10 +24,21 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
 
     @Resource
     private LaboratoryMapper laboratoryMapper;
-    @Override
-    public int insertLaboratory(LaboratoryDto laboratoryDto) {
+    @Resource
+    private LaboratoryDeviceMapper laboratoryDeviceMapper;
 
-        return laboratoryMapper.insertLaboratory(laboratoryDto);
+    @Override
+    public int insertLaboratory(LaboratoryDto laboratoryDto, String devices) {
+        int i = laboratoryMapper.insertLaboratory(laboratoryDto);
+        List<LaboratoryDeviceDto> device = JSON.parseObject(devices, new TypeReference<ArrayList<LaboratoryDeviceDto>>() {});
+        for (LaboratoryDeviceDto laboratoryDeviceDto : device) {
+            LaboratoryDevice laboratoryDevice = new LaboratoryDevice();
+            laboratoryDevice.setDeviceId(laboratoryDeviceDto.getDeviceId());
+            laboratoryDevice.setLaboratoryId(laboratoryDto.getId());
+            laboratoryDevice.setStatus(0);
+            laboratoryDeviceMapper.insertLaboratoryDevice(laboratoryDevice);
+        }
+        return i;
     }
 
     @Override

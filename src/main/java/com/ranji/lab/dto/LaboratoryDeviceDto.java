@@ -8,14 +8,8 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LaboratoryDto {
+public class LaboratoryDeviceDto {
     private int id;
     @NonNull
-    private String laboratoryName;   //
-    @NonNull
-    private String faculty;
-    @NonNull
-    private String laboratoryResponsibility;
-    @NonNull
-    private String imgSrc;
+    private int deviceId;
 }

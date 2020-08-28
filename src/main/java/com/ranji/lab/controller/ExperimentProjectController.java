@@ -193,7 +193,7 @@ public class ExperimentProjectController {
                 return "{status:jpg plz}";
             }
         }
-        int i = iLaboratoryService.insertLaboratory(laboratoryDto);
+        int i = iLaboratoryService.insertLaboratory(laboratoryDto,devices);
         if(i<1){
             laboratoryMap.put("status","failure");
             return JSON.toJSONString(laboratoryMap);
