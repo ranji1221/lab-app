@@ -67,4 +67,25 @@ public class ConsumeInformServiceImpl implements IConsumeInformService {
     public List<ConsumeInformAndConsumeTypeNameDto> findConsumeAndConsumeName() {
         return consumeInformMapper.findConsumeAndConsumeName();
     }
+
+    @Override
+    public Map<Object, Object> pageFindConsumeAndConsumeName(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ConsumeInformAndConsumeTypeNameDto> consumeAndConsumeName = consumeInformMapper.findConsumeAndConsumeName();
+
+
+        PageInfo pageInfo = new PageInfo(consumeAndConsumeName);
+        long total = pageInfo.getTotal();
+
+        Map<Object, Object> allMap= new HashMap<>();
+        allMap.put("data",consumeAndConsumeName);
+        allMap.put("total",total);
+
+        return allMap;
+    }
+
+    @Override
+    public List<ConsumeInform> arrangeProjectIdFindconsumeInform(int arrangeProjectId) {
+        return consumeInformMapper.arrangeProjectIdFindconsumeInform(arrangeProjectId);
+    }
 }

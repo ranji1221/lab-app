@@ -12,9 +12,7 @@ public interface IConsumeNormService {
 
     int updateConsumeNorm(ConsumeNorm consumeNorm);
 
-    Map<Object, Object> findAll(int pageNum, int pageSize);
-
-    List<ConsumeNorm> findAll();
+    ConsumeNorm findAll();
 
     ConsumeNorm findById(int id);
 

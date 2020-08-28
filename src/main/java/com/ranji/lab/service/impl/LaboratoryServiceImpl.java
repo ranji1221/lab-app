@@ -4,12 +4,15 @@ package com.ranji.lab.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.LaboratoryDto;
+import com.ranji.lab.dto.LaboratoryStatusMonitoringDto;
+import com.ranji.lab.dto.StatusMonitoringDto;
 import com.ranji.lab.entity.Laboratory;
 import com.ranji.lab.mapper.LaboratoryMapper;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,23 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     @Override
     public List<Laboratory> dateFindAll(String date, String timeStart, String timeStop) {
         return laboratoryMapper.dateFindAll(date,timeStart,timeStop);
+    }
+
+    @Override
+    public List<StatusMonitoringDto> laboratoryStatusMonitoring() {
+        List<StatusMonitoringDto> list = new ArrayList<>();
+        List<Laboratory> all = laboratoryMapper.findAll();
+        int i = 0;
+        for (Laboratory laboratory : all) {
+            i++;
+            StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
+            statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
+            list.add(statusMonitoringDto);
+            if(i==6){
+                break;
+            }
+        }
+        return list;
     }
 
     @Override

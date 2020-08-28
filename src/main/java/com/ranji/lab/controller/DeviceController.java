@@ -3,9 +3,7 @@ package com.ranji.lab.controller;
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.*;
-import com.ranji.lab.service.prototype.IDeviceModelService;
-import com.ranji.lab.service.prototype.IDeviceService;
-import com.ranji.lab.service.prototype.IDeviceTypeService;
+import com.ranji.lab.service.prototype.*;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +25,8 @@ public class DeviceController {
     private IDeviceTypeService iDeviceTypeService;
     @Resource
     private IDeviceModelService iDeviceModelService;
+    @Resource
+    private ILaboratoryService iLaboratoryService;
 
     /*
     通过前台表单的数据插入设备信息
@@ -327,6 +327,24 @@ public class DeviceController {
             return JSON.toJSONString(noAllocationDeviceTypeNum);
         }else{
             return JSON.toJSONString(noAllocationDeviceTypeNum);
+        }
+    }
+    /*
+        实验状态监控laboratoryStatusMonitoring
+    */
+    @ApiOperation(value="实验状态监控", notes="查询实验状态6条")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/laboratoryStatusMonitoring",produces = "text/plain;charset=utf-8")
+    public String laboratoryStatusMonitoring(){
+
+        List<StatusMonitoringDto> laboratoryStatusMonitoringDtos = iLaboratoryService.laboratoryStatusMonitoring();
+        if(!laboratoryStatusMonitoringDtos.isEmpty()) {
+            return JSON.toJSONString(laboratoryStatusMonitoringDtos);
+        }else{
+            return JSON.toJSONString(laboratoryStatusMonitoringDtos);
         }
     }
 }
