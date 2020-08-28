@@ -311,7 +311,7 @@ public class DeviceController {
     /*
         按照实验室查询拥有设备数量
     */
-    @ApiOperation(value="查询没有分配实验室的设备的数量", notes="查询没有分配实验室的设备的数量")
+    @ApiOperation(value="按照实验室查询拥有设备数量", notes="查询没有分配实验室的设备的数量")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "laboratoryId", value = "页数", required = true, dataType = "String")
     })
