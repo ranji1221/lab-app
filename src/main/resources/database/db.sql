@@ -66,5 +66,25 @@ create table t_news(
 create table t_news_image(
     id int primary key auto_increment,
     title varchar(200),
-    url varchar(500)
+    url varchar(500)    #这个字段其实是保存的图片的真实存储位置，这个字段名应叫为path,我在这里就不更改了
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# article 文章表
+create table t_article(
+    id int primary key auto_increment,
+    title varchar(300),
+    summary varchar(2048),
+    thumbnail_url varchar(500),      # 缩略图访问路径，缩略图单独上传到某个目录下返回相应的访问路径
+    content longtext,               # 文章的内容，内容中的图片以base64存储到数据中
+    publisher varchar(100),
+    create_time timestamp,
+    last_time timestamp
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# article_thumbnail  文章缩略图表
+create table t_article_thumbnail(
+    id int primary key auto_increment,
+    title varchar(200),
+    path varchar(500)    #这个字段其实是保存的图片的真实存储位置
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

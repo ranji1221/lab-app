@@ -2,37 +2,35 @@ package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ranji.lab.entity.News;
-import com.ranji.lab.entity.NewsImage;
-import com.ranji.lab.entity.Slide;
-import com.ranji.lab.mapper.NewsMapper;
-import com.ranji.lab.service.prototype.INewsService;
+import com.ranji.lab.entity.Article;
+import com.ranji.lab.entity.ArticleThumbnail;
+import com.ranji.lab.service.prototype.IArticleService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 /**
- * 新闻控制器
+ * 文章控制器
  */
 @Controller
-public class NewsController {
+public class ArticleController {
     @Resource
-    private INewsService newsService;
+    private IArticleService articleService;
 
-    @GetMapping("/toaddnews")
-    public String toAddNews(){
-        return "content/news";
-    }
-
-    @PostMapping("/uploadNewsImage")
+    /**
+     * 上传文章缩微图接口
+     * @param request
+     * @param file
+     * @return
+     */
+    @PostMapping("/uploadAticleThumbnail")
     @ResponseBody
-    public String uploadNewsImage(HttpServletRequest request, @RequestParam("file") MultipartFile file)
+    public String uploadArticleImage(HttpServletRequest request, @RequestParam("file") MultipartFile file)
             throws Exception{
         //-- 获取图片访问路径的前缀
         String url= request.getRequestURL().toString();
@@ -50,15 +48,15 @@ public class NewsController {
         String path = resourceDirectory.getAbsolutePath()+File.separator+System.currentTimeMillis()+"_"+file.getOriginalFilename();
         //-- System.out.println(path);
         file.transferTo(new File(path));
-        //-- 4. 保存新闻图片
-        NewsImage newsImage = new NewsImage(path);
-        int id = newsService.addNewsImage(newsImage);
+        //-- 4. 保存缩略图
+        ArticleThumbnail articleThumbnail = new ArticleThumbnail(path);
+        int id = articleService.addArticleThumbnail(articleThumbnail);
         //-- 5. 构建返回的JSON
         JSONObject jo = new JSONObject();
         jo.put("code",0);
         jo.put("msg","");
         JSONObject data = new JSONObject();
-        data.put("src",url+"/newsImage/"+id);
+        data.put("src",url+"/articlethumb/"+id);
         data.put("title","");
         jo.put("data",data);
         System.out.println(jo.toJSONString());
@@ -66,16 +64,16 @@ public class NewsController {
     }
 
     /**
-     * 访问某张图片的接口
+     * 访问文章缩略图的接口
      * @param id
      * @return
      * @throws IOException
      * @throws FileNotFoundException
      */
-    @GetMapping(value = "/newsImage/{id}")
+    @GetMapping(value = "/articlethumb/{id}")
     public String getImage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
-        NewsImage newsImage = newsService.getNewsImage(id);
-        File f = new File(newsImage.getUrl());
+        ArticleThumbnail articleThumbnail = articleService.getArticleThumbnail(id);
+        File f = new File(articleThumbnail.getPath());
         //-- 3. 缓存区域
         byte[] buffer = new byte[1024];
         BufferedInputStream bis = null;
@@ -90,27 +88,22 @@ public class NewsController {
         return null;
     }
 
-    @PostMapping(value = "/addnews",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/addarticle",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String addNews(String title,String content){
+    public String addArticle(String title,String summary,String thumbnailUrl,String content,String publisher){
         //System.out.println(title);
         //System.out.println(content);
-        News news = new News(title,content);
-        newsService.issueNews(news);
+        Article article = new Article(title,summary,thumbnailUrl,content,publisher);
+        articleService.issueArticle(article);
         JSONObject jo = new JSONObject();
         jo.put("code",200);
         return jo.toJSONString();
     }
 
-    @GetMapping("/viewnews")
-    public String toNewsDetail(){
-        return "content/detail";
-    }
-
-    @GetMapping(value = "/news")
+    @GetMapping(value = "/article")
     @ResponseBody
     public String getNews(@RequestParam("id") int id){
-        News news = newsService.getNews(id);
-        return JSON.toJSONString(news);
+        Article article = articleService.getArticle(id);
+        return JSON.toJSONString(article);
     }
 }

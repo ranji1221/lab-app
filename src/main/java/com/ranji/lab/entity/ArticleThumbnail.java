@@ -8,14 +8,15 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 新闻所对应的图片实体类
+ * 文章缩略图实体类
+ * 即每篇文章所对应的缩略图类
  */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class NewsImage implements Serializable {
+public class ArticleThumbnail implements Serializable {
     private int id;
     private String title = "";
     @NonNull
-    private String url; //-- 保存图片的路径
+    private String path; //-- 以Base64的形式保存图片到数据库
 }

@@ -66,7 +66,7 @@ public class SlideController {
      * @throws IOException
      * @throws FileNotFoundException
      */
-    @RequestMapping(value = "/slide/{id}",produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/slide/{id}")
     public String getImage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
         /*
         //-- 1. 获取运行程序所在的根目录
