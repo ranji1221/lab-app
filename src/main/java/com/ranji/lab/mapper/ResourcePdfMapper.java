@@ -14,4 +14,6 @@ public interface ResourcePdfMapper {
     int updateResourceDoc(ResourcePdf resourcePdf);
     @Select("select * from resource_pdf")
     List<ResourcePdf> findAll();
+    @Select("select * from resource_pdf where id = #{id}")
+    ResourcePdf findResoucePdfById(int id);
 }

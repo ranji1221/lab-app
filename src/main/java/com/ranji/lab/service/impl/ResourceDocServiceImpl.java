@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ResourceServiceImpl implements IResourceDocService {
+public class ResourceDocServiceImpl implements IResourceDocService {
 
     @Resource
     private ResourceDocMapper resourceDocMapper;
@@ -61,5 +61,10 @@ public class ResourceServiceImpl implements IResourceDocService {
             allMap.put("total",total);
         }
         return allMap;
+    }
+
+    @Override
+    public ResourceDoc findResourceDocById(int id) {
+        return resourceDocMapper.findRrsourceDocById(id);
     }
 }

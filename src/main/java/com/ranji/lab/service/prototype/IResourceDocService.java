@@ -14,4 +14,6 @@ public interface IResourceDocService {
 
     Map<Object,Object> ResourceDocPaging(int pageNum,int pageSize);
 
+    ResourceDoc findResourceDocById(int id);
+
 }

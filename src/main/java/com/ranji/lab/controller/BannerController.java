@@ -1,6 +1,8 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.dto.BannerImagesDto;
+import com.ranji.lab.entity.Banner;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Images;
 import com.ranji.lab.service.prototype.IBannerService;
@@ -13,16 +15,19 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@Api(tags = "上传接口")
+@Api(tags = "轮播图接口")
 @Controller
-public class UploadController {
+public class BannerController {
     @GetMapping(value = "/toupload",produces = "text/plain;charset=utf-8")
     public String toUpload(){
         return "slide/upload";
@@ -85,6 +90,42 @@ public class UploadController {
 
         return null;
     }
+
+    @ApiOperation(value = "获取门户轮播图信息",notes = "获取所有轮播图信息")
+    @GetMapping(value = "allbanner",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String allImage(){
+        List<BannerImagesDto> allBannerImages = new ArrayList<>();
+        for(int i = 1;i<4;i++){
+            int imagesId = iBannerService.findSureBannerId(i);
+            BannerImagesDto bannerImagesDto = new BannerImagesDto();
+            bannerImagesDto.setId(i);
+            bannerImagesDto.setSureUrl("/bannerimagejpg/"+imagesId);
+            allBannerImages.add(bannerImagesDto);
+        }
+        HashMap<Object, Object> allData = new HashMap<>();
+        if(!allBannerImages.isEmpty()){
+            allData.put("data",allBannerImages);
+            allData.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+        }else{
+            allData.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
+        }
+        return JSON.toJSONString(allData);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @ApiOperation(value = "插入jpg格式的图片",notes = "通过传来的文件插入jpg格式的图片")
     @ApiImplicitParam(name = "files",value = "图片文件(无法在swagger上进行测试，需要自写前端页面验证)",dataType = "String")
     @PostMapping(value = "/insertimagesjpg",produces = "text/plain;charset=utf-8")
@@ -126,7 +167,4 @@ public class UploadController {
             return JSON.toJSONString(imagesMap);
         }
     }
-
-
-
 }

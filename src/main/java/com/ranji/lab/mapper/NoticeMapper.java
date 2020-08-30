@@ -3,6 +3,7 @@ package com.ranji.lab.mapper;
 import com.ranji.lab.entity.News;
 import com.ranji.lab.entity.Notice;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -21,4 +22,14 @@ public interface NoticeMapper {
     List<News> findNoticeNextToNext(int noticeId);
     @Select("select count(*) from notice")
     int count();
+
+    //模糊查询
+    @Select("<script>" +
+            "select * from notice where " +
+            "title like '%${like}%' or " +
+            "information_source like '%${like}%' or " +
+            "author like '%${like}%' or " +
+            "content like '%${like}%'" +
+            "</script>")
+    List<Notice> findLikeNotice(@Param("like") String like);
 }

@@ -18,4 +18,7 @@ public interface IRegimeService {
     Regime findById(int id);
 
     Map<Object,Object> findRegimeNextToNext(int regimeId);
+
+    //模糊查找
+    Map<Object,Object> findLikeRegime(String like,int pageNum, int pageSize);
 }

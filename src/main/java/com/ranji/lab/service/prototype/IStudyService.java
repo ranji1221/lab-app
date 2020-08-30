@@ -20,4 +20,7 @@ public interface IStudyService {
     Study findById(int id);
 
     Map<Object,Object> findStudyNextToNext(int studyId);
+
+    //模糊查找
+    Map<Object,Object> findLikeStudy(String like,int pageNum, int pageSize);
 }

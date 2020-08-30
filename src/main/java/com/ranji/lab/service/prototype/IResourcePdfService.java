@@ -12,4 +12,6 @@ public interface IResourcePdfService {
     Map<Object,Object> ResourcePdfInTen();
 
     Map<Object,Object> ResourcePdfPaging(int pageNum,int pageSize);
+
+    ResourcePdf findResourcePdfById(int id);
 }

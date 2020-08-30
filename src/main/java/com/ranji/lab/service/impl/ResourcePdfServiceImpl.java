@@ -62,4 +62,9 @@ public class ResourcePdfServiceImpl implements IResourcePdfService {
         }
         return allMap;
     }
+
+    @Override
+    public ResourcePdf findResourcePdfById(int id) {
+        return resourcePdfMapper.findResoucePdfById(id);
+    }
 }

@@ -20,14 +20,26 @@
 		<p></p>
 		<label>上传图片</label><input id="files" type="file" multiple><br>
 		<button id="uploads" type="button" onclick="uploads();">UpLoads</button>
+
+		<label>上传图片</label><input id="filess" type="file" multiple><br>
+		<button id="uploadss" type="button" onclick="uploadss();">UpLoadss</button>
+
+		<label>上传图片</label><input id="filesss" type="file" multiple><br>
+		<button id="uploadsss" type="button" onclick="uploadsss();">UpLoadsss</button>
 	</div>
 	<script type="text/javascript">
-		let lengths,length;
+		let lengths,length,lengthss,lengthsss;
 		$('#files').change(function(){
 			lengths = this.files.length;
 		});
 		$('#file').change(function(){
 			length = this.files.length;
+		});
+		$('#filess').change(function(){
+			lengthss = this.files.length;
+		});
+		$('#filesss').change(function(){
+			lengthsss = this.files.length;
 		});
 		function upload(){
 			let formData = new FormData();
@@ -60,6 +72,47 @@
 			console.log("length = " + lengths)
 			$.ajax({
 				url:'/lab/insertimages',
+				type:'post',
+				data:formData,
+				processData:false,
+				contentType:false,
+				success:function(data){
+					alert(data);
+				},
+				error:function(res){
+					alert('upload failure');
+				}
+			})
+		}
+
+		function uploadss(){
+			let formData = new FormData();
+			for(let i=0;i<lengthss;i++){
+				formData.append('file',$('#filess')[0].files[i]);
+			}
+			console.log("length = " + lengthss)
+			$.ajax({
+				url:'/lab/uploadresourcepdf',
+				type:'post',
+				data:formData,
+				processData:false,
+				contentType:false,
+				success:function(data){
+					alert(data);
+				},
+				error:function(res){
+					alert('upload failure');
+				}
+			})
+		}
+		function uploadsss(){
+			let formData = new FormData();
+			for(let i=0;i<lengthsss;i++){
+				formData.append('file',$('#filesss')[0].files[i]);
+			}
+			console.log("length = " + lengthsss)
+			$.ajax({
+				url:'/lab/uploadresourcedoc',
 				type:'post',
 				data:formData,
 				processData:false,

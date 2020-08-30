@@ -14,4 +14,6 @@ public interface ResourceDocMapper {
     int updateResourceDoc(ResourceDoc resourceDoc);
     @Select("select * from resource_doc")
     List<ResourceDoc> findAll();
+    @Select("select * from resource_doc where id = #{id}")
+    ResourceDoc findRrsourceDocById(int id);
 }

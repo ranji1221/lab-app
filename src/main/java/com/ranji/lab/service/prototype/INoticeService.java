@@ -19,4 +19,7 @@ public interface INoticeService {
     Notice findById(int id);
 
     Map<Object,Object> findNoticeNextToNext(int noticeId);
+
+    //模糊查找
+    Map<Object,Object> findLikeNotice(String like,int pageNum, int pageSize);
 }

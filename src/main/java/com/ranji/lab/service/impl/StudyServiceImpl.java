@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.entity.Regime;
 import com.ranji.lab.entity.Study;
 import com.ranji.lab.mapper.StudyMapper;
 import com.ranji.lab.service.prototype.IStudyService;
@@ -64,5 +65,20 @@ public class StudyServiceImpl implements IStudyService {
         HashMap<Object, Object> studyNextToNextMap = new HashMap<>();
         studyNextToNextMap.put("data",studyNextToNext);
         return studyNextToNextMap;
+    }
+
+    @Override
+    public Map<Object, Object> findLikeStudy(String like, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Study> all = studyMapper.findLikeStudy(like);
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
     }
 }

@@ -9,5 +9,4 @@ import javax.annotation.Resource;
 public class ImageConrtoller {
     @Resource
     private IImageService iImageService;
-
 }

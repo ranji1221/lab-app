@@ -69,4 +69,19 @@ public class RegimeServiceImpl implements IRegimeService{
         return regimeNextToNextMap;
     }
 
+    @Override
+    public Map<Object, Object> findLikeRegime(String like, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Regime> all = regimeMapper.findLikeRegime(like);
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
+    }
+
 }

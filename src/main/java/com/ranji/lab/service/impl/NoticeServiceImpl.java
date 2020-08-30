@@ -64,4 +64,19 @@ public class NoticeServiceImpl implements INoticeService {
         noticeNextToNextMap.put("data",noticeNextToNext);
         return noticeNextToNextMap;
     }
+
+    @Override
+    public Map<Object, Object> findLikeNotice(String like, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Notice> all = noticeMapper.findLikeNotice(like);
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
+    }
 }

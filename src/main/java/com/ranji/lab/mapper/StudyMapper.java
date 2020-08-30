@@ -2,6 +2,7 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.entity.Study;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -25,4 +26,14 @@ public interface StudyMapper {
 
     @Select("select count(*) from study")
     int count();
+
+    //模糊查询
+    @Select("<script>" +
+            "select * from study where " +
+            "title like '%${like}%' or " +
+            "information_source like '%${like}%' or " +
+            "author like '%${like}%' or " +
+            "content like '%${like}%'" +
+            "</script>")
+    List<Study> findLikeStudy(@Param("like") String like);
 }

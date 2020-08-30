@@ -55,4 +55,10 @@ public class BannerServiceImpl implements IBannerService {
         return images;
     }
 
+    @Override
+    public int findSureBannerId(int id) {
+        Banner sureIdBanner = bannerMapper.findSureIdBanner(id);
+        return sureIdBanner.getImageId();
+    }
+
 }

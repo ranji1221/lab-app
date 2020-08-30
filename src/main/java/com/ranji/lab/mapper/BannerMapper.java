@@ -27,6 +27,7 @@ public interface BannerMapper {
     int updateBanner(Banner banner);
     @Select("select img.id from banner b join images img on img.id = b.image_id where b.id = #{bannerId}")
     int findBannerImageIdByBannerId(int bannerId);
+    //通过id获取准确的轮播图信息
     @Select("select * from banner where id = #{id}")
     Banner findSureIdBanner(int id);
 }

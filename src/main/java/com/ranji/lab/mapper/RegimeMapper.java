@@ -3,6 +3,7 @@ package com.ranji.lab.mapper;
 import com.ranji.lab.entity.News;
 import com.ranji.lab.entity.Regime;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -26,4 +27,14 @@ public interface RegimeMapper {
 
     @Select("select count(*) from regime")
     int count();
+
+    //模糊查询
+    @Select("<script>" +
+            "select * from regime where " +
+            "title like '%${like}%' or " +
+            "information_source like '%${like}%' or " +
+            "author like '%${like}%' or " +
+            "content like '%${like}%'" +
+            "</script>")
+    List<Regime> findLikeRegime(@Param("like") String like);
 }

@@ -16,4 +16,9 @@ public class ImageServiceImpl implements IImageService {
     public int insertImage(Images images) {
         return imageMapper.insertImage(images);
     }
+
+    @Override
+    public Images findImagesById(int id) {
+        return imageMapper.findImagesById(id);
+    }
 }

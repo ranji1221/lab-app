@@ -15,4 +15,6 @@ public interface IBannerService {
     List<Banner> findAllBanner();
 
     Images findBannerImageByBannerId(int bannerId);
+
+    int findSureBannerId(int id);
 }

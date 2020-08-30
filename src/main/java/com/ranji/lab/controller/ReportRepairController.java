@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = "设备维修接口")
+@Api(tags = "设备报修接口")
 @RestController
 public class ReportRepairController {
     @Resource

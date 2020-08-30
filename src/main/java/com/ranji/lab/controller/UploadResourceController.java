@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-@Api("上传教学资源接口")
+@Api(tags = "教学资源上传接口")
 @RestController
 public class UploadResourceController {
 
