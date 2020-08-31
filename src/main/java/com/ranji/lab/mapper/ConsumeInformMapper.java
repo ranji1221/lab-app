@@ -56,10 +56,18 @@ public interface ConsumeInformMapper {
     @Select("select consume_inform.* from consume_inform where type = #{type}")
     List<ConsumeInformDto> findAllConsumeInformByTypeId(int type);
 
+    //查询所有耗材
     @Select("select ci.*,ct.type_name from consume_inform ci left join consume_type ct on ct.id = ci.type")
     List<ConsumeInformAndConsumeTypeNameDto> findConsumeAndConsumeName();
 
     //按照预约id查询实验耗材
     @Select("select ci.* from consume_inform ci join project_consume pc on ci.id = pc.experiment_consume_id join arrange a on a.id = pc.arrange_project_id where a.project_id = #{arrangeProjectId}")
     List<ConsumeInform> arrangeProjectIdFindconsumeInform(int arrangeProjectId);
+
+    //模糊查询耗材
+    @Select("select ci.*,ct.type_name from consume_inform ci left join consume_type ct on ct.id = ci.type " +
+            " where 1 = 1 " +
+            " and ci.name like '%${like}%' ")
+    List<ConsumeInformAndConsumeTypeNameDto> likeFindConsumeAndConsumeName(String like);
+
 }

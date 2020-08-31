@@ -3,6 +3,7 @@ package com.ranji.lab.mapper;
 import com.ranji.lab.dto.ConsumeCustodyDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -23,4 +24,12 @@ public interface ConsumeCustodyMapper {
 
     @Select("select count(*) from consume_custody")
     int getCount();
+
+    //模糊查询
+    @Select("select cc.*,ci.unit_name,ci.name consumeName from consume_custody cc left join consume_inform ci on cc.consume_id = ci.id " +
+            " where cc.status != 2 " +
+            " and ci.name like '%${like}%' or " +
+            " ci.brand like '%${like}%' " +
+            " order by date")
+    List<ConsumeCustody> likefindAll(String like);
 }

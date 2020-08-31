@@ -8,6 +8,7 @@ import com.ranji.lab.entity.DeviceModel;
 import com.ranji.lab.mapper.DeviceMapper;
 import com.ranji.lab.mapper.DeviceModelMapper;
 import com.ranji.lab.service.prototype.IDeviceService;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -215,5 +216,12 @@ public class DeviceServiceImpl implements IDeviceService {
     public List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int id) {
         return deviceMapper.laboratoryIdFindDevice(id);
     }
+
+    //按照实验室id查询设备信息、数量及设备状态
+    @Override
+    public List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId) {
+        return deviceMapper.laboratoryIdFindDeviceAndStatus(laboratoryId);
+    }
+
 
 }

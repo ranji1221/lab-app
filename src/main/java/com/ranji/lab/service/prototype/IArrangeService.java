@@ -21,4 +21,7 @@ public interface IArrangeService {
 
     //验证是否可以预约
     List<ArrangeDto>yesOrNoArrange(Arrange arrange);
+
+    //模糊查询
+    Map<Object,Object> pageFindlikeFindArrange(int pageNum,int pageSize,String like);
 }

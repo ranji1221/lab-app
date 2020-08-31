@@ -329,8 +329,8 @@ public class ConsumeInformationAndPurchaseController {
     //分页查询
     @ApiOperation(value="分页查询查询所有耗材和耗材类型", notes="查询所有耗材和耗材类型")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "耗材类型id", required = true, dataType = "String")
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
     })
     @GetMapping(value = "pageFindConsumeAndConsumeName",produces = "text/plain;charset=utf-8")
     public String pageFindConsumeAndConsumeName(int page,int limit){
@@ -361,5 +361,43 @@ public class ConsumeInformationAndPurchaseController {
         Map<String,Object> map = new HashMap<>();
         map.put("data",consumeInformList);
         return JSON.toJSONString(map);
+    }
+
+    //模糊查询耗材信息
+    @ApiOperation(value="分页模糊查询所有耗材和耗材类型", notes="查询所有耗材和耗材类型")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    })
+    @GetMapping(value = "pageLikeFindConsumeAndConsumeName",produces = "text/plain;charset=utf-8")
+    public String pageLikeFindConsumeAndConsumeName(int page,int limit,String like){
+        Map<Object, Object> objectObjectMap = iConsumeInformService.pageLikeFindConsumeAndConsumeName(page, limit, like);
+        if(!objectObjectMap.isEmpty()){
+            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }else{
+            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }
+    }
+
+    //模糊查询购置信息
+    @ApiOperation(value="分页模糊查询购置信息", notes="分页模糊查询购置信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    })
+    @GetMapping(value = "likeFindAllConsumePurchase",produces = "text/plain;charset=utf-8")
+    public String likeFindAll(int page,int limit,String like){
+        Map<Object, Object> objectObjectMap = iConsumePurchaseService.likeFindAll(page, limit, like);
+        if(!objectObjectMap.isEmpty()){
+            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }else{
+            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }
     }
 }

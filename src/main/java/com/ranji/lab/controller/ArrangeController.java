@@ -89,7 +89,7 @@ public class ArrangeController {
     @ApiOperation(value="分页查询预约实验项目", notes="根据传过来的信息来查询实验项目")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
     })
     @GetMapping(value = "/pageFindAllArrange",produces = "text/plain;charset=utf-8")
     public Object pageFindAllArrange(int page,int limit,Integer status){
@@ -183,5 +183,24 @@ public class ArrangeController {
             newsMap.put("data", laboratories);
         }
         return JSON.toJSONString(newsMap);
+    }
+
+    //分页模糊查询
+    @ApiOperation(value="分页模糊查询预约实验项目", notes="分页模糊查询预约实验项目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    })
+    @GetMapping(value = "/pageFindlikeFindArrange",produces = "text/plain;charset=utf-8")
+    public Object pageFindlikeFindArrange(int page,int limit,String like){
+        Map<Object, Object> pageExperimentProject = iArrangeService.pageFindlikeFindArrange(page,limit,like);
+        if(!pageExperimentProject.isEmpty()) {
+            pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(pageExperimentProject);
+        }else{
+            pageExperimentProject.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(pageExperimentProject);
+        }
     }
 }

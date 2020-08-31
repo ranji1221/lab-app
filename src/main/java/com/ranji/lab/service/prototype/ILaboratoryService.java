@@ -4,6 +4,7 @@ import com.ranji.lab.dto.LaboratoryDto;
 import com.ranji.lab.dto.LaboratoryStatusMonitoringDto;
 import com.ranji.lab.dto.StatusMonitoringDto;
 import com.ranji.lab.entity.Laboratory;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,7 @@ public interface ILaboratoryService {
     List<Laboratory> dateFindAll(String date, String timeStart, String timeStop);
 
     List<StatusMonitoringDto> laboratoryStatusMonitoring();
+
+    //模糊查询实验室
+    Map<Object,Object> likeFindAll(int pageNum,int pageSize, String like);
 }

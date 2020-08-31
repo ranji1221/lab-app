@@ -40,4 +40,12 @@ public interface ConsumePurchaseMapper {
 
     @Select("select count(*) from consume_purchase")
     int getCount();
+
+    //模糊查询
+    @Select("select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id " +
+            " where 1 = 1 " +
+            " and ci.name like '%${like}%' or " +
+            " ci.brand like '%${like}%' " +
+            " order by date desc")
+    List<ConsumePurchase> likeFindAll(String like);
 }

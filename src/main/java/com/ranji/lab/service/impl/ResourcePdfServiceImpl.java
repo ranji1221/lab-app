@@ -36,10 +36,10 @@ public class ResourcePdfServiceImpl implements IResourcePdfService {
 
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!all.isEmpty())
-            allMap.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         else{
             allMap.put("data",all);
-            allMap.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         }
         return allMap;
     }
@@ -54,10 +54,10 @@ public class ResourcePdfServiceImpl implements IResourcePdfService {
 
         HashMap<Object, Object> allMap = new HashMap<>();
         if(all.isEmpty())
-            allMap.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         else{
             allMap.put("data",all);
-            allMap.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             allMap.put("total",total);
         }
         return allMap;

@@ -68,4 +68,17 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     public int getCount() {
         return consumeCustodyMapper.getCount();
     }
+
+    @Override
+    public Map<Object, Object> likefindAll(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.likefindAll(like);
+        PageInfo<ConsumeCustody> allConsumeCustodyPaging = new PageInfo<>(consumeCustodies);
+        long total = allConsumeCustodyPaging.getTotal();
+
+        Map<Object, Object> allConsumeCustodyOnPaging = new HashMap<>();
+        allConsumeCustodyOnPaging.put("data",consumeCustodies);
+        allConsumeCustodyOnPaging.put("total",total);
+        return allConsumeCustodyOnPaging;
+    }
 }

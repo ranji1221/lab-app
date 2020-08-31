@@ -35,4 +35,15 @@ public interface ArrangeMapper {
     //修改该项目信息
     @Update("update arrange set laboratory_id=#{laboratoryId},project_id=#{projectId},num=#{num},arrange_time=#{arrangeTime},date=#{date},time_start=#{timeStart},time_stop=#{timeStop},responsibility=#{responsibility},status=#{status} where id = #{id}")
     int updArrange(Arrange arrange);
+
+    //模糊查询
+    @Select("<script>" +
+            "select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id " +
+            " where a.status != 2 " +
+            " and ep.experiment_name like '%${like}%' or " +
+            "ep.experiment_target like '%${like}%' or " +
+            "ep.experiment_content like '%${like}%'" +
+            "</script>")
+    List<ArrangeDto> likeFindArrange(String like);
+
 }

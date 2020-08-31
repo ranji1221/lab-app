@@ -85,6 +85,10 @@ public class ConsumeCustodyController {
         }
     }
     @ApiOperation(value="获得保管领用包括name", notes="根据传过来的设备信息来获得")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
+    })
     @GetMapping(value = "/allconsumecustodys",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustodys(int page,int limit){
         Map<Object,Object> map = new HashMap<>();
@@ -123,9 +127,32 @@ public class ConsumeCustodyController {
     }
 
     @ApiOperation(value="分页查询保管领用", notes="根据传过来的设备信息来获得保管领用")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
+    })
     @GetMapping(value = "/allconsumecustodypaging",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeCustodyPaging(int pageNum,int pageSize){
-        Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.findAll(pageNum,pageSize);
+    public String findAllConsumeCustodyPaging(int page,int limit){
+        Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.findAll(page,limit);
+        if(!allConsumeCustodyMap.isEmpty()){
+            allConsumeCustodyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(allConsumeCustodyMap);
+        }else{
+            allConsumeCustodyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allConsumeCustodyMap);
+        }
+    }
+
+    //模糊查询
+    @ApiOperation(value="分页模糊查询保管领用", notes="根据传过来的设备信息来获得保管领用")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    })
+    @GetMapping(value = "/likefindAll",produces = "text/plain;charset=utf-8")
+    public String likefindAll(int page,int limit,String like){
+        Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.likefindAll(page,limit,like);
         if(!allConsumeCustodyMap.isEmpty()){
             allConsumeCustodyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(allConsumeCustodyMap);

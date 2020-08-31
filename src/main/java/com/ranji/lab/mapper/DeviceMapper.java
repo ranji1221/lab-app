@@ -47,4 +47,8 @@ public interface DeviceMapper {
     //按照实验室查询拥有设备数量
     @Select("select dm.id,dm.device_name,count(*) count from device d left join device_model dm on dm.id = d.device_model_id left join laboratory_device ld on ld.device_id = d.id  where ld.laboratory_id = #{laboratoryId} GROUP BY d.device_model_id")
     List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int laboratoryId);
+
+    //按照实验室id查询设备信息、数量及设备状态
+    @Select("select dm.id id,dm.device_name deviceName,ld.status,count(*) count from laboratory_device ld LEFT JOIN device d on d.id = ld.device_id LEFT JOIN device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} GROUP BY device_id,ld.status")
+    List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
 }

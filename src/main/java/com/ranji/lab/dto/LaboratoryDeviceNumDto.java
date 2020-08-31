@@ -21,4 +21,5 @@ public class LaboratoryDeviceNumDto implements Serializable {
     private String deviceName;
     @NonNull
     private int count;
+    private int status;
 }

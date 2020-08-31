@@ -70,4 +70,19 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
     public int getCount() {
         return consumePurchaseMapper.getCount();
     }
+
+    @Override
+    public Map<Object, Object> likeFindAll(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ConsumePurchase> allConsumePurchase = consumePurchaseMapper.likeFindAll(like);
+
+        PageInfo<ConsumePurchase> allConsumePurchasePaging = new PageInfo<>(allConsumePurchase);
+        long total = allConsumePurchasePaging.getTotal();
+
+        Map<Object,Object> allConsumePurchaseOnPaging = new HashMap<>();
+        allConsumePurchaseOnPaging.put("data",allConsumePurchase);
+        allConsumePurchaseOnPaging.put("total",total);
+
+        return allConsumePurchaseOnPaging;
+    }
 }

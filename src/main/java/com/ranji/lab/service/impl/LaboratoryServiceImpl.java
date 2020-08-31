@@ -78,6 +78,20 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     }
 
     @Override
+    public Map<Object, Object> likeFindAll(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Laboratory> all = laboratoryMapper.likeFindAll(like);
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap =  new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
+
+        return allMap;
+    }
+
+    @Override
     public Map<Object, Object> findAllLaboratory(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Laboratory> all = laboratoryMapper.findAll();

@@ -23,4 +23,7 @@ public interface IConsumePurchaseService {
     ConsumePurchaseDto findNameById(int id);
 
     int getCount();
+
+    //模糊查询
+    Map<Object,Object> likeFindAll(int pageNum, int pageSize,String like);
 }

@@ -39,4 +39,7 @@ public interface IDeviceService {
 
     //按照实验室查询拥有设备数量
     List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int id);
+
+    //按照实验室id查询设备信息、数量及设备状态
+    List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
 }

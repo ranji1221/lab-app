@@ -7,6 +7,8 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Laboratory;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,10 +94,34 @@ public class LaboratoryController {
     }
 
     @ApiOperation(value="分页查询所有实验室", notes="分页查询所有实验室")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
+    })
     @GetMapping(value = "alllaboratorypaging",produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String findAllLaboratorypaging(int page,int limit){
         Map<Object, Object> allLaboratory = iLaboratoryService.findAllLaboratory(page,limit);
+        if(!allLaboratory.isEmpty()){
+            allLaboratory.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }else{
+            allLaboratory.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }
+    }
+
+    //模糊查询实验室
+    @ApiOperation(value="分页模糊查询所有实验室", notes="分页模糊查询所有实验室")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    })
+    @GetMapping(value = "likeFindAllLaboratory",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String likeFindAll(int page,int limit,String like){
+        Map<Object, Object> allLaboratory = iLaboratoryService.likeFindAll(page,limit,like);
         if(!allLaboratory.isEmpty()){
             allLaboratory.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(allLaboratory);

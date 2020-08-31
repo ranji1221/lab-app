@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ArrangeDto;
@@ -123,5 +124,31 @@ public class ArrangeServiceImpl implements IArrangeService {
     public List<ArrangeDto> yesOrNoArrange(Arrange arrange) {
         List<ArrangeDto> arrangeDtos = arrangeMapper.yesOrNoArrange(arrange);
         return arrangeDtos;
+    }
+
+    @Override
+    public Map<Object, Object> pageFindlikeFindArrange(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<ArrangeDto> allArrange = arrangeMapper.likeFindArrange(like);
+        for (ArrangeDto arrangeDto : allArrange) {
+            StringBuffer consumes = new StringBuffer();
+            StringBuffer devices = new StringBuffer();
+            List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
+            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
+            }
+            arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());
+            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
+            }
+            arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
+        }
+        PageInfo<ArrangeDto> arrangeDtoPageInfo = new PageInfo<>(allArrange);
+        long total = arrangeDtoPageInfo.getTotal();
+        Map<Object,Object> map = new HashMap<>();
+        map.put("data",allArrange);
+        map.put("total",total);
+        return map;
     }
 }

@@ -25,4 +25,7 @@ public interface IConsumeCustodyService {
     ConsumeCustodyDto findNameById(int id);
 
     int getCount();
+
+    //分页模糊查询
+    Map<Object,Object> likefindAll(int pageNum, int pageSize,String like);
 }
