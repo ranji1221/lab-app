@@ -17,7 +17,7 @@ public interface IArrangeService {
     //按照id查询项目
     ArrangeDto idFindArrange(int id);
     //修改该项目信息
-    int updArrange(Arrange arrange);
+    int updArrange(Arrange arrange,String devices,String consumes);
 
     //验证是否可以预约
     List<ArrangeDto>yesOrNoArrange(Arrange arrange);

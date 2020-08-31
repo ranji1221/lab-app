@@ -45,17 +45,10 @@ public class ArrangeServiceImpl implements IArrangeService {
     public int insertArrange(Arrange arrange,String devices,String consumes) {
         List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
         List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(consumes, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
-        int laboratoryId = arrange.getLaboratoryId();
         int i = arrangeMapper.insertArrange(arrange);
         for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-            List<LaboratoryDevice> laboratoryDevice = laboratoryDeviceMapper.findLaboratoryDevice(laboratoryId, projectDeviceDto.getDeviceModelId(), projectDeviceDto.getDeviceNum());
-            for (LaboratoryDevice device : laboratoryDevice) {
-                ProjectDeviceDto projectDeviceDto1 = new ProjectDeviceDto();
-                projectDeviceDto1.setDeviceNum(1);
-                projectDeviceDto1.setArrangeProjectId(arrange.getId());
-                projectDeviceDto1.setExperimentDeviceId(device.getDeviceId());
-                projectDeviceMapper.insertProjectDevice(projectDeviceDto1);
-            }
+                projectDeviceDto.setArrangeProjectId(arrange.getId());
+                projectDeviceMapper.insertProjectDevice(projectDeviceDto);
         }
         for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
             projectConsumeDto.setArrangeProjectId(arrange.getId());
@@ -115,9 +108,22 @@ public class ArrangeServiceImpl implements IArrangeService {
         return arrangeMapper.idFindArrange(id);
     }
 
+    //修改
     @Override
-    public int updArrange(Arrange arrange) {
-        return arrangeMapper.updArrange(arrange);
+    @Transactional
+    public int updArrange(Arrange arrange,String devices,String consumes) {
+        List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
+        List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(consumes, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
+        int i = arrangeMapper.updArrange(arrange);
+        for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+            projectDeviceDto.setArrangeProjectId(arrange.getId());
+            projectDeviceMapper.updProjectDevice(projectDeviceDto);
+        }
+        for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+            projectConsumeDto.setArrangeProjectId(arrange.getId());
+            projectConsumeMapper.updProjectConsume(projectConsumeDto);
+        }
+        return i;
     }
 
     @Override

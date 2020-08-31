@@ -111,16 +111,15 @@ public class ArrangeController {
      */
     @ApiOperation(value="修改预约信息", notes="根据传过来的信息来插入预约信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "预约id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "projectId", value = "实验项目id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "num", value = "实验人数", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "arrangeTime", value = "当前时间", required = true, dataType = "String"),
             @ApiImplicitParam(name = "date", value = "预约日期", required = true, dataType = "String"),
             @ApiImplicitParam(name = "timeStart", value = "开始时间", required = true, dataType = "String"),
             @ApiImplicitParam(name = "timeStop", value = "结束时间", required = true, dataType = "String"),
             @ApiImplicitParam(name = "responsibility", value = "管理员", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "预约状态", required = true, dataType = "String")
+            @ApiImplicitParam(name = "devices", value = "设备信息", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "consumes", value = "耗材信息", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -128,9 +127,9 @@ public class ArrangeController {
     })
     @PostMapping(value = "updArrange")
     @ResponseBody
-    public String updArrange(Arrange arrange){
+    public String updArrange(Arrange arrange,String devices, String consumes){
         Map<Object,Object> insertNewsMap = new HashMap<>();
-        int i = iArrangeService.updArrange(arrange);
+        int i = iArrangeService.updArrange(arrange,devices,consumes);
         if(i<1){
             insertNewsMap.put("status","failure");
             return JSON.toJSONString(insertNewsMap);
