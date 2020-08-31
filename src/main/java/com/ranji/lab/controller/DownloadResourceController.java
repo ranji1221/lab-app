@@ -27,16 +27,18 @@ public class DownloadResourceController {
      */
     @ApiOperation(value = "下载教学资源",notes = "下载教学资源")
     @GetMapping(value = "/downloadresourcedoc")
-    public String downloadResourceDoc(HttpServletResponse response , int id){
+    public String downloadResourceDoc(HttpServletResponse response , int id) throws UnsupportedEncodingException {
         ResourceDoc resourceDoc = iResourceDocService.findResourceDocById(id);
         //获取文件地址
         File fileResourceDoc = new File(resourceDoc.getUrl());
 
+        String name = new String(resourceDoc.getName().getBytes("UTF-8"), "ISO-8859-1");
+
         try {
             //设置下载格式
             response.setCharacterEncoding("utf-8");
-            response.setContentType("application/msword;charset=UTF8");
-            response.setHeader("Content-Disposition","attachment;filename=" + resourceDoc.getName());
+            response.setContentType("application/force-download;charset=UTF8");
+            response.setHeader("Content-Disposition","attachment;filename=" + name);
             response.flushBuffer();
 
             //输出.Doc文件
@@ -57,18 +59,19 @@ public class DownloadResourceController {
     }
 
     @ApiOperation(value = "下载教学资源",notes = "下载教学资源")
-    @GetMapping(value = "/downloadresourcepdf",produces = "text/plain;charset=utf-8")
-    public String downloadResourcePdf(HttpServletResponse response , int id){
+    @GetMapping(value = "/downloadresourcepdf")
+    public String downloadResourcePdf(HttpServletResponse response , int id) throws Exception {
 
         ResourcePdf resourcePdf = iResourcePdfService.findResourcePdfById(id);
         //获取文件地址
         File fileResourcePdf = new File(resourcePdf.getUrl());
 
+        String name = new String(resourcePdf.getName().getBytes("UTF-8"), "ISO-8859-1");
         try {
             //设置下载格式
             response.setCharacterEncoding("utf-8");
-            response.setContentType("application/pdf;charset=UTF8");
-            response.setHeader("Content-Disposition","attachment;filename=" + resourcePdf.getName());
+            response.setContentType("application/force-download;charset=UTF8");
+            response.setHeader("Content-Disposition","attachment;filename=" + name);
             response.flushBuffer();
             //输出.Pdf文件
             OutputStream os = null;

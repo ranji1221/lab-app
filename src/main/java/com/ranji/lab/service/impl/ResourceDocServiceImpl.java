@@ -53,7 +53,7 @@ public class ResourceDocServiceImpl implements IResourceDocService {
         long total = pageInfo.getTotal();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty())
+        if(all.isEmpty())
             allMap.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
         else{
             allMap.put("data",all);

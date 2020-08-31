@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 全局异常处理
  */
-
 @RestControllerAdvice
 public class MyExceptionHandler {
 
