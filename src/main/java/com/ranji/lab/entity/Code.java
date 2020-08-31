@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public enum Code implements Serializable {
     SUCCESS("code",200),
-    FAILURE("code",500);
+    FAILURE("code",600);
 
     private String msg;
     private int code;
