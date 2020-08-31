@@ -1,6 +1,7 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ranji.lab.dto.BannerImagesDto;
 import com.ranji.lab.entity.Banner;
 import com.ranji.lab.entity.Code;
@@ -98,6 +99,7 @@ public class BannerController {
         List<BannerImagesDto> allBannerImages = new ArrayList<>();
         for(int i = 1;i<4;i++){
             int imagesId = iBannerService.findSureBannerId(i);
+            /*if(i<0) return JSONObject.*/
             BannerImagesDto bannerImagesDto = new BannerImagesDto();
             bannerImagesDto.setId(i);
             bannerImagesDto.setSureUrl("/bannerimagejpg/"+imagesId);
@@ -106,9 +108,9 @@ public class BannerController {
         HashMap<Object, Object> allData = new HashMap<>();
         if(!allBannerImages.isEmpty()){
             allData.put("data",allBannerImages);
-            allData.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+            allData.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         }else{
-            allData.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
+            allData.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         }
         return JSON.toJSONString(allData);
     }
