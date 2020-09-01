@@ -32,7 +32,7 @@ public class ConsumeNormController {
             @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
             @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
     })*/
-    @PostMapping(value = "/insertconsumenorm",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "/insertconsumenorm",produces = "text/plain;charset=utf-8")
     public String insertConsumeNorm(ConsumeNormDto consumeNormDto){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
@@ -52,7 +52,7 @@ public class ConsumeNormController {
             @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
             @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
     })*/
-    @PostMapping(value = "/updateconsumenorm",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "/updateconsumenorm",produces = "text/plain;charset=utf-8")
     public String updateConsumeNorm(ConsumeNorm consumeNorm){
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.updateConsumeNorm(consumeNorm);
@@ -108,7 +108,7 @@ public class ConsumeNormController {
 
 
     /*@ApiOperation(value="插入管理标准bug", notes="根据传过来的设备信息来插入管理标准")
-    @PostMapping(value = "/insertconsumenormbug",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "/insertconsumenormbug",produces = "text/plain;charset=utf-8")
     public String insertConsumeNormBug(ConsumeNormDto consumeNormDto){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
@@ -121,7 +121,7 @@ public class ConsumeNormController {
         }
     }
     @ApiOperation(value="更新管理标准bug", notes="根据传过来的设备信息来更新管理标准")
-    @PostMapping(value = "/updateconsumenormbug",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "/updateconsumenormbug",produces = "text/plain;charset=utf-8")
     public String updateConsumeNormBug(ConsumeNorm consumeNorm){
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.updateConsumeNorm(consumeNorm);

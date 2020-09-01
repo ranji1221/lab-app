@@ -1,10 +1,7 @@
 package com.ranji.lab.service.prototype;
 
-import com.ranji.lab.dto.ConsumeAndConsumeNumDto;
 import com.ranji.lab.dto.ConsumeCustodyDto;
-import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumeCustody;
-import com.ranji.lab.entity.ConsumePurchase;
 
 import java.util.List;
 import java.util.Map;

@@ -139,7 +139,7 @@ public class ConsumeInformationAndPurchaseController {
             @ApiImplicitParam(name = "date", value = "购置日期", required = true, dataType = "String"),
             @ApiImplicitParam(name = "applicant", value = "购置申请人", required = true, dataType = "String"),
     })
-    @PostMapping(value = "/insertconsumepurchase",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "/insertconsumepurchase",produces = "text/plain;charset=utf-8")
     public String insertConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> insertConsumePurchaseMap = new HashMap<>();
         int i = iConsumePurchaseService.insertConsumePurchase(consumePurchase);
@@ -152,7 +152,7 @@ public class ConsumeInformationAndPurchaseController {
         }
     }
     @ApiOperation(value="更新申请购置信息", notes="根据传过来的设备信息来更新申请购置信息")
-    @PostMapping(value = "/updateconsumepurchase",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "/updateconsumepurchase",produces = "text/plain;charset=utf-8")
     public String updateConsumePurchase(ConsumePurchase consumePurchase){
         Map<Object,Object> updateConsumePurchaseMap = new HashMap<>();
         int i = iConsumePurchaseService.updateConsumePurchase(consumePurchase);

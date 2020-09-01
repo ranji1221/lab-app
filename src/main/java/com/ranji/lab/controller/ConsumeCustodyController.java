@@ -34,10 +34,9 @@ public class ConsumeCustodyController {
             @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "recipient", value = "领用人", required = true, dataType = "String"),
             @ApiImplicitParam(name = "date", value = "领用日期", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "count", value = "领用数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "status", value = "状态", dataType = "String")
     })
-    @PostMapping(value = "insertConsumeCustody",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "insertConsumeCustody",produces = "text/plain;charset=utf-8")
     public String insertConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.insertConsumeCustody(consumeCustody);
@@ -57,7 +56,7 @@ public class ConsumeCustodyController {
             @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
             @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
     })*/
-    @PostMapping(value = "updateConsumeCustody",produces = "text/plain;chartset=utf-8")
+    @PostMapping(value = "updateConsumeCustody",produces = "text/plain;charset=utf-8")
     public String updateConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object,Object> updateConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.updateConsumeCustody(consumeCustody);

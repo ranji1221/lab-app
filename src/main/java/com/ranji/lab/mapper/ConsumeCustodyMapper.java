@@ -12,7 +12,7 @@ import java.util.List;
 public interface ConsumeCustodyMapper {
     @Insert("insert into consume_custody (recipient,date,arrange_project_id,status) values (#{recipient},#{date},#{arrangeProjectId},0)")
     int insertConsumeCustody(ConsumeCustody consumeCustody);
-    @Update("update consume_custody set recipient=#{recipient},date=#{date},count=#{count},status=#{status} where id = #{id}")
+    @Update("update consume_custody set recipient=#{recipient},date=#{date},arrange_project_id=#{arrangeProjectId},status=#{status} where id = #{id}")
     int updateConsumeCustody(ConsumeCustody consumeCustody);
     @Select("select cc.*,ci.unit_name,ci.name consumeName from consume_custody cc left join consume_inform ci on cc.consume_id = ci.id order by date")
     List<ConsumeCustody> findAll();
