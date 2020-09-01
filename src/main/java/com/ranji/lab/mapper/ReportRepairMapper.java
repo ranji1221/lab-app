@@ -1,5 +1,6 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.ReportRepairDto;
 import com.ranji.lab.entity.ReportRepair;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -41,6 +42,6 @@ public interface ReportRepairMapper {
      * 查询所有维修设备
      * @return
      */
-    @Select("select * from report_repair")
-    List<ReportRepair> allReportRepair();
+    @Select("SELECT rr.*, l.laboratory_name, d.uuid FROM report_repair rr LEFT JOIN device d ON d.id = rr.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = rr.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id")
+    List<ReportRepairDto> allReportRepair();
 }

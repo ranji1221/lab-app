@@ -216,13 +216,13 @@ public class ConsumeInformationAndPurchaseController {
     }
     @ApiOperation(value="分页查询申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "pageSize", value = "每页几条", required = true, dataType = "String")
+            @ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "每页几条", required = true, dataType = "String")
 
     })
     @GetMapping(value = "/allconsumepurchasepaging",produces = "text/plain;charset=utf-8")
-    public String findAllConsumePurchasePaging(int pageNum,int pageSize){
-        Map<Object,Object> consumePurchaseMap = iConsumePurchaseService.findAllConsumePurchase(pageNum,pageSize);
+    public String findAllConsumePurchasePaging(int page,int limit){
+        Map<Object,Object> consumePurchaseMap = iConsumePurchaseService.findAllConsumePurchase(page,limit);
         if(!consumePurchaseMap.isEmpty()){
             consumePurchaseMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(consumePurchaseMap);

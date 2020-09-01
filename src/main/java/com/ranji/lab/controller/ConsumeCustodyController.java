@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.var;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,7 +110,8 @@ public class ConsumeCustodyController {
                 consumeCustodyDto.setDate(DateUtil.DateToString(allConsumecustody.getDate(),"yyyy-MM-dd"));
                 consumeCustodyDto.setStatus(allConsumecustody.getStatus());
                 consumeCustodyDto.setId(allConsumecustody.getId());
-                consumeCustodyDto.setUnitName(allConsumecustody.getUnitName());
+                consumeCustodyDto.setCount(iConsumeCustodyService.findNameById(id).getCount());
+                consumeCustodyDto.setUnitName(iConsumeCustodyService.findNameById(id).getUnitName());
                 allConsumeCustodyss.add(consumeCustodyDto);
             }
             int total = iConsumeCustodyService.getCount();

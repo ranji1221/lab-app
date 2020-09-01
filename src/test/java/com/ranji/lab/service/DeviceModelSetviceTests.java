@@ -1,6 +1,7 @@
 package com.ranji.lab.service;
 
 import com.ranji.lab.dto.DeviceAndModelDto;
+import com.ranji.lab.dto.UsageRateDto;
 import com.ranji.lab.service.prototype.IDeviceService;
 import com.ranji.lab.util.DateUtil;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class DeviceModelSetviceTests {
@@ -31,5 +34,14 @@ public class DeviceModelSetviceTests {
         DeviceAndModelDto deviceAndModelDto = new DeviceAndModelDto(factime,deviceName,brand,facid,proid,supid,type,unitName,lifetime,count);
         int i = iDeviceService.insertDeviceAndDeviceModel(deviceAndModelDto);
         System.out.println(i);
+    }
+
+    @Test
+    public void testfindUsageRate(){
+        Map<Object, Object> usageRate = iDeviceService.findUsageRate(1);
+        List<UsageRateDto> usage = (List<UsageRateDto>)usageRate.get("data");
+        for (UsageRateDto usageRateDto : usage) {
+            System.out.println(usageRateDto);
+        }
     }
 }

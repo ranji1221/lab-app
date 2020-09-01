@@ -48,4 +48,8 @@ public interface IDeviceService {
 
     //按照设备状态、设备分类和实验室id查询数据
     Map<Object,Object> findDeviceStatusNum(int laboratoryId);
+
+    //查询设备使用率
+    Map<Object,Object> findUsageRate(int laboratoryId);
+
 }

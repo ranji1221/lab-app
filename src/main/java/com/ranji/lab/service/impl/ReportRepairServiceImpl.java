@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ReportRepairDto;
 import com.ranji.lab.entity.ReportRepair;
 import com.ranji.lab.mapper.ReportRepairMapper;
 import com.ranji.lab.service.prototype.IReportRepairService;
@@ -30,7 +31,7 @@ public class ReportRepairServiceImpl implements IReportRepairService {
 
     @Override
     public Map<Object, Object> AllReportRepair() {
-        List<ReportRepair> reportRepairs = reportRepairMapper.allReportRepair();
+        List<ReportRepairDto> reportRepairs = reportRepairMapper.allReportRepair();
         HashMap<Object, Object> reportRepairsMap = new HashMap<>();
         reportRepairsMap.put("data",reportRepairs);
         return reportRepairsMap;
@@ -39,7 +40,7 @@ public class ReportRepairServiceImpl implements IReportRepairService {
     @Override
     public Map<Object, Object> AllReportRepair(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<ReportRepair> all = reportRepairMapper.allReportRepair();
+        List<ReportRepairDto> all = reportRepairMapper.allReportRepair();
 
         PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();

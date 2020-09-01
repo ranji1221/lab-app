@@ -250,5 +250,26 @@ public class DeviceServiceImpl implements IDeviceService {
         return map;
     }
 
+    //查询设备使用率
+    @Override
+    public Map<Object, Object> findUsageRate(int laboratoryId) {
+        List<DeviceMsgDto> deviceMsgDtos = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+        List<UsageRateDto> UsageRate = new ArrayList<>();
+        for (DeviceMsgDto deviceMsgDto : deviceMsgDtos) {
+            double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(laboratoryId);
+            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(laboratoryId, deviceMsgDto.getDeviceId());
+            UsageRateDto usageRateDto = new UsageRateDto();
+            usageRateDto.setDeviceId(deviceMsgDto.getDeviceId());
+            usageRateDto.setDeviceName(deviceMsgDto.getDeviceName());
+            if(endingProjectNum!=0&&endingDeviceNum!=0){
+                usageRateDto.setUsageRate(endingDeviceNum/endingProjectNum);
+            }
+            UsageRate.add(usageRateDto);
+        }
+        Map<Object,Object> map = new HashMap<>();
+        map.put("data",UsageRate);
+        return map;
+    }
+
 
 }

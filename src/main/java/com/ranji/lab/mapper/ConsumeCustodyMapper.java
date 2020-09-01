@@ -14,12 +14,12 @@ public interface ConsumeCustodyMapper {
     int insertConsumeCustody(ConsumeCustody consumeCustody);
     @Update("update consume_custody set recipient=#{recipient},date=#{date},arrange_project_id=#{arrangeProjectId},status=#{status} where id = #{id}")
     int updateConsumeCustody(ConsumeCustody consumeCustody);
-    @Select("select cc.*,ci.unit_name,ci.name consumeName from consume_custody cc left join consume_inform ci on cc.consume_id = ci.id order by date")
+    @Select("select cc.* from consume_custody cc order by date")
     List<ConsumeCustody> findAll();
     @Select("select cc.*,ci.unit_name,ci.name consumeName from consume_custody cc left join consume_inform ci on cc.consume_id = ci.id where consume_custody.id = #{id}")
     ConsumeCustody findById(int id);
 
-    @Select("select cc.*,ci.name as consume_name,ci.unit_name from consume_custody cc join consume_inform ci on ci.id = cc.consume_id where cc.id = #{id}")
+    @Select("select cc.*,pc.consume_num count,ci.name as consumeName,ci.unit_name unitName from consume_custody cc join arrange a on cc.arrange_project_id = a.id join project_consume pc on pc.arrange_project_id= a.id join consume_inform ci on ci.id = pc.experiment_consume_id where cc.id = #{id} limit 1")
     ConsumeCustodyDto findNameById(int id);
 
     @Select("select count(*) from consume_custody")
