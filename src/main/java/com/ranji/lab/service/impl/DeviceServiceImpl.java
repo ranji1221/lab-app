@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DeviceServiceImpl implements IDeviceService {
@@ -221,6 +218,36 @@ public class DeviceServiceImpl implements IDeviceService {
     @Override
     public List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId) {
         return deviceMapper.laboratoryIdFindDeviceAndStatus(laboratoryId);
+    }
+
+    //按照实验室id查询所有的设备
+    @Override
+    public List<DeviceMsgDto> laboratoryIdFindAllDevice(int laboratoryId) {
+        return deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+    }
+
+    //按照设备状态、设备分类和实验室id查询数据
+    @Override
+    public Map<Object, Object> findDeviceStatusNum(int laboratoryId) {
+        List<Integer> deviceModel = deviceMapper.findDeviceModel(laboratoryId);
+        List<LaboratoryDeviceNumDto> laboratoryDeviceNum= new ArrayList<>();
+        for (Integer integer : deviceModel) {
+            LaboratoryDeviceNumDto laboratoryDeviceNumDto = new LaboratoryDeviceNumDto();
+            LaboratoryDeviceNumDto deviceStatusNum = deviceMapper.findDeviceStatusNum(laboratoryId, integer, 0);
+            LaboratoryDeviceNumDto deviceStatusNum1 = deviceMapper.findDeviceStatusNum(laboratoryId, integer, 1);
+            LaboratoryDeviceNumDto deviceStatusNum2 = deviceMapper.findDeviceStatusNum(laboratoryId, integer, 2);
+
+            laboratoryDeviceNumDto.setDeviceName(deviceStatusNum.getDeviceName());
+            laboratoryDeviceNumDto.setId(deviceStatusNum.getId());
+            laboratoryDeviceNumDto.setStatus(deviceStatusNum.getStatus());
+            laboratoryDeviceNumDto.setCount(deviceStatusNum.getCount());
+            laboratoryDeviceNumDto.setCount1(deviceStatusNum1.getCount());
+            laboratoryDeviceNumDto.setCount2(deviceStatusNum2.getCount());
+            laboratoryDeviceNum.add(laboratoryDeviceNumDto);
+        }
+        Map<Object,Object> map = new HashMap<>();
+        map.put("data",laboratoryDeviceNum);
+        return map;
     }
 
 

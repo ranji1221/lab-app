@@ -57,12 +57,19 @@ public class ArrangeServiceImpl implements IArrangeService {
         return i;
     }
 
+    //查询全部预约实验项目运
     @Override
     public List<ArrangeDto> findAllArrange(Integer status) {
         List<ArrangeDto> allArrange = arrangeMapper.findAllArrange(status);
         for (ArrangeDto arrangeDto : allArrange) {
             List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());
+            List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
             StringBuffer devices = new StringBuffer();
+            StringBuffer consumes = new StringBuffer();
+            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
+            }
+            arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
             for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
                 devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
             }
@@ -133,8 +140,7 @@ public class ArrangeServiceImpl implements IArrangeService {
     }
 
     @Override
-    public Map<Object, Object> pageFindlikeFindArrange(int pageNum, int pageSize, String like) {
-        PageHelper.startPage(pageNum,pageSize);
+    public Map<Object, Object> pageFindlikeFindArrange(String like) {
         List<ArrangeDto> allArrange = arrangeMapper.likeFindArrange(like);
         for (ArrangeDto arrangeDto : allArrange) {
             StringBuffer consumes = new StringBuffer();
@@ -150,11 +156,8 @@ public class ArrangeServiceImpl implements IArrangeService {
             }
             arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
         }
-        PageInfo<ArrangeDto> arrangeDtoPageInfo = new PageInfo<>(allArrange);
-        long total = arrangeDtoPageInfo.getTotal();
         Map<Object,Object> map = new HashMap<>();
         map.put("data",allArrange);
-        map.put("total",total);
         return map;
     }
 }

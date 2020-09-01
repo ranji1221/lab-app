@@ -313,7 +313,7 @@ public class DeviceController {
     */
     @ApiOperation(value="按照实验室查询拥有设备数量", notes="查询没有分配实验室的设备的数量")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "laboratoryId", value = "页数", required = true, dataType = "String")
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
     })
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
@@ -348,6 +348,25 @@ public class DeviceController {
         }
     }
 
+    /*
+        实验状态监控laboratoryStatusMonitoring
+    */
+    @ApiOperation(value="查询实验状态监控", notes="查询实验状态全部")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/laboratoryStatusMonitoringAll",produces = "text/plain;charset=utf-8")
+    public String laboratoryStatusMonitoringAll(){
+
+        List<StatusMonitoringDto> laboratoryStatusMonitoringDtos = iLaboratoryService.laboratoryStatusMonitoringAll();
+        if(!laboratoryStatusMonitoringDtos.isEmpty()) {
+            return JSON.toJSONString(laboratoryStatusMonitoringDtos);
+        }else{
+            return JSON.toJSONString(laboratoryStatusMonitoringDtos);
+        }
+    }
+
     //按照实验室id查询实验设备信息及状态
     @ApiOperation(value="按照实验室id查询实验设备信息及状态", notes="按照实验室id查询实验设备信息及状态")
     @ApiImplicitParams({
@@ -364,6 +383,43 @@ public class DeviceController {
             return JSON.toJSONString(laboratoryDeviceNumDtos);
         }else{
             return JSON.toJSONString(laboratoryDeviceNumDtos);
+        }
+    }
+
+    //按照实验室id查询所有的设备
+    @ApiOperation(value="按照实验室id查询所有的设备", notes="按照实验室id查询所有的设备")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value="/laboratoryIdFindAllDevice",produces = "text/plain;charset=utf-8")
+    public String laboratoryIdFindAllDevice(int laboratoryId){
+        List<DeviceMsgDto> deviceDtos = iDeviceService.laboratoryIdFindAllDevice(laboratoryId);
+        if(!deviceDtos.isEmpty()) {
+            return JSON.toJSONString(deviceDtos);
+        }else{
+            return JSON.toJSONString(deviceDtos);
+        }
+    }
+    //按照设备状态、设备分类和实验室id查询数据
+    @ApiOperation(value="按照实验室id查询所有的设备状态数据", notes="按照实验室id查询所有的设备状态数据")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value="/findDeviceStatusNum",produces = "text/plain;charset=utf-8")
+    public String findDeviceStatusNum(int laboratoryId){
+        Map<Object, Object> deviceStatusNum = iDeviceService.findDeviceStatusNum(laboratoryId);
+        if(!deviceStatusNum.isEmpty()) {
+            return JSON.toJSONString(deviceStatusNum);
+        }else{
+            return JSON.toJSONString(deviceStatusNum);
         }
     }
 }

@@ -23,5 +23,5 @@ public interface IArrangeService {
     List<ArrangeDto>yesOrNoArrange(Arrange arrange);
 
     //模糊查询
-    Map<Object,Object> pageFindlikeFindArrange(int pageNum,int pageSize,String like);
+    Map<Object,Object> pageFindlikeFindArrange(String like);
 }

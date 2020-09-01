@@ -20,6 +20,9 @@ public class LaboratoryDeviceNumDto implements Serializable {
     @NonNull
     private String deviceName;
     @NonNull
-    private int count;
     private int status;
+
+    private int count;
+    private int count1;
+    private int count2;
 }

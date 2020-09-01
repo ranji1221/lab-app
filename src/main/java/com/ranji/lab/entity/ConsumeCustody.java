@@ -16,14 +16,10 @@ import java.util.Date;
 public class ConsumeCustody implements Serializable {
     private int id;
     @NonNull
-    private int consumeId;//耗材id
-    @NonNull
     private String recipient;//领用人
+    private int arrangeProjectId;
     @NonNull
     private String date;//领用日期
-    @NonNull
-    private int count;//领用数量
-    @NonNull
     private int status;//领用状态
     private String unitName;
     private String consumeName;

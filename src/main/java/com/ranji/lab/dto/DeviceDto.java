@@ -17,12 +17,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class DeviceDto implements Serializable {
     private int id;
-    @NonNull
     private String factime;
-    @NonNull
     private int deviceModelId;
-    @NonNull
     private String uuid;
+    private String deviceName;
+    private int deviceId;
+    private int status;
 
 
     public DeviceDto(int id, String deviceName, String brand, String conid, int num, String roomnames, String facid, String factime, String proid, String supid) {

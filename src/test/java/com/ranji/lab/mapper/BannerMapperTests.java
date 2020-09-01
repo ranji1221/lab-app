@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 public class BannerMapperTests {
@@ -17,4 +21,5 @@ public class BannerMapperTests {
         int i = imageMapper.latestImageData();
         System.out.println(i);
     }
+
 }

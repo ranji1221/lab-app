@@ -107,12 +107,10 @@ public class ConsumeCustodyController {
 
                 consumeCustodyDto.setRecipient(allConsumecustody.getRecipient());
                 consumeCustodyDto.setConsumeName(name);
-                consumeCustodyDto.setConsumeId(allConsumecustody.getConsumeId());
                 consumeCustodyDto.setDate(DateUtil.DateToString(allConsumecustody.getDate(),"yyyy-MM-dd"));
                 consumeCustodyDto.setStatus(allConsumecustody.getStatus());
                 consumeCustodyDto.setId(allConsumecustody.getId());
                 consumeCustodyDto.setUnitName(allConsumecustody.getUnitName());
-                consumeCustodyDto.setCount(allConsumecustody.getCount());
                 allConsumeCustodyss.add(consumeCustodyDto);
             }
             int total = iConsumeCustodyService.getCount();

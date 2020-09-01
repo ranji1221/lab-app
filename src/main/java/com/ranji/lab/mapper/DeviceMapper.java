@@ -49,6 +49,17 @@ public interface DeviceMapper {
     List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int laboratoryId);
 
     //按照实验室id查询设备信息、数量及设备状态
-    @Select("select dm.id id,dm.device_name deviceName,ld.status,count(*) count from laboratory_device ld LEFT JOIN device d on d.id = ld.device_id LEFT JOIN device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} GROUP BY device_id,ld.status")
+    @Select("select d.device_model_id id,dm.device_name deviceName,ld.status status,count(*) count from laboratory_device ld join device d on ld.device_id = d.id join device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} GROUP BY ld.`status`,d.device_model_id")
     List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
+
+    //按照实验室id查询所有的设备
+    @Select("select ld.*,d.uuid,dm.device_name from laboratory_device ld left join device d on d.id = ld.device_id left join device_model dm on dm.id = d.device_model_id where ld.laboratory_id = #{laboratoryId} and d.status != 2")
+    List<DeviceMsgDto> laboratoryIdFindAllDevice(int laboratoryId);
+
+    //按照实验室id查询所有分类
+    @Select("select d.device_model_id from laboratory_device ld join device d on d.id = ld.device_id where ld.laboratory_id = #{laboratoryId} GROUP BY d.device_model_id ")
+    List<Integer> findDeviceModel(int laboratoryId);
+    //按照设备状态、设备分类和实验室id查询数据
+    @Select("select d.device_model_id id,dm.device_name deviceName,count(*) count from laboratory_device ld join device d on ld.device_id = d.id join device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} and d.device_model_id = #{deviceModelId} and d.status = #{status}")
+    LaboratoryDeviceNumDto findDeviceStatusNum(int laboratoryId,int deviceModelId,int status);
 }

@@ -13,13 +13,13 @@ import java.util.Date;
 public class ConsumeCustodyDto {
 
     private int id;
-    private int consumeId;
     private String consumeName;
     private String recipient;
     private String date;
     private int count;
     private int status;
     private String unitName;
+    private int arrangeProjectId;
 
     public void setDate(String date){
         this.date = date;

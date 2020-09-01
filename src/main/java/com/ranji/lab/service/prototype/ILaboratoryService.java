@@ -21,6 +21,7 @@ public interface ILaboratoryService {
     List<Laboratory> dateFindAll(String date, String timeStart, String timeStop);
 
     List<StatusMonitoringDto> laboratoryStatusMonitoring();
+    List<StatusMonitoringDto> laboratoryStatusMonitoringAll();
 
     //模糊查询实验室
     Map<Object,Object> likeFindAll(int pageNum,int pageSize, String like);

@@ -78,6 +78,18 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     }
 
     @Override
+    public List<StatusMonitoringDto> laboratoryStatusMonitoringAll() {
+        List<StatusMonitoringDto> list = new ArrayList<>();
+        List<Laboratory> all = laboratoryMapper.findAll();
+        for (Laboratory laboratory : all) {
+            StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
+            statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
+            list.add(statusMonitoringDto);
+        }
+        return list;
+    }
+
+    @Override
     public Map<Object, Object> likeFindAll(int pageNum, int pageSize, String like) {
         PageHelper.startPage(pageNum, pageSize);
         List<Laboratory> all = laboratoryMapper.likeFindAll(like);
