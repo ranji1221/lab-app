@@ -422,4 +422,23 @@ public class DeviceController {
             return JSON.toJSONString(deviceStatusNum);
         }
     }
+
+    //查询设备使用率
+    @ApiOperation(value="按照实验室id查询设备使用率", notes="按照实验室id查询设备使用率")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value="/findUsageRate",produces = "text/plain;charset=utf-8")
+    public String findUsageRate(int laboratoryId){
+        Map<Object, Object> deviceStatusNum = iDeviceService.findUsageRate(laboratoryId);
+        if(!deviceStatusNum.isEmpty()) {
+            return JSON.toJSONString(deviceStatusNum);
+        }else{
+            return JSON.toJSONString(deviceStatusNum);
+        }
+    }
 }

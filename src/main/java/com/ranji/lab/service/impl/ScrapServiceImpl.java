@@ -57,9 +57,9 @@ public class ScrapServiceImpl implements IScrapService {
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!all.isEmpty()){
             allMap.put("data",all);
-            allMap.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         }else
-            allMap.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         return allMap;
     }
 
@@ -75,9 +75,9 @@ public class ScrapServiceImpl implements IScrapService {
         if(!all.isEmpty()){
             allMap.put("data",all);
             allMap.put("total",total);
-            allMap.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         }else
-            allMap.put(Code.FAILURE.getCode(),Code.FAILURE.getMsg());
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         return allMap;
     }
 }
