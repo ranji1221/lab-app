@@ -85,4 +85,12 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
 
         return allConsumePurchaseOnPaging;
     }
+
+    @Override
+    public Map<Object, Object> likeFindAll(String like) {
+        List<ConsumePurchase> consumePurchases = consumePurchaseMapper.likeFindAll(like);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data",consumePurchases);
+        return allMap;
+    }
 }

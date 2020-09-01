@@ -23,4 +23,5 @@ public interface IExperimentProjectService {
     int updExperimentProject(ExperimentProject experimentProject, String p1);
     //模糊查询
     Map<Object,Object> findLikeExperimentProject(String like,int pageNum, int pageSize);
+    Map<Object,Object> findLikeExperimentProject(String like);
 }

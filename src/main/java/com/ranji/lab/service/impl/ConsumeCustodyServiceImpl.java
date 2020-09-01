@@ -1,5 +1,6 @@
 package com.ranji.lab.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ConsumeCustodyDto;
@@ -80,5 +81,13 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
         allConsumeCustodyOnPaging.put("data",consumeCustodies);
         allConsumeCustodyOnPaging.put("total",total);
         return allConsumeCustodyOnPaging;
+    }
+
+    @Override
+    public Map<Object, Object> likefindAll(String like) {
+        List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.likefindAll(like);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data",consumeCustodies);
+        return allMap;
     }
 }

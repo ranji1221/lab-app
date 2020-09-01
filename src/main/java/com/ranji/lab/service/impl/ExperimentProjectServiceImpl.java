@@ -160,4 +160,30 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
         map.put("data",allExperimentProject);
         return map;
     }
+
+    @Override
+    public Map<Object, Object> findLikeExperimentProject(String like) {
+        List<ExperimentProjectDto> allExperimentProject = experimentProjectMapper.findLikeExperimentProject(like);
+        for (ExperimentProjectDto experimentProjectDto : allExperimentProject) {
+            List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(experimentProjectDto.getId());
+            StringBuffer projectConsumeLists = new StringBuffer();
+            StringBuffer projectDeviceLists = new StringBuffer();
+            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                projectConsumeLists.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
+            }
+            List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(experimentProjectDto.getId());
+            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                projectDeviceLists.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
+            }
+            if(projectConsumeLists.toString().length()>0){
+                experimentProjectDto.setProjectConsumeLists(projectConsumeLists.toString().substring(0,projectConsumeLists.toString().length()-1));
+            }
+            if(projectDeviceLists.toString().length()>0){
+                experimentProjectDto.setProjectDeviceLists(projectDeviceLists.toString().substring(0,projectDeviceLists.toString().length()-1));
+            }
+        }
+        Map<Object,Object> map = new HashMap<>();
+        map.put("data",allExperimentProject);
+        return map;
+    }
 }

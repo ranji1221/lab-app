@@ -142,8 +142,8 @@ public class ExperimentProjectController {
         }
     }
 
-    //模糊查询
-    @ApiOperation(value="模糊查询项目信息", notes="根据传过来的信息模糊查询实验项目信息")
+    /*//模糊查询
+    @ApiOperation(value="分页模糊查询项目信息", notes="根据传过来的信息模糊查询实验项目信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "like", value = "like", required = true, dataType = "String"),
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
@@ -153,9 +153,9 @@ public class ExperimentProjectController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @GetMapping(value = "/findLikeExperimentProject",produces = "text/plain;charset=utf-8")
+    @GetMapping(value = "/findLikeExperimentProjects",produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String findLikeExperimentProject(String like,int page, int limit){
+    public String findLikeExperimentProjects(String like,int page, int limit){
         Map<Object,Object>  likeExperimentProjectMap = iExperimentProjectService.findLikeExperimentProject(like, page, limit);
         if(!likeExperimentProjectMap.isEmpty()) {
             likeExperimentProjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
@@ -164,7 +164,24 @@ public class ExperimentProjectController {
             likeExperimentProjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(likeExperimentProjectMap);
         }
+    }*/
+
+    @ApiOperation(value="模糊查询项目信息", notes="根据传过来的信息模糊查询实验项目信息")
+    @ApiImplicitParam(name = "like", value = "like", required = true, dataType = "String")
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/findLikeExperimentProject",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String findLikeExperimentProject(String like){
+        Map<Object,Object>  likeExperimentProjectMap = iExperimentProjectService.findLikeExperimentProject(like);
+        if(!likeExperimentProjectMap.isEmpty()) {
+            likeExperimentProjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(likeExperimentProjectMap);
+        }else{
+            likeExperimentProjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(likeExperimentProjectMap);
+        }
     }
-
-
 }

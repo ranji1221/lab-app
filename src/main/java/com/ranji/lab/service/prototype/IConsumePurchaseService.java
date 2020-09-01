@@ -26,4 +26,5 @@ public interface IConsumePurchaseService {
 
     //模糊查询
     Map<Object,Object> likeFindAll(int pageNum, int pageSize,String like);
+    Map<Object,Object> likeFindAll(String like);
 }

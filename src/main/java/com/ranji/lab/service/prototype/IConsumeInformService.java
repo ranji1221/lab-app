@@ -32,6 +32,10 @@ public interface IConsumeInformService {
 
     List<ConsumeInform> arrangeProjectIdFindconsumeInform(int arrangeProjectId);
 
-    //模糊查询耗材
+    //分页模糊查询耗材
     Map<Object,Object> pageLikeFindConsumeAndConsumeName(int pageNum, int pageSize,String like);
+
+    //模糊查询耗材
+    Map<Object,Object> pageLikeFindConsumeAndConsumeName(String like);
+
 }

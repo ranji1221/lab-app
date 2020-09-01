@@ -111,8 +111,8 @@ public class LaboratoryController {
         }
     }
 
-    //模糊查询实验室
-    @ApiOperation(value="分页模糊查询所有实验室", notes="分页模糊查询所有实验室")
+    //分页模糊查询实验室
+    /*@ApiOperation(value="分页模糊查询所有实验室", notes="分页模糊查询所有实验室")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
@@ -122,6 +122,21 @@ public class LaboratoryController {
     @ResponseBody
     public String likeFindAll(int page,int limit,String like){
         Map<Object, Object> allLaboratory = iLaboratoryService.likeFindAll(page,limit,like);
+        if(!allLaboratory.isEmpty()){
+            allLaboratory.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }else{
+            allLaboratory.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(allLaboratory);
+        }
+    }*/
+
+    @ApiOperation(value="模糊查询所有实验室", notes="分页模糊查询所有实验室")
+    @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    @GetMapping(value = "likeFindAllLaboratory",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String likeFindAll(String like){
+        Map<Object, Object> allLaboratory = iLaboratoryService.likeFindAll(like);
         if(!allLaboratory.isEmpty()){
             allLaboratory.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(allLaboratory);
