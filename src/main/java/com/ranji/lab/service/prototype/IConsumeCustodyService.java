@@ -1,5 +1,6 @@
 package com.ranji.lab.service.prototype;
 
+import com.ranji.lab.dto.ConsumeAndConsumeNumDto;
 import com.ranji.lab.dto.ConsumeCustodyDto;
 import com.ranji.lab.dto.ConsumePurchaseDto;
 import com.ranji.lab.entity.ConsumeCustody;
@@ -31,4 +32,7 @@ public interface IConsumeCustodyService {
 
     //模糊查询
     Map<Object,Object> likefindAll(String like);
+
+    //通过预约项目查询所有耗材和耗材数量
+    Map<Object,Object> findAllConsumeAndConsumeNum(int id);
 }

@@ -176,4 +176,12 @@ public class ConsumeCustodyController {
             return JSON.toJSONString(allConsumeCustodyMap);
         }
     }
+
+    @ApiOperation(value="通过实验id查询所有耗材和耗材数量", notes="通过实验室id查询所有耗材和耗材数量")
+    @ApiImplicitParam(name = "id", value = "实验id", required = true, dataType = "String")
+    @GetMapping(value = "/allconsumeandconsumenum",produces = "text/plain;charset=utf-8")
+    public String allConsumeAndConsumenum(int id){
+        Map<Object, Object> allConsumeAndConsumeNum = iConsumeCustodyService.findAllConsumeAndConsumeNum(id);
+        return JSON.toJSONString(allConsumeAndConsumeNum);
+    }
 }

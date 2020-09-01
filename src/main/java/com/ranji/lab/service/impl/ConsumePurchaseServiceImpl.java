@@ -48,6 +48,13 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
     public List<ConsumePurchase> findAllConsumePurchases(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<ConsumePurchase> all = consumePurchaseMapper.findAll();
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",total);
         return all;
     }
 

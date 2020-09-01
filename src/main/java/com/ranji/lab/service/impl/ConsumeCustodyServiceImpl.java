@@ -3,13 +3,21 @@ package com.ranji.lab.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ConsumeAndConsumeNumDto;
 import com.ranji.lab.dto.ConsumeCustodyDto;
+import com.ranji.lab.dto.ExperimentProjectDto;
+import com.ranji.lab.dto.ProjectConsumeDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.mapper.ConsumeCustodyMapper;
+import com.ranji.lab.mapper.ExperimentProjectMapper;
+import com.ranji.lab.mapper.ProjectConsumeMapper;
+import com.ranji.lab.mapper.ProjectDeviceMapper;
 import com.ranji.lab.service.prototype.IConsumeCustodyService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +25,12 @@ import java.util.Map;
 public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     @Resource
     private ConsumeCustodyMapper consumeCustodyMapper;
+    @Resource
+    private ExperimentProjectMapper experimentProjectMapper;
+    @Resource
+    ProjectConsumeMapper projectConsumeMapper;
+    @Resource
+    ProjectDeviceMapper projectDeviceMapper;
 
     @Override
     public int insertConsumeCustody(ConsumeCustody consumeCustody) {
@@ -47,6 +61,14 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     public List<ConsumeCustody> findAllConsumeCustodys(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<ConsumeCustody> all = consumeCustodyMapper.findAll();
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total" , total);
+
         return all;
     }
 
@@ -88,6 +110,36 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
         List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.likefindAll(like);
         HashMap<Object, Object> allMap = new HashMap<>();
         allMap.put("data",consumeCustodies);
+        return allMap;
+    }
+
+    /**
+     * 通过项目查询所有的耗材和耗材数量
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public Map<Object,Object> findAllConsumeAndConsumeNum(int id) {
+        //输出map
+        HashMap<Object, Object> allMap = new HashMap<>();
+        //接收list
+        List<ConsumeAndConsumeNumDto> allList = new ArrayList<>();
+
+        //拿到实验项目
+        ExperimentProjectDto experimentProjectDto = experimentProjectMapper.idFindExperimentProject(id);
+        experimentProjectDto.setProjectDeviceList(projectDeviceMapper.projectIdFindProjectDeviceNum(id));
+        experimentProjectDto.setProjectConsumeList(projectConsumeMapper.projectIdFindAllProjectConsume(id));
+        //获得项目中的耗材清单
+        List<ProjectConsumeDto> projectConsumeList = experimentProjectDto.getProjectConsumeList();
+        for (ProjectConsumeDto projectConsumeDto : projectConsumeList) {
+            ConsumeAndConsumeNumDto consumeAndConsumeNumDto = new ConsumeAndConsumeNumDto();
+            consumeAndConsumeNumDto.setConsumeId(projectConsumeDto.getExperimentConsumeId());
+            consumeAndConsumeNumDto.setName(projectConsumeDto.getConsumeName());
+            consumeAndConsumeNumDto.setNum(projectConsumeDto.getConsumeNum());
+            allList.add(consumeAndConsumeNumDto);
+        }
+        allMap.put("data",allList);
         return allMap;
     }
 }
