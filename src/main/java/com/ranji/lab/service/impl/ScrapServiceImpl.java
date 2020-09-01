@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.ScrapDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Scrap;
 import com.ranji.lab.mapper.ScrapMapper;
@@ -52,7 +53,7 @@ public class ScrapServiceImpl implements IScrapService {
 
     @Override
     public Map<Object, Object> allScrap() {
-        List<Scrap> all = scrapMapper.findAll();
+        List<ScrapDto> all = scrapMapper.findAll();
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!all.isEmpty()){
             allMap.put("data",all);
@@ -65,7 +66,7 @@ public class ScrapServiceImpl implements IScrapService {
     @Override
     public Map<Object, Object> allScrap(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Scrap> all = scrapMapper.findAll();
+        List<ScrapDto> all = scrapMapper.findAll();
 
         PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();

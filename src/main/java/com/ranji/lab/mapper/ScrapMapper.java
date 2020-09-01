@@ -1,5 +1,6 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.ScrapDto;
 import com.ranji.lab.entity.Scrap;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -27,6 +28,6 @@ public interface ScrapMapper {
     @Update("update device set status = 0 where id = #{deviceId}")
     int updateDeviceStatusToNormal(int deviceId);
 
-    @Select("select * from scrap")
-    List<Scrap> findAll();
+    @Select("SELECT l.laboratory_name, s.*, d.uuid FROM scrap s LEFT JOIN device d ON d.id = s.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = s.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id\n")
+    List<ScrapDto> findAll();
 }
