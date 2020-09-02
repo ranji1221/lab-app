@@ -1,5 +1,6 @@
 package com.ranji.lab.entity;
 
+import com.alibaba.fastjson.JSON;
 import lombok.*;
 import java.io.Serializable;
 
@@ -25,4 +26,12 @@ public class User implements Serializable {
     private String password;
     @NonNull
     private int enable;    //-- 1: 启用  2: 禁用
+
+    /**
+     * 重写toString方法
+     */
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

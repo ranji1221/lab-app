@@ -1,7 +1,10 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import java.util.List;
 import java.util.Map;
@@ -30,4 +33,79 @@ public interface UserMapper {
             "</script>"
     })
     List<User> find(Map<String,Object> params);
+
+
+    /**
+     * 给某用户分配角色
+     * @param userID
+     * @param roleID
+     */
+    @Insert("insert into t_user_role(user_id,role_id) values(#{userID},#{roleID})")
+    void saveRole(@Param("userID") int userID, @Param("roleID") int roleID);
+
+
+    /**
+     * 给某用户分配多种角色
+     * @param userID
+     * @param rolesID
+     */
+    @Insert("<script>\n" +
+            "insert into t_user_role(user_id,role_id) values\n" +
+            "    <foreach collection=\"rolesID\" item=\"roleID\" separator=\",\">\n" +
+            "    (#{userID}, #{roleID})\n" +
+            "    </foreach>\n" +
+            "</script>")
+    void saveRoles(@Param("userID") int userID, @Param("rolesID") int[] rolesID);
+
+    /**
+     * 通过用户id查询用户的角色
+     * @param userID
+     * @return
+     */
+    @Select("select r.* \n" +
+            "from t_user_role ur\n" +
+            "left join t_role r\n" +
+            "on r.id = ur.role_id\n" +
+            "where ur.user_id=#{userID}")
+    Role getRole(int userID);
+    /**
+     * 通过用户名查询用户的角色
+     * @param userName
+     * @return
+     */
+    @Select("select r.*\n" +
+            "from t_user u\n" +
+            "left join t_user_role ur\n" +
+            "on u.id = ur.user_id\n" +
+            "left join t_role r\n" +
+            "on r.id = ur.role_id\n" +
+            "where u.name=#{userName}")
+    Role getRoleByName(String userName);
+
+    /**
+     * 通过用户名查询用户所有的角色
+     * @param userName
+     * @return
+     */
+    @Select("select r.*\n" +
+            "from t_user u\n" +
+            "right join t_user_role ur\n" +
+            "on u.id = ur.user_id\n" +
+            "left join t_role r\n" +
+            "on r.id = ur.role_id\n" +
+            "where u.name=#{userName}")
+    List<Role> getRoles(String userName);
+
+    /**
+     * 删除用户的所有角色
+     * @param userID
+     * @param rolesID
+     */
+    @Delete("<script>\n" +
+            "delete from t_user_role where user_id=#{userID} and role_id in \n" +
+            "    <foreach collection=\"rolesID\" item=\"roleID\" open=\"(\" separator=\",\" close=\")\">\n" +
+            "    #{roleID}\n" +
+            "    </foreach>\n" +
+            "</script>")
+    void cancelRoles(@Param("userID") int userID, @Param("rolesID") int[] rolesID);
 }

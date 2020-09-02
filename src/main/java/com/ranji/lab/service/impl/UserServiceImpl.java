@@ -1,5 +1,6 @@
 package com.ranji.lab.service.impl;
 
+import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.mapper.UserMapper;
 import com.ranji.lab.service.prototype.IUserService;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    @CacheEvict(value = "users", allEntries = true)
+    /*@CacheEvict(value = "users", allEntries = true)*/
     public void save(User user) {
         userMapper.save(user);
     }
@@ -43,7 +44,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Cacheable(value = "users")
+    /*@Cacheable(value = "users")*/
     public List<User> getAllUsers() {
         return userMapper.findAll();
     }
@@ -54,8 +55,44 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    @Cacheable(value = "users")
+    /*@Cacheable(value = "users")*/
     public List<User> getUsers(Map<String, Object> params) {
         return userMapper.find(params);
     }
+
+
+
+
+
+
+    @Override
+    public void assignRole(int userID, int roleID) {
+        userMapper.saveRole(userID,roleID);
+    }
+
+    @Override
+    public Role getRole(int userID) {
+        return userMapper.getRole(userID);
+    }
+
+    @Override
+    public Role getRole(String userName) {
+        return userMapper.getRoleByName(userName);
+    }
+
+    @Override
+    public void assignRoles(int userID, int[] rolesID) {
+        userMapper.saveRoles(userID,rolesID);
+    }
+
+    @Override
+    public List<Role> getRoles(String userName) {
+        return userMapper.getRoles(userName);
+    }
+
+    @Override
+    public void cancelRoles(int userID, int[] rolesID) {
+        userMapper.cancelRoles(userID,rolesID);
+    }
+
 }
