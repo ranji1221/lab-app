@@ -132,7 +132,7 @@ public class ResourceController {
         }
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        allMap.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+        allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         return JSON.toJSONString(allMap);
     }
 
@@ -151,14 +151,44 @@ public class ResourceController {
         for (MultipartFile file : files) {
             String url = resourceDirectory.getAbsolutePath() +File.separator + file.getOriginalFilename();
             file.transferTo(new File(url));
-
             ResourceDoc resourceDoc = new ResourceDoc(url, file.getOriginalFilename());
             iResourceDocService.insertResourceDoc(resourceDoc);
-
         }
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
+    @ApiOperation(value = "上传教学资源",notes = "上传教学资源")
+    @PostMapping(value = "/uploadresource",produces = "text/plain;charset=utf-8")
+    public String uploadResource(@RequestParam("file") MultipartFile[] files) throws IOException {
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        allMap.put(Code.SUCCESS.getCode(),Code.SUCCESS.getMsg());
+        //获取根目录
+        String rootDirectory = System.getProperty("user.dir");
+        //文件存储位置
+        File resourceDirectory = new File(rootDirectory + File.separator + "upload" + File.separator + "resourcedoc");
+        //创建文件夹
+        if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
+        for (MultipartFile file : files) {
+            String originalFilename = file.getOriginalFilename();
+            String type = originalFilename.substring(originalFilename.lastIndexOf(".")+1,originalFilename.length());
+            if(type.equals("docx") || type.equals("doc")){
+                String url = resourceDirectory.getAbsolutePath() +File.separator + file.getOriginalFilename();
+                file.transferTo(new File(url));
+                ResourceDoc resourceDoc = new ResourceDoc(url, file.getOriginalFilename());
+                iResourceDocService.insertResourceDoc(resourceDoc);
+            }else if(type.equals("pdf")){
+                String url = resourceDirectory.getAbsolutePath() +File.separator + file.getOriginalFilename();
+                file.transferTo(new File(url));
+                ResourcePdf resourceDoc = new ResourcePdf(url, file.getOriginalFilename());
+                iResourcePdfService.insertResourcePdf(resourceDoc);
+            }else{
+                allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+                return JSON.toJSONString(allMap);
+            }
+        }
+        allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         return JSON.toJSONString(allMap);
     }
 }

@@ -25,7 +25,7 @@ public interface DeviceMapper {
      * 通过传来的uuid判断是否存在该设备
      * @return
      */
-    @Select("select * from device where uuid =#{uuid}")
+    @Select("select * from device where uuid = #{uuid}")
     List<Device> findDeviceByuuid(String uuid);
 
     /**
@@ -68,7 +68,7 @@ public interface DeviceMapper {
     List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
 
     //按照实验室id查询所有的设备
-    @Select("select ld.*,d.uuid,dm.device_name from laboratory_device ld left join device d on d.id = ld.device_id left join device_model dm on dm.id = d.device_model_id where ld.laboratory_id = #{laboratoryId} and d.status != 2")
+    @Select("select ld.*,d.uuid,dm.device_name,dm.lifetime from laboratory_device ld left join device d on d.id = ld.device_id left join device_model dm on dm.id = d.device_model_id where ld.laboratory_id = #{laboratoryId} and d.status != 2")
     List<DeviceMsgDto> laboratoryIdFindAllDevice(int laboratoryId);
 
     //按照实验室id查询所有分类
@@ -86,4 +86,7 @@ public interface DeviceMapper {
     @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 1 and a.laboratory_id = #{laboratoryId} and pd.experiment_device_id = #{deviceId}")
     int findEndingProjectNumByLaboratoryIdAndDeviceId(int laboratoryId,int deviceId);
 
+    //通过设备查询该设备使用次数
+    @Select("select count(*) from project_device pd where pd.experiment_device_id = #{deviceId}")
+    int deviceIdFindUseNum(int deviceId);
 }

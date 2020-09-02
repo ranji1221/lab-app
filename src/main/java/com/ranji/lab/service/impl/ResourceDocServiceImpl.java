@@ -35,7 +35,7 @@ public class ResourceDocServiceImpl implements IResourceDocService {
         List<ResourceDoc> all = resourceDocMapper.findAll();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty())
+        if(all.isEmpty())
             allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         else{
             allMap.put("data",all);

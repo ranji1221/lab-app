@@ -2,6 +2,7 @@ package com.ranji.lab.service.prototype;
 
 import com.ranji.lab.dto.ArrangeDto;
 import com.ranji.lab.entity.Arrange;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -24,4 +25,7 @@ public interface IArrangeService {
 
     //模糊查询
     Map<Object,Object> pageFindlikeFindArrange(String like);
+
+    //查询项目的状态及数量
+    List<ArrangeDto> statusAndNum();
 }

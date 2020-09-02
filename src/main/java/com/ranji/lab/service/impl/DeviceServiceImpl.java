@@ -258,16 +258,38 @@ public class DeviceServiceImpl implements IDeviceService {
         for (DeviceMsgDto deviceMsgDto : deviceMsgDtos) {
             double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(laboratoryId);
             double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(laboratoryId, deviceMsgDto.getDeviceId());
-            UsageRateDto usageRateDto = new UsageRateDto();
-            usageRateDto.setDeviceId(deviceMsgDto.getDeviceId());
-            usageRateDto.setDeviceName(deviceMsgDto.getDeviceName());
             if(endingProjectNum!=0&&endingDeviceNum!=0){
+                UsageRateDto usageRateDto = new UsageRateDto();
+                usageRateDto.setDeviceId(deviceMsgDto.getDeviceId());
+                usageRateDto.setDeviceName(deviceMsgDto.getDeviceName());
                 usageRateDto.setUsageRate(endingDeviceNum/endingProjectNum);
+                UsageRate.add(usageRateDto);
             }
-            UsageRate.add(usageRateDto);
         }
         Map<Object,Object> map = new HashMap<>();
         map.put("data",UsageRate);
+        return map;
+    }
+
+    //查询设备的损耗率
+    @Override
+    public Map<Object, Object> findRatio(int laboratoryId) {
+        List<DeviceMsgDto> deviceMsgDtos = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+        List<ratioDto> r = new ArrayList<>();
+        for (DeviceMsgDto deviceMsgDto : deviceMsgDtos) {
+            double i = deviceMapper.deviceIdFindUseNum(deviceMsgDto.getDeviceId())*2;
+            double x = deviceMsgDto.getLifetime();
+            ratioDto ratioDto = new ratioDto();
+            if(i!=0&&x!=0){
+                double ratio = i/x;
+                ratioDto.setDeviceId(deviceMsgDto.getDeviceId());
+                ratioDto.setDeviceName(deviceMsgDto.getDeviceName());
+                ratioDto.setRatio(ratio);
+                r.add(ratioDto);
+            }
+        }
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("data",r);
         return map;
     }
 

@@ -160,4 +160,9 @@ public class ArrangeServiceImpl implements IArrangeService {
         map.put("data",allArrange);
         return map;
     }
+
+    @Override
+    public List<ArrangeDto> statusAndNum() {
+        return arrangeMapper.statusAndNum();
+    }
 }

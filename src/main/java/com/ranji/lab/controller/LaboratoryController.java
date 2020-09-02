@@ -4,7 +4,10 @@ package com.ranji.lab.controller;
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.LaboratoryDto;
 import com.ranji.lab.entity.Code;
+import com.ranji.lab.entity.Images;
 import com.ranji.lab.entity.Laboratory;
+import com.ranji.lab.service.impl.ImageServiceImpl;
+import com.ranji.lab.service.prototype.IImageService;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,31 +32,36 @@ public class LaboratoryController {
 
     @Resource
     private ILaboratoryService iLaboratoryService;
+    @Resource
+    private IImageService iImageService;
 
     @ApiOperation(value="插入实验室", notes="根据传过来的信息插入实验室")
     @PostMapping(value = "insertlaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String insertLaboratory(LaboratoryDto laboratoryDto, @RequestParam("file") MultipartFile[] files, String devices){
+    public String insertLaboratory(LaboratoryDto laboratoryDto, @RequestParam("file") MultipartFile file, String devices){
         Map laboratoryMap = new HashMap<>();
         //-- 1. 获取项目的根目录
         String rootDirectory = System.getProperty("user.dir");
         //-- 2. 创建存放上传资源的目录
         File resourceDirectory = new File(rootDirectory+File.separator+"upload"+File.separator+"image");
         if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
-        for(MultipartFile file : files){
             String jpgname = file.getOriginalFilename();
             if(jpgname.substring(jpgname.indexOf(".")+1,jpgname.length()).equals("jpg")) {
                 String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
                 try {
                     file.transferTo(new File(path));
-                    laboratoryDto.setImgSrc(path);
+                    Images images = new Images();
+                    images.setImgAddr(path);
+                    images.setImgDescription("noDescription");
+                    images.setImgName("noName");
+                    iImageService.insertImage(images);
+                    laboratoryDto.setImgSrc(images.getId());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }else{
                 return "{status:jpg plz}";
             }
-        }
         int i = iLaboratoryService.insertLaboratory(laboratoryDto,devices);
         if(i<1){
             laboratoryMap.put("status","failure");

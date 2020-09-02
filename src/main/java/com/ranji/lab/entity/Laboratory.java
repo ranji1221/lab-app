@@ -20,5 +20,5 @@ public class Laboratory implements Serializable {
     @NonNull
     private String laboratoryResponsibility;//实验室负责人
     @NonNull
-    private String imgSrc;  //实验室图片地址
+    private int imgSrc;  //实验室图片地址
 }

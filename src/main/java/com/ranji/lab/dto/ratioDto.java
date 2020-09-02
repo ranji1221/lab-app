@@ -5,16 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeviceMsgDto implements Serializable {
-
-    private String uuid;
-    private String deviceName;
+public class ratioDto {
     private int deviceId;
-    private int status;
-    private int lifetime;
+    private String deviceName;
+    private double ratio;
 }

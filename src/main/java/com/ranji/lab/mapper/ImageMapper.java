@@ -2,10 +2,13 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.entity.Images;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface ImageMapper {
+
+    @Options(useGeneratedKeys=true,keyColumn="id",keyProperty = "id")
     @Insert("insert into images (img_name,img_addr,img_description) values (#{imgName},#{imgAddr},#{imgDescription});")
     int insertImage(Images images);
     @Select("select MAX(id) from images;")

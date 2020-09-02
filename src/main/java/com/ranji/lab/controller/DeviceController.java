@@ -351,7 +351,29 @@ public class DeviceController {
     /*
         实验状态监控laboratoryStatusMonitoring
     */
-    @ApiOperation(value="查询实验状态监控", notes="查询实验状态全部")
+    @ApiOperation(value="分页查询实验状态监控", notes="查询实验状态全部")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "需要条数", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/pageLaboratoryStatusMonitoringAll",produces = "text/plain;charset=utf-8")
+    public String pageLaboratoryStatusMonitoringAll(int page,int limit){
+        Map<Object, Object> map = iLaboratoryService.pageLaboratoryStatusMonitoringAll(page, limit);
+        if(!map.isEmpty()) {
+            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else{
+            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        }
+        return JSON.toJSONString(map);
+    }
+    /*
+        查询实验状态监控
+    */
+    @ApiOperation(value="查询实验状态监控", notes="分页查询实验状态全部")
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
@@ -435,6 +457,25 @@ public class DeviceController {
     @GetMapping(value="/findUsageRate",produces = "text/plain;charset=utf-8")
     public String findUsageRate(int laboratoryId){
         Map<Object, Object> deviceStatusNum = iDeviceService.findUsageRate(laboratoryId);
+        if(!deviceStatusNum.isEmpty()) {
+            return JSON.toJSONString(deviceStatusNum);
+        }else{
+            return JSON.toJSONString(deviceStatusNum);
+        }
+    }
+
+    //查询设备损耗率
+    @ApiOperation(value="按照实验室id查询设备损耗率", notes="按照实验室id查询设备损耗率")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value="/findRatio",produces = "text/plain;charset=utf-8")
+    public String findRatio(int laboratoryId){
+        Map<Object, Object> deviceStatusNum = iDeviceService.findRatio(laboratoryId);
         if(!deviceStatusNum.isEmpty()) {
             return JSON.toJSONString(deviceStatusNum);
         }else{

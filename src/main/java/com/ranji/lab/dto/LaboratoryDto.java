@@ -17,5 +17,5 @@ public class LaboratoryDto {
     @NonNull
     private String laboratoryResponsibility;
     @NonNull
-    private String imgSrc;
+    private int imgSrc;
 }

@@ -66,11 +66,12 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         List<Laboratory> all = laboratoryMapper.findAll();
         int i = 0;
         for (Laboratory laboratory : all) {
-            i++;
             StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
             statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
-            list.add(statusMonitoringDto);
-            if(i==6){
+            if(i<6&&statusMonitoringDto!=null){
+                list.add(statusMonitoringDto);
+                i++;
+            }else if(i>=6){
                 break;
             }
         }
@@ -87,6 +88,26 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
             list.add(statusMonitoringDto);
         }
         return list;
+    }
+
+    @Override
+    public Map<Object, Object> pageLaboratoryStatusMonitoringAll(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<StatusMonitoringDto> list = new ArrayList<>();
+        List<Laboratory> all = laboratoryMapper.findAll();
+        for (Laboratory laboratory : all) {
+            StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
+            statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
+            list.add(statusMonitoringDto);
+        }
+        PageInfo pageInfo = new PageInfo(list);
+        long total = pageInfo.getTotal();
+
+        Map<Object,Object> allMap =  new HashMap<>();
+        allMap.put("data",list);
+        allMap.put("total",total);
+
+        return allMap;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ResourcePdfServiceImpl implements IResourcePdfService {
         List<ResourcePdf> all = resourcePdfMapper.findAll();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty())
+        if(all.isEmpty())
             allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         else{
             allMap.put("data",all);

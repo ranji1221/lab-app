@@ -14,7 +14,7 @@ public class StatusMonitoringDto {
     @NonNull
     private String laboratoryResponsibility;
     @NonNull
-    private String imgSrc;
+    private int imgSrc;
     @NonNull
     private String timeStart;
     @NonNull

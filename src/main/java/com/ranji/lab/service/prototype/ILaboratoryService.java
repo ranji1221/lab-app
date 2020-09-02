@@ -22,7 +22,7 @@ public interface ILaboratoryService {
 
     List<StatusMonitoringDto> laboratoryStatusMonitoring();
     List<StatusMonitoringDto> laboratoryStatusMonitoringAll();
-
+    Map<Object,Object> pageLaboratoryStatusMonitoringAll(int pageNum,int pageSize);
     //模糊查询实验室
     Map<Object,Object> likeFindAll(int pageNum,int pageSize, String like);
     Map<Object,Object> likeFindAll(String like);

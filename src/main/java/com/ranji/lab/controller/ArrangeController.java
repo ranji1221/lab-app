@@ -200,4 +200,27 @@ public class ArrangeController {
             return JSON.toJSONString(pageExperimentProject);
         }
     }
+
+    //分页模糊查询
+    @ApiOperation(value="分页模糊查询预约实验项目", notes="分页模糊查询预约实验项目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value = "/statusAndNum",produces = "text/plain;charset=utf-8")
+    public String statusAndNum(){
+        List<ArrangeDto> arrangeDtos = iArrangeService.statusAndNum();
+        Map<String,Object> map = new HashMap<>();
+        if(!arrangeDtos.isEmpty()) {
+            map.put("data",arrangeDtos);
+            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(map);
+        }else{
+            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(arrangeDtos);
+        }
+    }
 }

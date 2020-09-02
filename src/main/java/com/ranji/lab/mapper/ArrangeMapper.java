@@ -46,4 +46,8 @@ public interface ArrangeMapper {
             "</script>")
     List<ArrangeDto> likeFindArrange(String like);
 
+    //查询项目的状态及数量
+    @Select("select a.status,count(*) num from arrange a GROUP BY a.`status`")
+    List<ArrangeDto> statusAndNum();
+
 }

@@ -54,7 +54,7 @@ public class BannerController {
     })
     @PostMapping(value = "/uploadbanner",produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String uploadFile(@RequestParam("id") int id, @RequestParam("name") String name,@RequestParam("description") String description,@RequestParam("file") MultipartFile[] files)
+    public String uploadFile(int id, String name, String description, MultipartFile files)
             throws Exception{
         //-- 1. 获取运行程序所在的根目录
         String rootDirectory = System.getProperty("user.dir");
@@ -62,14 +62,15 @@ public class BannerController {
         File resourceDirectory = new File(rootDirectory+File.separator+"upload"+File.separator+"banner");
         if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
         //-- 3. 处理上传路径
-        for (MultipartFile file : files) {
-            String path = resourceDirectory.getAbsolutePath()+File.separator+file.getOriginalFilename();
-            file.transferTo(new File(path));
+       // for (MultipartFile file : files) {
+            String path = resourceDirectory.getAbsolutePath()+File.separator+files.getOriginalFilename();
+            files.transferTo(new File(path));
             //-- 4. 保持到数据库
             Images images = new Images(id,name,path,description);
             iBannerService.insertOrUpdateBannerAndImages(id,images);
-        }
-        return "{'upload':'ok'}";
+            return "{'upload':'ok'}";
+       // }
+        //return "{'upload':'no'}";
     }
 
     @ApiOperation(value = "查看jpg格式的轮播图",notes = "通过传来的轮播图id，查看图片(.jpg)")
