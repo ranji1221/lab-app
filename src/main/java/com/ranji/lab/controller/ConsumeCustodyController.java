@@ -3,6 +3,7 @@ package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.ConsumeCustodyDto;
+import com.ranji.lab.dto.ConsumeCustodyInsertDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.service.prototype.IConsumeCustodyService;
@@ -34,13 +35,12 @@ public class ConsumeCustodyController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "耗材名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "recipient", value = "领用人", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "date", value = "领用日期", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "状态", dataType = "String")
+            @ApiImplicitParam(name = "date", value = "领用日期", required = true, dataType = "String")
     })
     @PostMapping(value = "insertConsumeCustody",produces = "text/plain;charset=utf-8")
-    public String insertConsumeCustody(ConsumeCustody consumeCustody){
+    public String insertConsumeCustody(ConsumeCustodyInsertDto consumeCustodyInsertDto){
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
-        int i = iConsumeCustodyService.insertConsumeCustody(consumeCustody);
+        int i = iConsumeCustodyService.insertConsumeCustody(consumeCustodyInsertDto);
         if(i<1){
             insertConsumeCustodyMap.put("status","failure");
             return JSON.toJSONString(insertConsumeCustodyMap);
@@ -73,15 +73,37 @@ public class ConsumeCustodyController {
     @ApiOperation(value="查找所有的保管领用", notes="根据传过来的设备信息来更新保管领用")
     @GetMapping(value = "/allconsumecustody",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustody(){
-        List<ConsumeCustody> allConsumeCustody = iConsumeCustodyService.findAll();
-        Map<Object,Object> allConsumeCustodyPaging = new HashMap<>();
-        if(!allConsumeCustody.isEmpty()){
-            allConsumeCustodyPaging.put("data",allConsumeCustody);
-            allConsumeCustodyPaging.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(allConsumeCustodyPaging);
+        Map<Object,Object> map = new HashMap<>();
+        List<ConsumeCustody> allConsumeCustodys = iConsumeCustodyService.findAll();
+        /**
+         * 通过id查询名字，并将名字传递至前台
+         */
+        List<ConsumeCustodyDto> allConsumeCustodyss = new ArrayList<>();
+        if(!allConsumeCustodys.isEmpty()){
+
+            for (ConsumeCustody allConsumecustody : allConsumeCustodys) {
+                int id = allConsumecustody.getId();
+                String name = iConsumeCustodyService.findNameById(id).getConsumeName();
+
+                ConsumeCustodyDto consumeCustodyDto = new ConsumeCustodyDto();
+
+                consumeCustodyDto.setRecipient(allConsumecustody.getRecipient());
+                consumeCustodyDto.setConsumeName(name);
+                consumeCustodyDto.setDate(DateUtil.DateToString(allConsumecustody.getDate(),"yyyy-MM-dd"));
+                consumeCustodyDto.setStatus(allConsumecustody.getStatus());
+                consumeCustodyDto.setId(allConsumecustody.getId());
+                consumeCustodyDto.setCount(iConsumeCustodyService.findNameById(id).getCount());
+                consumeCustodyDto.setUnitName(iConsumeCustodyService.findNameById(id).getUnitName());
+                allConsumeCustodyss.add(consumeCustodyDto);
+            }
+            int total = iConsumeCustodyService.getCount();
+            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            map.put("data",allConsumeCustodyss);
+            map.put("total",total);
+            return JSON.toJSONString(map);
         }else{
-            allConsumeCustodyPaging.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(allConsumeCustodyPaging);
+            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(map);
         }
     }
     @ApiOperation(value="获得保管领用包括name", notes="根据传过来的设备信息来获得")

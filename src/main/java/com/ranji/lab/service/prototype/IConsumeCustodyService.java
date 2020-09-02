@@ -1,6 +1,7 @@
 package com.ranji.lab.service.prototype;
 
 import com.ranji.lab.dto.ConsumeCustodyDto;
+import com.ranji.lab.dto.ConsumeCustodyInsertDto;
 import com.ranji.lab.entity.ConsumeCustody;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public interface IConsumeCustodyService {
 
-    int insertConsumeCustody(ConsumeCustody consumeCustody);
+    int insertConsumeCustody(ConsumeCustodyInsertDto consumeCustodyInsertDto);
 
     int updateConsumeCustody(ConsumeCustody consumeCustody);
 

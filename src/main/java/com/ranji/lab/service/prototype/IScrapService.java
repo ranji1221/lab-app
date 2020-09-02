@@ -1,12 +1,13 @@
 package com.ranji.lab.service.prototype;
 
+import com.ranji.lab.dto.ScrapInsertDto;
 import com.ranji.lab.entity.Scrap;
 
 import java.util.Map;
 
 public interface IScrapService {
 
-    int insertScrap(Scrap scrap);
+    int insertScrap(ScrapInsertDto scrapInsertDto);
     //取消报废
     int updateScrapValue(Scrap scrap);
 

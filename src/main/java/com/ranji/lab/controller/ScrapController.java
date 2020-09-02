@@ -1,6 +1,7 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.dto.ScrapInsertDto;
 import com.ranji.lab.entity.Scrap;
 import com.ranji.lab.service.prototype.IScrapService;
 import io.swagger.annotations.Api;
@@ -25,7 +26,7 @@ public class ScrapController {
 
     /**
      * 第一次报修(需要上级审核)
-     * @param scrap
+     * @param scrapInsertDto
      * @return
      */
     @ApiOperation(value="插入所需报废的设备", notes="插入所需报废的值")
@@ -36,9 +37,9 @@ public class ScrapController {
             @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
     })
     @PostMapping(value = "/insertscrap",produces = "text/plain;charset=utf-8")
-    public String insertScrap(Scrap scrap){
+    public String insertScrap(ScrapInsertDto scrapInsertDto){
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
-        int i = iScrapService.insertScrap(scrap);
+        int i = iScrapService.insertScrap(scrapInsertDto);
         if(i<1){
             insertScrapMap.put("status","failure");
             return JSON.toJSONString(insertScrapMap);

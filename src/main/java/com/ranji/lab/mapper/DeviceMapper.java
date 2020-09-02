@@ -20,6 +20,21 @@ public interface DeviceMapper {
     //查询全部
     @Select("select device.* from device")
     List<Device> findAll();
+
+    /**
+     * 通过传来的uuid判断是否存在该设备
+     * @return
+     */
+    @Select("select * from device where uuid =#{uuid}")
+    List<Device> findDeviceByuuid(String uuid);
+
+    /**
+     * 通过传来的uuid获取设备id
+     * @return
+     */
+    @Select("select id from device where id =#{uuid}")
+    int findDeviceIdByuuid(String uuid);
+
     @Select("select * from device d left join device_model dm on dm.id=d.device_model_id")
     List<DeviceAndModelDto> findAllDeviceAndModel();
     //按照id查询

@@ -3,10 +3,7 @@ package com.ranji.lab.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ranji.lab.dto.ConsumeAndConsumeNumDto;
-import com.ranji.lab.dto.ConsumeCustodyDto;
-import com.ranji.lab.dto.ExperimentProjectDto;
-import com.ranji.lab.dto.ProjectConsumeDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.ConsumeCustody;
 import com.ranji.lab.mapper.ConsumeCustodyMapper;
 import com.ranji.lab.mapper.ExperimentProjectMapper;
@@ -33,13 +30,13 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     ProjectDeviceMapper projectDeviceMapper;
 
     @Override
-    public int insertConsumeCustody(ConsumeCustody consumeCustody) {
-        return consumeCustodyMapper.insertConsumeCustody(consumeCustody);
+    public int insertConsumeCustody(ConsumeCustodyInsertDto consumeCustodyInsertDto) {
+        return consumeCustodyMapper.insertConsumeCustody(consumeCustodyInsertDto);
     }
 
     @Override
     public int updateConsumeCustody(ConsumeCustody consumeCustody) {
-        return consumeCustodyMapper.insertConsumeCustody(consumeCustody);
+        return consumeCustodyMapper.updateConsumeCustody(consumeCustody);
     }
 
     @Override

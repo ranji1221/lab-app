@@ -1,6 +1,7 @@
 package com.ranji.lab.mapper;
 
 import com.ranji.lab.dto.ConsumeCustodyDto;
+import com.ranji.lab.dto.ConsumeCustodyInsertDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface ConsumeCustodyMapper {
     @Insert("insert into consume_custody (recipient,date,arrange_project_id,status) values (#{recipient},#{date},#{arrangeProjectId},0)")
-    int insertConsumeCustody(ConsumeCustody consumeCustody);
+    int insertConsumeCustody(ConsumeCustodyInsertDto consumeCustodyInsertDto);
     @Update("update consume_custody set recipient=#{recipient},date=#{date},arrange_project_id=#{arrangeProjectId},status=#{status} where id = #{id}")
     int updateConsumeCustody(ConsumeCustody consumeCustody);
     @Select("select cc.* from consume_custody cc order by date")

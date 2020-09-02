@@ -271,5 +271,11 @@ public class DeviceServiceImpl implements IDeviceService {
         return map;
     }
 
+    @Override
+    public List<Device> findDeviceByuuid(String uuid) {
+        List<Device> deviceByuuid = deviceMapper.findDeviceByuuid(uuid);
+        return deviceByuuid;
+    }
+
 
 }

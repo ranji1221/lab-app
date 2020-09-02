@@ -1,6 +1,8 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.dto.ReportRepairDto;
+import com.ranji.lab.dto.ReportRepairInsertDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ReportRepair;
 import com.ranji.lab.service.prototype.IReportRepairService;
@@ -31,9 +33,9 @@ public class ReportRepairController {
             @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
     })
     @PostMapping(value = "/insertreportrepair",produces = "text/plain;charset=utf-8")
-    public String insertReportRepair(ReportRepair reportRepair){
+    public String insertReportRepair(ReportRepairInsertDto reportRepairInsertDto){
         HashMap<Object, Object> insertReportRepairMap = new HashMap<>();
-        int i = reportRepairService.insertReportRepair(reportRepair);
+        int i = reportRepairService.insertReportRepair(reportRepairInsertDto);
         if(i<1){
             insertReportRepairMap.put("status","failure");
             return JSON.toJSONString(insertReportRepairMap);

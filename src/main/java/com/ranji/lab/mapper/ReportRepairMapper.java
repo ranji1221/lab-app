@@ -15,7 +15,7 @@ public interface ReportRepairMapper {
      * @return
      */
     //插入维修信息
-    @Insert("insert into report_repair (device_id,description,date) values (#{deviceId},#{description},#{date})")
+    @Insert("insert into report_repair (device_id,description,date,status) values (#{deviceId},#{description},#{date},0)")
     int insertReportRepair(ReportRepair reportRepair);
     //修改维修设备状态
     @Update("update device set status = 1 where id = #{deviceId}")
@@ -44,4 +44,5 @@ public interface ReportRepairMapper {
      */
     @Select("SELECT rr.*, l.laboratory_name, d.uuid FROM report_repair rr LEFT JOIN device d ON d.id = rr.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = rr.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id")
     List<ReportRepairDto> allReportRepair();
+
 }

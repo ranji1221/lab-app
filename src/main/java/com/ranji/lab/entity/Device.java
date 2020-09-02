@@ -22,6 +22,7 @@ public class Device implements Serializable {
     private String uuid;//设备类型uuid唯一标识
     @NonNull
     private String factime;//设备出厂日期
+    private String status;
 
     public void setFactime(String factime){
         this.factime=factime;

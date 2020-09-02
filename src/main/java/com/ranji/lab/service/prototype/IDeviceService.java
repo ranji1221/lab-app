@@ -52,4 +52,8 @@ public interface IDeviceService {
     //查询设备使用率
     Map<Object,Object> findUsageRate(int laboratoryId);
 
+    /**
+     * 根据uuid判断是否存在该设备
+     */
+    List<Device> findDeviceByuuid(String uuid);
 }

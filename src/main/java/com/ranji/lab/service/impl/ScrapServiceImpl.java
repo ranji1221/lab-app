@@ -5,8 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ScrapDto;
+import com.ranji.lab.dto.ScrapInsertDto;
 import com.ranji.lab.entity.Code;
+import com.ranji.lab.entity.Device;
+import com.ranji.lab.entity.ReportRepair;
 import com.ranji.lab.entity.Scrap;
+import com.ranji.lab.mapper.DeviceMapper;
 import com.ranji.lab.mapper.ScrapMapper;
 import com.ranji.lab.service.prototype.IScrapService;
 import org.springframework.stereotype.Service;
@@ -22,16 +26,29 @@ public class ScrapServiceImpl implements IScrapService {
 
     @Resource
     private ScrapMapper scrapMapper;
+    @Resource
+    private DeviceMapper deviceMapper;
+
     @Override
     @Transactional
-    public int insertScrap(Scrap scrap) {
-        int i = scrapMapper.insertScarp(scrap);
-        if(1<0) return 0;
-        else{
-            int i1 = scrapMapper.updateDeviceStatusToStartScrap(scrap.getId());
-            if(i1<0) return 0;
+    public int insertScrap(ScrapInsertDto scrapInsertDto) {
+        String[] uuid = scrapInsertDto.getUuid();
+        for (String s : uuid) {
+            List<Device> deviceByuuid = deviceMapper.findDeviceByuuid(s);
+            if(deviceByuuid.isEmpty()){
+                return 0;
+            }
+        }
+        for (String s : uuid) {
+            int deviceId = deviceMapper.findDeviceIdByuuid(s);
+            Scrap scrap = new Scrap();
+            scrap.setDeviceId(deviceId);
+            scrap.setDate(scrapInsertDto.getDate());
+            scrap.setDescription(scrapInsertDto.getDescription());
+            scrapMapper.insertScarp(scrap);
         }
         return 1;
+
     }
 
     @Override
