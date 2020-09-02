@@ -18,7 +18,7 @@ public class ReportRepairServiceTest {
     @Resource
     private IScrapService iScrapService;
 
-    @Test
+    /*@Test
     public void testirrs(){
         ReportRepairInsertDto reportRepairInsertDto = new ReportRepairInsertDto();
         reportRepairInsertDto.setDate("2020-1-1");
@@ -29,8 +29,8 @@ public class ReportRepairServiceTest {
 
         int i = iReportRepairService.insertReportRepair(reportRepairInsertDto);
 
-    }
-    @Test
+    }*/
+    /*@Test
     public void testiss(){
         ScrapInsertDto scrapInsertDto = new ScrapInsertDto();
         scrapInsertDto.setDate("2020-1-1");
@@ -41,5 +41,5 @@ public class ReportRepairServiceTest {
 
         int i = iScrapService.insertScrap(scrapInsertDto);
 
-    }
+    }*/
 }

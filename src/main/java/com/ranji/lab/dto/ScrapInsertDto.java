@@ -10,7 +10,7 @@ public class ScrapInsertDto {
 
     private String laboratory;
 
-    private String[] uuid;
+    private String uuid;
 
     private String description;
 

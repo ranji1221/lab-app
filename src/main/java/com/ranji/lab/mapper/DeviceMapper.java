@@ -32,7 +32,7 @@ public interface DeviceMapper {
      * 通过传来的uuid获取设备id
      * @return
      */
-    @Select("select id from device where id =#{uuid}")
+    @Select("select id from device where uuid =#{uuid}")
     int findDeviceIdByuuid(String uuid);
 
     @Select("select * from device d left join device_model dm on dm.id=d.device_model_id")

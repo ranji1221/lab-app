@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ScrapDto;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +34,16 @@ public class ScrapServiceImpl implements IScrapService {
     @Override
     @Transactional
     public int insertScrap(ScrapInsertDto scrapInsertDto) {
-        String[] uuid = scrapInsertDto.getUuid();
-        for (String s : uuid) {
+        String uuid = scrapInsertDto.getUuid();
+        ArrayList<String> strings = JSON.parseObject(uuid, new TypeReference<ArrayList<String>>(){});
+
+        for (String s : strings) {
             List<Device> deviceByuuid = deviceMapper.findDeviceByuuid(s);
             if(deviceByuuid.isEmpty()){
                 return 0;
             }
         }
-        for (String s : uuid) {
+        for (String s : strings) {
             int deviceId = deviceMapper.findDeviceIdByuuid(s);
             Scrap scrap = new Scrap();
             scrap.setDeviceId(deviceId);

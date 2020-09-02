@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ReportRepairInsertDto {
     private String laboratory;
 
-    private String[] uuid;
+    private String uuid;
 
     private String description;
 
