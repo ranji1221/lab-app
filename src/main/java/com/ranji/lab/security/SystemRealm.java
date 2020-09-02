@@ -1,5 +1,6 @@
 package com.ranji.lab.security;
 
+import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.service.prototype.IUserService;
 import org.apache.shiro.authc.*;
@@ -47,11 +48,19 @@ public class SystemRealm extends AuthorizingRealm {
         //-- 以下的代码是测试代码，假设所有的用户都会有"user:list"的权限
         //-- 在实际的开发中，我们会自己写好user-role-permission模块，然后从数据库中查询，用户的权限
         //-- 并可以赋予用户权限
-        String userName = (String)principalCollection.fromRealm(getName()).iterator().next();
+        //-- 由于下面保存的User，所以这里拿到的就是User,若下面只保存用户名，则这里拿到的就是字符串用户名
+        User user = (User)principalCollection.fromRealm(getName()).iterator().next();
         SimpleAuthorizationInfo info = null;
-        if(userName != null && !"".equals(userName))
+        List<Role> roles = null;
+        if(user != null) {
             info = new SimpleAuthorizationInfo();
-        info.addStringPermission("user:list");
+            roles = userService.getRoles(user.getName());
+        }
+        //-- 暂时不拿权限判断权限，只拿角色来判断
+        //info.addStringPermission("user:list");
+        for (Role role : roles) {
+            info.addRole(role.getCode());
+        }
         return info;
     }
 
@@ -74,8 +83,13 @@ public class SystemRealm extends AuthorizingRealm {
 
         //-- 2. 返回认证材料信息
         AuthenticationInfo  authenInfo = null;
-        if(user != null)
-            authenInfo = new SimpleAuthenticationInfo(user.getName(),user.getPassword(),getName());
+        if(user != null) {
+            //-- 这里直接把用户保存起来，以便更好的获取到用户的信息，先前只保存用户的名字，主要看第一个参数
+            //-- 其实用SecurityUtils.getSubject().getPrincipal()这个方法，返回的就是这里第一个参数的值，一般只保存用户名
+            //-- 而在做前后端分离的需要返回User
+            authenInfo = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+            //-- authenInfo = new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
+        }
         return authenInfo;
     }
 

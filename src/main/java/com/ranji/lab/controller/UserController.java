@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * 用户控制器
+ * 用户控制器，暂时不用，所以先注释起来
  * @author RanJi
  */
-@Controller
+//@Controller
 public class UserController {
     @ApiOperation(value = "注册用户",notes = "根据给定的User对象进行注册")
     @RequestMapping(value="/user",method = RequestMethod.GET)

@@ -1,5 +1,7 @@
 package com.ranji.lab.service;
 
+import com.ranji.lab.entity.Auth;
+import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.service.prototype.IUserService;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,9 @@ public class UserServiceTests {
 
     @Test
     public void testSave(){
-        userService.save(new User("kai","hallo",1));
+        User u = new User("kai","hallo",1);
+        userService.save(u);
+        System.out.println(u.getId());
     }
 
     @Test
@@ -38,6 +42,52 @@ public class UserServiceTests {
         List<User> users = userService.getUsers(params);
         for (User user : users) {
             System.out.println(user);
+        }
+    }
+
+    @Test
+    public void testAssignRole(){
+        userService.assignRole(3,1);
+    }
+
+    @Test
+    public void testGetRole(){
+        Role role = userService.getRole(5);
+        System.out.println(role);
+    }
+
+    @Test
+    public void testGetRole2(){
+        Role role = userService.getRole("kai");
+        System.out.println(role);
+    }
+
+    @Test
+    public void testAssignRoles(){
+        userService.assignRoles(1,new int[]{1,2});
+    }
+
+    @Test
+    public void testFindRoles(){
+        List<Role> roles = userService.getRoles("zhangsan");
+        for (Role role : roles) {
+            System.out.println(role);
+        }
+    }
+
+    @Test
+    public void testFindAuths(){
+        List<String> auths = userService.getAuthsCode("lisi");
+        for (String auth : auths) {
+            System.out.println(auth);
+        }
+    }
+
+    @Test
+    public void testFindAuths2(){
+        List<Auth> auths = userService.getAuths("lisi");
+        for (Auth auth : auths) {
+            System.out.println(auth);
         }
     }
 }

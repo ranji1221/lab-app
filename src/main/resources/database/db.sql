@@ -13,30 +13,46 @@ insert into t_user(name,password,enable) values('zhangsan','123456',1);
 drop table if exists t_role;
 create table t_role(
     id int primary key auto_increment,
-    role_code varchar(100) not null unique,
-    role_name varchar(200)
+    code varchar(100) not null unique,
+    name varchar(200)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into t_role(role_code,role_name) values('admin','管理员');
-insert into t_role(role_code,role_name) values('user','普通用户');
+insert into t_role(code,name) values('admin','管理员');
+insert into t_role(code,name) values('user','普通用户');
+
+# userRole table  用户角色表
+drop table if exists t_user_role;
+create table t_user_role(
+    id int primary key auto_increment,
+    user_id int,
+    role_id int,
+    unique key (user_id,role_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # auth table    权限表
 drop table if exists t_auth;
 create table t_auth(
     id int primary key auto_increment,
-    auth_code varchar(200) not null unique,
-    auth_name varchar(200)
+    type varchar(200),
+    name varchar(200),
+    code varchar(200) not null unique
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into t_auth(auth_code,auth_name) values('user:view','查看用户');
-insert into t_auth(auth_code,auth_name) values('user:add','添加用户');
-insert into t_auth(auth_code,auth_name) values('user:delete','删除用户');
-insert into t_auth(auth_code,auth_name) values('user:edit','编辑用户');
+insert into t_auth(type,name,code) values('用户管理','查看用户','user:view');
+insert into t_auth(type,name,code) values('用户管理','添加用户','user:add');
+insert into t_auth(type,name,code) values('用户管理','删除用户','user:delete');
+insert into t_auth(type,name,code) values('用户管理','编辑用户','user:edit');
+insert into t_auth(type,name,code) values('项目管理','添加项目','project:add');
+insert into t_auth(type,name,code) values('项目管理','查询项目','project:delete');
+insert into t_auth(type,name,code) values('设备管理','添加设备','device:add');
+insert into t_auth(type,name,code) values('公告管理','添加公告','notice:add');
+insert into t_auth(type,name,code) values('公告管理','查看公告','notice:view');
 
 # role_auth table   角色权限关联表
 drop table if exists t_role_auth;
 create table t_role_auth(
     id int primary key auto_increment,
     role_id int,
-    auth_id int
+    auth_id int,
+    unique key (role_id,auth_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 insert into t_role_auth(role_id,auth_id) values(1,1);
 insert into t_role_auth(role_id,auth_id) values(1,2);

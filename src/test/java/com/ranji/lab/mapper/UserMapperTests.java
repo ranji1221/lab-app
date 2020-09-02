@@ -1,6 +1,7 @@
 package com.ranji.lab.mapper;
 
 import com.github.pagehelper.PageHelper;
+import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,5 +46,21 @@ public class UserMapperTests {
             System.out.println(user);
         }
     }
+    @Test
+    public void testAssignRoles(){
+        userMapper.saveRoles(1,new int[]{1,2,3});
+    }
 
+    @Test
+    public void testGetRoles(){
+        List<Role> roles = userMapper.getRoles("lisi");
+        for (Role role : roles) {
+            System.out.println(role);
+        }
+    }
+
+    @Test
+    public void testCancelRoles(){
+        userMapper.cancelRoles(1,new int[]{1,2});
+    }
 }

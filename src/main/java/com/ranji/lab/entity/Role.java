@@ -9,21 +9,21 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 轮播图实体类
- * 代表可以上传到服务器图片资源
- * @RanJi
- * @RanJi
+ * ClassName:    Role
+ * Package:    com.ranji.lab.entity
+ * Description: 角色实体类
+ * Datetime:    2020/8/31   5:35 下午
+ * Author:   ranji
  */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Slide implements Serializable {
-    @NonNull
+public class Role implements Serializable {
     private int id;
     @NonNull
-    private String name;
+    private String code;    //-- 角色英文名
     @NonNull
-    private String url;
+    private String name;    //-- 角色中文名
 
     @Override
     public String toString() {
