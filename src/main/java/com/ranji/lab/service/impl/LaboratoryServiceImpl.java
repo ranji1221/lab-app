@@ -12,6 +12,7 @@ import com.ranji.lab.mapper.LaboratoryDeviceMapper;
 import com.ranji.lab.mapper.LaboratoryMapper;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     private LaboratoryDeviceMapper laboratoryDeviceMapper;
 
     @Override
+    @Transactional
     public int insertLaboratory(LaboratoryDto laboratoryDto, String devices) {
         int i = laboratoryMapper.insertLaboratory(laboratoryDto);
         List<LaboratoryDeviceDto> device = JSON.parseObject(devices, new TypeReference<ArrayList<LaboratoryDeviceDto>>() {});
@@ -85,7 +87,8 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         for (Laboratory laboratory : all) {
             StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
             statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
-            list.add(statusMonitoringDto);
+            if(statusMonitoringDto!=null){
+                list.add(statusMonitoringDto);}
         }
         return list;
     }
@@ -98,7 +101,9 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         for (Laboratory laboratory : all) {
             StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
             statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
-            list.add(statusMonitoringDto);
+            if(statusMonitoringDto!=null){
+                list.add(statusMonitoringDto);
+            }
         }
         PageInfo pageInfo = new PageInfo(list);
         long total = pageInfo.getTotal();

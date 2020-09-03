@@ -419,7 +419,7 @@ public class DeviceController {
     })
     @GetMapping(value="/laboratoryIdFindAllDevice",produces = "text/plain;charset=utf-8")
     public String laboratoryIdFindAllDevice(int laboratoryId){
-        List<DeviceMsgDto> deviceDtos = iDeviceService.laboratoryIdFindAllDevice(laboratoryId);
+        List<DeviceAndDeviceTypeNameDto> deviceDtos = iDeviceService.laboratoryIdFindAllDevice(laboratoryId);
         if(!deviceDtos.isEmpty()) {
             return JSON.toJSONString(deviceDtos);
         }else{

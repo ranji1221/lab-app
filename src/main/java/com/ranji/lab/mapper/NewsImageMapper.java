@@ -11,7 +11,7 @@ public interface NewsImageMapper {
      * @param newsImage
      * @return
      */
-    @Insert("insert into news_image (image_addr) values (imageAddr)")
+    @Insert("insert into news_image (image_addr) values (#{imageAddr})")
     //加入@Options是为了获取插入时的主键值；返回值对象是当前新闻图片id值
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int insertNewsImage(NewsImage newsImage);
@@ -23,4 +23,8 @@ public interface NewsImageMapper {
      */
     @Select("select * from news_image where id = #{id}")
     NewsImage findNewsImageById(int id);
+
+
+    @Select("select Max(id) from news_image")
+    int findLatestNewsImageId();
 }

@@ -21,4 +21,10 @@ public class Laboratory implements Serializable {
     private String laboratoryResponsibility;//实验室负责人
     @NonNull
     private int imgSrc;  //实验室图片地址
+    private String imageAddr;
+
+    public void setImgSrc(int imgSrc) {
+        this.imgSrc = imgSrc;
+        this.imageAddr = "/laboratoryimage/" + imgSrc;
+    }
 }

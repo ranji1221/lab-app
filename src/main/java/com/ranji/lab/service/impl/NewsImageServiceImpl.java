@@ -4,6 +4,7 @@ import com.ranji.lab.entity.NewsImage;
 import com.ranji.lab.mapper.NewsImageMapper;
 import com.ranji.lab.service.prototype.INewsImageService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -15,7 +16,8 @@ public class NewsImageServiceImpl implements INewsImageService {
 
     @Override
     public int insertNewsImage(NewsImage newsImage) {
-        return newsImageMapper.insertNewsImage(newsImage);
+        newsImageMapper.insertNewsImage(newsImage);
+        return newsImage.getId();
     }
 
     @Override

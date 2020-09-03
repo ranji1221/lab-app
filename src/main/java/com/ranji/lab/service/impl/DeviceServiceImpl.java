@@ -222,7 +222,7 @@ public class DeviceServiceImpl implements IDeviceService {
 
     //按照实验室id查询所有的设备
     @Override
-    public List<DeviceMsgDto> laboratoryIdFindAllDevice(int laboratoryId) {
+    public List<DeviceAndDeviceTypeNameDto> laboratoryIdFindAllDevice(int laboratoryId) {
         return deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
     }
 
@@ -253,17 +253,14 @@ public class DeviceServiceImpl implements IDeviceService {
     //查询设备使用率
     @Override
     public Map<Object, Object> findUsageRate(int laboratoryId) {
-        List<DeviceMsgDto> deviceMsgDtos = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
-        List<UsageRateDto> UsageRate = new ArrayList<>();
-        for (DeviceMsgDto deviceMsgDto : deviceMsgDtos) {
+        List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+        List<DeviceAndDeviceTypeNameDto> UsageRate = new ArrayList<>();
+        for (DeviceAndDeviceTypeNameDto device : devices) {
             double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(laboratoryId);
-            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(laboratoryId, deviceMsgDto.getDeviceId());
+            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(laboratoryId, device.getId());
             if(endingProjectNum!=0&&endingDeviceNum!=0){
-                UsageRateDto usageRateDto = new UsageRateDto();
-                usageRateDto.setDeviceId(deviceMsgDto.getDeviceId());
-                usageRateDto.setDeviceName(deviceMsgDto.getDeviceName());
-                usageRateDto.setUsageRate(endingDeviceNum/endingProjectNum);
-                UsageRate.add(usageRateDto);
+                device.setUsageRate(endingDeviceNum/endingProjectNum);
+                UsageRate.add(device);
             }
         }
         Map<Object,Object> map = new HashMap<>();
@@ -274,18 +271,15 @@ public class DeviceServiceImpl implements IDeviceService {
     //查询设备的损耗率
     @Override
     public Map<Object, Object> findRatio(int laboratoryId) {
-        List<DeviceMsgDto> deviceMsgDtos = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
-        List<ratioDto> r = new ArrayList<>();
-        for (DeviceMsgDto deviceMsgDto : deviceMsgDtos) {
-            double i = deviceMapper.deviceIdFindUseNum(deviceMsgDto.getDeviceId())*2;
-            double x = deviceMsgDto.getLifetime();
-            ratioDto ratioDto = new ratioDto();
+        List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+        List<DeviceAndDeviceTypeNameDto> r = new ArrayList<>();
+        for (DeviceAndDeviceTypeNameDto device : devices) {
+            double i = deviceMapper.deviceIdFindUseNum(device.getId())*2;
+            double x = device.getLifetime();
             if(i!=0&&x!=0){
                 double ratio = i/x;
-                ratioDto.setDeviceId(deviceMsgDto.getDeviceId());
-                ratioDto.setDeviceName(deviceMsgDto.getDeviceName());
-                ratioDto.setRatio(ratio);
-                r.add(ratioDto);
+                device.setRatio(ratio);
+                r.add(device);
             }
         }
         HashMap<Object, Object> map = new HashMap<>();

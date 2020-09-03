@@ -4,16 +4,16 @@ package com.ranji.lab.controller;
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.LaboratoryDto;
 import com.ranji.lab.entity.Code;
-import com.ranji.lab.entity.Images;
 import com.ranji.lab.entity.Laboratory;
-import com.ranji.lab.service.impl.ImageServiceImpl;
-import com.ranji.lab.service.prototype.IImageService;
+import com.ranji.lab.entity.LaboratoryImage;
+import com.ranji.lab.service.prototype.ILaboratoryImageService;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,11 +33,12 @@ public class LaboratoryController {
     @Resource
     private ILaboratoryService iLaboratoryService;
     @Resource
-    private IImageService iImageService;
+    private ILaboratoryImageService iLaboratoryImageService;
 
     @ApiOperation(value="插入实验室", notes="根据传过来的信息插入实验室")
     @PostMapping(value = "insertlaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
+    @Transactional
     public String insertLaboratory(LaboratoryDto laboratoryDto, @RequestParam("file") MultipartFile file, String devices){
         Map laboratoryMap = new HashMap<>();
         //-- 1. 获取项目的根目录
@@ -50,12 +51,10 @@ public class LaboratoryController {
                 String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
                 try {
                     file.transferTo(new File(path));
-                    Images images = new Images();
-                    images.setImgAddr(path);
-                    images.setImgDescription("noDescription");
-                    images.setImgName("noName");
-                    iImageService.insertImage(images);
-                    laboratoryDto.setImgSrc(images.getId());
+                    LaboratoryImage laboratoryImage = new LaboratoryImage();
+                    laboratoryImage.setImageAddr(path);
+                    int i = iLaboratoryImageService.insertLaboratoryImage(laboratoryImage);
+                    laboratoryDto.setImgSrc(i);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

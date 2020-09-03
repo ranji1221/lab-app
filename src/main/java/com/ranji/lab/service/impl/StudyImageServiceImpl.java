@@ -15,7 +15,8 @@ public class StudyImageServiceImpl implements IStudyImageService {
 
     @Override
     public int insertStudyImage(StudyImage studyImage) {
-        return studyImageMapper.insertStudyImage(studyImage);
+        studyImageMapper.insertStudyImage(studyImage);
+        return studyImage.getId();
     }
 
     @Override
