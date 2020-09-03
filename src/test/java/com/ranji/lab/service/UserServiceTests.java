@@ -25,10 +25,10 @@ public class UserServiceTests {
 
     @Test
     public void testFind(){
-        List<User> users = userService.getAllUsers();
+       /* List<User> users = userService.getAllUsers();
         for (User u: users) {
             System.out.println(u);
-        }
+        }*/
     }
 
     @Test
