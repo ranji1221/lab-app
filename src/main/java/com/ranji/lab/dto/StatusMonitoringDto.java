@@ -15,6 +15,7 @@ public class StatusMonitoringDto {
     private String laboratoryResponsibility;
     @NonNull
     private int imgSrc;
+    private String imageAddr;
     @NonNull
     private String timeStart;
     @NonNull
@@ -27,4 +28,9 @@ public class StatusMonitoringDto {
     private int status;
     @NonNull
     private String responsibility;
+
+    public void setImgSrc(int imgSrc) {
+        this.imgSrc = imgSrc;
+        this.imageAddr = "/laboratoryimage/" + imgSrc;
+    }
 }

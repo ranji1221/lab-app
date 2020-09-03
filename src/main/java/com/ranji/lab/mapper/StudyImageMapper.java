@@ -11,7 +11,7 @@ public interface StudyImageMapper {
      * @param studyImage
      * @return
      */
-    @Insert("insert into study_image (image_addr) values (imageAddr)")
+    @Insert("insert into study_image (image_addr) values (#{imageAddr})")
     //加入@Options是为了获取插入时的主键值；返回值对象是当前教学科研图片id值
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     int insertStudyImage(StudyImage studyImage);

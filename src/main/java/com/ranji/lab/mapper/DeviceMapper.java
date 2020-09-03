@@ -44,7 +44,7 @@ public interface DeviceMapper {
     @Select("select device.* from device where type = #{type}")
     List<DeviceDto> findAllDeviceByTypeId(int type);
 
-    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type=dt.type_name")
+    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type=dt.id")
     List<DeviceAndDeviceTypeNameDto> findDeviceAndDeviceName();
 
     //智能分析
@@ -68,8 +68,8 @@ public interface DeviceMapper {
     List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
 
     //按照实验室id查询所有的设备
-    @Select("select ld.*,d.uuid,dm.device_name,dm.lifetime from laboratory_device ld left join device d on d.id = ld.device_id left join device_model dm on dm.id = d.device_model_id where ld.laboratory_id = #{laboratoryId} and d.status != 2")
-    List<DeviceMsgDto> laboratoryIdFindAllDevice(int laboratoryId);
+    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type = dt.id left join laboratory_device ld on ld.device_id = d.id where ld.laboratory_id = #{laboratoryId} and d.status != 2")
+    List<DeviceAndDeviceTypeNameDto> laboratoryIdFindAllDevice(int laboratoryId);
 
     //按照实验室id查询所有分类
     @Select("select d.device_model_id from laboratory_device ld join device d on d.id = ld.device_id where ld.laboratory_id = #{laboratoryId} GROUP BY d.device_model_id ")

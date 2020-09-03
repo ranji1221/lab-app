@@ -1,11 +1,14 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ranji.lab.entity.Laboratory;
 import com.ranji.lab.entity.NewsImage;
 import com.ranji.lab.entity.StudyImage;
 import com.ranji.lab.service.prototype.IImageService;
+import com.ranji.lab.service.prototype.ILaboratoryImageService;
 import com.ranji.lab.service.prototype.INewsImageService;
 import com.ranji.lab.service.prototype.IStudyImageService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
+@Api(tags = "图片接口")
 public class ImageConrtoller {
     @Resource
     private IImageService iImageService;
@@ -25,6 +29,8 @@ public class ImageConrtoller {
     private INewsImageService iNewsImageService;
     @Resource
     private IStudyImageService iStudyImageService;
+    @Resource
+    private ILaboratoryImageService iLaboratoryImageService;
 
     @ApiOperation(value = "插入新闻(富文本)图片", notes = "通过传来的文件插入新闻(富文本)图片")
     @ApiImplicitParam(name = "files", value = "图片文件(无法在swagger上进行测试，需要自写前端页面验证)", dataType = "String")
@@ -49,6 +55,7 @@ public class ImageConrtoller {
         //-- 4. 保存新闻图片
         NewsImage newsImage = new NewsImage(path);
         int id = iNewsImageService.insertNewsImage(newsImage);
+        System.out.println("-------------------------------------------------------------" + id);
         //-- 5. 构建返回的JSON
         JSONObject jo = new JSONObject();
         jo.put("code",0);
@@ -123,6 +130,29 @@ public class ImageConrtoller {
         StudyImage studyImage = iStudyImageService.findStudyImageById(id);
 
         File f = new File(studyImage.getImageAddr());
+        byte[] buffer = new byte[1024];
+        BufferedInputStream bis = null;
+        bis = new BufferedInputStream(new FileInputStream(f));
+        OutputStream os = response.getOutputStream();
+        int len = 0;
+        while ((len=bis.read(buffer))!= -1) {
+            os.write(buffer, 0, len);
+        }
+        bis.close();
+
+        return null;
+    }
+
+
+    //查看实验室图片
+    @ApiOperation(value = "查看实验室图片",notes = "通过实验室图片id查看实验室图片")
+    @ApiImplicitParam(name = "id", value = "轮播图id", required = true, dataType = "String")
+    @GetMapping(value = "/laboratoryimage/{id}")
+
+    public String laboratoryimage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
+        Laboratory laboratory = iLaboratoryImageService.findlaboratoryImageById(id);
+
+        File f = new File(laboratory.getImageAddr());
         byte[] buffer = new byte[1024];
         BufferedInputStream bis = null;
         bis = new BufferedInputStream(new FileInputStream(f));

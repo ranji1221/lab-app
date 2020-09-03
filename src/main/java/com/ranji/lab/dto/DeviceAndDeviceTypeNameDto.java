@@ -37,6 +37,11 @@ public class DeviceAndDeviceTypeNameDto {
     @NonNull
     private int lifetime;
 
+    private double ratio;
+
+    private double usageRate;
+
+
     public void setFactime(String factime){
         this.factime=factime;
     }

@@ -44,7 +44,7 @@ public interface IDeviceService {
     List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
 
     //按照实验室id查询所有的设备
-    List<DeviceMsgDto> laboratoryIdFindAllDevice(int laboratoryId);
+    List<DeviceAndDeviceTypeNameDto> laboratoryIdFindAllDevice(int laboratoryId);
 
     //按照设备状态、设备分类和实验室id查询数据
     Map<Object,Object> findDeviceStatusNum(int laboratoryId);
