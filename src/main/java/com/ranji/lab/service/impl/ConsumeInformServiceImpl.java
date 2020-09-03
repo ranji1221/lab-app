@@ -109,6 +109,7 @@ public class ConsumeInformServiceImpl implements IConsumeInformService {
         List<ConsumeInformAndConsumeTypeNameDto> consumeInformAndConsumeTypeNameDtos = consumeInformMapper.likeFindConsumeAndConsumeName(like);
         HashMap<Object, Object> allMap = new HashMap<>();
         allMap.put("data",consumeInformAndConsumeTypeNameDtos);
+        allMap.put("tatol",consumeInformAndConsumeTypeNameDtos.size());
         return allMap;
     }
 }

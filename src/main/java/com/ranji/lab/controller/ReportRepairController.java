@@ -94,4 +94,18 @@ public class ReportRepairController {
         }
     }
 
+    @ApiOperation(value="模糊查询所有设备维修", notes="模糊分页查询所有设备维修")
+    @GetMapping(value = "likeFinAllReportRepair",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String likeFinAllReportRepair(String like){
+        Map<Object, Object> reportRepairMap = reportRepairService.likeFinAllReportRepair(like);
+        if(!reportRepairMap.isEmpty()){
+            reportRepairMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(reportRepairMap);
+        }else{
+            reportRepairMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(reportRepairMap);
+        }
+    }
+
 }

@@ -184,7 +184,7 @@ public class ConsumeCustodyController {
     }*/
 
     //模糊查询
-    @ApiOperation(value="分页模糊查询保管领用", notes="根据传过来的设备信息来获得保管领用")
+    @ApiOperation(value="模糊查询保管领用", notes="根据传过来的设备信息来获得保管领用")
     @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     @GetMapping(value = "/likefindAll",produces = "text/plain;charset=utf-8")
     public String likefindAll(String like){

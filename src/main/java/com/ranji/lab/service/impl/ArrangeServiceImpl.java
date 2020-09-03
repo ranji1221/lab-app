@@ -158,6 +158,7 @@ public class ArrangeServiceImpl implements IArrangeService {
         }
         Map<Object,Object> map = new HashMap<>();
         map.put("data",allArrange);
+        map.put("tatol",allArrange.size());
         return map;
     }
 

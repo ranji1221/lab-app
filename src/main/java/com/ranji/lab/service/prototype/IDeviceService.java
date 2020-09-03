@@ -50,13 +50,20 @@ public interface IDeviceService {
     Map<Object,Object> findDeviceStatusNum(int laboratoryId);
 
     //查询设备使用率
-    Map<Object,Object> findUsageRate(int laboratoryId);
+    Map<Object,Object> findUsageRate();
 
     //查询设备损耗率
-    Map<Object,Object> findRatio(int laboratoryId);
+    Map<Object,Object> findRatio();
 
     /**
      * 根据uuid判断是否存在该设备
      */
     List<Device> findDeviceByuuid(String uuid);
+
+    /**
+     * 模糊查询设备信息
+     * @param like
+     * @return
+     */
+    Map<Object, Object> likeFindDeviceAndDeviceName(String like);
 }

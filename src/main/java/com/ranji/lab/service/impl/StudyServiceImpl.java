@@ -81,4 +81,13 @@ public class StudyServiceImpl implements IStudyService {
 
         return allMap;
     }
+    @Override
+    public Map<Object, Object> findLikeStudy(String like) {
+        List<Study> all = studyMapper.findLikeStudy(like);
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",all.size());
+
+        return allMap;
+    }
 }

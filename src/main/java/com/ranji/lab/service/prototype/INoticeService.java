@@ -22,4 +22,5 @@ public interface INoticeService {
 
     //模糊查找
     Map<Object,Object> findLikeNotice(String like,int pageNum, int pageSize);
+    Map<Object,Object> findLikeNotice(String like);
 }

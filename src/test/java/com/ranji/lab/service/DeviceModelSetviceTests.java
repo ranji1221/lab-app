@@ -38,7 +38,7 @@ public class DeviceModelSetviceTests {
 
     @Test
     public void testfindUsageRate(){
-        Map<Object, Object> usageRate = iDeviceService.findUsageRate(1);
+        Map<Object, Object> usageRate = iDeviceService.findUsageRate();
         List<UsageRateDto> usage = (List<UsageRateDto>)usageRate.get("data");
         for (UsageRateDto usageRateDto : usage) {
             System.out.println(usageRateDto);

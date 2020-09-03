@@ -446,17 +446,14 @@ public class DeviceController {
     }
 
     //查询设备使用率
-    @ApiOperation(value="按照实验室id查询设备使用率", notes="按照实验室id查询设备使用率")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
-    })
+    @ApiOperation(value="查询设备使用率", notes="查询设备使用率")
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
     @GetMapping(value="/findUsageRate",produces = "text/plain;charset=utf-8")
-    public String findUsageRate(int laboratoryId){
-        Map<Object, Object> deviceStatusNum = iDeviceService.findUsageRate(laboratoryId);
+    public String findUsageRate(){
+        Map<Object, Object> deviceStatusNum = iDeviceService.findUsageRate();
         if(!deviceStatusNum.isEmpty()) {
             return JSON.toJSONString(deviceStatusNum);
         }else{
@@ -465,21 +462,39 @@ public class DeviceController {
     }
 
     //查询设备损耗率
-    @ApiOperation(value="按照实验室id查询设备损耗率", notes="按照实验室id查询设备损耗率")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
-    })
+    @ApiOperation(value="查询设备损耗率", notes="查询设备损耗率")
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
     @GetMapping(value="/findRatio",produces = "text/plain;charset=utf-8")
-    public String findRatio(int laboratoryId){
-        Map<Object, Object> deviceStatusNum = iDeviceService.findRatio(laboratoryId);
+    public String findRatio(){
+        Map<Object, Object> deviceStatusNum = iDeviceService.findRatio();
         if(!deviceStatusNum.isEmpty()) {
             return JSON.toJSONString(deviceStatusNum);
         }else{
             return JSON.toJSONString(deviceStatusNum);
+        }
+    }
+
+    //模糊查询所有设备信息
+    @ApiOperation(value="模糊查询所有设备信息", notes="按照关键词模糊查询所有设备信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "like", value = "关键词", required = true, dataType = "String")
+    })
+    @ApiResponses({
+            @ApiResponse(code=200,message="成功"),
+            @ApiResponse(code=500,message="服务器错误")
+    })
+    @GetMapping(value="/likefinddevice",produces = "text/plain;charset=utf-8")
+    public String likeFindDevice(String like){
+        Map<Object,Object> map = iDeviceService.likeFindDeviceAndDeviceName(like);
+        if(!map.isEmpty()) {
+            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(map);
+        }else{
+            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            return JSON.toJSONString(map);
         }
     }
 }

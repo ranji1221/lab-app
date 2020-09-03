@@ -107,6 +107,7 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
         List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.likefindAll(like);
         HashMap<Object, Object> allMap = new HashMap<>();
         allMap.put("data",consumeCustodies);
+        allMap.put("tatol",consumeCustodies.size());
         return allMap;
     }
 

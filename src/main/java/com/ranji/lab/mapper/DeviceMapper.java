@@ -46,7 +46,14 @@ public interface DeviceMapper {
 
     @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type=dt.id")
     List<DeviceAndDeviceTypeNameDto> findDeviceAndDeviceName();
-
+    //模糊查询设备信息
+    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join device_type dt on dm.type = dt.id " +
+            " where 1 = 1 and " +
+            " d.id like '%${like}%' or " +
+            " dm.device_name like '%${like}%' or " +
+            " dm.brand like '%${like}%' "
+            )
+    List<DeviceAndDeviceTypeNameDto> likeFindDeviceAndDeviceName(String like);
     //智能分析
     @Select("SELECT d.id,dm.device_name,dm.brand,ld.status,count(*) count,l.laboratory_name,dm.unit_name unitName FROM device d JOIN device_model dm ON d.device_model_id=dm.id JOIN laboratory_device ld ON ld.device_id=d.id JOIN laboratory l ON l.id=ld.laboratory_id GROUP BY ld.laboratory_id,ld.STATUS")
     List<DeviceIntelligentAnalyzeDto> findIntelligentAnalyze();
@@ -67,9 +74,14 @@ public interface DeviceMapper {
     @Select("select d.device_model_id id,dm.device_name deviceName,ld.status status,count(*) count from laboratory_device ld join device d on ld.device_id = d.id join device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} GROUP BY ld.`status`,d.device_model_id")
     List<LaboratoryDeviceNumDto> laboratoryIdFindDeviceAndStatus(int laboratoryId);
 
+
     //按照实验室id查询所有的设备
     @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type = dt.id left join laboratory_device ld on ld.device_id = d.id where ld.laboratory_id = #{laboratoryId} and d.status != 2")
     List<DeviceAndDeviceTypeNameDto> laboratoryIdFindAllDevice(int laboratoryId);
+
+    //查询所有的设备
+    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type = dt.id left join laboratory_device ld on ld.device_id = d.id where 1 = 1 and d.status != 2")
+    List<DeviceAndDeviceTypeNameDto> findAllDevice();
 
     //按照实验室id查询所有分类
     @Select("select d.device_model_id from laboratory_device ld join device d on d.id = ld.device_id where ld.laboratory_id = #{laboratoryId} GROUP BY d.device_model_id ")

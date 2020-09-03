@@ -201,11 +201,8 @@ public class ArrangeController {
         }
     }
 
-    //分页模糊查询
-    @ApiOperation(value="分页模糊查询预约实验项目", notes="分页模糊查询预约实验项目")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
-    })
+    //状态数量信息
+    @ApiOperation(value="状态数量信息", notes="查询状态数量信息")
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")

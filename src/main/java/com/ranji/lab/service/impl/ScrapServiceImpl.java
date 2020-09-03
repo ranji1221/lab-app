@@ -101,4 +101,17 @@ public class ScrapServiceImpl implements IScrapService {
             allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         return allMap;
     }
+
+    @Override
+    public Map<Object, Object> likeFindAll(String like) {
+        List<ScrapDto> all = scrapMapper.likeFindAll(like);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(!all.isEmpty()){
+            allMap.put("data",all);
+            allMap.put("total",all.size());
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return allMap;
+    }
 }

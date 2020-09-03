@@ -106,4 +106,17 @@ public class ScrapController {
         Map<Object, Object> allMap = iScrapService.allScrap(page,limit);
         return JSON.toJSONString(allMap);
     }
+
+    /**
+     * 模糊查询
+     * @param like
+     * @return
+     */
+    @ApiOperation(value="模糊查询所有设备报废", notes="模糊查询所有设备报废")
+    @GetMapping(value = "/likeFindAll",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String likeFindAll(String like){
+        Map<Object, Object> allMap = iScrapService.likeFindAll(like);
+        return JSON.toJSONString(allMap);
+    }
 }

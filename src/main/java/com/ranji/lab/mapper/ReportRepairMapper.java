@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
+/**
+ * 设备维修
+ */
 public interface ReportRepairMapper {
     /**
      * 申请维修
@@ -44,5 +47,14 @@ public interface ReportRepairMapper {
      */
     @Select("SELECT rr.*, l.laboratory_name, d.uuid FROM report_repair rr LEFT JOIN device d ON d.id = rr.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = rr.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id")
     List<ReportRepairDto> allReportRepair();
+
+    /**
+     * 模糊查询所有维修设备
+     * @return
+     */
+    @Select("SELECT rr.*, l.laboratory_name, d.uuid FROM report_repair rr LEFT JOIN device d ON d.id = rr.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = rr.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id " +
+            " where l.laboratory_name like '%${like}%' or " +
+            " rr.description like '%${like}%'")
+    List<ReportRepairDto> likeFinAllReportRepair(String like);
 
 }

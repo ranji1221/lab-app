@@ -184,6 +184,7 @@ public class ExperimentProjectServiceImpl implements IExperimentProjectService {
         }
         Map<Object,Object> map = new HashMap<>();
         map.put("data",allExperimentProject);
+        map.put("tatol",allExperimentProject.size());
         return map;
     }
 }

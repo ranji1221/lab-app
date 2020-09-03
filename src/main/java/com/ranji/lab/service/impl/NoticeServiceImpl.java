@@ -79,4 +79,16 @@ public class NoticeServiceImpl implements INoticeService {
 
         return allMap;
     }
+
+    @Override
+    public Map<Object, Object> findLikeNotice(String like) {
+        List<Notice> all = noticeMapper.findLikeNotice(like);
+
+
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",all.size());
+
+        return allMap;
+    }
 }

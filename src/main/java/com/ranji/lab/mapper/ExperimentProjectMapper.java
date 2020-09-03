@@ -56,7 +56,8 @@ public interface ExperimentProjectMapper {
             "select * from experiment_project  where status != 2 " +
             "and experiment_name like '%${like}%' or " +
             "experiment_target like '%${like}%' or " +
-            "experiment_content like '%${like}%' " +
+            "experiment_content like '%${like}%' or " +
+            "experiment_process like '%${like}%' " +
             "</script>")
     List<ExperimentProjectDto> findLikeExperimentProject(@Param("like") String like);
 

@@ -42,7 +42,8 @@ public interface ArrangeMapper {
             " where a.status != 2 " +
             " and ep.experiment_name like '%${like}%' or " +
             "ep.experiment_target like '%${like}%' or " +
-            "ep.experiment_content like '%${like}%'" +
+            "ep.experiment_content like '%${like}%' or " +
+            "ep.experiment_process like '%${like}%' " +
             "</script>")
     List<ArrangeDto> likeFindArrange(String like);
 

@@ -81,4 +81,13 @@ public class NewsServiceImpl implements INewsService {
 
         return allMap;
     }
+    @Override
+    public Map<Object, Object> findLikeNews(String like) {
+        List<News> all = newsMapper.findLikeNews(like);
+        Map<Object,Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",all.size());
+
+        return allMap;
+    }
 }

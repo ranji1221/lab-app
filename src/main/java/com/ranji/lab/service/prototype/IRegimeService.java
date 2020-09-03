@@ -21,4 +21,5 @@ public interface IRegimeService {
 
     //模糊查找
     Map<Object,Object> findLikeRegime(String like,int pageNum, int pageSize);
+    Map<Object, Object> findLikeRegime(String like);
 }

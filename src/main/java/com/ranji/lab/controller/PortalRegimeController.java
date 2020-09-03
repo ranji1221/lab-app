@@ -190,13 +190,11 @@ public class PortalRegimeController {
 
     @ApiOperation(value="模糊查找实验制度", notes="模糊查找实验制度")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "like", value = "模糊词", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "limit", value = "每页几条", required = true, dataType = "String")
+            @ApiImplicitParam(name = "like", value = "模糊词", required = true, dataType = "String")
     })
     @GetMapping(value = "/likeregime",produces = "text/plain;charset=utf-8")
-    public String findLikeRegime(String like,int page,int limit){
-        Map<Object, Object> likeRegime = iRegimeService.findLikeRegime(like,page,limit);
+    public String findLikeRegime(String like){
+        Map<Object, Object> likeRegime = iRegimeService.findLikeRegime(like);
         if(!likeRegime.isEmpty()){
             likeRegime.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         }else{

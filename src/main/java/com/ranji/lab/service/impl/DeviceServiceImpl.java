@@ -252,12 +252,15 @@ public class DeviceServiceImpl implements IDeviceService {
 
     //查询设备使用率
     @Override
-    public Map<Object, Object> findUsageRate(int laboratoryId) {
-        List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+    public Map<Object, Object> findUsageRate() {
+        //按照实验室id
+        //List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+        //查询全部
+        List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.findAllDevice();
         List<DeviceAndDeviceTypeNameDto> UsageRate = new ArrayList<>();
         for (DeviceAndDeviceTypeNameDto device : devices) {
-            double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(laboratoryId);
-            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(laboratoryId, device.getId());
+            double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(device.getLaboratoryId());
+            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(device.getLaboratoryId(), device.getId());
             if(endingProjectNum!=0&&endingDeviceNum!=0){
                 device.setUsageRate(endingDeviceNum/endingProjectNum);
                 UsageRate.add(device);
@@ -270,8 +273,11 @@ public class DeviceServiceImpl implements IDeviceService {
 
     //查询设备的损耗率
     @Override
-    public Map<Object, Object> findRatio(int laboratoryId) {
-        List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+    public Map<Object, Object> findRatio() {
+        //按照实验室id
+        //List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.laboratoryIdFindAllDevice(laboratoryId);
+        //查询全部
+        List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.findAllDevice();
         List<DeviceAndDeviceTypeNameDto> r = new ArrayList<>();
         for (DeviceAndDeviceTypeNameDto device : devices) {
             double i = deviceMapper.deviceIdFindUseNum(device.getId())*2;
@@ -291,6 +297,20 @@ public class DeviceServiceImpl implements IDeviceService {
     public List<Device> findDeviceByuuid(String uuid) {
         List<Device> deviceByuuid = deviceMapper.findDeviceByuuid(uuid);
         return deviceByuuid;
+    }
+
+    /**
+     * 模糊查询
+     * @param like
+     * @return
+     */
+    @Override
+    public Map<Object, Object> likeFindDeviceAndDeviceName(String like) {
+        List<DeviceAndDeviceTypeNameDto> deviceAndDeviceTypeNameDtos = deviceMapper.likeFindDeviceAndDeviceName(like);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data",deviceAndDeviceTypeNameDtos);
+        allMap.put("tatol",deviceAndDeviceTypeNameDtos.size());
+        return allMap;
     }
 
 

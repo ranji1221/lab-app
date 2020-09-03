@@ -23,4 +23,5 @@ public interface IStudyService {
 
     //模糊查找
     Map<Object,Object> findLikeStudy(String like,int pageNum, int pageSize);
+    Map<Object, Object> findLikeStudy(String like);
 }

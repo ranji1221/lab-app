@@ -27,7 +27,7 @@ public interface ConsumeCustodyMapper {
     int getCount();
 
     //模糊查询
-    @Select("select cc.*,ci.unit_name,ci.name consumeName from consume_custody cc left join consume_inform ci on cc.consume_id = ci.id " +
+    @Select("select cc.*,ci.unit_name,ci.name consumeName from consume_custody cc join arrange a on cc.arrange_project_id = a.id join project_consume pc on pc.arrange_project_id= a.id join consume_inform ci on ci.id = pc.experiment_consume_id " +
             " where cc.status != 2 " +
             " and ci.name like '%${like}%' or " +
             " ci.brand like '%${like}%' " +

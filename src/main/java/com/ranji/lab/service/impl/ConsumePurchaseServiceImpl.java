@@ -98,6 +98,7 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
         List<ConsumePurchase> consumePurchases = consumePurchaseMapper.likeFindAll(like);
         HashMap<Object, Object> allMap = new HashMap<>();
         allMap.put("data",consumePurchases);
+        allMap.put("tatol",consumePurchases.size());
         return allMap;
     }
 }

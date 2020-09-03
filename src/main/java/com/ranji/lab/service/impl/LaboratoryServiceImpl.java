@@ -135,6 +135,7 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
 
         Map<Object,Object> allMap =  new HashMap<>();
         allMap.put("data",all);
+        allMap.put("tatol",all.size());
 
         return allMap;
     }

@@ -79,4 +79,15 @@ public class ReportRepairServiceImpl implements IReportRepairService {
 
         return allMap;
     }
+
+    @Override
+    public Map<Object, Object> likeFinAllReportRepair(String like) {
+        List<ReportRepairDto> all = reportRepairMapper.likeFinAllReportRepair(like);
+
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data",all);
+        allMap.put("total",all.size());
+
+        return allMap;
+    }
 }

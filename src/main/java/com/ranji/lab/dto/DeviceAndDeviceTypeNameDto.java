@@ -41,6 +41,8 @@ public class DeviceAndDeviceTypeNameDto {
 
     private double usageRate;
 
+    private int laboratoryId;
+
 
     public void setFactime(String factime){
         this.factime=factime;
