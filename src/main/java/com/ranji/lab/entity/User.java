@@ -18,13 +18,14 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     private int id;
     @NonNull
     private String name;
     @NonNull
     private String password;
-    @NonNull
+
     private int enable;    //-- 1: 启用  2: 禁用
 
     /**

@@ -4,6 +4,7 @@ import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.mapper.UserMapper;
 import com.ranji.lab.service.prototype.IUserService;
+import org.apache.ibatis.annotations.Options;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,10 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     /*@CacheEvict(value = "users", allEntries = true)*/
-    public void save(User user) {
-        userMapper.save(user);
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    public int save(User user) {
+        int save = userMapper.save(user);
+        return save;
     }
 
     /**

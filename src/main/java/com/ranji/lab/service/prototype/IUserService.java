@@ -10,7 +10,7 @@ import java.util.Map;
  * @author RanJi
  */
 public interface IUserService {
-    void save(User user);
+    int save(User user);
     List<User> getAllUsers();
     List<User> getUsers(Map<String,Object> params);
 

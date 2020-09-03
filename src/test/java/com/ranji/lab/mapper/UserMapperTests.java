@@ -20,8 +20,8 @@ public class UserMapperTests {
 
     @Test
     public void testSave(){
-        User u = new User("wang","123456",1);
-        userMapper.save(u);
+        /*User u = new User("wang","123456",1);
+        userMapper.save(u);*/
     }
 
     @Test

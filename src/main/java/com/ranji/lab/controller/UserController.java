@@ -20,7 +20,7 @@ public class UserController {
     public ResponseEntity<JsonResult> opentAccount(User act){
         JsonResult r = new JsonResult();
         r.setStatus("ok");
-        r.setResult(new User("aaa","123",1));
+        //r.setResult(new User("aaa","123",1));
         return ResponseEntity.ok(r);
     }
     @RequestMapping(value = "/user/{id}")
