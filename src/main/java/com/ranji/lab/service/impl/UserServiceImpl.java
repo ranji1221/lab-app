@@ -1,5 +1,8 @@
 package com.ranji.lab.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.mapper.UserMapper;
@@ -9,6 +12,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,10 +40,9 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     /*@CacheEvict(value = "users", allEntries = true)*/
-    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     public int save(User user) {
-        int save = userMapper.save(user);
-        return save;
+        userMapper.save(user);
+        return user.getId();
     }
 
     /**
@@ -48,8 +51,22 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     /*@Cacheable(value = "users")*/
-    public List<User> getAllUsers() {
-        return userMapper.findAll();
+    public Map<Object,Object> getAllUsers(int pageNum , int pageSize) {
+        PageHelper.startPage(pageNum , pageSize);
+        List<User> all = userMapper.findAll();
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(!all.isEmpty()){
+            allMap.put("data", all);
+            allMap.put("total",total);
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+
+        return allMap;
     }
 
     /**

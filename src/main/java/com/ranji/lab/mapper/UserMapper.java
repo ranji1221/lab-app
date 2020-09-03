@@ -2,10 +2,8 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +11,7 @@ import java.util.Map;
  * UserMapper类
  */
 public interface UserMapper {
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     @Insert("insert into t_user(name,password,enable) values (#{name},#{password},#{enable})")
     int save(User u);
     @Select("select * from t_user")

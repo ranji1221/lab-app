@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public interface IUserService {
     int save(User user);
-    List<User> getAllUsers();
+    Map<Object,Object> getAllUsers(int pageNum , int pageSize);
     List<User> getUsers(Map<String,Object> params);
 
 

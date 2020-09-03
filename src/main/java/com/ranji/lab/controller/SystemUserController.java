@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.Map;
 
 @Api(tags = "系统用户管理")
 @RestController
@@ -21,7 +22,7 @@ public class SystemUserController {
     @Resource
     private IRoleService iRoleService;
 
-    @ApiOperation(value="添加角色信息", notes="添加角色信息")
+    @ApiOperation(value="添加用户账号信息", notes="添加角色信息")
     @PostMapping(value = "/insertuser",produces = "text/plain;charset=utf-8")
     public String insertUser(User user , int roleId){
         user.setEnable(1);
@@ -33,5 +34,12 @@ public class SystemUserController {
         else
             allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
         return JSON.toJSONString(allMap);
+    }
+
+    @ApiOperation(value="分页查找所有账号信息", notes="分页查找所有账号信息")
+    @PostMapping(value = "/alluser",produces = "text/plain;charset=utf-8")
+    public String user(int page , int limit){
+        Map<Object, Object> allUsers = iUserService.getAllUsers(page, limit);
+        return JSON.toJSONString(allUsers);
     }
 }
