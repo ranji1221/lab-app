@@ -32,6 +32,18 @@ public class SystemRoleController {
         return JSON.toJSONString(allMap);
     }
 
+    @ApiOperation(value="新增系统角色", notes="新增系统角色")
+    @PostMapping(value = "/insertuserrole",produces = "text/plain;charset=utf-8")
+    public String insertUserRole(Role role){
+        iRoleService.save(role);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(role.getId()>0)
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
 
 
 }

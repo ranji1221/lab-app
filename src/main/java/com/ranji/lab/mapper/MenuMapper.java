@@ -14,6 +14,6 @@ public interface MenuMapper {
     @Select("select * from menu where pid = 0")
     List<Menu> findRootMenu();
 
-    @Select("select * from menu where pid = #{id}")
-    List<Menu> findSonMenuByRootMenuId(int id);
+    @Select("select * from menu where pid = #{id} ORDER BY priority asc ")
+    List<MenuDto> findSonMenuByRootMenuId(int id);
 }

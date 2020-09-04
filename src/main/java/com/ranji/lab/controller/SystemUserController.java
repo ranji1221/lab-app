@@ -5,9 +5,15 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.service.prototype.IRoleService;
 import com.ranji.lab.service.prototype.IUserService;
+import com.ranji.lab.util.JsonResult;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -42,4 +48,19 @@ public class SystemUserController {
         Map<Object, Object> allUsers = iUserService.getAllUsers(page, limit);
         return JSON.toJSONString(allUsers);
     }
+
+
+    @ApiOperation(value = "修改用户",notes = "根据给定的User对象进行信息修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true , dataType = "String")
+    })
+    @RequestMapping(value="/updateUser",method = RequestMethod.GET)
+    public String updateUser(User u){
+        iUserService.updateUser(u);
+        Map<String,Object> map = new HashMap<>();
+        map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        return JSON.toJSONString(map);
+    }
+
 }

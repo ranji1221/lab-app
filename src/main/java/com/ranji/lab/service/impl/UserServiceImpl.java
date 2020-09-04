@@ -115,4 +115,9 @@ public class UserServiceImpl implements IUserService {
         userMapper.cancelRoles(userID,rolesID);
     }
 
+    @Override
+    public void updateUser(User u) {
+        userMapper.updateUser(u);
+    }
+
 }

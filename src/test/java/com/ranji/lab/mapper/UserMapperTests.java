@@ -45,5 +45,12 @@ public class UserMapperTests {
             System.out.println(user);
         }
     }
+    @Test
+    public void testUpdate(){
+        User user = new User();
+        user.setId(4);
+        user.setPassword("1111");
+        userMapper.updateUser(user);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.ranji.lab.mapper;
 
 import com.ranji.lab.entity.Role;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface RoleMapper {
      * @param role
      */
     @Insert("insert into t_role(code,name) values(#{code},#{name})")
+    @Options(useGeneratedKeys=true,keyColumn="id",keyProperty = "id")
     void save(Role role);
 
     /**
