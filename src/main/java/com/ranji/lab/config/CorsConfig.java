@@ -1,9 +1,13 @@
 package com.ranji.lab.config;
 
+import com.ranji.lab.Interceptor.UserInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import javax.annotation.Resource;
 
 /**
  *  全局跨域配置
@@ -17,6 +21,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  */
 @Configuration
 public class CorsConfig extends WebMvcConfigurationSupport {
+
+    /**
+     * 自定义拦截器实体
+     */
+    @Resource
+    private UserInterceptor userInterceptor;
+
     /**
      * 全局跨域处理
      * @param registry
@@ -52,6 +63,15 @@ public class CorsConfig extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
 
         super.addResourceHandlers(registry);
+    }
+
+    /**
+     * 自定义拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(userInterceptor);
     }
 
 }
