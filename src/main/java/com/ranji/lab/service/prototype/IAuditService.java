@@ -9,4 +9,8 @@ public interface IAuditService {
     int insertAudit(Audit audit);
 
     Map<Object,Object> findAll();
+
+    Map<Object,Object> findAll(int pageNum,int pageSize);
+
+
 }

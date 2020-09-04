@@ -56,7 +56,7 @@ public class SystemUserController {
             @ApiImplicitParam(name = "password", value = "密码", required = true , dataType = "String")
     })
     @RequestMapping(value="/updateUser",method = RequestMethod.GET)
-    public String updateUser(User u){
+    public String updateUser(User u,String oldPassword){
         iUserService.updateUser(u);
         Map<String,Object> map = new HashMap<>();
         map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());

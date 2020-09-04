@@ -53,10 +53,10 @@ public class PortalRegimeController {
         Map<Object,Object> insertRegimeMap = new HashMap<>();
         int i = iRegimeService.insertRegime(regime);
         if(i<1){
-            insertRegimeMap.put("status","failure");
+            insertRegimeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertRegimeMap);
         }else{
-            insertRegimeMap.put("status","success");
+            insertRegimeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertRegimeMap);
         }
 
@@ -82,10 +82,10 @@ public class PortalRegimeController {
         Map<Object,Object> insertRegimeMap = new HashMap<>();
         int i = iRegimeService.updateRegime(regime);
         if(i<1){
-            insertRegimeMap.put("status","failure");
+            insertRegimeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertRegimeMap);
         }else{
-            insertRegimeMap.put("status","success");
+            insertRegimeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertRegimeMap);
         }
 

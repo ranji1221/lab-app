@@ -42,10 +42,10 @@ public class PortalNewsController {
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iNewsService.insertNews(newsDto);
         if(i<1){
-            insertNewsMap.put("status","failure");
+            insertNewsMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertNewsMap);
         }else{
-            insertNewsMap.put("status","success");
+            insertNewsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertNewsMap);
         }
 
@@ -71,10 +71,10 @@ public class PortalNewsController {
         Map<Object,Object> updateNewsMap = new HashMap<>();
         int i = iNewsService.updateNews(news);
         if(i<1){
-            updateNewsMap.put("status","failure");
+            updateNewsMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateNewsMap);
         }else{
-            updateNewsMap.put("status","success");
+            updateNewsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateNewsMap);
         }
 

@@ -2,6 +2,7 @@ package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.ScrapInsertDto;
+import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Scrap;
 import com.ranji.lab.service.prototype.IScrapService;
 import io.swagger.annotations.Api;
@@ -41,10 +42,10 @@ public class ScrapController {
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = iScrapService.insertScrap(scrapInsertDto);
         if(i<1){
-            insertScrapMap.put("status","failure");
+            insertScrapMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertScrapMap);
         }else{
-            insertScrapMap.put("status","success");
+            insertScrapMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertScrapMap);
         }
     }
@@ -62,10 +63,10 @@ public class ScrapController {
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = iScrapService.updateScrapValue(scrap);
         if(i<1){
-            insertScrapMap.put("status","failure");
+            insertScrapMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertScrapMap);
         }else{
-            insertScrapMap.put("status","success");
+            insertScrapMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertScrapMap);
         }
     }
@@ -83,10 +84,10 @@ public class ScrapController {
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = iScrapService.updateScrapStatus(scrap);
         if(i<1){
-            insertScrapMap.put("status","failure");
+            insertScrapMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertScrapMap);
         }else{
-            insertScrapMap.put("status","success");
+            insertScrapMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertScrapMap);
         }
     }

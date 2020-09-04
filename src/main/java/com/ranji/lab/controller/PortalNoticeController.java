@@ -43,10 +43,10 @@ public class PortalNoticeController {
         Map<Object,Object> insertNoticeMap = new HashMap<>();
         int i = iNoticeService.insertNotice(notice);
         if(i<1){
-            insertNoticeMap.put("status","failure");
+            insertNoticeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertNoticeMap);
         }else{
-            insertNoticeMap.put("status","success");
+            insertNoticeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertNoticeMap);
         }
 
@@ -73,10 +73,10 @@ public class PortalNoticeController {
         Map<Object,Object> insertNoticeMap = new HashMap<>();
         int i = iNoticeService.insertNotice(notice);
         if(i<1){
-            insertNoticeMap.put("status","failure");
+            insertNoticeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertNoticeMap);
         }else{
-            insertNoticeMap.put("status","success");
+            insertNoticeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertNoticeMap);
         }
 

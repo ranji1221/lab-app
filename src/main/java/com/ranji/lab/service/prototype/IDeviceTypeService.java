@@ -11,4 +11,9 @@ public interface IDeviceTypeService {
     int updateDeviceType(DeviceType deviceType);
 
     Map<Object,Object> allDeviceType();
+
+
+    Map<Object,Object> allDeviceTypePaging(int pageNum,int pageSize);
+
+
 }

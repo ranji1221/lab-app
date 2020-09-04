@@ -4,6 +4,7 @@ import com.ranji.lab.entity.Role;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface RoleMapper {
     @Select("select * from t_role")
     List<Role> findAll();
 
+
+    //@Update("update t_tole set name = #{name} where id = #{id}")
 }
