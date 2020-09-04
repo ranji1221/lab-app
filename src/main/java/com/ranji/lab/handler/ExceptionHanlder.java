@@ -34,7 +34,7 @@ public class ExceptionHanlder {
         jo.put("code",100);
         jo.put("msg",e.getMessage());
         jo.put("url",request.getRequestURL());
-        return jo;
+        return jo.toJSONString();
     }
 
     /**
@@ -52,7 +52,7 @@ public class ExceptionHanlder {
         jo.put("code",e.getCode());
         jo.put("msg",e.getMsg());
         jo.put("url",request.getRequestURL());
-        return jo;
+        return jo.toJSONString();
     }
 
 }
