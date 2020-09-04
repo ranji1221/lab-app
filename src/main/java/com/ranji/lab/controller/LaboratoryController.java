@@ -63,10 +63,10 @@ public class LaboratoryController {
             }
         int i = iLaboratoryService.insertLaboratory(laboratoryDto,devices);
         if(i<1){
-            laboratoryMap.put("status","failure");
+            laboratoryMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(laboratoryMap);
         }else{
-            laboratoryMap.put("status","success");
+            laboratoryMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(laboratoryMap);
         }
     }
@@ -78,10 +78,10 @@ public class LaboratoryController {
         Map laboratoryMap = new HashMap<>();
         int i = iLaboratoryService.updateLaboratory(laboratory);
         if(i<1){
-            laboratoryMap.put("status","failure");
+            laboratoryMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(laboratoryMap);
         }else{
-            laboratoryMap.put("status","success");
+            laboratoryMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(laboratoryMap);
         }
     }

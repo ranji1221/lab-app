@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MenuServiceImpl implements IMenuService {
@@ -41,8 +42,21 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     @Override
-    public List<Menu> findSonMenuByRootMenuId(int id) {
+    public List<MenuDto> findSonMenuByRootMenuId(int id) {
         return menuMapper.findSonMenuByRootMenuId(id);
+    }
+
+    @Override
+    public Map<String, Object> findAllMenu() {
+        List<MenuDto> sonMenuByRootMenuId = menuMapper.findSonMenuByRootMenuId(0);
+        for (MenuDto menuDto : sonMenuByRootMenuId) {
+            List<MenuDto> sonMenuByRootMenuId1 = menuMapper.findSonMenuByRootMenuId(menuDto.getId());
+            menuDto.setMenu(sonMenuByRootMenuId1);
+            System.out.println(menuDto);
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",sonMenuByRootMenuId);
+        return map;
     }
 
 

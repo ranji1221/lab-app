@@ -2,6 +2,8 @@ package com.ranji.lab.service.prototype;
 
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
+import org.apache.ibatis.annotations.Update;
+
 import java.util.List;
 import java.util.Map;
 
@@ -57,5 +59,11 @@ public interface IUserService {
      * @param rolesID
      */
     void cancelRoles(int userID, int[] rolesID);
+
+    /**
+     * 修改用户信息
+     * @param u
+     */
+    void updateUser(User u);
 
 }

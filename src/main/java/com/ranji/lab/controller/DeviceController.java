@@ -53,10 +53,10 @@ public class DeviceController {
         Map<Object,Object> insertDeviceMap = new HashMap<>();
         int i = iDeviceService.insertDeviceAndDeviceModel(deviceAndModelDto);
         if(i<1){
-            insertDeviceMap.put("status","failure");
+            insertDeviceMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertDeviceMap);
         }else{
-            insertDeviceMap.put("status","success");
+            insertDeviceMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertDeviceMap);
         }
     }
@@ -86,11 +86,14 @@ public class DeviceController {
         Map<Object,Object> updateDeviceMap = new HashMap<>();
         int i = iDeviceService.updateDeviceAndDeviceModel(deviceAndModelDto);
         if(i<1){
-            updateDeviceMap.put("status","failure");
+            updateDeviceMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateDeviceMap);
         }else{
-            updateDeviceMap.put("status","success");
+            updateDeviceMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateDeviceMap);
+
+
+
         }
     }
     /*
@@ -157,10 +160,11 @@ public class DeviceController {
         Map<Object,Object> insertDeviceTypeMap = new HashMap<>();
         int i = iDeviceTypeService.insertDeviceType(deviceTypeDto);
         if(i<1){
-            insertDeviceTypeMap.put("status","failure");
+            insertDeviceTypeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertDeviceTypeMap);
         }else{
-            insertDeviceTypeMap.put("status","success");
+            insertDeviceTypeMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+
             return JSON.toJSONString(insertDeviceTypeMap);
         }
     }
@@ -182,10 +186,10 @@ public class DeviceController {
         Map<Object,Object> updateDeviceTypeMap = new HashMap<>();
         int i = iDeviceTypeService.updateDeviceType(deviceType);
         if(i<1){
-            updateDeviceTypeMap.put("status","failure");
+            updateDeviceTypeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateDeviceTypeMap);
         }else{
-            updateDeviceTypeMap.put("status","success");
+            updateDeviceTypeMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateDeviceTypeMap);
         }
     }
@@ -201,6 +205,13 @@ public class DeviceController {
             objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
         }
+    }
+
+    @ApiOperation(value="分页查找所有设备类型信息", notes="根据传过来的设备信息来查询设备类型信息")
+    @GetMapping(value="alldevicetypepaging",produces = "text/plain;charset=utf-8")
+    public String allDeviceTypePaging(int page,int limit){
+        Map<Object, Object> allMap = iDeviceTypeService.allDeviceTypePaging(page,limit);
+        return JSON.toJSONString(allMap);
     }
 
     @ApiOperation(value="通过id查找所有设备信息", notes="根据传过来的id来查询设备类型信息")

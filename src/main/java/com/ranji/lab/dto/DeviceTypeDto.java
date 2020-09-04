@@ -1,9 +1,6 @@
 package com.ranji.lab.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -11,4 +8,12 @@ import lombok.NonNull;
 public class DeviceTypeDto {
     @NonNull
     private String typeName;
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 }

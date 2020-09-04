@@ -11,4 +11,5 @@ public interface IConsumeTypeService {
     int updateConsumeType(ConsumeType consumeType);
 
     Map<Object,Object> allConsumeType();
+    Map<Object,Object> allConsumeType(int pageNum,int pageSize);
 }

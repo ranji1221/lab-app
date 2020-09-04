@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "系统菜单管理")
 @RestController
@@ -49,13 +50,26 @@ public class SystemMenuController {
     @ApiOperation(value="根据根菜单id的所有子菜单信息", notes="根据根菜单id的所有子菜单信息")
     @GetMapping(value = "/allsonmenus",produces = "text/plain;charset=utf-8")
     public String allSonMenus(int id){
-        List<Menu> rootMenu = iMenuService.findSonMenuByRootMenuId(id);
+        List<MenuDto> rootMenu = iMenuService.findSonMenuByRootMenuId(id);
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!rootMenu.isEmpty()){
             allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             allMap.put("data", rootMenu);
         }else
             allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
+    //查询所有菜单
+    @ApiOperation(value="根据根所有菜单信息", notes="查询所有菜单信息")
+    @GetMapping(value = "/findAllMenu",produces = "text/plain;charset=utf-8")
+    public String findAllMenu(){
+        Map<String, Object> allMap = iMenuService.findAllMenu();
+        if(!allMap.isEmpty()){
+            allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        }else {
+            allMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+        }
         return JSON.toJSONString(allMap);
     }
 

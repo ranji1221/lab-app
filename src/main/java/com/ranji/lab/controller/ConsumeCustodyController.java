@@ -42,10 +42,10 @@ public class ConsumeCustodyController {
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.insertConsumeCustody(consumeCustodyInsertDto);
         if(i<1){
-            insertConsumeCustodyMap.put("status","failure");
+            insertConsumeCustodyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertConsumeCustodyMap);
         }else{
-            insertConsumeCustodyMap.put("status","success");
+            insertConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertConsumeCustodyMap);
         }
 
@@ -62,10 +62,10 @@ public class ConsumeCustodyController {
         Map<Object,Object> updateConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.updateConsumeCustody(consumeCustody);
         if(i<1){
-            updateConsumeCustodyMap.put("status","failure");
+            updateConsumeCustodyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateConsumeCustodyMap);
         }else{
-            updateConsumeCustodyMap.put("status","success");
+            updateConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateConsumeCustodyMap);
         }
 

@@ -37,10 +37,10 @@ public class ReportRepairController {
         HashMap<Object, Object> insertReportRepairMap = new HashMap<>();
         int i = reportRepairService.insertReportRepair(reportRepairInsertDto);
         if(i<1){
-            insertReportRepairMap.put("status","failure");
+            insertReportRepairMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertReportRepairMap);
         }else{
-            insertReportRepairMap.put("status","success");
+            insertReportRepairMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertReportRepairMap);
         }
     }
@@ -58,10 +58,10 @@ public class ReportRepairController {
         HashMap<Object, Object> updateReportRepairMap = new HashMap<>();
         int i = reportRepairService.updateReportRepair(reportRepair);
         if(i<1){
-            updateReportRepairMap.put("status","failure");
+            updateReportRepairMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateReportRepairMap);
         }else{
-            updateReportRepairMap.put("status","success");
+            updateReportRepairMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(updateReportRepairMap);
         }
     }

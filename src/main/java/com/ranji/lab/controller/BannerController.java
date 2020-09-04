@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "轮播图接口")
 @Controller
@@ -66,7 +67,9 @@ public class BannerController {
             //-- 4. 保持到数据库
             Images images = new Images(id,name,path,description);
             iBannerService.insertOrUpdateBannerAndImages(id,images);
-            return "{'upload':'ok'}";
+            Map<String,Object> map = new HashMap<>();
+            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            return JSON.toJSONString(map);
        // }
         //return "{'upload':'no'}";
     }
@@ -86,8 +89,9 @@ public class BannerController {
             os.write(buffer, 0, len);
         }
         bis.close();
-
-        return null;
+        Map<String,Object> map = new HashMap<>();
+        map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        return JSON.toJSONString(map);
     }
 
     @ApiOperation(value = "获取门户轮播图信息",notes = "获取所有轮播图信息")

@@ -233,10 +233,6 @@ public class ConsumeInformationAndPurchaseController {
     }
 
 
-
-
-
-
     @ApiOperation(value="插入耗材类型信息", notes="根据传过来的设备信息来插入耗材类型信息")
     @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String")
     @ApiResponses({
@@ -247,11 +243,11 @@ public class ConsumeInformationAndPurchaseController {
     public String insertConsumeType(ConsumeTypeDto consumeTypeDto){
         Map<Object,Object> insertConsumeTypeMap = new HashMap<>();
         int i = iConsumeTypeService.insertConsumeType(consumeTypeDto);
-        if(i<1){
-            insertConsumeTypeMap.put("status","failure");
+        if(i>0){
+            insertConsumeTypeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertConsumeTypeMap);
         }else{
-            insertConsumeTypeMap.put("status","success");
+            insertConsumeTypeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertConsumeTypeMap);
         }
     }
@@ -269,11 +265,11 @@ public class ConsumeInformationAndPurchaseController {
     public String updateConsumeType(ConsumeType consumeType){
         Map<Object,Object> updateConsumeTypeMap = new HashMap<>();
         int i = iConsumeTypeService.updateConsumeType(consumeType);
-        if(i<1){
-            updateConsumeTypeMap.put("status","failure");
+        if(i>0){
+            updateConsumeTypeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(updateConsumeTypeMap);
         }else{
-            updateConsumeTypeMap.put("status","success");
+            updateConsumeTypeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateConsumeTypeMap);
         }
     }
@@ -290,6 +286,14 @@ public class ConsumeInformationAndPurchaseController {
             return JSON.toJSONString(objectObjectMap);
         }
     }
+
+    @ApiOperation(value="分页查找所有耗材类型信息", notes="分页查找所有耗材类型信息")
+    @GetMapping(value="allconsumetypepaging",produces = "text/plain;charset=utf-8")
+    public String allConsumeTypePaging(int page,int limit){
+        Map<Object, Object> objectObjectMap = iConsumeTypeService.allConsumeType(page,limit);
+        return JSON.toJSONString(objectObjectMap);
+    }
+
     @ApiOperation(value="通过id查找所有耗材类型信息", notes="根据传过来的id来查询耗材类型信息")
     @ApiResponses({
             @ApiResponse(code=200,message="成功"),

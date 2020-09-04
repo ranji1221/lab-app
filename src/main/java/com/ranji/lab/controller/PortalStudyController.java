@@ -42,10 +42,10 @@ public class PortalStudyController {
         Map<Object,Object> insertStudyMap = new HashMap<>();
         int i = iStudyService.insertStudy(study);
         if(i<1){
-            insertStudyMap.put("status","failure");
+            insertStudyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertStudyMap);
         }else{
-            insertStudyMap.put("status","success");
+            insertStudyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(insertStudyMap);
         }
     }
@@ -70,10 +70,10 @@ public class PortalStudyController {
         Map<Object,Object> updateStudyMap = new HashMap<>();
         int i = iStudyService.insertStudy(study);
         if(i<1){
-            updateStudyMap.put("status","failure");
+            updateStudyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateStudyMap);
         }else{
-            updateStudyMap.put("status","success");
+            updateStudyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(updateStudyMap);
         }
 

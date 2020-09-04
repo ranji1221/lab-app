@@ -12,4 +12,11 @@ public interface AuditMapper {
 
     @Select("select * from audit")
     List<Audit> findAll();
+
+    @Select("select * from audit where " +
+            "1=1 and username like '%#{like}%' " +
+            "or ip_addr like '%#{like}%' " +
+            "or access_addr like '%#{like}%' " +
+            "or time like '%#{like}%'")
+    List<Audit> findAllByLike(String like);
 }

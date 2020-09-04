@@ -52,10 +52,10 @@ public class ArrangeController {
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iArrangeService.insertArrange(arrange,devices,consumes);
         if(i<1){
-            insertNewsMap.put("status","failure");
+            insertNewsMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertNewsMap);
         }else{
-            insertNewsMap.put("status","success");
+            insertNewsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertNewsMap);
         }
     }
@@ -131,10 +131,10 @@ public class ArrangeController {
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iArrangeService.updArrange(arrange,devices,consumes);
         if(i<1){
-            insertNewsMap.put("status","failure");
+            insertNewsMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertNewsMap);
         }else{
-            insertNewsMap.put("status","success");
+            insertNewsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertNewsMap);
         }
     }

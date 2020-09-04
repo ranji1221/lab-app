@@ -37,10 +37,10 @@ public class ConsumeNormController {
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
         if(i<1){
-            insertConsumeNormMap.put("status","failure");
+            insertConsumeNormMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertConsumeNormMap);
         }else{
-            insertConsumeNormMap.put("status","success");
+            insertConsumeNormMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertConsumeNormMap);
         }
     }
@@ -57,10 +57,10 @@ public class ConsumeNormController {
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.updateConsumeNorm(consumeNorm);
         if(i<1){
-            updateConsumeNormMap.put("status","failure");
+            updateConsumeNormMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateConsumeNormMap);
         }else{
-            updateConsumeNormMap.put("status","success");
+            updateConsumeNormMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateConsumeNormMap);
         }
     }

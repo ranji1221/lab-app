@@ -107,4 +107,13 @@ public interface UserMapper {
             "    </foreach>\n" +
             "</script>")
     void cancelRoles(@Param("userID") int userID, @Param("rolesID") int[] rolesID);
+
+    @Update("<script>" +
+            "UPDATE `t_user` set " +
+            "<if test = 'password != null or password != \"\"'>" +
+            "`password` = #{password}" +
+            "</if>" +
+            " where id = #{id}" +
+            "</script>")
+    void updateUser(User u);
 }
