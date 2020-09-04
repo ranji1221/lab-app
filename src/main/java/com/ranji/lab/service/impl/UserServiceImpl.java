@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
@@ -53,7 +54,7 @@ public class UserServiceImpl implements IUserService {
     /*@Cacheable(value = "users")*/
     public Map<Object,Object> getAllUsers(int pageNum , int pageSize) {
         PageHelper.startPage(pageNum , pageSize);
-        List<User> all = userMapper.findAll();
+        List<UserDto> all = userMapper.findAll();
 
         PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();

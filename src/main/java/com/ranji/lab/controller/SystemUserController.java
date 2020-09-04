@@ -10,6 +10,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +60,20 @@ public class SystemUserController {
     })
     @RequestMapping(value="/updateUser",method = RequestMethod.GET)
     public String updateUser(User u,String oldPassword){
-        iUserService.updateUser(u);
+        Subject subject = SecurityUtils.getSubject();
+        //-- 2. 构建身份信息
+        UsernamePasswordToken token = new UsernamePasswordToken(u.getName(),oldPassword);
+        //-- 3. 认证
+        subject.login(token);
+        //-- 4. 若认证通过则获取到该用户
+        User user = (User) subject.getPrincipal();
         Map<String,Object> map = new HashMap<>();
-        map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        if(user.getId()>0){
+            iUserService.updateUser(u);
+            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else{
+            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        }
         return JSON.toJSONString(map);
     }
 

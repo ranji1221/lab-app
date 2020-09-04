@@ -1,6 +1,7 @@
 package com.ranji.lab.mapper;
 
 import com.github.pagehelper.PageHelper;
+import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,8 +28,8 @@ public class UserMapperTests {
     @Test
     public void testFind(){
         PageHelper.startPage(1,2);
-        List<User> users = userMapper.findAll();
-        for (User u : users) {
+        List<UserDto> users = userMapper.findAll();
+        for (UserDto u : users) {
             System.out.println(u);
         }
     }

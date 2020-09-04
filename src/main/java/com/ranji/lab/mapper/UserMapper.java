@@ -1,5 +1,6 @@
 package com.ranji.lab.mapper;
 
+import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import org.apache.ibatis.annotations.*;
@@ -14,8 +15,8 @@ public interface UserMapper {
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     @Insert("insert into t_user(name,password,enable) values (#{name},#{password},#{enable})")
     int save(User u);
-    @Select("select * from t_user")
-    List<User> findAll();
+    @Select("select tu.*,tr.`name` roleName from t_user tu join t_user_role tur on tu.id = tur.user_id join t_role tr on tur.role_id = tr.id")
+    List<UserDto> findAll();
     @Select({
             "<script>",
             "select * from t_user",
@@ -116,4 +117,5 @@ public interface UserMapper {
             " where id = #{id}" +
             "</script>")
     void updateUser(User u);
+
 }
