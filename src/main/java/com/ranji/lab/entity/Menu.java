@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Menu implements Comparable{
+public class Menu implements Comparable<Menu>{
 
     private int id;
     @NonNull
@@ -19,11 +19,10 @@ public class Menu implements Comparable{
     private String access;
 
     @Override
-    public int compareTo(Object o) {
-        Menu menu = (Menu)o;
-        if(this.priority-menu.priority<0)
+    public int compareTo(Menu o) {
+        if(this.priority-o.priority<0)
             return -1;
-        else if(this.priority-menu.priority>0)
+        else if(this.priority-o.priority>0)
             return 1;
         else
             return 0;
