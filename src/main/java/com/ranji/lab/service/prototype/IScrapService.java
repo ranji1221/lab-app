@@ -16,10 +16,12 @@ public interface IScrapService {
 
     int updateScrapStatus(Scrap scrap);
 
-    Map<Object,Object> allScrap();
+    Map<Object, Object> allScrap();
 
-    Map<Object,Object> allScrap(int pageNum , int pageSize);
+    Map<Object, Object> allScrap(int pageNum, int pageSize);
 
     //模糊查询
-    Map<Object,Object> likeFindAll(String like);
+    Map<Object, Object> likeFindAll(String like);
+
+    Map<Object, Object> statusFindScrap(Integer status, int page, int limit);
 }

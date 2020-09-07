@@ -23,11 +23,14 @@ public class ConsumeCustody implements Serializable {
     private int status;//领用状态
     private String unitName;
     private String consumeName;
+    private double count;
+    private String projectName;
 
-    public void setDate(String date){
+    public void setDate(String date) {
         this.date = date;
     }
-    public Date getDate(){
-        return DateUtil.StringToDate(this.date,"yyyy-MM-dd");
+
+    public Date getDate() {
+        return DateUtil.StringToDate(this.date, "yyyy-MM-dd");
     }
 }

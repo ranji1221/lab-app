@@ -1,7 +1,6 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.dto.StudentScoreDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.StudentScore;
@@ -34,14 +33,15 @@ public class ExperimentStudentScoreController {
     })
     @PostMapping(value = "/insertstudentscore",produces = "text/plain;charset=utf-8")
     public String insertStudentScore(StudentScoreDto studentScoreDto){
-        String teacher = studentScoreDto.getTeacher();
-        int teacherId = iUserService.findUserIdByUserName(teacher);
-
-        StudentScore studentScore = new StudentScore(teacherId,studentScoreDto.getProjectId(),studentScoreDto.getStudentId(),studentScoreDto.getScore());
+        StudentScore studentScore = new StudentScore();
+        studentScore.setProjectId(studentScoreDto.getProjectId());
+        studentScore.setScore(studentScoreDto.getScore());
+        studentScore.setStudentId(studentScoreDto.getStudentId());
+        studentScore.setTeacherId(studentScoreDto.getTeacherId());
         int i = iStudentScoreService.insertStudentScore(studentScore);
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(i<1)
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        if (i < 1)
+            allMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         else
             allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
 

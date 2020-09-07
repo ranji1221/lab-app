@@ -78,15 +78,36 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
         return consumePurchaseMapper.getCount();
     }
 
+    /**
+     * 按照状态查询购置
+     *
+     * @param status
+     * @return
+     */
+    @Override
+    public Map<Object, Object> statusFindAll(Integer status, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ConsumePurchase> allConsumePurchase = consumePurchaseMapper.statusFindAll(status);
+
+        PageInfo<ConsumePurchase> allConsumePurchasePaging = new PageInfo<>(allConsumePurchase);
+        long total = allConsumePurchasePaging.getTotal();
+
+        Map<Object, Object> allConsumePurchaseOnPaging = new HashMap<>();
+        allConsumePurchaseOnPaging.put("data", allConsumePurchase);
+        allConsumePurchaseOnPaging.put("total", total);
+
+        return allConsumePurchaseOnPaging;
+    }
+
     @Override
     public Map<Object, Object> likeFindAll(int pageNum, int pageSize, String like) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<ConsumePurchase> allConsumePurchase = consumePurchaseMapper.likeFindAll(like);
 
         PageInfo<ConsumePurchase> allConsumePurchasePaging = new PageInfo<>(allConsumePurchase);
         long total = allConsumePurchasePaging.getTotal();
 
-        Map<Object,Object> allConsumePurchaseOnPaging = new HashMap<>();
+        Map<Object, Object> allConsumePurchaseOnPaging = new HashMap<>();
         allConsumePurchaseOnPaging.put("data",allConsumePurchase);
         allConsumePurchaseOnPaging.put("total",total);
 

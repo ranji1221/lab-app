@@ -9,6 +9,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeviceAndModelDto {
+    private int id; //设备id
     @NonNull
     private String factime;
     @NonNull

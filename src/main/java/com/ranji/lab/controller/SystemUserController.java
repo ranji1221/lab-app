@@ -16,10 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -50,8 +47,8 @@ public class SystemUserController {
         return JSON.toJSONString(allMap);
     }
 
-    @ApiOperation(value="分页查找所有账号信息", notes="分页查找所有账号信息")
-    @PostMapping(value = "/alluser",produces = "text/plain;charset=utf-8")
+    @ApiOperation(value = "分页查找所有账号信息", notes = "分页查找所有账号信息")
+    @GetMapping(value = "/alluser", produces = "text/plain;charset=utf-8")
     public String user(int page , int limit){
         Map<Object, Object> allUsers = iUserService.getAllUsers(page, limit);
         return JSON.toJSONString(allUsers);
@@ -85,8 +82,8 @@ public class SystemUserController {
     }
 
 
-    @ApiOperation(value="获取所有教师角色用户", notes="获取所有教师角色用户")
-    @PostMapping(value = "/allteachers",produces = "text/plain;charset=utf-8")
+    @ApiOperation(value = "获取所有教师角色用户", notes = "获取所有教师角色用户")
+    @GetMapping(value = "/allteachers", produces = "text/plain;charset=utf-8")
     public String allTeachers(){
         List<UserDto> all = iUserService.findAllTeachers();
         HashMap<Object, Object> allMap = new HashMap<>();
@@ -98,8 +95,8 @@ public class SystemUserController {
         return JSON.toJSONString(allMap);
     }
 
-    @ApiOperation(value="获取所有学生角色用户", notes="获取所有学生角色用户")
-    @PostMapping(value = "/allstudents",produces = "text/plain;charset=utf-8")
+    @ApiOperation(value = "获取所有学生角色用户", notes = "获取所有学生角色用户")
+    @GetMapping(value = "/allstudents", produces = "text/plain;charset=utf-8")
     public String allStudents(){
         List<UserDto> all = iUserService.findAllStudents();
         HashMap<Object, Object> allMap = new HashMap<>();
@@ -111,8 +108,8 @@ public class SystemUserController {
         return JSON.toJSONString(allMap);
     }
 
-    @ApiOperation(value="通过用户id获取某用户基本资料", notes="通过用户id获取某用户基本资料")
-    @PostMapping(value = "finduserbasic",produces = "text/plain;charset=utf-8")
+    @ApiOperation(value = "通过用户id获取某用户基本资料", notes = "通过用户id获取某用户基本资料")
+    @GetMapping(value = "finduserbasic", produces = "text/plain;charset=utf-8")
     public String findUserBasicByname(String name){
         int userId = iUserService.findUserIdByUserName(name);
         UserBasicDto userBasic = iUserBasicService.findUserBasic(userId);

@@ -424,14 +424,32 @@ public class ConsumeInformationAndPurchaseController {
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     })
-    @GetMapping(value = "likeFindAllConsumePurchase",produces = "text/plain;charset=utf-8")
-    public String likeFindAll(String like){
+    @GetMapping(value = "likeFindAllConsumePurchase", produces = "text/plain;charset=utf-8")
+    public String likeFindAll(String like) {
         Map<Object, Object> objectObjectMap = iConsumePurchaseService.likeFindAll(like);
-        if(!objectObjectMap.isEmpty()){
-            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        if (!objectObjectMap.isEmpty()) {
+            objectObjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(objectObjectMap);
-        }else{
-            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            objectObjectMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        }
+    }
+
+    @ApiOperation(value = "按照状态查询所有购置", notes = "按照状态查询所有购置")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "status", value = "状态", required = true, dataType = "String")
+    })
+    @GetMapping(value = "statusFindAllConsumePurchase", produces = "text/plain;charset=utf-8")
+    public String statusFindAll(Integer status, int page, int limit) {
+        Map<Object, Object> objectObjectMap = iConsumePurchaseService.statusFindAll(status, page, limit);
+        if (!objectObjectMap.isEmpty()) {
+            objectObjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(objectObjectMap);
+        } else {
+            objectObjectMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
         }
     }

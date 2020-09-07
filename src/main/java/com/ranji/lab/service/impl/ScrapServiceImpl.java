@@ -106,12 +106,25 @@ public class ScrapServiceImpl implements IScrapService {
     public Map<Object, Object> likeFindAll(String like) {
         List<ScrapDto> all = scrapMapper.likeFindAll(like);
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty()){
-            allMap.put("data",all);
-            allMap.put("total",all.size());
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        if (!all.isEmpty()) {
+            allMap.put("data", all);
+            allMap.put("total", all.size());
+            allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else
+            allMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+        return allMap;
+    }
+
+    @Override
+    public Map<Object, Object> statusFindScrap(Integer status, int page, int limit) {
+        List<ScrapDto> all = scrapMapper.statusFindScrap(status);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if (!all.isEmpty()) {
+            allMap.put("data", all);
+            allMap.put("total", all.size());
+            allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else
+            allMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         return allMap;
     }
 }

@@ -16,10 +16,11 @@ public class ConsumeCustodyDto {
     private String consumeName;
     private String recipient;
     private String date;
-    private int count;
+    private double count;
     private int status;
     private String unitName;
     private int arrangeProjectId;
+    private String projectName;
 
     public void setDate(String date){
         this.date = date;

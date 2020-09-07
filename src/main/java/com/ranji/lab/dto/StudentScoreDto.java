@@ -13,9 +13,13 @@ public class StudentScoreDto {
     @NonNull
     private int projectId;
     @NonNull
-    private String teacher;
+    private int teacherId;
     @NonNull
     private int studentId;
     @NonNull
     private int score;
+
+    private String projectName;
+    private String studentName;
+    private String teachName;
 }

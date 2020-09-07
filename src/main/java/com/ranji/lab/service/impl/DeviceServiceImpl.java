@@ -156,6 +156,7 @@ public class DeviceServiceImpl implements IDeviceService {
     @Override
     public int updateDeviceAndDeviceModel(DeviceAndModelDto deviceAndModelDto) {
         DeviceModel deviceModel = new DeviceModel();
+        deviceModel.setId(deviceAndModelDto.getId());
         deviceModel.setBrand(deviceAndModelDto.getBrand());
         deviceModel.setCount(deviceAndModelDto.getCount());
         deviceModel.setDeviceName(deviceAndModelDto.getDeviceName());

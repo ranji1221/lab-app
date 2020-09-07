@@ -152,14 +152,32 @@ public class ConsumeCustodyController {
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
     })
-    @GetMapping(value = "/allconsumecustodypaging",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeCustodyPaging(int page,int limit){
-        Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.findAll(page,limit);
-        if(!allConsumeCustodyMap.isEmpty()){
-            allConsumeCustodyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+    @GetMapping(value = "/allconsumecustodypaging", produces = "text/plain;charset=utf-8")
+    public String findAllConsumeCustodyPaging(int page, int limit) {
+        Map<Object, Object> allConsumeCustodyMap = iConsumeCustodyService.findAll(page, limit);
+        if (!allConsumeCustodyMap.isEmpty()) {
+            allConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(allConsumeCustodyMap);
-        }else{
-            allConsumeCustodyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            allConsumeCustodyMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+            return JSON.toJSONString(allConsumeCustodyMap);
+        }
+    }
+
+    @ApiOperation(value = "按照状态查询保管领用", notes = "根据传过来的信息来获得保管领用")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "status", value = "状态", required = true, dataType = "String")
+    })
+    @GetMapping(value = "/statusFindAllConsumeCustody", produces = "text/plain;charset=utf-8")
+    public String statusFindAll(Integer status, int page, int limit) {
+        Map<Object, Object> allConsumeCustodyMap = iConsumeCustodyService.statusFindAll(status, page, limit);
+        if (!allConsumeCustodyMap.isEmpty()) {
+            allConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(allConsumeCustodyMap);
+        } else {
+            allConsumeCustodyMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(allConsumeCustodyMap);
         }
     }

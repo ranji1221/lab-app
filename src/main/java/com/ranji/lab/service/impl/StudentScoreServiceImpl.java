@@ -2,6 +2,7 @@ package com.ranji.lab.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ranji.lab.dto.StudentScoreDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.StudentScore;
 import com.ranji.lab.mapper.StudentScoreMapper;
@@ -31,7 +32,7 @@ public class StudentScoreServiceImpl implements IStudentScoreService {
 
     @Override
     public Map<Object,Object> findAll() {
-        List<StudentScore> all = studentScoreMapper.findAll();
+        List<StudentScoreDto> all = studentScoreMapper.findAll();
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!all.isEmpty()) {
             allMap.put("data", all);
@@ -44,7 +45,7 @@ public class StudentScoreServiceImpl implements IStudentScoreService {
     @Override
     public Map<Object, Object> findAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<StudentScore> all = studentScoreMapper.findAll();
+        List<StudentScoreDto> all = studentScoreMapper.findAll();
 
         PageInfo pageInfo = new PageInfo();
         long total = pageInfo.getTotal();

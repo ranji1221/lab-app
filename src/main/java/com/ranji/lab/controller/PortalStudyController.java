@@ -67,8 +67,8 @@ public class PortalStudyController {
     })
     @PostMapping(value = "/updatestudy",produces = "text/plain;charset=utf-8")
     public String updateStudy(Study study){
-        Map<Object,Object> updateStudyMap = new HashMap<>();
-        int i = iStudyService.insertStudy(study);
+        Map<Object, Object> updateStudyMap = new HashMap<>();
+        int i = iStudyService.updateStudy(study);
         if(i<1){
             updateStudyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(updateStudyMap);

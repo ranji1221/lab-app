@@ -70,8 +70,8 @@ public class PortalNoticeController {
     })
     @PostMapping(value = "/updatenotice",produces = "text/plain;charset=utf-8")
     public String updateNotice(Notice notice){
-        Map<Object,Object> insertNoticeMap = new HashMap<>();
-        int i = iNoticeService.insertNotice(notice);
+        Map<Object, Object> insertNoticeMap = new HashMap<>();
+        int i = iNoticeService.updateNotice(notice);
         if(i<1){
             insertNoticeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertNoticeMap);

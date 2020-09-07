@@ -31,7 +31,7 @@ public class DeviceModelSetviceTests {
         String unitName = "个";
         int lifetime = 100;
         int count = 1;
-        DeviceAndModelDto deviceAndModelDto = new DeviceAndModelDto(factime,deviceName,brand,facid,proid,supid,type,unitName,lifetime,count);
+        DeviceAndModelDto deviceAndModelDto = new DeviceAndModelDto(1, factime, deviceName, brand, facid, proid, supid, type, unitName, lifetime, count);
         int i = iDeviceService.insertDeviceAndDeviceModel(deviceAndModelDto);
         System.out.println(i);
     }

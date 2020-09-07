@@ -137,7 +137,22 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
             consumeAndConsumeNumDto.setNum(projectConsumeDto.getConsumeNum());
             allList.add(consumeAndConsumeNumDto);
         }
-        allMap.put("data",allList);
+        allMap.put("data", allList);
+        return allMap;
+    }
+
+    @Override
+    public Map<Object, Object> statusFindAll(Integer status, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ConsumeCustody> all = consumeCustodyMapper.statusFindAll(status);
+
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
+
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data", all);
+        allMap.put("total", total);
+
         return allMap;
     }
 }

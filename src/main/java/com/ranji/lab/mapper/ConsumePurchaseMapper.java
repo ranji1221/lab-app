@@ -22,19 +22,33 @@ public interface ConsumePurchaseMapper {
             "<if test = 'date != null '>"+
             ",date=#{date}" +
             "</if>" +
-            "<if test = 'applicant != null '>"+
+            "<if test = 'applicant != null '>" +
             ",applicant=#{applicant}" +
             "</if>" +
-            "<if test = 'status != null '>"+
+            "<if test = 'status != null '>" +
             ",status = #{status}" +
             "</if>" +
             "where id = #{id}" +
             "</script>")
     int updateConsumePurchase(ConsumePurchase consumePurchase);
-    @Select("select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id order by date desc")
+
+    //按照状态查询购置入库
+    @Select("<script>" +
+            "select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id " +
+            " where 1 = 1 " +
+            "<if test = 'status != null'>" +
+            " and cc.status = #{status}" +
+            "</if>" +
+            " order by date desc " +
+            "</script>")
+    List<ConsumePurchase> statusFindAll(Integer status);
+
+    @Select("select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id order by date desc ")
     List<ConsumePurchase> findAll();
+
     @Select("select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id where id = #{id}")
     ConsumePurchase findById(int id);
+
     @Select("select cp.*,ci.name as consume_name,ci.unit_name unitName from consume_purchase cp join consume_inform ci on ci.id = cp.consume_id where cp.id = #{id}")
     ConsumePurchaseDto findNameById(int id);
 

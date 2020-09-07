@@ -24,7 +24,11 @@ public interface IConsumePurchaseService {
 
     int getCount();
 
+    //查询全部
+    Map<Object, Object> statusFindAll(Integer status, int pageNum, int pageSize);
+
     //模糊查询
-    Map<Object,Object> likeFindAll(int pageNum, int pageSize,String like);
-    Map<Object,Object> likeFindAll(String like);
+    Map<Object, Object> likeFindAll(int pageNum, int pageSize, String like);
+
+    Map<Object, Object> likeFindAll(String like);
 }
