@@ -4,6 +4,7 @@ import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -117,5 +118,25 @@ public interface UserMapper {
             " where id = #{id}" +
             "</script>")
     void updateUser(User u);
+
+    /**
+     * 查询所有教师角色用户
+     * @return
+     */
+    @Select("SELECT u.* FROM t_user u JOIN t_user_role ur ON ur.user_id = u.id JOIN t_role r ON r.id = ur.role_id WHERE r. CODE = 'teacher'\n")
+    List<UserDto> findAllTeachers();
+
+    /**
+     * 查询所有学生角色用户
+     * @return
+     */
+    @Select("SELECT u.* FROM t_user u JOIN t_user_role ur ON ur.user_id = u.id JOIN t_role r ON r.id = ur.role_id WHERE r. CODE = 'student'\n")
+    List<UserDto> findAllStudents();
+
+    /**
+     * 通过用户名获取用户id
+     */
+    @Select("select id from t_user where name = #{name}")
+    int findUserIdByUserName(String name);
 
 }

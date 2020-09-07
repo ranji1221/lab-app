@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.User;
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -18,6 +19,7 @@ import java.util.Map;
  * 登录控制器
  * @author RanJi
  */
+@Api(tags = "登陆接口")
 @Controller
 public class LoginController {
 

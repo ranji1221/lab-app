@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * pdf资源实体类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

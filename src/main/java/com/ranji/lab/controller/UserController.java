@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  */
 @Controller
 public class UserController {
-
+/*
     @Resource
     private IUserService iUserService;
 
@@ -36,5 +36,5 @@ public class UserController {
     @RequestMapping(value = "/user/{id}")
     public ResponseEntity<JsonResult> getUser(@PathVariable("id") int id){
         return null;
-    }
+    }*/
 }

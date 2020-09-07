@@ -2,6 +2,9 @@ package com.ranji.lab.entity;
 
 import lombok.*;
 
+/**
+ * 实验室图片实体类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

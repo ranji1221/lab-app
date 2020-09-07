@@ -2,6 +2,9 @@ package com.ranji.lab.entity;
 
 import lombok.*;
 
+/**
+ * 菜单实体类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

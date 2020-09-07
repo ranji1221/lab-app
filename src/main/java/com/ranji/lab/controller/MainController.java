@@ -1,5 +1,6 @@
 package com.ranji.lab.controller;
 
+import io.swagger.annotations.Api;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * 主控制器
  */
+@Api(tags = "主页面接口")
 @Controller
 public class MainController {
     //@RequiresPermissions(value = {"user:delete","user:edit","user:list"},logical = Logical.OR)
@@ -21,8 +23,6 @@ public class MainController {
     }
     @RequestMapping(value = "/indexx", method = RequestMethod.GET)
     public String indexx(){
-        //String user = SecurityUtils.getSubject().getPrincipal().toString();
-        //System.out.println(user);
         return "indexx";
     }
 }

@@ -1,9 +1,13 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ranji.lab.dto.UserBasicDto;
+import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.Code;
+import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.service.prototype.IRoleService;
+import com.ranji.lab.service.prototype.IUserBasicService;
 import com.ranji.lab.service.prototype.IUserService;
 import com.ranji.lab.util.JsonResult;
 import io.swagger.annotations.Api;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = "系统用户管理")
@@ -30,6 +35,8 @@ public class SystemUserController {
     private IUserService iUserService;
     @Resource
     private IRoleService iRoleService;
+    @Resource
+    private IUserBasicService iUserBasicService;
 
     @ApiOperation(value="添加用户账号信息", notes="添加角色信息")
     @PostMapping(value = "/insertuser",produces = "text/plain;charset=utf-8")
@@ -76,5 +83,47 @@ public class SystemUserController {
         }
         return JSON.toJSONString(map);
     }
+
+
+    @ApiOperation(value="获取所有教师角色用户", notes="获取所有教师角色用户")
+    @PostMapping(value = "/allteachers",produces = "text/plain;charset=utf-8")
+    public String allTeachers(){
+        List<UserDto> all = iUserService.findAllTeachers();
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(!all.isEmpty()) {
+            allMap.put("data", all);
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
+    @ApiOperation(value="获取所有学生角色用户", notes="获取所有学生角色用户")
+    @PostMapping(value = "/allstudents",produces = "text/plain;charset=utf-8")
+    public String allStudents(){
+        List<UserDto> all = iUserService.findAllStudents();
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(!all.isEmpty()) {
+            allMap.put("data", all);
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
+    @ApiOperation(value="通过用户id获取某用户基本资料", notes="通过用户id获取某用户基本资料")
+    @PostMapping(value = "finduserbasic",produces = "text/plain;charset=utf-8")
+    public String findUserBasicByname(String name){
+        int userId = iUserService.findUserIdByUserName(name);
+        UserBasicDto userBasic = iUserBasicService.findUserBasic(userId);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(!(userBasic==null)) {
+            allMap.put("data", userBasic);
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
 
 }

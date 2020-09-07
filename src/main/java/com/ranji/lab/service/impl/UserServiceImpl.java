@@ -121,4 +121,19 @@ public class UserServiceImpl implements IUserService {
         userMapper.updateUser(u);
     }
 
+    @Override
+    public List<UserDto> findAllTeachers() {
+        return userMapper.findAllTeachers();
+    }
+
+    @Override
+    public List<UserDto> findAllStudents() {
+        return userMapper.findAllStudents();
+    }
+
+    @Override
+    public int findUserIdByUserName(String name) {
+        return userMapper.findUserIdByUserName(name);
+    }
+
 }

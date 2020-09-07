@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * doc资源实体类
+ */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

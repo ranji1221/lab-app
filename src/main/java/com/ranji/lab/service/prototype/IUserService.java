@@ -1,5 +1,6 @@
 package com.ranji.lab.service.prototype;
 
+import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import org.apache.ibatis.annotations.Update;
@@ -66,4 +67,18 @@ public interface IUserService {
      */
     void updateUser(User u);
 
+    /**
+     * 查询所有教师角色用户
+     */
+    List<UserDto> findAllTeachers();
+
+    /**
+     * 查询所有学生角色用户
+     */
+    List<UserDto> findAllStudents();
+
+    /**
+     * 通过用户名获取教师id
+     */
+    int findUserIdByUserName(String name);
 }
