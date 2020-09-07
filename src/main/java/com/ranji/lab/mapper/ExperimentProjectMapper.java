@@ -19,7 +19,7 @@ public interface ExperimentProjectMapper {
 
     //查询全部
     @Select("<script>" +
-            "select * from experiment_project  where status != 2 " +
+            "select * from experiment_project  where 1 = 1 " +
             "<if test = 'status != null '> " +
             "and status = #{status}" +
             "</if>" +
@@ -53,7 +53,7 @@ public interface ExperimentProjectMapper {
 
     //模糊查询
     @Select("<script>" +
-            "select * from experiment_project  where status != 2 " +
+            "select * from experiment_project  where 1 = 1 " +
             "and experiment_name like '%${like}%' or " +
             "experiment_target like '%${like}%' or " +
             "experiment_content like '%${like}%' or " +

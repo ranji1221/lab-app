@@ -17,7 +17,7 @@ public interface ArrangeMapper {
 
     //查询全部
     @Select("<script>" +
-            "select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id where a.status != 2" +
+            "select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id where 1 = 1 " +
             "<if test = 'status != null '> " +
             "and a.status = #{status}" +
             "</if>" +
@@ -39,8 +39,7 @@ public interface ArrangeMapper {
     //模糊查询
     @Select("<script>" +
             "select a.*,l.*, ep.experiment_name project_name from arrange a LEFT JOIN laboratory l on a.laboratory_id = l.id LEFT JOIN experiment_project ep on a.project_id = ep.id " +
-            " where a.status != 2 " +
-            " and ep.experiment_name like '%${like}%' or " +
+            " where ep.experiment_name like '%${like}%' or " +
             "ep.experiment_target like '%${like}%' or " +
             "ep.experiment_content like '%${like}%' or " +
             "ep.experiment_process like '%${like}%' " +

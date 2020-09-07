@@ -8,6 +8,7 @@ import com.ranji.lab.entity.StudentScore;
 import com.ranji.lab.service.prototype.IStudentScoreService;
 import com.ranji.lab.service.prototype.IUserService;
 import io.swagger.annotations.*;
+import lombok.val;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +59,18 @@ public class ExperimentStudentScoreController {
     public String allStudentScorePaging(int page,int limit){
         Map<Object, Object> all = iStudentScoreService.findAll(page,limit);
         return JSON.toJSONString(all);
+    }
+
+    @ApiOperation(value="修改学生成绩", notes="修改学生成绩")
+    @GetMapping(value = "/updStudentScore",produces = "text/plain;charset=utf-8")
+    public String updStudentScore(StudentScore studentScore){
+        val i = iStudentScoreService.updateStudentScore(studentScore);
+        Map<String,Object> map = new HashMap<>();
+        if(i>0){
+            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else{
+            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        }
+        return JSON.toJSONString(map);
     }
 }

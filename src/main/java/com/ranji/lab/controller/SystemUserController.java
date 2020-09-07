@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.ranji.lab.dto.UserBasicDto;
 import com.ranji.lab.dto.UserDto;
 import com.ranji.lab.entity.Code;
-import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
+import com.ranji.lab.entity.UserBasic;
 import com.ranji.lab.service.prototype.IRoleService;
 import com.ranji.lab.service.prototype.IUserBasicService;
 import com.ranji.lab.service.prototype.IUserService;
-import com.ranji.lab.util.JsonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,16 +61,18 @@ public class SystemUserController {
     @ApiOperation(value = "修改用户",notes = "根据给定的User对象进行信息修改")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "password", value = "密码", required = true , dataType = "String")
+            @ApiImplicitParam(name = "password", value = "密码", required = true , dataType = "String"),
+            @ApiImplicitParam(name = "name", value = "用户名", required = true , dataType = "String"),
+            @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true , dataType = "String")
     })
-    @RequestMapping(value="/updateUser",method = RequestMethod.GET)
+    @RequestMapping(value="/updateUser",method = RequestMethod.POST)
     public String updateUser(User u,String oldPassword){
         Subject subject = SecurityUtils.getSubject();
         //-- 2. 构建身份信息
         UsernamePasswordToken token = new UsernamePasswordToken(u.getName(),oldPassword);
         //-- 3. 认证
         subject.login(token);
-        //-- 4. 若认证通过则获取到该用户
+        //-- 4. 若认证通过则获取到该用户,说明旧密码正确
         User user = (User) subject.getPrincipal();
         Map<String,Object> map = new HashMap<>();
         if(user.getId()>0){
@@ -118,6 +118,20 @@ public class SystemUserController {
         UserBasicDto userBasic = iUserBasicService.findUserBasic(userId);
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!(userBasic==null)) {
+            allMap.put("data", userBasic);
+            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        }else
+            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        return JSON.toJSONString(allMap);
+    }
+
+
+    @ApiOperation(value="插入某用户基本资料", notes="插入某用户基本资料")
+    @PostMapping(value = "insertuserbasic",produces = "text/plain;charset=utf-8")
+    public String insertuserbasic(UserBasic userBasic){
+        int userId = iUserBasicService.insertUserBasic(userBasic);
+        HashMap<Object, Object> allMap = new HashMap<>();
+        if(userId>0) {
             allMap.put("data", userBasic);
             allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
         }else
