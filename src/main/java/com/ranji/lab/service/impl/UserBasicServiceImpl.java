@@ -14,8 +14,14 @@ public class UserBasicServiceImpl implements IUserBasicService {
     private UserBasicMapper userBasicMapper;
 
     @Override
-    public int insertUserBasic(UserBasic userBasic) {
-        return userBasicMapper.insertUserBasic(userBasic);
+    public int insertOrUpdateUserBasic(UserBasic userBasic) {
+        UserBasicDto userBasicDto = userBasicMapper.findByUserId(userBasic.getUserId());
+        if(!(userBasicDto == null))
+            userBasicMapper.updateUserBasic(userBasic);
+        else
+            userBasicMapper.insertUserBasic(userBasic);
+
+        return 1;
     }
 
     @Override

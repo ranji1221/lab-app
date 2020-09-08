@@ -4,7 +4,7 @@ import com.ranji.lab.dto.UserBasicDto;
 import com.ranji.lab.entity.UserBasic;
 
 public interface IUserBasicService {
-    int insertUserBasic(UserBasic userBasic);
+    int insertOrUpdateUserBasic(UserBasic userBasic);
 
     UserBasicDto findUserBasic(int userId);
 }

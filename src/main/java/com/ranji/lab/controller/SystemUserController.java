@@ -125,7 +125,7 @@ public class SystemUserController {
     @ApiOperation(value="插入某用户基本资料", notes="插入某用户基本资料")
     @PostMapping(value = "insertuserbasic",produces = "text/plain;charset=utf-8")
     public String insertuserbasic(UserBasic userBasic){
-        int userId = iUserBasicService.insertUserBasic(userBasic);
+        int userId = iUserBasicService.insertOrUpdateUserBasic(userBasic);
         HashMap<Object, Object> allMap = new HashMap<>();
         if(userId>0) {
             allMap.put("data", userBasic);
