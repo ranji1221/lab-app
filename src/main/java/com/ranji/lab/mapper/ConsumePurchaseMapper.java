@@ -32,6 +32,15 @@ public interface ConsumePurchaseMapper {
             "</script>")
     int updateConsumePurchase(ConsumePurchase consumePurchase);
 
+    @Update("<script>" +
+            "update consume_purchase set " +
+            "<if test = 'status != null '>" +
+            " status = 4 " +
+            "</if>" +
+            "where id = #{id}" +
+            "</script>")
+    int updateConsumePurchaseStatus(ConsumePurchase consumePurchase);
+
     //按照状态查询购置入库
     @Select("<script>" +
             "select cc.*,ci.name consumeName,ci.unit_name from consume_purchase cc left join consume_inform ci on cc.consume_id = ci.id " +

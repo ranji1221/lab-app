@@ -12,11 +12,17 @@ import java.util.List;
 public interface DeviceMapper {
 
     //插入
-    @Insert("insert into device (factime,device_model_id,uuid) values (#{factime},#{deviceModelId},#{uuid})")
+    @Insert("insert into device (factime,device_model_id,uuid,status) values (#{factime},#{deviceModelId},#{uuid},0)")
     int insertDevice(Device device);
+
     //修改
-    @Update("update device set factime = #{factime},device_model_id = #{deviceModelId},uuid = #{uuid}  where id = #{id}")
+    @Update("<script>" +
+            "update device set " +
+            "status = #{status}" +
+            " where id = #{id}" +
+            "</script>")
     int updateDevice(Device device);
+
     //查询全部
     @Select("select device.* from device")
     List<Device> findAll();

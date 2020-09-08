@@ -1,3 +1,4 @@
+/*
 package com.ranji.lab.Interceptor;
 
 import com.ranji.lab.entity.Audit;
@@ -33,19 +34,23 @@ public class UserInterceptor implements HandlerInterceptor {
         //用户cookie获取username
         Cookie[] cookies = request.getCookies();
         String username = "nousername";
-        /*for (Cookie cookie : cookies) {
+        */
+/*for (Cookie cookie : cookies) {
             String name = cookie.getName();
             if(name.equals("name")){
                 username = cookie.getName();
             }
-        }*/
+        }*//*
+
         //用户ip
         String ipAddress = GetIpAddrUtil.getIPAddress(request);
         //当前时间
         String time = DateUtil.DateToString(new Date(), "yyyy-MM-dd HH-mm-ss");
-        /*访问绝对路径接口
+        */
+/*访问绝对路径接口
         String url = request.getRequestURL().toString();
-        url = url.substring(url.indexOf("8080/lab")+8);*/
+        url = url.substring(url.indexOf("8080/lab")+8);*//*
+
         //访问相对路径接口
         String servletPath = request.getServletPath();
         System.out.println("cookies =====================================" + cookies);
@@ -62,3 +67,4 @@ public class UserInterceptor implements HandlerInterceptor {
         System.out.println("过滤结束");
     }
 }
+*/

@@ -5,6 +5,7 @@ import com.ranji.lab.dto.ConsumeCustodyInsertDto;
 import com.ranji.lab.entity.ConsumeCustody;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface IConsumeCustodyService {
 
     Map<Object,Object> findAll(int pageNum, int pageSize);
 
-    List<ConsumeCustody> findAllConsumeCustodys(int pageNum, int pageSize);
+    HashMap<Object, Object> findAllConsumeCustodys(int pageNum, int pageSize);
 
     List<ConsumeCustody> findAll();
 
@@ -37,4 +38,7 @@ public interface IConsumeCustodyService {
 
     //按照状态查询保管领用
     Map<Object, Object> statusFindAll(Integer status, int pageNum, int pageSize);
+
+    //修改保管领用
+    int updateConsumeCustodyStatus(ConsumeCustodyDto consumeCustodydto);
 }

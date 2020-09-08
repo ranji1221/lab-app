@@ -18,7 +18,7 @@ public class UserBasic {
 
     private String phone;//用户手机号
 
-    private String eMali;//用户邮箱
+    private String eMail;//用户邮箱
 
     private String remark;//用户备注
 }

@@ -20,7 +20,7 @@ public class ConsumeInform implements Serializable {
     @NonNull
     private String brand;//耗材品牌
     @NonNull
-    private int num;//耗材数量
+    private double num;//耗材数量
     @NonNull
     private String facid;//出厂编号
     @NonNull

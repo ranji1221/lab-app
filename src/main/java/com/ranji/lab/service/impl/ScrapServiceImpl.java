@@ -62,13 +62,9 @@ public class ScrapServiceImpl implements IScrapService {
 
     @Override
     @Transactional
-    public int updateScrapStatus(Scrap scrap) {
-        int i = scrapMapper.updateScarp(scrap);
-        if(i<0) return 0;
-        else{
-            int i1 = scrapMapper.updateDeviceStatusToStopScrap(scrap.getId());
-            if(i1<0) return 0;
-        }
+    public int updateScrapStatus(ScrapDto scrap) {
+        scrapMapper.updateScarpStatus(scrap.getId());
+        scrapMapper.updateDeviceStatusToStopScrap(scrap.getId());
         return 1;
     }
 

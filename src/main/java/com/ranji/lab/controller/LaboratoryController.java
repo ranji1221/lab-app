@@ -44,28 +44,23 @@ public class LaboratoryController {
         //-- 1. 获取项目的根目录
         String rootDirectory = System.getProperty("user.dir");
         //-- 2. 创建存放上传资源的目录
-        File resourceDirectory = new File(rootDirectory+File.separator+"upload"+File.separator+"image");
-        if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
-            String jpgname = file.getOriginalFilename();
-            if(jpgname.substring(jpgname.indexOf(".")+1,jpgname.length()).equals("jpg")) {
-                String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
-                try {
-                    file.transferTo(new File(path));
-                    LaboratoryImage laboratoryImage = new LaboratoryImage();
-                    laboratoryImage.setImageAddr(path);
-                    int i = iLaboratoryImageService.insertLaboratoryImage(laboratoryImage);
-                    laboratoryDto.setImgSrc(i);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                return "{status:jpg plz}";
-            }
-        int i = iLaboratoryService.insertLaboratory(laboratoryDto,devices);
-        if(i<1){
-            laboratoryMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        File resourceDirectory = new File(rootDirectory + File.separator + "upload" + File.separator + "image");
+        if (!resourceDirectory.exists()) resourceDirectory.mkdirs();
+        String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
+        try {
+            file.transferTo(new File(path));
+            LaboratoryImage laboratoryImage = new LaboratoryImage();
+            laboratoryImage.setImageAddr(path);
+            int i = iLaboratoryImageService.insertLaboratoryImage(laboratoryImage);
+            laboratoryDto.setImgSrc(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int i = iLaboratoryService.insertLaboratory(laboratoryDto, devices);
+        if (i < 1) {
+            laboratoryMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(laboratoryMap);
-        }else{
+        } else {
             laboratoryMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(laboratoryMap);
         }

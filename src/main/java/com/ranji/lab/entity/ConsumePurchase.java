@@ -24,7 +24,7 @@ public class ConsumePurchase implements Serializable {
     @NonNull
     private String applicant;//购置耗材申请人
     @NonNull
-    private String status;//购置耗材状态
+    private int status;//购置耗材状态
     @NonNull
     private String unitName;
     @NonNull

@@ -26,6 +26,8 @@ public class ConsumeCustody implements Serializable {
     private double count;
     private String projectName;
 
+    private String consumes;
+
     public void setDate(String date) {
         this.date = date;
     }

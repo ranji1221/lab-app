@@ -3,20 +3,26 @@ package com.ranji.lab.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ConsumePurchaseDto;
+import com.ranji.lab.entity.ConsumeInform;
 import com.ranji.lab.entity.ConsumePurchase;
+import com.ranji.lab.mapper.ConsumeInformMapper;
 import com.ranji.lab.mapper.ConsumePurchaseMapper;
 import com.ranji.lab.service.prototype.IConsumePurchaseService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
 
     @Resource
     private ConsumePurchaseMapper consumePurchaseMapper;
+    @Resource
+    private ConsumeInformMapper consumeInformMapper;
 
 
     @Override
@@ -25,7 +31,15 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
     }
 
     @Override
+    @Transactional
     public int updateConsumePurchase(ConsumePurchase consumePurchase) {
+        if (consumePurchase.getDate() == null) {
+            ConsumeInform consumeInform = new ConsumeInform();
+            consumeInform.setId(consumePurchase.getConsumeId());
+            consumeInform.setNum(consumePurchase.getNum());
+            consumeInformMapper.updateConsumeInformNum(consumeInform);
+            consumePurchaseMapper.updateConsumePurchaseStatus(consumePurchase);
+        }
         return consumePurchaseMapper.updateConsumePurchase(consumePurchase);
     }
 

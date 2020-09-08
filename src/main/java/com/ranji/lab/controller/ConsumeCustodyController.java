@@ -2,10 +2,12 @@ package com.ranji.lab.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.ranji.lab.dto.ConsumeCustodyDto;
 import com.ranji.lab.dto.ConsumeCustodyInsertDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ConsumeCustody;
+import com.ranji.lab.entity.ConsumePurchase;
 import com.ranji.lab.service.prototype.IConsumeCustodyService;
 import com.ranji.lab.util.DateUtil;
 import io.swagger.annotations.Api;
@@ -59,50 +61,56 @@ public class ConsumeCustodyController {
     })*/
     @PostMapping(value = "updateConsumeCustody",produces = "text/plain;charset=utf-8")
     public String updateConsumeCustody(ConsumeCustody consumeCustody){
-        Map<Object,Object> updateConsumeCustodyMap = new HashMap<>();
+        Map<Object, Object> updateConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.updateConsumeCustody(consumeCustody);
-        if(i<1){
-            updateConsumeCustodyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        if (i < 1) {
+            updateConsumeCustodyMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(updateConsumeCustodyMap);
-        }else{
+        } else {
             updateConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateConsumeCustodyMap);
         }
 
     }
-    @ApiOperation(value="查找所有的保管领用", notes="根据传过来的设备信息来更新保管领用")
-    @GetMapping(value = "/allconsumecustody",produces = "text/plain;charset=utf-8")
-    public String findAllConsumeCustody(){
-        Map<Object,Object> map = new HashMap<>();
-        List<ConsumeCustody> allConsumeCustodys = iConsumeCustodyService.findAll();
-        /**
-         * 通过id查询名字，并将名字传递至前台
-         */
-        List<ConsumeCustodyDto> allConsumeCustodyss = new ArrayList<>();
-        if(!allConsumeCustodys.isEmpty()){
 
-            for (ConsumeCustody allConsumecustody : allConsumeCustodys) {
-                int id = allConsumecustody.getId();
-                String name = iConsumeCustodyService.findNameById(id).getConsumeName();
-
-                ConsumeCustodyDto consumeCustodyDto = new ConsumeCustodyDto();
-
-                consumeCustodyDto.setRecipient(allConsumecustody.getRecipient());
-                consumeCustodyDto.setConsumeName(name);
-                consumeCustodyDto.setDate(DateUtil.DateToString(allConsumecustody.getDate(),"yyyy-MM-dd"));
-                consumeCustodyDto.setStatus(allConsumecustody.getStatus());
-                consumeCustodyDto.setId(allConsumecustody.getId());
-                consumeCustodyDto.setCount(iConsumeCustodyService.findNameById(id).getCount());
-                consumeCustodyDto.setUnitName(iConsumeCustodyService.findNameById(id).getUnitName());
-                allConsumeCustodyss.add(consumeCustodyDto);
+    //修改保管领用状态
+    @ApiOperation(value = "更新保管领用状态", notes = "更新保管领用状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "保管领用id", required = true, dataType = "String")
+    })
+    @PostMapping(value = "updateConsumeCustodyStatus", produces = "text/plain;charset=utf-8")
+    public String updateConsumeCustodyStatus(ConsumeCustodyDto consumeCustody, String consumeCustodyss) {
+        Map<Object, Object> updateConsumeCustodyMap = new HashMap<>();
+        int i = 0;
+        if (consumeCustody != null) {
+            i = iConsumeCustodyService.updateConsumeCustodyStatus(consumeCustody);
+        }
+        if (consumeCustodyss != null) {
+            ConsumeCustodyDto[] consumeCustodys = JSON.parseObject(consumeCustodyss, new TypeReference<ConsumeCustodyDto[]>() {
+            });
+            for (ConsumeCustodyDto consumeCustody1 : consumeCustodys) {
+                i = iConsumeCustodyService.updateConsumeCustodyStatus(consumeCustody1);
             }
-            int total = iConsumeCustodyService.getCount();
-            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            map.put("data",allConsumeCustodyss);
-            map.put("total",total);
+        }
+        if (i < 1) {
+            updateConsumeCustodyMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+            return JSON.toJSONString(updateConsumeCustodyMap);
+        } else {
+            updateConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(updateConsumeCustodyMap);
+        }
+
+    }
+
+    @ApiOperation(value = "查找所有的保管领用", notes = "根据传过来的设备信息来更新保管领用")
+    @GetMapping(value = "/allconsumecustody", produces = "text/plain;charset=utf-8")
+    public String findAllConsumeCustody() {
+        HashMap<Object, Object> map = iConsumeCustodyService.findAllConsumeCustodys(0, Integer.MAX_VALUE);
+        if (map != null) {
+            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(map);
-        }else{
-            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            map.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(map);
         }
     }
@@ -113,36 +121,15 @@ public class ConsumeCustodyController {
     })
     @GetMapping(value = "/allconsumecustodys",produces = "text/plain;charset=utf-8")
     public String findAllConsumeCustodys(int page,int limit){
-        Map<Object,Object> map = new HashMap<>();
-        List<ConsumeCustody> allConsumeCustodys = iConsumeCustodyService.findAllConsumeCustodys(page, limit);
+        HashMap<Object, Object> map = iConsumeCustodyService.findAllConsumeCustodys(page, limit);
         /**
          * 通过id查询名字，并将名字传递至前台
          */
-        List<ConsumeCustodyDto> allConsumeCustodyss = new ArrayList<>();
-        if(!allConsumeCustodys.isEmpty()){
-
-            for (ConsumeCustody allConsumecustody : allConsumeCustodys) {
-                int id = allConsumecustody.getId();
-                String name = iConsumeCustodyService.findNameById(id).getConsumeName();
-
-                ConsumeCustodyDto consumeCustodyDto = new ConsumeCustodyDto();
-
-                consumeCustodyDto.setRecipient(allConsumecustody.getRecipient());
-                consumeCustodyDto.setConsumeName(name);
-                consumeCustodyDto.setDate(DateUtil.DateToString(allConsumecustody.getDate(),"yyyy-MM-dd"));
-                consumeCustodyDto.setStatus(allConsumecustody.getStatus());
-                consumeCustodyDto.setId(allConsumecustody.getId());
-                consumeCustodyDto.setCount(iConsumeCustodyService.findNameById(id).getCount());
-                consumeCustodyDto.setUnitName(iConsumeCustodyService.findNameById(id).getUnitName());
-                allConsumeCustodyss.add(consumeCustodyDto);
-            }
-            int total = iConsumeCustodyService.getCount();
-            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            map.put("data",allConsumeCustodyss);
-            map.put("total",total);
+        if (map != null) {
+            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(map);
-        }else{
-            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            map.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(map);
         }
     }

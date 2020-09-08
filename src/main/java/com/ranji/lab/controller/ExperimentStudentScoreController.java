@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api("学生成绩接口")
+@Api(tags = "学生成绩接口")
 @RestController
 public class ExperimentStudentScoreController {
     @Resource

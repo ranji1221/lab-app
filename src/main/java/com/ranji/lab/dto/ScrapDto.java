@@ -10,14 +10,15 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class ScrapDto {
     private int id;
-    @NonNull
     private String laboratoryName;
-    @NonNull
     private String uuid;
-    @NonNull
     private String description;
-    @NonNull
     private String date;
-    @NonNull
     private String status;
+    private int deviceId;
+
+    public ScrapDto(int id, int deviceId) {
+        this.id = id;
+        this.deviceId = deviceId;
+    }
 }

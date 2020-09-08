@@ -70,4 +70,12 @@ public interface ConsumeInformMapper {
             " and ci.name like '%${like}%' ")
     List<ConsumeInformAndConsumeTypeNameDto> likeFindConsumeAndConsumeName(String like);
 
+    @Update("<script>" +
+            "update consume_inform set " +
+            "<if test = 'num != null '> " +
+            "num=#{num}+num" +
+            "</if>" +
+            " where id =#{id}" +
+            "</script>")
+    int updateConsumeInformNum(ConsumeInform consumeInform);
 }

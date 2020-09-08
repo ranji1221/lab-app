@@ -14,7 +14,7 @@ public interface IScrapService {
     //取消报废
     int updateScrapValue(Scrap scrap);
 
-    int updateScrapStatus(Scrap scrap);
+    int updateScrapStatus(ScrapDto scrap);
 
     Map<Object, Object> allScrap();
 

@@ -48,12 +48,21 @@ public class ReportRepairServiceImpl implements IReportRepairService {
             reportRepair.setDate(reportRepairInsertDto.getDate());
             reportRepair.setDescription(reportRepairInsertDto.getDescription());
             reportRepairMapper.insertReportRepair(reportRepair);
+            Device device = new Device();
+            device.setId(deviceId);
+            device.setStatus(3);
+            deviceMapper.updateDevice(device);
         }
         return 1;
     }
 
     @Override
+    @Transactional
     public int updateReportRepair(ReportRepair reportRepair) {
+        Device device = new Device();
+        device.setId(reportRepair.getDeviceId());
+        device.setStatus(0);
+        deviceMapper.updateDevice(device);
         return reportRepairMapper.updateReportRepair(reportRepair);
     }
 

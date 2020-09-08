@@ -1,6 +1,7 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
@@ -137,7 +138,7 @@ public class ConsumeInformationAndPurchaseController {
             @ApiImplicitParam(name = "consumeId", value = "购置耗材id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "num", value = "购置数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "date", value = "购置日期", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "applicant", value = "购置申请人", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "applicant", value = "购置申请人", required = true, dataType = "String")
     })
     @PostMapping(value = "/insertconsumepurchase",produces = "text/plain;charset=utf-8")
     public String insertConsumePurchase(ConsumePurchase consumePurchase){
@@ -151,20 +152,38 @@ public class ConsumeInformationAndPurchaseController {
             return JSON.toJSONString(insertConsumePurchaseMap);
         }
     }
-    @ApiOperation(value="更新申请购置信息", notes="根据传过来的设备信息来更新申请购置信息")
-    @PostMapping(value = "/updateconsumepurchase",produces = "text/plain;charset=utf-8")
-    public String updateConsumePurchase(ConsumePurchase consumePurchase){
-        Map<Object,Object> updateConsumePurchaseMap = new HashMap<>();
-        int i = iConsumePurchaseService.updateConsumePurchase(consumePurchase);
-        if(i<1){
-            updateConsumePurchaseMap.put("status","failure");
+
+    @ApiOperation(value = "更新申请购置信息", notes = "根据传过来的设备信息来更新申请购置信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "购置id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "consumeId", value = "购置耗材id", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "num", value = "购置数量", required = true, dataType = "String")
+    })
+    @PostMapping(value = "/updateconsumepurchase", produces = "text/plain;charset=utf-8")
+    public String updateConsumePurchase(ConsumePurchase consumePurchase, String consumePurchasess) {
+        Map<Object, Object> updateConsumePurchaseMap = new HashMap<>();
+        int i = 0;
+        if (consumePurchase != null) {
+            i = iConsumePurchaseService.updateConsumePurchase(consumePurchase);
+        }
+        if (consumePurchasess != null) {
+            ConsumePurchase[] consumePurchases = JSON.parseObject(consumePurchasess, new TypeReference<ConsumePurchase[]>() {
+            });
+            for (ConsumePurchase consumePurchase1 : consumePurchases) {
+                i = iConsumePurchaseService.updateConsumePurchase(consumePurchase1);
+            }
+        }
+        if (i < 1) {
+            updateConsumePurchaseMap.put("status", "failure");
             return JSON.toJSONString(updateConsumePurchaseMap);
-        }else{
-            updateConsumePurchaseMap.put("status","success");
+        } else {
+            updateConsumePurchaseMap.put("status", "success");
             return JSON.toJSONString(updateConsumePurchaseMap);
         }
+
     }
-    @ApiOperation(value="获取所有申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
+
+    @ApiOperation(value = "获取所有申请购置信息", notes = "根据传过来的设备信息来获得申请购置信息")
     @GetMapping(value = "/allconsumepurchase",produces = "text/plain;charset=utf-8")
     public String findAllConsumePurchase(){
         List<ConsumePurchase> allConsumePurchase = iConsumePurchaseService.findAllConsumePurchase();

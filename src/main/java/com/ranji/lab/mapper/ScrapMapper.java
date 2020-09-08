@@ -23,16 +23,20 @@ public interface ScrapMapper {
 
     @Update("update scrap set device_id = #{deviceId},description = #{description},date=#{date} where id = #{deviceId}")
     int updateScarp(Scrap scrap);
+
     //修改报废设备状态
     @Update("update device set status = 4 where id = #{deviceId}")
     int updateDeviceStatusToStopScrap(int deviceId);
+
+    @Update("update scrap set status = 4 where id = #{id}")
+    int updateScarpStatus(int id);
 
 
     //修改报废设备状态
     @Update("update device set status = 0 where id = #{deviceId}")
     int updateDeviceStatusToNormal(int deviceId);
 
-    @Select("SELECT l.laboratory_name, s.*, d.uuid FROM scrap s LEFT JOIN device d ON d.id = s.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = s.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id")
+    @Select("SELECT l.laboratory_name, s.*, d.uuid,d.id deviceId FROM scrap s LEFT JOIN device d ON d.id = s.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = s.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id")
     List<ScrapDto> findAll();
 
     @Select("SELECT l.laboratory_name, s.*, d.uuid FROM scrap s LEFT JOIN device d ON d.id = s.id LEFT JOIN ( SELECT * FROM laboratory_device ) ld ON ld.device_id = s.device_id LEFT JOIN laboratory l ON l.id = ld.laboratory_id where s.status = #{status} ")

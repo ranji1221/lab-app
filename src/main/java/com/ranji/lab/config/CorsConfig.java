@@ -1,6 +1,5 @@
 package com.ranji.lab.config;
 
-import com.ranji.lab.Interceptor.UserInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -25,15 +24,16 @@ public class CorsConfig extends WebMvcConfigurationSupport {
     /**
      * 自定义拦截器实体
      */
-    @Resource
-    private UserInterceptor userInterceptor;
+    /*@Resource
+    private UserInterceptor userInterceptor;*/
 
     /**
      * 全局跨域处理
+     *
      * @param registry
      */
     @Override
-    public void addCorsMappings(CorsRegistry registry){
+    public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowCredentials(true)
@@ -69,9 +69,9 @@ public class CorsConfig extends WebMvcConfigurationSupport {
      * 自定义拦截器
      * @param registry
      */
-    @Override
+    /*@Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userInterceptor);
-    }
+    }*/
 
 }

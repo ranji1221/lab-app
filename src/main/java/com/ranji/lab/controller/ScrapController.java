@@ -1,6 +1,9 @@
 package com.ranji.lab.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.ranji.lab.dto.ProjectDeviceDto;
+import com.ranji.lab.dto.ScrapDto;
 import com.ranji.lab.dto.ScrapInsertDto;
 import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Scrap;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = "设备报废接口")
@@ -33,11 +38,11 @@ public class ScrapController {
     @ApiOperation(value="插入所需报废的设备", notes="插入所需报废的值")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deviceId", value = "所需报废设备id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "状态(2报废中，4报废)",dataType = "String"),
-            @ApiImplicitParam(name = "description", value = "报废描述", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
+            @ApiImplicitParam(name = "status", value = "状态(2报废中，4报废)", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "报废描述", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true, dataType = "String")
     })
-    @PostMapping(value = "/insertscrap",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "insertscrap", produces = "text/plain;charset=utf-8")
     public String insertScrap(ScrapInsertDto scrapInsertDto){
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = iScrapService.insertScrap(scrapInsertDto);
@@ -71,23 +76,33 @@ public class ScrapController {
         }
     }
 
-    @ApiOperation(value="更改所需报废的设备状态", notes="更改所需报废的值")
+    @ApiOperation(value = "更改所需报废的设备状态", notes = "更改所需报废的值")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deviceId", value = "所需报废设备id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "状态(2报废中，4报废)",dataType = "String"),
-            @ApiImplicitParam(name = "description", value = "报废描述", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "报废编号", required = true , dataType = "String")
+            @ApiImplicitParam(name = "status", value = "状态(2报废中，4报废)", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "报废描述", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "报废编号", required = true, dataType = "String")
     })
-    @PostMapping(value = "/updatescrapstatus",produces = "text/plain;charset=utf-8")
-    public String updateScrapStatus(Scrap scrap){
+    @PostMapping(value = "/updatescrapstatus", produces = "text/plain;charset=utf-8")
+    public String updateScrapStatus(ScrapDto scrap, String scrapss) {
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
-        int i = iScrapService.updateScrapStatus(scrap);
-        if(i<1){
-            insertScrapMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        int i = 0;
+        if (scrap != null) {
+            i = iScrapService.updateScrapStatus(scrap);
+        }
+        if (scrapss != null) {
+            ScrapDto[] scraps = JSON.parseObject(scrapss, new TypeReference<ScrapDto[]>() {
+            });
+            for (ScrapDto scrap1 : scraps) {
+                i = iScrapService.updateScrapStatus(scrap1);
+            }
+        }
+        if (i < 1) {
+            insertScrapMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(insertScrapMap);
-        }else{
-            insertScrapMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        } else {
+            insertScrapMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertScrapMap);
         }
     }

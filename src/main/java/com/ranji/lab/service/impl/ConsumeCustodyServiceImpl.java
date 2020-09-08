@@ -5,10 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.ConsumeCustody;
-import com.ranji.lab.mapper.ConsumeCustodyMapper;
-import com.ranji.lab.mapper.ExperimentProjectMapper;
-import com.ranji.lab.mapper.ProjectConsumeMapper;
-import com.ranji.lab.mapper.ProjectDeviceMapper;
+import com.ranji.lab.entity.ConsumeInform;
+import com.ranji.lab.mapper.*;
 import com.ranji.lab.service.prototype.IConsumeCustodyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     @Resource
@@ -28,6 +27,8 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     ProjectConsumeMapper projectConsumeMapper;
     @Resource
     ProjectDeviceMapper projectDeviceMapper;
+    @Resource
+    ConsumeInformMapper consumeInformMapper;
 
     @Override
     public int insertConsumeCustody(ConsumeCustodyInsertDto consumeCustodyInsertDto) {
@@ -55,18 +56,27 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
     }
 
     @Override
-    public List<ConsumeCustody> findAllConsumeCustodys(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+    public HashMap<Object, Object> findAllConsumeCustodys(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<ConsumeCustody> all = consumeCustodyMapper.findAll();
-
+        for (ConsumeCustody consumeCustody : all) {
+            StringBuffer consumes = new StringBuffer();
+            List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.projectIdFindAll(consumeCustody.getArrangeProjectId());
+            if (consumeCustodies != null) {
+                for (ConsumeCustody custody : consumeCustodies) {
+                    consumes.append(custody.getConsumeName() + ":" + custody.getCount() + custody.getUnitName() + "、");
+                }
+                consumeCustody.setConsumes(consumes.toString().substring(0, consumes.toString().length() - 1));
+            }
+        }
         PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        allMap.put("data",all);
-        allMap.put("total" , total);
+        allMap.put("data", all);
+        allMap.put("total", total);
 
-        return all;
+        return allMap;
     }
 
     @Override
@@ -154,5 +164,24 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
         allMap.put("total", total);
 
         return allMap;
+    }
+
+    /**
+     * 保管领用审核
+     *
+     * @param consumeCustodyDto
+     * @return
+     */
+    @Override
+    @Transactional
+    public int updateConsumeCustodyStatus(ConsumeCustodyDto consumeCustodyDto) {
+        List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.projectIdFindAll(consumeCustodyDto.getArrangeProjectId());
+        ConsumeInform consumeInform = new ConsumeInform();
+        for (ConsumeCustody consumeCustody : consumeCustodies) {
+            consumeInform.setNum(-consumeCustody.getCount());
+            consumeInform.setId(consumeCustody.getArrangeProjectId());
+            consumeInformMapper.updateConsumeInformNum(consumeInform);
+        }
+        return consumeCustodyMapper.updateConsumeCustodyStatus(consumeCustodyDto);
     }
 }

@@ -13,7 +13,7 @@ public class ConsumePurchaseDto {
     private int num;
     private String date;
     private String applicant;
-    private String status;
+    private int status;
     private String consumeName;
     private String unitName;
 }
