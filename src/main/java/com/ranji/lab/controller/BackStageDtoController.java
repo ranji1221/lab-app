@@ -17,10 +17,17 @@ public class BackStageDtoController {
     @Resource
     private IBackStageDtoService iBackStageDtoService;
 
-    @ApiOperation(value="查询折线图", notes="前端通过访问接口获得所有预约信息")
+    @ApiOperation(value="查询折线图", notes="查询折线图")
     @GetMapping(value = "/findlinechart",produces = "text/plain;charset=utf-8")
     public String findLineChart(){
         Map<Object, Object> allMap = iBackStageDtoService.findNowAndLatestSevenDaysData();
         return JSON.toJSONString(allMap);
     }
+    @ApiOperation(value="查询四格图", notes="查询四格图")
+    @GetMapping(value = "/findfourchart",produces = "text/plain;charset=utf-8")
+    public String findFourChart(){
+        Map<Object, Object> allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountData();
+        return JSON.toJSONString(allMap);
+    }
+
 }
