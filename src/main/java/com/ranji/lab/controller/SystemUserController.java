@@ -110,9 +110,8 @@ public class SystemUserController {
 
     @ApiOperation(value = "通过用户id获取某用户基本资料", notes = "通过用户id获取某用户基本资料")
     @GetMapping(value = "finduserbasic", produces = "text/plain;charset=utf-8")
-    public String findUserBasicByname(String name){
-        int userId = iUserService.findUserIdByUserName(name);
-        UserBasicDto userBasic = iUserBasicService.findUserBasic(userId);
+    public String findUserBasicByname(int id){
+        UserBasicDto userBasic = iUserBasicService.findUserBasic(id);
         HashMap<Object, Object> allMap = new HashMap<>();
         if(!(userBasic==null)) {
             allMap.put("data", userBasic);

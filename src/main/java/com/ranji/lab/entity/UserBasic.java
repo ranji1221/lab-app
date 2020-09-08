@@ -14,11 +14,7 @@ public class UserBasic {
     @NonNull
     private int userId; //用户id
 
-    private String nickname;//用户昵称
-
     private String sex;//用户性别
-
-    private int imageId;//用户头像
 
     private String phone;//用户手机号
 

@@ -12,11 +12,7 @@ public class UserBasicDto {
     @NonNull
     private String roleName; //用户角色
 
-    private String nickname;//用户昵称
-
     private String sex;//用户性别
-
-    private String imageAddr;//用户头像
 
     private String phone;//用户手机号
 
