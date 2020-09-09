@@ -12,10 +12,7 @@ import com.ranji.lab.entity.Arrange;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.LaboratoryDevice;
 import com.ranji.lab.entity.ProjectDevice;
-import com.ranji.lab.mapper.ArrangeMapper;
-import com.ranji.lab.mapper.LaboratoryDeviceMapper;
-import com.ranji.lab.mapper.ProjectConsumeMapper;
-import com.ranji.lab.mapper.ProjectDeviceMapper;
+import com.ranji.lab.mapper.*;
 import com.ranji.lab.service.prototype.IArrangeService;
 import com.ranji.lab.service.prototype.IDeviceService;
 import com.ranji.lab.service.prototype.ILaboratoryDeviceService;
@@ -31,13 +28,15 @@ import java.util.Map;
 @Service
 public class ArrangeServiceImpl implements IArrangeService {
     @Resource
-    ArrangeMapper arrangeMapper;
+    private ArrangeMapper arrangeMapper;
     @Resource
-    ProjectConsumeMapper projectConsumeMapper;
+    private BackStageDtoMapper backStageDtoMapper;
     @Resource
-    ProjectDeviceMapper projectDeviceMapper;
+    private ProjectConsumeMapper projectConsumeMapper;
     @Resource
-    LaboratoryDeviceMapper laboratoryDeviceMapper;
+    private  ProjectDeviceMapper projectDeviceMapper;
+    @Resource
+    private LaboratoryDeviceMapper laboratoryDeviceMapper;
 
     //插入预约信息
     @Override
@@ -165,5 +164,14 @@ public class ArrangeServiceImpl implements IArrangeService {
     @Override
     public List<ArrangeDto> statusAndNum() {
         return arrangeMapper.statusAndNum();
+    }
+
+    @Override
+    @Transactional
+    public void changeArrangeStatus() {
+        String date = backStageDtoMapper.findNowDays(0);
+        String time = backStageDtoMapper.findNowTime();
+        arrangeMapper.changeArrangeProjectToFinished(date,time);
+        arrangeMapper.changeArrangeProjectToFinished(date,time);
     }
 }

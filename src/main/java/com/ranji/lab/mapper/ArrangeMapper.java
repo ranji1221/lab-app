@@ -50,4 +50,13 @@ public interface ArrangeMapper {
     @Select("select a.status,count(*) num from arrange a GROUP BY a.`status`")
     List<ArrangeDto> statusAndNum();
 
+
+    /**
+     * 根据时间判断修改状态在拦截器中使用
+     */
+    @Select("update arrange set status = '1' where date=#{date} and time_stop <= #{time} and time_start >= #{time}")
+    void changeArrangeProjectToOngoing(String date,String time);
+
+    @Select("update arrange set status = '2' where date=#{date} and time_stop < #{time} and time_start < #{time}")
+    void changeArrangeProjectToFinished(String date,String time);
 }

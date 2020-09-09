@@ -28,4 +28,9 @@ public interface IArrangeService {
 
     //查询项目的状态及数量
     List<ArrangeDto> statusAndNum();
+
+    /**
+     * 拦截器修改预约状态
+     */
+    void changeArrangeStatus();
 }
