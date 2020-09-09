@@ -62,8 +62,11 @@ public interface IDeviceService {
 
     /**
      * 模糊查询设备信息
+     *
      * @param like
      * @return
      */
     Map<Object, Object> likeFindDeviceAndDeviceName(String like);
+
+    List<BackStage3Dto> findStatusAndSum();
 }

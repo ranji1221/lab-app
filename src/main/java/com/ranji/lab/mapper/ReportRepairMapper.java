@@ -26,16 +26,28 @@ public interface ReportRepairMapper {
 
     /**
      * 开始维修
+     *
      * @param reportRepair
      * @return
      */
     @Update("update report_repair set device_id = #{deviceId},description = #{description},date=#{date} where id = #{id}")
     int updateReportRepair(ReportRepair reportRepair);
+
+    /**
+     * 更新维修状态
+     *
+     * @param reportRepair
+     * @return
+     */
+    @Update("update report_repair set status=4 where id = #{id}")
+    int updateReportRepairStatus(ReportRepair reportRepair);
+
     @Update("update device set status = 3 where id = #{deviceId}")
     int updateDeviceStatusToStopRepair(int deviceId);
 
     /**
      * 维修结束
+     *
      * @return
      */
     @Update("update device set status = 0 where id = #{deviceId}")

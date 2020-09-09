@@ -63,7 +63,7 @@ public class ReportRepairServiceImpl implements IReportRepairService {
         device.setId(reportRepair.getDeviceId());
         device.setStatus(0);
         deviceMapper.updateDevice(device);
-        return reportRepairMapper.updateReportRepair(reportRepair);
+        return reportRepairMapper.updateReportRepairStatus(reportRepair);
     }
 
     @Override

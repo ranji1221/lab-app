@@ -102,9 +102,13 @@ public interface DeviceMapper {
 
     //按照实验室id、设备id查询该实验室使用到该设备的实验数量
     @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 1 and a.laboratory_id = #{laboratoryId} and pd.experiment_device_id = #{deviceId}")
-    int findEndingProjectNumByLaboratoryIdAndDeviceId(int laboratoryId,int deviceId);
+    int findEndingProjectNumByLaboratoryIdAndDeviceId(int laboratoryId, int deviceId);
 
     //通过设备查询该设备使用次数
     @Select("select count(*) from project_device pd where pd.experiment_device_id = #{deviceId}")
     int deviceIdFindUseNum(int deviceId);
+
+    //按照实验室分组
+    @Select("select status,count(*) count from device GROUP BY status")
+    List<BackStage3Dto> findStatusAndSum();
 }

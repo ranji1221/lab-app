@@ -309,9 +309,15 @@ public class DeviceServiceImpl implements IDeviceService {
     public Map<Object, Object> likeFindDeviceAndDeviceName(String like) {
         List<DeviceAndDeviceTypeNameDto> deviceAndDeviceTypeNameDtos = deviceMapper.likeFindDeviceAndDeviceName(like);
         HashMap<Object, Object> allMap = new HashMap<>();
-        allMap.put("data",deviceAndDeviceTypeNameDtos);
-        allMap.put("tatol",deviceAndDeviceTypeNameDtos.size());
+        allMap.put("data", deviceAndDeviceTypeNameDtos);
+        allMap.put("tatol", deviceAndDeviceTypeNameDtos.size());
         return allMap;
+    }
+
+    @Override
+    public List<BackStage3Dto> findStatusAndSum() {
+        List<BackStage3Dto> all = deviceMapper.findStatusAndSum();
+        return all;
     }
 
 
