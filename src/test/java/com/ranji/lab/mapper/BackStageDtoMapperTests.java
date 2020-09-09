@@ -25,9 +25,9 @@ public class BackStageDtoMapperTests {
         System.out.println(nowAndLatestSevenDays);
 
     }
-    @Test
+    /*@Test
     public void findAllArrange2(){
         Map<Object, Object> allMap = iBackStageDtoService.findNowAndLatestSevenDaysData();
         System.out.println(allMap);
-    }
+    }*/
 }

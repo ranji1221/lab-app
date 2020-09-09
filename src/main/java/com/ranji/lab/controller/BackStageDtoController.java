@@ -25,7 +25,7 @@ public class BackStageDtoController {
     @ApiOperation(value = "查询折线图", notes = "查询折线图")
     @GetMapping(value = "/findlinechart", produces = "text/plain;charset=utf-8")
     public String findLineChart() {
-        Map<Object, Object> allMap = iBackStageDtoService.findNowAndLatestSevenDaysData();
+        Map<Object, Object> allMap = iBackStageDtoService.findSevenDaysAgoData();
         return JSON.toJSONString(allMap);
     }
 

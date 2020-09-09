@@ -7,14 +7,35 @@ import java.util.List;
 
 public interface BackStageDtoMapper {
 
-    @Select("SELECT date_format(t.date, '%Y-%m-%d') date FROM (SELECT CURRENT_DATE + #{dayId} date) t")
+    @Select("select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL #{dayId} DAY),'%Y-%m-%d') date")
     String findNowDays(int dayId);
 
     @Select("SELECT date_format(t.date, '%H:%i:%s') time FROM (SELECT NOW() date) t")
     String findNowTime();
 
-    @Select("SELECT l.laboratory_name, a.date, count(*) count FROM arrange a LEFT JOIN laboratory l ON l.id = a.laboratory_id WHERE a.date = #{date} GROUP BY laboratory_id\n")
-    List<BackStageDto> findNowDaysLaboratory(String date);
+    /**
+     * 根据日期查找今天将要进行的项目数
+     * @param date
+     * @return
+     */
+    @Select("select count(*) from arrange a where a.date=#{date}")
+    int findArrangeNum(String date);
+
+    /**
+     * 根据日期查找今天预约的项目数
+     * @param date
+     * @return
+     */
+    @Select("select count(*) from arrange a where a.arrange_time like '%${date}%'")
+    int findArrangeDateNum(String date);
+
+    /**
+     * 根据日期查找预约了几种项目
+     * @param date
+     * @return
+     */
+    @Select("select count(*) from (select count(*) from arrange a where a.date=#{date} GROUP BY a.project_id) count")
+    int findArrangeProjectNum(String date);
 
     @Select("select count(*) as all_count from laboratory")
     int findAllCount();
