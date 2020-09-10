@@ -46,20 +46,16 @@ public class ResourceDocServiceImpl implements IResourceDocService {
 
     @Override
     public Map<Object, Object> ResourceDocPaging(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<ResourceDoc> all = resourceDocMapper.findAll();
 
         PageInfo pageInfo = new PageInfo<>(all);
         long total = pageInfo.getTotal();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(all.isEmpty())
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-        else{
-            allMap.put("data",all);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            allMap.put("total",total);
-        }
+        allMap.put("data", all);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        allMap.put("total", total);
         return allMap;
     }
 

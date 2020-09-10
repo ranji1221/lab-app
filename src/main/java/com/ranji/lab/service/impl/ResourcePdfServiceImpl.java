@@ -46,20 +46,16 @@ public class ResourcePdfServiceImpl implements IResourcePdfService {
 
     @Override
     public Map<Object, Object> ResourcePdfPaging(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<ResourcePdf> all = resourcePdfMapper.findAll();
 
         PageInfo pageInfo = new PageInfo<>(all);
         long total = pageInfo.getTotal();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(all.isEmpty())
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-        else{
-            allMap.put("data",all);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            allMap.put("total",total);
-        }
+        allMap.put("data", all);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        allMap.put("total", total);
         return allMap;
     }
 

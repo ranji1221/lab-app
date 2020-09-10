@@ -198,13 +198,8 @@ public class DeviceController {
     @GetMapping(value="alldevicetype",produces = "text/plain;charset=utf-8")
     public String allDeviceType(){
         Map<Object, Object> objectObjectMap = iDeviceTypeService.allDeviceType();
-        if(!objectObjectMap.isEmpty()){
-            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(objectObjectMap);
-        }else{
-            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(objectObjectMap);
-        }
+        objectObjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        return JSON.toJSONString(objectObjectMap);
     }
 
     @ApiOperation(value="分页查找所有设备类型信息", notes="根据传过来的设备信息来查询设备类型信息")

@@ -34,28 +34,22 @@ public class StudentScoreServiceImpl implements IStudentScoreService {
     public Map<Object,Object> findAll() {
         List<StudentScoreDto> all = studentScoreMapper.findAll();
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty()) {
-            allMap.put("data", all);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        allMap.put("data", all);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return allMap;
     }
 
     @Override
     public Map<Object, Object> findAll(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<StudentScoreDto> all = studentScoreMapper.findAll();
 
         PageInfo pageInfo = new PageInfo();
         long total = pageInfo.getTotal();
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty()) {
-            allMap.put("data", all);
-            allMap.put("total",total);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        allMap.put("data", all);
+        allMap.put("total", total);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return allMap;
     }
 }

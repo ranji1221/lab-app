@@ -37,13 +37,12 @@ public class UserInterceptor implements HandlerInterceptor {
         //用户cookie获取username
         Cookie[] cookies = request.getCookies();
         String username = "nousername";
-        /*for (Cookie cookie : cookies) {
+        for (Cookie cookie : cookies) {
             String name = cookie.getName();
-            if(name.equals("name")){
-                username = cookie.getName();
+            if (name.equals("name")) {
+                username = cookie.getValue();
             }
-        }*/
-
+        }
         //用户ip
         String ipAddress = GetIpAddrUtil.getIPAddress(request);
         //当前时间
@@ -53,13 +52,16 @@ public class UserInterceptor implements HandlerInterceptor {
         url = url.substring(url.indexOf("8080/lab") + 8);
 
         //访问相对路径接口
-        /*String servletPath = request.getServletPath();
+        String servletPath = request.getServletPath();
+
         System.out.println("cookies =====================================" + cookies);
         System.out.println("ipAddress =====================================" + ipAddress);
         System.out.println("time =====================================" + time);
         System.out.println("servletPath =====================================" + servletPath);
-        Audit audit = new Audit(username,ipAddress,time,servletPath);
-        iAuditService.insertAudit(audit);*/
+        System.out.println("username =====================================" + username);
+
+        Audit audit = new Audit(username, ipAddress, time, servletPath);
+        iAuditService.insertAudit(audit);
         iArrangeService.changeArrangeStatus();
     }
 

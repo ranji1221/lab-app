@@ -26,12 +26,18 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
         String[] dateArray = new String[7];
         for (int i = 0; i < 7; i++) {
             String date = backStageDtoMapper.findNowDays(i);
-            int arrangeNum = backStageDtoMapper.findArrangeNum(date);
-            int arrangeDateNum = backStageDtoMapper.findArrangeDateNum(date);
-            int arrangeProjectNum = backStageDtoMapper.findArrangeProjectNum(date);
-            arrangeArray[6 - i] = arrangeNum;
-            arrangeDateArray[6 - i] = arrangeDateNum;
-            arrangeProjectArray[6 - i] = arrangeProjectNum;
+            Integer arrangeNum = backStageDtoMapper.findArrangeNum(date);
+            Integer arrangeDateNum = backStageDtoMapper.findArrangeDateNum(date);
+            Integer arrangeProjectNum = backStageDtoMapper.findArrangeProjectNum(date);
+            if (arrangeNum != null) {
+                arrangeArray[6 - i] = arrangeNum;
+            }
+            if (arrangeDateNum != null) {
+                arrangeDateArray[6 - i] = arrangeDateNum;
+            }
+            if (arrangeProjectNum != null) {
+                arrangeProjectArray[6 - i] = arrangeProjectNum;
+            }
             dateArray[6 - i] = date;
         }
         HashMap<Object, Object> allMap = new HashMap<>();
@@ -39,6 +45,7 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
         allMap.put("arrangeDate", arrangeDateArray);
         allMap.put("arrangeProject", arrangeProjectArray);
         allMap.put("Date", dateArray);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return allMap;
     }
 
@@ -69,11 +76,7 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
 
         BackStage2Dto backStage2Dto = new BackStage2Dto(allCount,allCountPercentage,finishedCount,finishedCountPercentage,unfinishedCount,unfinishedCountPercentage, noCount,noCountPercentage);
         System.out.println(backStage2Dto);
-        if(backStage2Dto!=null){
-            allMap.put("data",backStage2Dto);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
 
         return allMap;
     }

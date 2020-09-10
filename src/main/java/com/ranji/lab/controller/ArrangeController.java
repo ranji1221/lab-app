@@ -210,14 +210,9 @@ public class ArrangeController {
     @GetMapping(value = "/statusAndNum",produces = "text/plain;charset=utf-8")
     public String statusAndNum(){
         List<ArrangeDto> arrangeDtos = iArrangeService.statusAndNum();
-        Map<String,Object> map = new HashMap<>();
-        if(!arrangeDtos.isEmpty()) {
-            map.put("data",arrangeDtos);
-            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            return JSON.toJSONString(map);
-        }else{
-            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(arrangeDtos);
-        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", arrangeDtos);
+        map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        return JSON.toJSONString(map);
     }
 }

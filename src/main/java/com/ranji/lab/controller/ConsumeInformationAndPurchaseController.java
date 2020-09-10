@@ -206,8 +206,6 @@ public class ConsumeInformationAndPurchaseController {
          * 通过id查询名字并传至前台
          */
         List<ConsumePurchaseDto> allConsumePurchasess = new ArrayList<>();
-        if(!allConsumePurchases.isEmpty()){
-
             for (ConsumePurchase allConsumePurchase : allConsumePurchases) {
                 int id = allConsumePurchase.getId();
                 String consumeName = iConsumePurchaseService.findNameById(id).getConsumeName();
@@ -228,10 +226,6 @@ public class ConsumeInformationAndPurchaseController {
             map.put("data",allConsumePurchasess);
             map.put("total",total);
             return JSON.toJSONString(map);
-        }else{
-            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(map);
-        }
     }
     @ApiOperation(value="分页查询申请购置信息", notes="根据传过来的设备信息来获得申请购置信息")
     @ApiImplicitParams({
@@ -241,14 +235,9 @@ public class ConsumeInformationAndPurchaseController {
     })
     @GetMapping(value = "/allconsumepurchasepaging",produces = "text/plain;charset=utf-8")
     public String findAllConsumePurchasePaging(int page,int limit){
-        Map<Object,Object> consumePurchaseMap = iConsumePurchaseService.findAllConsumePurchase(page,limit);
-        if(!consumePurchaseMap.isEmpty()){
-            consumePurchaseMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(consumePurchaseMap);
-        }else{
-            consumePurchaseMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(consumePurchaseMap);
-        }
+        Map<Object, Object> consumePurchaseMap = iConsumePurchaseService.findAllConsumePurchase(page, limit);
+        consumePurchaseMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        return JSON.toJSONString(consumePurchaseMap);
     }
 
 

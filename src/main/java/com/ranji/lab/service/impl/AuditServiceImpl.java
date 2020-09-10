@@ -27,30 +27,23 @@ public class AuditServiceImpl implements IAuditService {
     public Map<Object,Object> findAll() {
         List<Audit> all = auditMapper.findAll();
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(!all.isEmpty()){
-            allMap.put("data",all);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }
-        allMap.put("data",all);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        allMap.put("data", all);
         return allMap;
     }
 
     @Override
     public Map<Object, Object> findAll(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<Audit> all = auditMapper.findAll();
 
         PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();
 
         HashMap<Object, Object> allMap = new HashMap<>();
-
-        if(!all.isEmpty()){
-            allMap.put("data",all);
-            allMap.put("total",total);
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        allMap.put("data", all);
+        allMap.put("total", total);
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return allMap;
     }
 }
