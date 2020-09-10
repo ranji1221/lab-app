@@ -53,10 +53,35 @@ public interface ArrangeMapper {
 
     /**
      * 根据时间判断修改状态在拦截器中使用
+     * 修改预约项目状态到正在进行
      */
-    @Select("update arrange set status = '1' where date=#{date} and time_stop <= #{time} and time_start >= #{time}")
-    void changeArrangeProjectToOngoing(String date,String time);
+    @Update("update arrange set status = '1' where date<=#{date} and time_stop <= #{time} and time_start >= #{time}")
+    void changeArrangeProjectToOngoing(String date, String time);
 
-    @Select("update arrange set status = '2' where date=#{date} and time_stop < #{time} and time_start < #{time}")
-    void changeArrangeProjectToFinished(String date,String time);
+    /**
+     * 根据时间判断修改状态在拦截器中使用
+     * 修改预约项目状态到已完成
+     */
+    @Update("update arrange set status = '2' where date<=#{date} and time_stop < #{time} and time_start < #{time}")
+    void changeArrangeProjectToFinished(String date, String time);
+
+    /**
+     * 查询需要修改为正在进行项目的预约id
+     *
+     * @param date
+     * @param time
+     * @return
+     */
+    @Select("select id from arrange where date<=#{date} and time_stop <= #{time} and time_start >= #{time}")
+    List<Integer> findProjectIdByChangeArrangeProjectToOngoing(String date, String time);
+
+    /**
+     * 查询需要修改为已完成项目的预约id
+     *
+     * @param date
+     * @param time
+     * @return
+     */
+    @Select("select id from arrange  where date<=#{date} and time_stop < #{time} and time_start < #{time}")
+    List<Integer> findProjectIdByChangeArrangeProjectToFinished(String date, String time);
 }

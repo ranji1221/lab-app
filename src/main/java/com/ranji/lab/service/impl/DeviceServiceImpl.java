@@ -211,8 +211,8 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int id) {
-        return deviceMapper.laboratoryIdFindDevice(id);
+    public List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int id, Integer status) {
+        return deviceMapper.laboratoryIdFindDevice(id, status);
     }
 
     //按照实验室id查询设备信息、数量及设备状态

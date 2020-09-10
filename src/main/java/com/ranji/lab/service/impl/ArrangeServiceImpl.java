@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.ArrangeDto;
+import com.ranji.lab.dto.LaboratoryDeviceNumDto;
 import com.ranji.lab.dto.ProjectConsumeDto;
 import com.ranji.lab.dto.ProjectDeviceDto;
 import com.ranji.lab.entity.Arrange;
@@ -34,20 +35,24 @@ public class ArrangeServiceImpl implements IArrangeService {
     @Resource
     private ProjectConsumeMapper projectConsumeMapper;
     @Resource
-    private  ProjectDeviceMapper projectDeviceMapper;
+    private ProjectDeviceMapper projectDeviceMapper;
     @Resource
     private LaboratoryDeviceMapper laboratoryDeviceMapper;
+    @Resource
+    private DeviceMapper deviceMapper;
 
     //插入预约信息
     @Override
     @Transactional
-    public int insertArrange(Arrange arrange,String devices,String consumes) {
-        List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {});
-        List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(consumes, new TypeReference<ArrayList<ProjectConsumeDto>>() {});
+    public int insertArrange(Arrange arrange, String devices, String consumes) {
+        List<ProjectDeviceDto> projectDeviceDtos = JSON.parseObject(devices, new TypeReference<ArrayList<ProjectDeviceDto>>() {
+        });
+        List<ProjectConsumeDto> projectConsumeDtos = JSON.parseObject(consumes, new TypeReference<ArrayList<ProjectConsumeDto>>() {
+        });
         int i = arrangeMapper.insertArrange(arrange);
         for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                projectDeviceDto.setArrangeProjectId(arrange.getId());
-                projectDeviceMapper.insertProjectDevice(projectDeviceDto);
+            projectDeviceDto.setArrangeProjectId(arrange.getId());
+            projectDeviceMapper.insertProjectDevice(projectDeviceDto);
         }
         for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
             projectConsumeDto.setArrangeProjectId(arrange.getId());
@@ -65,14 +70,22 @@ public class ArrangeServiceImpl implements IArrangeService {
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
             StringBuffer devices = new StringBuffer();
             StringBuffer consumes = new StringBuffer();
-            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
-                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
+            if (projectConsumeDtos.size() > 0) {
+                for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                    if (projectConsumeDto != null) {
+                        consumes.append(projectConsumeDto.getConsumeName() + ":" + projectConsumeDto.getConsumeNum() + projectConsumeDto.getUnitName() + "、");
+                    }
+                }
+                arrangeDto.setConsumes(consumes.toString().substring(0, consumes.toString().length() - 1));
             }
-            arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
-            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
+            if (projectDeviceDtos.size() > 0) {
+                for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                    if (projectDeviceDto != null) {
+                        devices.append(projectDeviceDto.getDeviceName() + ":" + projectDeviceDto.getDeviceNum() + projectDeviceDto.getUnitName() + "、");
+                    }
+                }
+                arrangeDto.setDevices(devices.toString().substring(0, devices.toString().length() - 1));
             }
-            arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
         }
         return allArrange;
     }
@@ -86,15 +99,19 @@ public class ArrangeServiceImpl implements IArrangeService {
             StringBuffer consumes = new StringBuffer();
             StringBuffer devices = new StringBuffer();
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
-            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
-                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
+            if (projectConsumeDtos.size() > 0) {
+                for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                    consumes.append(projectConsumeDto.getConsumeName() + ":" + projectConsumeDto.getConsumeNum() + projectConsumeDto.getUnitName() + "、");
+                }
+                arrangeDto.setConsumes(consumes.toString().substring(0, consumes.toString().length() - 1));
             }
-            arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
             List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());
-            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
+            if (projectDeviceDtos.size() > 0) {
+                for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                    devices.append(projectDeviceDto.getDeviceName() + ":" + projectDeviceDto.getDeviceNum() + projectDeviceDto.getUnitName() + "、");
+                }
+                arrangeDto.setDevices(devices.toString().substring(0, devices.toString().length() - 1));
             }
-            arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
         }
         PageInfo<ArrangeDto> arrangeDtoPageInfo = new PageInfo<>(allArrange);
         long total = arrangeDtoPageInfo.getTotal();
@@ -145,15 +162,20 @@ public class ArrangeServiceImpl implements IArrangeService {
             StringBuffer consumes = new StringBuffer();
             StringBuffer devices = new StringBuffer();
             List<ProjectConsumeDto> projectConsumeDtos = projectConsumeMapper.projectIdFindAllProjectConsume(arrangeDto.getProjectId());
-            for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
-                consumes.append(projectConsumeDto.getConsumeName()+":"+projectConsumeDto.getConsumeNum()+projectConsumeDto.getUnitName()+"、");
+            if (projectConsumeDtos.size() > 0) {
+                for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
+                    consumes.append(projectConsumeDto.getConsumeName() + ":" + projectConsumeDto.getConsumeNum() + projectConsumeDto.getUnitName() + "、");
+                }
+                arrangeDto.setConsumes(consumes.toString().substring(0, consumes.toString().length() - 1));
             }
-            arrangeDto.setConsumes(consumes.toString().substring(0,consumes.toString().length()-1));
             List<ProjectDeviceDto> projectDeviceDtos = projectDeviceMapper.projectIdFindProjectDeviceNum(arrangeDto.getProjectId());
-            for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-                devices.append(projectDeviceDto.getDeviceName()+":"+projectDeviceDto.getDeviceNum()+projectDeviceDto.getUnitName()+"、");
+            if (projectDeviceDtos.size() > 0) {
+                for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
+                    devices.append(projectDeviceDto.getDeviceName() + ":" + projectDeviceDto.getDeviceNum() + projectDeviceDto.getUnitName() + "、");
+                }
+                arrangeDto.setDevices(devices.toString().substring(0, devices.toString().length() - 1));
+
             }
-            arrangeDto.setDevices(devices.toString().substring(0,devices.toString().length()-1));
         }
         Map<Object,Object> map = new HashMap<>();
         map.put("data",allArrange);
@@ -171,7 +193,37 @@ public class ArrangeServiceImpl implements IArrangeService {
     public void changeArrangeStatus() {
         String date = backStageDtoMapper.findNowDays(0);
         String time = backStageDtoMapper.findNowTime();
-        arrangeMapper.changeArrangeProjectToFinished(date,time);
-        arrangeMapper.changeArrangeProjectToFinished(date,time);
+        arrangeMapper.changeArrangeProjectToFinished(date, time);
+        arrangeMapper.changeArrangeProjectToOngoing(date, time);
+        //查询需要修改为正在进行项目的预约id
+        List<Integer> projectIdByChangeArrangeProjectToOngoing = arrangeMapper.findProjectIdByChangeArrangeProjectToOngoing(date, time);
+        //查询需要修改为已完成项目的预约id
+        List<Integer> projectIdByChangeArrangeProjectToFinished = arrangeMapper.findProjectIdByChangeArrangeProjectToFinished(date, time);
+        if (projectIdByChangeArrangeProjectToOngoing.size() > 0) {
+            for (Integer integer : projectIdByChangeArrangeProjectToOngoing) {
+                List<LaboratoryDeviceNumDto> laboratoryDeviceNumDtos = deviceMapper.laboratoryIdFindDevice(integer, 0);
+                if (laboratoryDeviceNumDtos.size() > 0) {
+                    for (LaboratoryDeviceNumDto laboratoryDeviceNumDto : laboratoryDeviceNumDtos) {
+                        Device device = new Device();
+                        device.setId(laboratoryDeviceNumDto.getId());
+                        device.setStatus(1);
+                        deviceMapper.updateDevice(device);
+                    }
+                }
+            }
+        }
+        if (projectIdByChangeArrangeProjectToFinished.size() > 0) {
+            for (Integer integer : projectIdByChangeArrangeProjectToFinished) {
+                List<LaboratoryDeviceNumDto> laboratoryDeviceNumDtos = deviceMapper.laboratoryIdFindDevice(integer, 1);
+                if (laboratoryDeviceNumDtos.size() > 0) {
+                    for (LaboratoryDeviceNumDto laboratoryDeviceNumDto : laboratoryDeviceNumDtos) {
+                        Device device = new Device();
+                        device.setId(laboratoryDeviceNumDto.getId());
+                        device.setStatus(0);
+                        deviceMapper.updateDevice(device);
+                    }
+                }
+            }
+        }
     }
 }

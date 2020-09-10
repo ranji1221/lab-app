@@ -73,8 +73,17 @@ public interface DeviceMapper {
     List<LaboratoryDeviceNumDto> findNoAllocationDeviceTypeNum();
 
     //按照实验室查询拥有设备数量
-    @Select("select dm.id,dm.device_name,count(*) count from device d left join device_model dm on dm.id = d.device_model_id left join laboratory_device ld on ld.device_id = d.id  where ld.laboratory_id = #{laboratoryId} GROUP BY d.device_model_id")
-    List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int laboratoryId);
+    @Select("<script>" +
+            "select dm.id,dm.device_name,count(*) count from device d left join device_model dm on dm.id = d.device_model_id left join laboratory_device ld on ld.device_id = d.id  where " +
+            " 1 = 1 " +
+            " and ld.laboratory_id = #{laboratoryId} " +
+            " <if test = 'status != null'>" +
+            " and d.status = #{status}" +
+            "</if>" +
+            " GROUP BY d.device_model_id" +
+            "" +
+            "</script>")
+    List<LaboratoryDeviceNumDto> laboratoryIdFindDevice(int laboratoryId, Integer status);
 
     //按照实验室id查询设备信息、数量及设备状态
     @Select("select d.device_model_id id,dm.device_name deviceName,ld.status status,count(*) count from laboratory_device ld join device d on ld.device_id = d.id join device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} GROUP BY ld.`status`,d.device_model_id")

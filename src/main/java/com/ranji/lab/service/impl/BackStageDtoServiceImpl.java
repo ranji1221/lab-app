@@ -24,21 +24,21 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
         int[] arrangeDateArray = new int[7];
         int[] arrangeProjectArray = new int[7];
         String[] dateArray = new String[7];
-        for (int i = 6; i >-1 ; i--) {
+        for (int i = 0; i < 7; i++) {
             String date = backStageDtoMapper.findNowDays(i);
             int arrangeNum = backStageDtoMapper.findArrangeNum(date);
             int arrangeDateNum = backStageDtoMapper.findArrangeDateNum(date);
             int arrangeProjectNum = backStageDtoMapper.findArrangeProjectNum(date);
-            arrangeArray[i]=arrangeNum;
-            arrangeDateArray[i]=arrangeDateNum;
-            arrangeProjectArray[i]=arrangeProjectNum;
-            dateArray[i]=date;
+            arrangeArray[6 - i] = arrangeNum;
+            arrangeDateArray[6 - i] = arrangeDateNum;
+            arrangeProjectArray[6 - i] = arrangeProjectNum;
+            dateArray[6 - i] = date;
         }
         HashMap<Object, Object> allMap = new HashMap<>();
-        allMap.put("arrange",arrangeArray);
-        allMap.put("arrangeDate",arrangeDateArray);
-        allMap.put("arrangeProject",arrangeProjectArray);
-        allMap.put("arrangeDate",dateArray);
+        allMap.put("arrange", arrangeArray);
+        allMap.put("arrangeDate", arrangeDateArray);
+        allMap.put("arrangeProject", arrangeProjectArray);
+        allMap.put("Date", dateArray);
         return allMap;
     }
 

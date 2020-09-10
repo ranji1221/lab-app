@@ -333,7 +333,7 @@ public class DeviceController {
     @GetMapping(value = "/laboratoryIdFindDevice",produces = "text/plain;charset=utf-8")
     public String laboratoryIdFindDevice(int laboratoryId){
 
-        List<LaboratoryDeviceNumDto> noAllocationDeviceTypeNum = iDeviceService.laboratoryIdFindDevice(laboratoryId);
+        List<LaboratoryDeviceNumDto> noAllocationDeviceTypeNum = iDeviceService.laboratoryIdFindDevice(laboratoryId, null);
         if(!noAllocationDeviceTypeNum.isEmpty()) {
             return JSON.toJSONString(noAllocationDeviceTypeNum);
         }else{
