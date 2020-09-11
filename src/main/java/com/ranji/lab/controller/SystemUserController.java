@@ -38,15 +38,15 @@ public class SystemUserController {
     @ApiOperation(value = "添加用户账号信息", notes = "添加角色信息")
     @PostMapping(value = "/insertuser", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
-    public String insertUser(User user , int roleId){
+    public String insertUser(User user, int roleId) {
         user.setEnable(1);
         int userId = iUserService.save(user);
-        iUserService.assignRole(userId , roleId);
+        iUserService.assignRole(userId, roleId);
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(userId>0)
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        if (userId > 0)
+            allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         else
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+            allMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         return JSON.toJSONString(allMap);
     }
 

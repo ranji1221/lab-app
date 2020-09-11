@@ -27,13 +27,13 @@ public class SystemMenuController {
     @ApiOperation(value = "更新菜单", notes = "更新菜单")
     @PostMapping(value = "/updatemenu", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
-    public String updateMenu(String menus){
+    public String updateMenu(String menus) {
         int i = iMenuService.updateMenuService(menus);
         HashMap<Object, Object> allMap = new HashMap<>();
-        if(i<1)
-            allMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        if (i < 1)
+            allMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         else
-            allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+            allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return JSON.toJSONString(allMap);
     }
 

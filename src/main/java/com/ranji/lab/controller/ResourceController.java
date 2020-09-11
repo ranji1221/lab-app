@@ -125,9 +125,9 @@ public class ResourceController {
         //文件存储位置
         File resourceDirectory = new File(rootDirectory + File.separator + "upload" + File.separator + "resourcepdf");
         //创建文件夹
-        if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
+        if (!resourceDirectory.exists()) resourceDirectory.mkdirs();
         for (MultipartFile file : files) {
-            String url = resourceDirectory.getAbsolutePath() +File.separator + file.getOriginalFilename();
+            String url = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
             file.transferTo(new File(url));
 
             ResourcePdf resourcePdf = new ResourcePdf(url, file.getOriginalFilename());
@@ -151,15 +151,15 @@ public class ResourceController {
         //文件存储位置
         File resourceDirectory = new File(rootDirectory + File.separator + "upload" + File.separator + "resourcedoc");
         //创建文件夹
-        if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
+        if (!resourceDirectory.exists()) resourceDirectory.mkdirs();
         for (MultipartFile file : files) {
-            String url = resourceDirectory.getAbsolutePath() +File.separator + file.getOriginalFilename();
+            String url = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
             file.transferTo(new File(url));
             ResourceDoc resourceDoc = new ResourceDoc(url, file.getOriginalFilename());
             iResourceDocService.insertResourceDoc(resourceDoc);
         }
         HashMap<Object, Object> allMap = new HashMap<>();
-        allMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return JSON.toJSONString(allMap);
     }
 
@@ -174,7 +174,7 @@ public class ResourceController {
         //文件存储位置
         File resourceDirectory = new File(rootDirectory + File.separator + "upload" + File.separator + "resourcedoc");
         //创建文件夹
-        if(!resourceDirectory.exists()) resourceDirectory.mkdirs();
+        if (!resourceDirectory.exists()) resourceDirectory.mkdirs();
         for (MultipartFile file : files) {
             String originalFilename = file.getOriginalFilename();
             String type = originalFilename.substring(originalFilename.lastIndexOf(".")+1,originalFilename.length());

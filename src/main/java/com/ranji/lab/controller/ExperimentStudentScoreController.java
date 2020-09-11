@@ -57,23 +57,24 @@ public class ExperimentStudentScoreController {
         Map<Object, Object> all = iStudentScoreService.findAll();
         return JSON.toJSONString(all);
     }
-    @ApiOperation(value="分页查询学生成绩", notes="查询学生成绩")
-    @GetMapping(value = "/allstudentscorepaging",produces = "text/plain;charset=utf-8")
-    public String allStudentScorePaging(int page,int limit){
-        Map<Object, Object> all = iStudentScoreService.findAll(page,limit);
+
+    @ApiOperation(value = "分页查询学生成绩", notes = "查询学生成绩")
+    @GetMapping(value = "/allstudentscorepaging", produces = "text/plain;charset=utf-8")
+    public String allStudentScorePaging(int page, int limit) {
+        Map<Object, Object> all = iStudentScoreService.findAll(page, limit);
         return JSON.toJSONString(all);
     }
 
     @ApiOperation(value = "修改学生成绩", notes = "修改学生成绩")
     @GetMapping(value = "/updStudentScore", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
-    public String updStudentScore(StudentScore studentScore){
+    public String updStudentScore(StudentScore studentScore) {
         val i = iStudentScoreService.updateStudentScore(studentScore);
-        Map<String,Object> map = new HashMap<>();
-        if(i>0){
-            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else{
-            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        Map<String, Object> map = new HashMap<>();
+        if (i > 0) {
+            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else {
+            map.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         }
         return JSON.toJSONString(map);
     }

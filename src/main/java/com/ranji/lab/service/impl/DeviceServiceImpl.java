@@ -310,7 +310,7 @@ public class DeviceServiceImpl implements IDeviceService {
         List<DeviceAndDeviceTypeNameDto> deviceAndDeviceTypeNameDtos = deviceMapper.likeFindDeviceAndDeviceName(like);
         HashMap<Object, Object> allMap = new HashMap<>();
         allMap.put("data", deviceAndDeviceTypeNameDtos);
-        allMap.put("tatol", deviceAndDeviceTypeNameDtos.size());
+        allMap.put("total", deviceAndDeviceTypeNameDtos.size());
         return allMap;
     }
 

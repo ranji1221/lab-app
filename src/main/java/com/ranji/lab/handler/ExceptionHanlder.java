@@ -20,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionHanlder {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionHanlder.class);
 
-    /*
-     * 处理全局异常
-     * @param e
-     * @param request
-     * @return
+/*
+ * 处理全局异常
+ * @param e
+ * @param request
+ * @return
 
-     */
+ */
     @ExceptionHandler(value = Exception.class)
     public Object handleException(Exception e, HttpServletRequest request){
         //-- 1. 日志输出

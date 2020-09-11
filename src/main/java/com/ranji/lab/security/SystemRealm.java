@@ -87,6 +87,7 @@ public class SystemRealm extends AuthorizingRealm {
             //-- 这里直接把用户保存起来，以便更好的获取到用户的信息，先前只保存用户的名字，主要看第一个参数
             //-- 其实用SecurityUtils.getSubject().getPrincipal()这个方法，返回的就是这里第一个参数的值，一般只保存用户名
             //-- 而在做前后端分离的需要返回User
+            String str = getName();
             authenInfo = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
             //-- authenInfo = new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
         }

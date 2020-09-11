@@ -82,16 +82,16 @@ public class PortalRegimeController {
       })
       @PostMapping(value = "/updateregime", produces = "text/plain;charset=utf-8")
       @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr"}, logical = Logical.OR)
-      public String updateRegime(Regime regime){
-        Map<Object,Object> insertRegimeMap = new HashMap<>();
-        int i = iRegimeService.updateRegime(regime);
-        if(i<1){
-            insertRegimeMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(insertRegimeMap);
-        }else{
-            insertRegimeMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-            return JSON.toJSONString(insertRegimeMap);
-        }
+      public String updateRegime(Regime regime) {
+          Map<Object, Object> insertRegimeMap = new HashMap<>();
+          int i = iRegimeService.updateRegime(regime);
+          if (i < 1) {
+              insertRegimeMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+              return JSON.toJSONString(insertRegimeMap);
+          } else {
+              insertRegimeMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+              return JSON.toJSONString(insertRegimeMap);
+          }
 
     }
     /*
