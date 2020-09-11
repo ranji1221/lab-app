@@ -82,7 +82,16 @@ public class BannerController {
     @GetMapping(value = "/bannerimagejpg/{id}")
     public String getImage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
         Images bannerImage= iBannerService.findBannerImageByBannerId(id);
-        File f = new File(bannerImage.getImgAddr());
+        String rootDirectory = System.getProperty("user.dir");
+
+        String addr = bannerImage.getImgAddr();
+
+        addr = addr.substring(bannerImage.getImgAddr().lastIndexOf(File.separator)+1);
+
+        String imageAddr = rootDirectory+File.separator+"banner"+File.separator+addr;
+
+        File f = new File(imageAddr);
+
         byte[] buffer = new byte[1024];
         BufferedInputStream bis = null;
         bis = new BufferedInputStream(new FileInputStream(f));
