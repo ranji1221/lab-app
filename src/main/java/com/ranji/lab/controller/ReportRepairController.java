@@ -27,12 +27,12 @@ public class ReportRepairController {
     @Resource
     private IReportRepairService reportRepairService;
 
-    @ApiOperation(value="插入所需维修的设备", notes="插入所需设备的值")
+    @ApiOperation(value = "插入所需维修的设备", notes = "插入所需设备的值")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deviceId", value = "所需维修设备id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "状态(0报修中，1维修结束)",dataType = "String"),
-            @ApiImplicitParam(name = "description", value = "描述", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
+            @ApiImplicitParam(name = "status", value = "状态(0报修中，1维修结束)", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "描述", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true, dataType = "String")
     })
     @PostMapping(value = "/insertreportrepair", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr", "manager"}, logical = Logical.OR)
@@ -48,13 +48,13 @@ public class ReportRepairController {
         }
     }
 
-    @ApiOperation(value="更新所需维修的设备", notes="更新所需维修的设备状态")
+    @ApiOperation(value = "更新所需维修的设备", notes = "更新所需维修的设备状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "维修表id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "deviceId", value = "所需维修设备id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "状态(0报修中，1维修结束)",dataType = "String"),
-            @ApiImplicitParam(name = "description", value = "描述", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
+            @ApiImplicitParam(name = "status", value = "状态(0报修中，1维修结束)", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "描述", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true, dataType = "String")
     })
     @PostMapping(value = "/updatereportrepair", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "laboratoryMgr", "manager"}, logical = Logical.OR)

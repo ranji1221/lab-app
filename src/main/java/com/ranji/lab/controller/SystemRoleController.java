@@ -34,7 +34,7 @@ public class SystemRoleController {
         return JSON.toJSONString(allMap);
     }
 
-    @ApiOperation(value="新增系统角色", notes="新增系统角色")
+    @ApiOperation(value = "新增系统角色", notes = "新增系统角色")
     @PostMapping(value = "/insertuserrole", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public String insertUserRole(Role role){

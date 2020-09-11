@@ -35,8 +35,8 @@ public class PortalNewsController {
             @ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/insertnews", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
@@ -66,8 +66,8 @@ public class PortalNewsController {
             @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "Integer")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/updatenews", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)

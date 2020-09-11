@@ -1,14 +1,12 @@
-/*
 package com.ranji.lab.handler;
 
-*/
-/**
+/*
  * ClassName:    MyException
  * Package:    com.ranji.lab.handler
  * Description: 自定义异常类
  * Datetime:    2020-8-29  11:18
  * Author:   RanJi
- *//*
+ */
 
 public class MyException extends RuntimeException {
     private String code;
@@ -35,4 +33,3 @@ public class MyException extends RuntimeException {
         this.msg = msg;
     }
 }
-*/

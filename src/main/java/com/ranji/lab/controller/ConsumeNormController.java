@@ -27,7 +27,7 @@ public class ConsumeNormController {
     @Resource
     private IConsumeNormService iConsumeNormService;
 
-    @ApiOperation(value="插入管理标准", notes="根据传过来的设备信息来插入管理标准")
+    @ApiOperation(value = "插入管理标准", notes = "根据传过来的设备信息来插入管理标准")
     /*@ApiImplicitParams({
             @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
             @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
@@ -48,7 +48,7 @@ public class ConsumeNormController {
         }
     }
 
-    @ApiOperation(value="更新管理标准", notes="根据传过来的设备信息来更新管理标准")
+    @ApiOperation(value = "更新管理标准", notes = "根据传过来的设备信息来更新管理标准")
     /*@ApiImplicitParams({
             @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
             @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),

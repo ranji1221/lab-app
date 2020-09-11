@@ -249,11 +249,11 @@ public class ConsumeInformationAndPurchaseController {
     }
 
 
-    @ApiOperation(value="插入耗材类型信息", notes="根据传过来的设备信息来插入耗材类型信息")
+    @ApiOperation(value = "插入耗材类型信息", notes = "根据传过来的设备信息来插入耗材类型信息")
     @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String")
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/insertconsumetype", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
@@ -269,14 +269,14 @@ public class ConsumeInformationAndPurchaseController {
         }
     }
 
-    @ApiOperation(value="更新耗材类型信息", notes="根据传过来的设备信息来更新耗材类型信息")
+    @ApiOperation(value = "更新耗材类型信息", notes = "根据传过来的设备信息来更新耗材类型信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "typeName", value = "耗材类型名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "id", value = "耗材类型id", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/updateconsumetype", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)

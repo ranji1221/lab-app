@@ -40,15 +40,15 @@ public class PortalRegimeController {
       /*通过前台表单的数据插入实验制度*/
     @ApiOperation(value="插入实验制度", notes="根据传过来的实验制度信息来插入实验制度详细信息")
     @ApiImplicitParams({
-              @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
-              @ApiImplicitParam(name = "informationSource", value = "信息来源(教务处)", required = true, dataType = "String"),
-              @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
-              @ApiImplicitParam(name = "time", value = "发布时间(xxxx-xx-xx)", required = true, dataType = "String"),
-              @ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String")
+            @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "informationSource", value = "信息来源(教务处)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "time", value = "发布时间(xxxx-xx-xx)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String")
     })
     @ApiResponses({
-              @ApiResponse(code=200,message="成功"),
-              @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/insertregime", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr"}, logical = Logical.OR)
@@ -77,12 +77,12 @@ public class PortalRegimeController {
               @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "String")
       })
       @ApiResponses({
-              @ApiResponse(code=200,message="成功"),
-              @ApiResponse(code=500,message="服务器错误")
+              @ApiResponse(code = 200, message = "成功"),
+              @ApiResponse(code = 500, message = "服务器错误")
       })
       @PostMapping(value = "/updateregime", produces = "text/plain;charset=utf-8")
       @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr"}, logical = Logical.OR)
-    public String updateRegime(Regime regime){
+      public String updateRegime(Regime regime){
         Map<Object,Object> insertRegimeMap = new HashMap<>();
         int i = iRegimeService.updateRegime(regime);
         if(i<1){

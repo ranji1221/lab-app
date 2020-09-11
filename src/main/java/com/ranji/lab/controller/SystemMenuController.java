@@ -24,7 +24,7 @@ public class SystemMenuController {
     @Resource
     private IMenuService iMenuService;
 
-    @ApiOperation(value="更新菜单", notes="更新菜单")
+    @ApiOperation(value = "更新菜单", notes = "更新菜单")
     @PostMapping(value = "/updatemenu", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public String updateMenu(String menus){

@@ -26,7 +26,7 @@ public class ExperimentStudentScoreController {
     @Resource
     private IUserService iUserService;
 
-    @ApiOperation(value="插入学生成绩", notes="插入学生成绩")
+    @ApiOperation(value = "插入学生成绩", notes = "插入学生成绩")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "teacherId", value = "老师id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "studentId", value = "学生id", required = true, dataType = "String"),
@@ -64,7 +64,7 @@ public class ExperimentStudentScoreController {
         return JSON.toJSONString(all);
     }
 
-    @ApiOperation(value="修改学生成绩", notes="修改学生成绩")
+    @ApiOperation(value = "修改学生成绩", notes = "修改学生成绩")
     @GetMapping(value = "/updStudentScore", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String updStudentScore(StudentScore studentScore){

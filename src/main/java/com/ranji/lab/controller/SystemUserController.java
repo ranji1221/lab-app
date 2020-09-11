@@ -35,7 +35,7 @@ public class SystemUserController {
     @Resource
     private IUserBasicService iUserBasicService;
 
-    @ApiOperation(value="添加用户账号信息", notes="添加角色信息")
+    @ApiOperation(value = "添加用户账号信息", notes = "添加角色信息")
     @PostMapping(value = "/insertuser", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public String insertUser(User user , int roleId){

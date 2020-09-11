@@ -116,7 +116,7 @@ public class ResourceController {
     /**
      * 上传pdf格式的资源
      */
-    @ApiOperation(value = "上传pdf版的资源",notes = "上传pdf版的资源")
+    @ApiOperation(value = "上传pdf版的资源", notes = "上传pdf版的资源")
     @PostMapping(value = "/uploadresourcepdf", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String uploadResourcePdf(@RequestParam("file") MultipartFile[] files) throws IOException {
@@ -142,7 +142,7 @@ public class ResourceController {
     /**
      * 上传doc格式的资源
      */
-    @ApiOperation(value = "上传doc版的资源",notes = "上传doc版的资源")
+    @ApiOperation(value = "上传doc版的资源", notes = "上传doc版的资源")
     @PostMapping(value = "/uploadresourcedoc", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String uploadResourceDoc(@RequestParam("file") MultipartFile[] files) throws IOException {
@@ -163,7 +163,7 @@ public class ResourceController {
         return JSON.toJSONString(allMap);
     }
 
-    @ApiOperation(value = "上传教学资源",notes = "上传教学资源")
+    @ApiOperation(value = "上传教学资源", notes = "上传教学资源")
     @PostMapping(value = "/uploadresource", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String uploadResource(@RequestParam("file") MultipartFile[] files) throws IOException {

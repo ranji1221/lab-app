@@ -37,8 +37,8 @@ public class PortalNoticeController {
             @ApiImplicitParam(name = "content", value = "内容", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/insertnotice", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
@@ -68,8 +68,8 @@ public class PortalNoticeController {
             @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "/updatenotice", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)

@@ -58,13 +58,13 @@ public class ScrapController {
         }
     }
 
-    @ApiOperation(value="取消报废)", notes="取消报废")
+    @ApiOperation(value = "取消报废)", notes = "取消报废")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deviceId", value = "所需报废设备id", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "status", value = "状态(2报废中，4报废)",dataType = "String"),
-            @ApiImplicitParam(name = "description", value = "报废描述", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String"),
-            @ApiImplicitParam(name = "id", value = "报废编号", required = true , dataType = "String")
+            @ApiImplicitParam(name = "status", value = "状态(2报废中，4报废)", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "报废描述", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "报废编号", required = true, dataType = "String")
     })
     @PostMapping(value = "/updatescrapvalue", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr", "manager"}, logical = Logical.OR)

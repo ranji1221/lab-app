@@ -47,8 +47,8 @@ public class DeviceController {
             @ApiImplicitParam(name = "unitName", value = "单位", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "insertdevice", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
@@ -81,8 +81,8 @@ public class DeviceController {
             @ApiImplicitParam(name = "unitName", value = "单位", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "updatedevice", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
@@ -153,11 +153,11 @@ public class DeviceController {
     /*
     通过前台表单的数据插入设备类型信息
      */
-    @ApiOperation(value="插入设备类型信息", notes="根据传过来的设备信息来插入设备类型信息")
+    @ApiOperation(value = "插入设备类型信息", notes = "根据传过来的设备信息来插入设备类型信息")
     @ApiImplicitParam(name = "typeName", value = "设备类型名称", required = true, dataType = "String")
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "insertdevicetype", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
@@ -177,14 +177,14 @@ public class DeviceController {
     /*
     通过前台表单的数据更新设备类型信息
      */
-    @ApiOperation(value="更新设备类型信息", notes="根据传过来的设备信息来更新设备类型信息")
+    @ApiOperation(value = "更新设备类型信息", notes = "根据传过来的设备信息来更新设备类型信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "typeName", value = "设备类型名称", required = true, dataType = "String"),
             @ApiImplicitParam(name = "id", value = "设备类型id", required = true, dataType = "String")
     })
-       @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
     @PostMapping(value = "updatedevicetype", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)

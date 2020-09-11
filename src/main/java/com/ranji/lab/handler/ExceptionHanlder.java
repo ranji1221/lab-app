@@ -1,4 +1,3 @@
-/*
 package com.ranji.lab.handler;
 
 import com.alibaba.fastjson.JSONObject;
@@ -9,36 +8,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
-*/
-/**
+/*
  * ClassName:    ExceptionHanlder
  * Package:    com.ranji.lab.handler
  * Description: 全局异常处理类
  * Datetime:    2020-8-29  10:56
  * Author:   RanJi
- * <p>
- * 处理全局异常
- *
- * @param e
- * @param request
- * @return 处理自定义异常
- * @param e
- * @param request
- * @return
- *//*
+ */
 
 @RestControllerAdvice
 public class ExceptionHanlder {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionHanlder.class);
 
-    */
-/**
- * 处理全局异常
- * @param e
- * @param request
- * @return
- *//*
+    /*
+     * 处理全局异常
+     * @param e
+     * @param request
+     * @return
 
+     */
     @ExceptionHandler(value = Exception.class)
     public Object handleException(Exception e, HttpServletRequest request){
         //-- 1. 日志输出
@@ -51,13 +39,12 @@ public class ExceptionHanlder {
         return jo.toJSONString();
     }
 
-    */
-/**
- * 处理自定义异常
- * @param e
- * @param request
- * @return
- *//*
+    /*
+     * 处理自定义异常
+     * @param e
+     * @param request
+     * @return
+     */
 
     @ExceptionHandler(value = MyException.class)
     public Object handleMyException(MyException e, HttpServletRequest request){
@@ -72,4 +59,3 @@ public class ExceptionHanlder {
     }
 
 }
-*/
