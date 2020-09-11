@@ -6,6 +6,8 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Study;
 import com.ranji.lab.service.prototype.IStudyService;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +39,8 @@ public class PortalStudyController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/insertstudy",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertstudy", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String insertStudy(Study study){
         Map<Object,Object> insertStudyMap = new HashMap<>();
         int i = iStudyService.insertStudy(study);
@@ -65,7 +68,8 @@ public class PortalStudyController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/updatestudy",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updatestudy", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String updateStudy(Study study){
         Map<Object, Object> updateStudyMap = new HashMap<>();
         int i = iStudyService.updateStudy(study);

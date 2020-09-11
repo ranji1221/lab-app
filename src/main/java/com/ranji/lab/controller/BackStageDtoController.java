@@ -6,6 +6,8 @@ import com.ranji.lab.service.prototype.IBackStageDtoService;
 import com.ranji.lab.service.prototype.IDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +26,7 @@ public class BackStageDtoController {
 
     @ApiOperation(value = "查询折线图", notes = "查询折线图")
     @GetMapping(value = "/findlinechart", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findLineChart() {
         Map<Object, Object> allMap = iBackStageDtoService.findSevenDaysAgoData();
         return JSON.toJSONString(allMap);
@@ -31,12 +34,14 @@ public class BackStageDtoController {
 
     @ApiOperation(value = "查询四格图", notes = "查询四格图")
     @GetMapping(value = "/findfourchart", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findFourChart() {
         Map<Object, Object> allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountData();
         return JSON.toJSONString(allMap);
     }
 
     @ApiOperation(value = "查询扇形图", notes = "查询扇形图")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     @GetMapping(value = "/findsectorchart", produces = "text/plain;charset=utf-8")
     public String findSectorChart() {
         List<BackStage3Dto> statusAndSum = iDeviceService.findStatusAndSum();

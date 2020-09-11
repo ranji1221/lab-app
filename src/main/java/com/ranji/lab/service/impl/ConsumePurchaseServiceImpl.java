@@ -33,14 +33,16 @@ public class ConsumePurchaseServiceImpl implements IConsumePurchaseService {
     @Override
     @Transactional
     public int updateConsumePurchase(ConsumePurchase consumePurchase) {
-        if (consumePurchase.getDate() == null) {
+        System.out.println(consumePurchase.getApplicant());
+        if (consumePurchase.getApplicant() == null) {
             ConsumeInform consumeInform = new ConsumeInform();
             consumeInform.setId(consumePurchase.getConsumeId());
             consumeInform.setNum(consumePurchase.getNum());
             consumeInformMapper.updateConsumeInformNum(consumeInform);
-            consumePurchaseMapper.updateConsumePurchaseStatus(consumePurchase);
+            return consumePurchaseMapper.updateConsumePurchaseStatus(consumePurchase);
+        } else {
+            return consumePurchaseMapper.updateConsumePurchase(consumePurchase);
         }
-        return consumePurchaseMapper.updateConsumePurchase(consumePurchase);
     }
 
     @Override

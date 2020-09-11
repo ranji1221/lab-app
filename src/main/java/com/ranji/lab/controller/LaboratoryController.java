@@ -12,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +41,7 @@ public class LaboratoryController {
     @PostMapping(value = "insertlaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
     @Transactional
+    @RequiresRoles(value = {"admin", "majorHead", "laboratoryMgr"}, logical = Logical.OR)
     public String insertLaboratory(LaboratoryDto laboratoryDto, @RequestParam("file") MultipartFile file, String devices){
         Map laboratoryMap = new HashMap<>();
         //-- 1. 获取项目的根目录
@@ -69,6 +72,7 @@ public class LaboratoryController {
     @ApiOperation(value="更新实验室", notes="根据传过来的信息更新实验室")
     @PostMapping(value = "updatelaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
+    @RequiresRoles(value = {"admin", "majorHead", "laboratoryMgr"}, logical = Logical.OR)
     public String updateLaboratory(Laboratory laboratory){
         Map laboratoryMap = new HashMap<>();
         int i = iLaboratoryService.updateLaboratory(laboratory);

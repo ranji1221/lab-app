@@ -8,6 +8,8 @@ import com.ranji.lab.service.prototype.IResourceDocService;
 import com.ranji.lab.service.prototype.IResourcePdfService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -115,7 +117,8 @@ public class ResourceController {
      * 上传pdf格式的资源
      */
     @ApiOperation(value = "上传pdf版的资源",notes = "上传pdf版的资源")
-    @PostMapping(value = "/uploadresourcepdf",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/uploadresourcepdf", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String uploadResourcePdf(@RequestParam("file") MultipartFile[] files) throws IOException {
         //获取根目录
         String rootDirectory = System.getProperty("user.dir");
@@ -140,7 +143,8 @@ public class ResourceController {
      * 上传doc格式的资源
      */
     @ApiOperation(value = "上传doc版的资源",notes = "上传doc版的资源")
-    @PostMapping(value = "/uploadresourcedoc",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/uploadresourcedoc", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String uploadResourceDoc(@RequestParam("file") MultipartFile[] files) throws IOException {
         //获取根目录
         String rootDirectory = System.getProperty("user.dir");
@@ -160,7 +164,8 @@ public class ResourceController {
     }
 
     @ApiOperation(value = "上传教学资源",notes = "上传教学资源")
-    @PostMapping(value = "/uploadresource",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/uploadresource", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String uploadResource(@RequestParam("file") MultipartFile[] files) throws IOException {
 
         HashMap<Object, Object> allMap = new HashMap<>();

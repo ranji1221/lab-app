@@ -8,6 +8,8 @@ import com.ranji.lab.service.prototype.IStudentScoreService;
 import com.ranji.lab.service.prototype.IUserService;
 import io.swagger.annotations.*;
 import lombok.val;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +33,8 @@ public class ExperimentStudentScoreController {
             @ApiImplicitParam(name = "projectId", value = "实验项目id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "score", value = "成绩", required = true, dataType = "String"),
     })
-    @PostMapping(value = "/insertstudentscore",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertstudentscore", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String insertStudentScore(StudentScoreDto studentScoreDto){
         StudentScore studentScore = new StudentScore();
         studentScore.setProjectId(studentScoreDto.getProjectId());
@@ -62,7 +65,8 @@ public class ExperimentStudentScoreController {
     }
 
     @ApiOperation(value="修改学生成绩", notes="修改学生成绩")
-    @GetMapping(value = "/updStudentScore",produces = "text/plain;charset=utf-8")
+    @GetMapping(value = "/updStudentScore", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String updStudentScore(StudentScore studentScore){
         val i = iStudentScoreService.updateStudentScore(studentScore);
         Map<String,Object> map = new HashMap<>();

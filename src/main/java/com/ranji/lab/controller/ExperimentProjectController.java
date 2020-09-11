@@ -6,6 +6,8 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.ExperimentProject;
 import com.ranji.lab.service.prototype.IExperimentProjectService;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +44,7 @@ public class ExperimentProjectController {
     })
     @PostMapping(value = "insertExperimentProject")
     @ResponseBody
+    @RequiresRoles(value = {"admin", "majorHead"}, logical = Logical.OR)
     public String insertExperimentProject(ExperimentProject experimentProject){
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iExperimentProjectService.insertExperimentProject(experimentProject);
@@ -132,6 +135,7 @@ public class ExperimentProjectController {
     })
     @PostMapping(value = "updExperimentProject")
     @ResponseBody
+    @RequiresRoles(value = {"admin", "majorHead"}, logical = Logical.OR)
     public String updExperimentProject(ExperimentProject experimentProject,String projectConsumeLists){
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iExperimentProjectService.updExperimentProject(experimentProject,projectConsumeLists);

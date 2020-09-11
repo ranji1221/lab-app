@@ -11,6 +11,8 @@ import com.ranji.lab.service.prototype.IStudyImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +38,7 @@ public class ImageConrtoller {
     @ApiImplicitParam(name = "files", value = "图片文件(无法在swagger上进行测试，需要自写前端页面验证)", dataType = "String")
     @PostMapping(value = "/insertnewsimage")
     @ResponseBody
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String insertNewsImage(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception{
         //-- 获取图片访问路径的前缀
         String url= request.getRequestURL().toString();
@@ -92,6 +95,7 @@ public class ImageConrtoller {
     @ApiImplicitParam(name = "files", value = "图片文件(无法在swagger上进行测试，需要自写前端页面验证)", dataType = "String")
     @PostMapping(value = "/insertstudyimage")
     @ResponseBody
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String insertStudyImage(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception{
         //-- 获取图片访问路径的前缀
         String url= request.getRequestURL().toString();
@@ -148,7 +152,6 @@ public class ImageConrtoller {
     @ApiOperation(value = "查看实验室图片",notes = "通过实验室图片id查看实验室图片")
     @ApiImplicitParam(name = "id", value = "轮播图id", required = true, dataType = "String")
     @GetMapping(value = "/laboratoryimage/{id}")
-
     public String laboratoryimage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
         Laboratory laboratory = iLaboratoryImageService.findlaboratoryImageById(id);
 

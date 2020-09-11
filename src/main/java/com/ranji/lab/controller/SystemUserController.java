@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +36,8 @@ public class SystemUserController {
     private IUserBasicService iUserBasicService;
 
     @ApiOperation(value="添加用户账号信息", notes="添加角色信息")
-    @PostMapping(value = "/insertuser",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertuser", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public String insertUser(User user , int roleId){
         user.setEnable(1);
         int userId = iUserService.save(user);

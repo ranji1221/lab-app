@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.var;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +41,8 @@ public class ConsumeCustodyController {
             @ApiImplicitParam(name = "recipient", value = "领用人", required = true, dataType = "String"),
             @ApiImplicitParam(name = "date", value = "领用日期", required = true, dataType = "String")
     })
-    @PostMapping(value = "insertConsumeCustody",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "insertConsumeCustody", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String insertConsumeCustody(ConsumeCustodyInsertDto consumeCustodyInsertDto){
         Map<Object,Object> insertConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.insertConsumeCustody(consumeCustodyInsertDto);
@@ -52,14 +55,16 @@ public class ConsumeCustodyController {
         }
 
     }
-    @ApiOperation(value="更新保管领用", notes="根据传过来的设备信息来更新保管领用")
+
+    @ApiOperation(value = "修改保管领用", notes = "根据传过来的设备信息来更新保管领用")
     /*@ApiImplicitParams({
             @ApiImplicitParam(name = "title", value = "题目", required = true, dataType = "String"),
             @ApiImplicitParam(name = "informationSource", value = "信息来源", required = true, dataType = "String"),
             @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
             @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
     })*/
-    @PostMapping(value = "updateConsumeCustody",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "updateConsumeCustody", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String updateConsumeCustody(ConsumeCustody consumeCustody){
         Map<Object, Object> updateConsumeCustodyMap = new HashMap<>();
         int i = iConsumeCustodyService.updateConsumeCustody(consumeCustody);
@@ -79,6 +84,7 @@ public class ConsumeCustodyController {
             @ApiImplicitParam(name = "id", value = "保管领用id", required = true, dataType = "String")
     })
     @PostMapping(value = "updateConsumeCustodyStatus", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateConsumeCustodyStatus(ConsumeCustodyDto consumeCustody, String consumeCustodyss) {
         Map<Object, Object> updateConsumeCustodyMap = new HashMap<>();
         int i = 0;

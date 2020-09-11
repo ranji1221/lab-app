@@ -7,9 +7,12 @@ import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import com.ranji.lab.util.DateUtil;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +46,8 @@ public class ConsumeInformationAndPurchaseController {
             @ApiImplicitParam(name = "type", value = "耗材类型", required = true, dataType = "String"),
             @ApiImplicitParam(name = "unitName", value = "耗材单位", required = true, dataType = "String")
     })
-    @PostMapping(value="/insertconsumeinform",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertconsumeinform", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertConsumeInform(ConsumeInformDto consumeInformDto){
         Map<Object,Object> insertConsumeInformMap = new HashMap<>();
         int i = iConsumeInformService.insertConsumeInform(consumeInformDto);
@@ -69,7 +73,8 @@ public class ConsumeInformationAndPurchaseController {
             @ApiImplicitParam(name = "id", value = "耗材id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "unitName", value = "耗材单位", required = true, dataType = "String")
     })
-    @PostMapping(value="/updateconsumeinform",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updateconsumeinform", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateConsumeInform(ConsumeInform consumeInform){
         Map<Object,Object> updateConsumeInformMap = new HashMap<>();
         int i = iConsumeInformService.updateConsumeInform(consumeInform);
@@ -133,22 +138,24 @@ public class ConsumeInformationAndPurchaseController {
         }
     }
 
-    @ApiOperation(value="插入申请购置信息", notes="根据传过来的设备信息来插入申请购置信息")
+    @ApiOperation(value = "插入申请购置信息", notes = "根据传过来的设备信息来插入申请购置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "consumeId", value = "购置耗材id", required = true, dataType = "String"),
             @ApiImplicitParam(name = "num", value = "购置数量", required = true, dataType = "String"),
             @ApiImplicitParam(name = "date", value = "购置日期", required = true, dataType = "String"),
             @ApiImplicitParam(name = "applicant", value = "购置申请人", required = true, dataType = "String")
     })
-    @PostMapping(value = "/insertconsumepurchase",produces = "text/plain;charset=utf-8")
-    public String insertConsumePurchase(ConsumePurchase consumePurchase){
-        Map<Object,Object> insertConsumePurchaseMap = new HashMap<>();
+    @PostMapping(value = "/insertconsumepurchase", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
+    public String insertConsumePurchase(ConsumePurchase consumePurchase, HttpServletRequest request) {
+        System.out.println("+++++++++++++++++++++++++" + request.getCookies());
+        Map<Object, Object> insertConsumePurchaseMap = new HashMap<>();
         int i = iConsumePurchaseService.insertConsumePurchase(consumePurchase);
-        if(i<1){
-            insertConsumePurchaseMap.put("status","failure");
+        if (i < 1) {
+            insertConsumePurchaseMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(insertConsumePurchaseMap);
-        }else{
-            insertConsumePurchaseMap.put("status","success");
+        } else {
+            insertConsumePurchaseMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertConsumePurchaseMap);
         }
     }
@@ -160,6 +167,7 @@ public class ConsumeInformationAndPurchaseController {
             @ApiImplicitParam(name = "num", value = "购置数量", required = true, dataType = "String")
     })
     @PostMapping(value = "/updateconsumepurchase", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateConsumePurchase(ConsumePurchase consumePurchase, String consumePurchasess) {
         Map<Object, Object> updateConsumePurchaseMap = new HashMap<>();
         int i = 0;
@@ -247,7 +255,8 @@ public class ConsumeInformationAndPurchaseController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/insertconsumetype",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertconsumetype", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertConsumeType(ConsumeTypeDto consumeTypeDto){
         Map<Object,Object> insertConsumeTypeMap = new HashMap<>();
         int i = iConsumeTypeService.insertConsumeType(consumeTypeDto);
@@ -269,7 +278,8 @@ public class ConsumeInformationAndPurchaseController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/updateconsumetype",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updateconsumetype", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateConsumeType(ConsumeType consumeType){
         Map<Object,Object> updateConsumeTypeMap = new HashMap<>();
         int i = iConsumeTypeService.updateConsumeType(consumeType);

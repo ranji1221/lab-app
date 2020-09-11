@@ -6,6 +6,8 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.News;
 import com.ranji.lab.service.prototype.INewsService;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,8 @@ public class PortalNewsController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/insertnews",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertnews", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String insertNews(NewsDto newsDto){
         System.out.println(newsDto);
         Map<Object,Object> insertNewsMap = new HashMap<>();
@@ -66,7 +69,8 @@ public class PortalNewsController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/updatenews",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updatenews", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String updateNews(News news){
         Map<Object,Object> updateNewsMap = new HashMap<>();
         int i = iNewsService.updateNews(news);

@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +34,8 @@ public class ConsumeNormController {
             @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
             @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
     })*/
-    @PostMapping(value = "/insertconsumenorm",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertconsumenorm", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertConsumeNorm(ConsumeNormDto consumeNormDto){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
@@ -52,7 +55,8 @@ public class ConsumeNormController {
             @ApiImplicitParam(name = "author", value = "作者", required = true, dataType = "String"),
             @ApiImplicitParam(name = "time", value = "添加日期", required = true, dataType = "String"),
     })*/
-    @PostMapping(value = "/updateconsumenorm",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updateconsumenorm", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateConsumeNorm(ConsumeNorm consumeNorm){
         Map<Object, Object> updateConsumeNormMap = new HashMap<>();
         int i = iConsumeNormService.updateConsumeNorm(consumeNorm);

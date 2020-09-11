@@ -5,6 +5,8 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.service.prototype.IRoleService;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,8 @@ public class SystemRoleController {
     }
 
     @ApiOperation(value="新增系统角色", notes="新增系统角色")
-    @PostMapping(value = "/insertuserrole",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertuserrole", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public String insertUserRole(Role role){
         iRoleService.save(role);
         HashMap<Object, Object> allMap = new HashMap<>();

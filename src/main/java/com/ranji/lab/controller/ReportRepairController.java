@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,7 +34,8 @@ public class ReportRepairController {
             @ApiImplicitParam(name = "description", value = "描述", required = true , dataType = "String"),
             @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
     })
-    @PostMapping(value = "/insertreportrepair",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertreportrepair", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr", "manager"}, logical = Logical.OR)
     public String insertReportRepair(ReportRepairInsertDto reportRepairInsertDto){
         HashMap<Object, Object> insertReportRepairMap = new HashMap<>();
         int i = reportRepairService.insertReportRepair(reportRepairInsertDto);
@@ -53,7 +56,8 @@ public class ReportRepairController {
             @ApiImplicitParam(name = "description", value = "描述", required = true , dataType = "String"),
             @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String")
     })
-    @PostMapping(value = "/updatereportrepair",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updatereportrepair", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "laboratoryMgr", "manager"}, logical = Logical.OR)
     public String updateReportRepair(ReportRepair reportRepair){
         HashMap<Object, Object> updateReportRepairMap = new HashMap<>();
         int i = reportRepairService.updateReportRepair(reportRepair);

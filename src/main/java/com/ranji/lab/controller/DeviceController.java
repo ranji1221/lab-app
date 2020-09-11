@@ -5,6 +5,8 @@ import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,7 +50,8 @@ public class DeviceController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value="insertdevice",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "insertdevice", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertDevice(DeviceAndModelDto deviceAndModelDto){
         Map<Object,Object> insertDeviceMap = new HashMap<>();
         int i = iDeviceService.insertDeviceAndDeviceModel(deviceAndModelDto);
@@ -81,7 +84,8 @@ public class DeviceController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value="updatedevice",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "updatedevice", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateDevice(DeviceAndModelDto deviceAndModelDto){
         Map<Object,Object> updateDeviceMap = new HashMap<>();
         int i = iDeviceService.updateDeviceAndDeviceModel(deviceAndModelDto);
@@ -155,7 +159,8 @@ public class DeviceController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value="insertdevicetype",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "insertdevicetype", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertDeviceType(DeviceTypeDto deviceTypeDto){
         Map<Object,Object> insertDeviceTypeMap = new HashMap<>();
         int i = iDeviceTypeService.insertDeviceType(deviceTypeDto);
@@ -181,7 +186,8 @@ public class DeviceController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value="updatedevicetype",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "updatedevicetype", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String updateDeviceType(DeviceType deviceType){
         Map<Object,Object> updateDeviceTypeMap = new HashMap<>();
         int i = iDeviceTypeService.updateDeviceType(deviceType);

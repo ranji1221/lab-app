@@ -12,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,6 +45,7 @@ public class ScrapController {
             @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true, dataType = "String")
     })
     @PostMapping(value = "insertscrap", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr", "manager"}, logical = Logical.OR)
     public String insertScrap(ScrapInsertDto scrapInsertDto){
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = iScrapService.insertScrap(scrapInsertDto);
@@ -63,7 +66,8 @@ public class ScrapController {
             @ApiImplicitParam(name = "date", value = "修改日期(xxxx-xx-xx)", required = true , dataType = "String"),
             @ApiImplicitParam(name = "id", value = "报废编号", required = true , dataType = "String")
     })
-    @PostMapping(value = "/updatescrapvalue",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updatescrapvalue", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr", "manager"}, logical = Logical.OR)
     public String updateScrap(Scrap scrap){
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = iScrapService.updateScrapValue(scrap);
@@ -85,6 +89,7 @@ public class ScrapController {
             @ApiImplicitParam(name = "id", value = "报废编号", required = true, dataType = "String")
     })
     @PostMapping(value = "/updatescrapstatus", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "laboratoryMgr", "manager"}, logical = Logical.OR)
     public String updateScrapStatus(ScrapDto scrap, String scrapss) {
         HashMap<Object, Object> insertScrapMap = new HashMap<>();
         int i = 0;

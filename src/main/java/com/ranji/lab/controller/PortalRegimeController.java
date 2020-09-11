@@ -5,6 +5,8 @@ import com.ranji.lab.dto.NewsDto;
 import com.ranji.lab.entity.*;
 import com.ranji.lab.service.prototype.*;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -48,7 +50,8 @@ public class PortalRegimeController {
               @ApiResponse(code=200,message="成功"),
               @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/insertregime",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertregime", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr"}, logical = Logical.OR)
     public String insertRegime(Regime regime){
         Map<Object,Object> insertRegimeMap = new HashMap<>();
         int i = iRegimeService.insertRegime(regime);
@@ -77,7 +80,8 @@ public class PortalRegimeController {
               @ApiResponse(code=200,message="成功"),
               @ApiResponse(code=500,message="服务器错误")
       })
-    @PostMapping(value = "/updateregime",produces = "text/plain;charset=utf-8")
+      @PostMapping(value = "/updateregime", produces = "text/plain;charset=utf-8")
+      @RequiresRoles(value = {"admin", "majorHead", "teacher", "laboratoryMgr"}, logical = Logical.OR)
     public String updateRegime(Regime regime){
         Map<Object,Object> insertRegimeMap = new HashMap<>();
         int i = iRegimeService.updateRegime(regime);

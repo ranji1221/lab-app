@@ -1,6 +1,8 @@
 package com.ranji.lab.config;
 
 import com.ranji.lab.Interceptor.UserInterceptor;
+import com.ranji.lab.entity.User;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -68,11 +70,18 @@ public class CorsConfig extends WebMvcConfigurationSupport {
 
     /**
      * 自定义拦截器
+     *
      * @param registry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor);
+        registry.addInterceptor(setUserInterceptor()).addPathPatterns("/**").excludePathPatterns("/login");
+        super.addInterceptors(registry);
+    }
+
+    @Bean
+    public UserInterceptor setUserInterceptor() {
+        return new UserInterceptor();
     }
 
 }

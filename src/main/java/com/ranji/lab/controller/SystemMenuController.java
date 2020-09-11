@@ -7,6 +7,8 @@ import com.ranji.lab.entity.Menu;
 import com.ranji.lab.service.prototype.IMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +25,8 @@ public class SystemMenuController {
     private IMenuService iMenuService;
 
     @ApiOperation(value="更新菜单", notes="更新菜单")
-    @PostMapping(value = "/updatemenu",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updatemenu", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin"}, logical = Logical.OR)
     public String updateMenu(String menus){
         int i = iMenuService.updateMenuService(menus);
         HashMap<Object, Object> allMap = new HashMap<>();

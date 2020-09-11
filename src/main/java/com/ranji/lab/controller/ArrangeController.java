@@ -8,6 +8,8 @@ import com.ranji.lab.entity.Laboratory;
 import com.ranji.lab.service.prototype.IArrangeService;
 import com.ranji.lab.service.prototype.ILaboratoryService;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,6 +50,7 @@ public class ArrangeController {
     })
     @PostMapping(value = "insertArrange")
     @ResponseBody
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead"}, logical = Logical.OR)
     public String insertArrange1(Arrange arrange,String devices,String consumes){
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iArrangeService.insertArrange(arrange,devices,consumes);
@@ -67,17 +70,12 @@ public class ArrangeController {
      */
     @ApiOperation(value="查询所有预约", notes="前端通过访问接口获得所有预约信息")
     @GetMapping(value = "/findAllArrange",produces = "text/plain;charset=utf-8")
-    public String findAllArrange(Integer status){
+    public String findAllArrange(Integer status) {
         List<ArrangeDto> allArrange = iArrangeService.findAllArrange(status);
-        Map<Object,Object> newsMap = new HashMap<>();
-        if(!allArrange.isEmpty()) {
-            newsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            newsMap.put("data", allArrange);
-            return JSON.toJSONString(newsMap);
-        }else{
-            newsMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(newsMap);
-        }
+        Map<Object, Object> newsMap = new HashMap<>();
+        newsMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        newsMap.put("data", allArrange);
+        return JSON.toJSONString(newsMap);
     }
 
     /**
@@ -92,15 +90,10 @@ public class ArrangeController {
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
     })
     @GetMapping(value = "/pageFindAllArrange",produces = "text/plain;charset=utf-8")
-    public Object pageFindAllArrange(int page,int limit,Integer status){
-        Map<Object, Object> pageExperimentProject = iArrangeService.pageFindAllArrange(page,limit,status);
-        if(!pageExperimentProject.isEmpty()) {
-            pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
-            return JSON.toJSONString(pageExperimentProject);
-        }else{
-            pageExperimentProject.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
-            return JSON.toJSONString(pageExperimentProject);
-        }
+    public Object pageFindAllArrange(int page,int limit,Integer status) {
+        Map<Object, Object> pageExperimentProject = iArrangeService.pageFindAllArrange(page, limit, status);
+        pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        return JSON.toJSONString(pageExperimentProject);
     }
     /**
 
@@ -127,6 +120,7 @@ public class ArrangeController {
     })
     @PostMapping(value = "updArrange")
     @ResponseBody
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead"}, logical = Logical.OR)
     public String updArrange(Arrange arrange,String devices, String consumes){
         Map<Object,Object> insertNewsMap = new HashMap<>();
         int i = iArrangeService.updArrange(arrange,devices,consumes);

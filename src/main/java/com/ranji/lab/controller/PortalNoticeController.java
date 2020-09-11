@@ -6,6 +6,8 @@ import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Notice;
 import com.ranji.lab.service.prototype.INoticeService;
 import io.swagger.annotations.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +40,8 @@ public class PortalNoticeController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/insertnotice",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/insertnotice", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String insertNotice(Notice notice){
         Map<Object,Object> insertNoticeMap = new HashMap<>();
         int i = iNoticeService.insertNotice(notice);
@@ -68,7 +71,8 @@ public class PortalNoticeController {
             @ApiResponse(code=200,message="成功"),
             @ApiResponse(code=500,message="服务器错误")
     })
-    @PostMapping(value = "/updatenotice",produces = "text/plain;charset=utf-8")
+    @PostMapping(value = "/updatenotice", produces = "text/plain;charset=utf-8")
+    @RequiresRoles(value = {"admin", "majorHead", "teacher"}, logical = Logical.OR)
     public String updateNotice(Notice notice){
         Map<Object, Object> insertNoticeMap = new HashMap<>();
         int i = iNoticeService.updateNotice(notice);

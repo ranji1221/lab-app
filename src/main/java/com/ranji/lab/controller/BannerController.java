@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +55,7 @@ public class BannerController {
     })
     @PostMapping(value = "/uploadbanner",produces = "text/plain;charset=utf-8")
     @ResponseBody
+    @RequiresRoles(value = {"admin", "majorHead"}, logical = Logical.OR)
     public String uploadFile(int id, String name, String description, MultipartFile files)
             throws Exception{
         //-- 1. 获取运行程序所在的根目录
