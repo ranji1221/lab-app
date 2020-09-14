@@ -53,4 +53,7 @@ public interface BackStageDtoMapper {
     @Select("select count(*) no_count from laboratory l  where l.id not in ( select a.laboratory_id from arrange a where a.date = #{date} GROUP BY a.laboratory_id )")
     int findNoCount(String date);
 
+    //有但是没有进行的项目
+    @Select("select count(*) from arrange where date = #{date} and status = 0")
+    int findHaveButNotUse(String date);
 }

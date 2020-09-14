@@ -28,6 +28,7 @@ public class StatusMonitoringDto {
     private int status;
     @NonNull
     private String responsibility;
+    private int laboratoryId;
 
     public void setImgSrc(int imgSrc) {
         this.imgSrc = imgSrc;

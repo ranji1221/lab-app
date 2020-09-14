@@ -112,7 +112,7 @@ public interface DeviceMapper {
     LaboratoryDeviceNumDto findDeviceStatusNum(int laboratoryId,int deviceModelId,int status);
 
     //按照实验室id查询该实验室已完成的实验数量
-    @Select("select count(*) from arrange a where where a.status = 2 and a.laboratory_id = #{laboratoryId}")
+    @Select("select count(*) from arrange a where a.status = 2 and a.laboratory_id = #{laboratoryId}")
     int findEndingProjectNumByLaboratoryId(int laboratoryId);
 
     //按照实验室id、设备id查询该实验室使用到该设备的实验数量

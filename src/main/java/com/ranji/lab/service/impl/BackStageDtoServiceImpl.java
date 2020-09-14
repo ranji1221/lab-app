@@ -61,6 +61,7 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
         double finishedCount = backStageDtoMapper.findFinishedCount(nowDays);
         double unfinishedCount = backStageDtoMapper.findUnfinishedCount(nowDays);
         double noCount = backStageDtoMapper.findNoCount(nowDays);
+        double haveButNotUse = backStageDtoMapper.findHaveButNotUse(nowDays);
 
         double allCountPercentageClone = allCount/ allCount;
         double allCountPercentage = Double.parseDouble(df.format(allCountPercentageClone));
@@ -74,7 +75,7 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
         double noCountPercentageClone = noCount/ allCount;
         double noCountPercentage = Double.parseDouble(df.format(noCountPercentageClone));
 
-        BackStage2Dto backStage2Dto = new BackStage2Dto(allCount,allCountPercentage,finishedCount,finishedCountPercentage,unfinishedCount,unfinishedCountPercentage, noCount,noCountPercentage);
+        BackStage2Dto backStage2Dto = new BackStage2Dto(allCount, allCountPercentage, finishedCount, finishedCountPercentage, unfinishedCount, unfinishedCountPercentage, noCount, noCountPercentage + haveButNotUse);
         System.out.println(backStage2Dto);
         allMap.put("data", backStage2Dto);
         allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
