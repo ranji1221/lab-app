@@ -417,11 +417,10 @@ public class DeviceController {
     @GetMapping(value="/laboratoryIdFindDeviceAndStatus",produces = "text/plain;charset=utf-8")
     public String laboratoryIdFindDeviceAndStatus(int laboratoryId){
         List<LaboratoryDeviceNumDto> laboratoryDeviceNumDtos = iDeviceService.laboratoryIdFindDeviceAndStatus(laboratoryId);
-        if(!laboratoryDeviceNumDtos.isEmpty()) {
-            return JSON.toJSONString(laboratoryDeviceNumDtos);
-        }else{
-            return JSON.toJSONString(laboratoryDeviceNumDtos);
-        }
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        map.put("data", laboratoryDeviceNumDtos);
+        return JSON.toJSONString(map);
     }
 
     //按照实验室id查询所有的设备

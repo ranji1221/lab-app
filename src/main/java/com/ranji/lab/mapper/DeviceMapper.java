@@ -95,7 +95,7 @@ public interface DeviceMapper {
     List<DeviceAndDeviceTypeNameDto> laboratoryIdFindAllDevice(int laboratoryId);
 
     //查询所有的设备
-    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type = dt.id left join laboratory_device ld on ld.device_id = d.id where 1 = 1 and d.status != 2")
+    @Select("select * from device d left join device_model dm on dm.id = d.device_model_id left join  device_type dt on dm.type = dt.id left join laboratory_device ld on ld.device_id = d.id")
     List<DeviceAndDeviceTypeNameDto> findAllDevice();
 
     //按照实验室id查询所有分类
@@ -106,11 +106,11 @@ public interface DeviceMapper {
     LaboratoryDeviceNumDto findDeviceStatusNum(int laboratoryId,int deviceModelId,int status);
 
     //按照实验室id查询该实验室已完成的实验数量
-    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 1 and a.laboratory_id = #{laboratoryId}")
+    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 2 and a.laboratory_id = #{laboratoryId}")
     int findEndingProjectNumByLaboratoryId(int laboratoryId);
 
     //按照实验室id、设备id查询该实验室使用到该设备的实验数量
-    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 1 and a.laboratory_id = #{laboratoryId} and pd.experiment_device_id = #{deviceId}")
+    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 2 and a.laboratory_id = #{laboratoryId} and pd.experiment_device_id = #{deviceId}")
     int findEndingProjectNumByLaboratoryIdAndDeviceId(int laboratoryId, int deviceId);
 
     //通过设备查询该设备使用次数

@@ -42,6 +42,7 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
+        iArrangeService.changeArrangeStatus();
         String method = request.getMethod();    //输出 OPTIONS/GET/POST。。。
         //如果是 OPTIONS 请求，让 OPTIONS 请求返回一个200状态码
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
@@ -82,7 +83,6 @@ public class UserInterceptor implements HandlerInterceptor {
 
         Audit audit = new Audit(username, ipAddress, time, servletPath);
         iAuditService.insertAudit(audit);
-        iArrangeService.changeArrangeStatus();
 
         return true;
     }

@@ -44,7 +44,7 @@ public class BackStageDtoController {
     @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     @GetMapping(value = "/findsectorchart", produces = "text/plain;charset=utf-8")
     public String findSectorChart() {
-        List<BackStage3Dto> statusAndSum = iDeviceService.findStatusAndSum();
+        Map<Object, Object> statusAndSum = iDeviceService.findStatusAndSum();
         return JSON.toJSONString(statusAndSum);
     }
 }

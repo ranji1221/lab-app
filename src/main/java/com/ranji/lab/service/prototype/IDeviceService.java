@@ -68,5 +68,5 @@ public interface IDeviceService {
      */
     Map<Object, Object> likeFindDeviceAndDeviceName(int pageNum, int pageSize, String like);
 
-    List<BackStage3Dto> findStatusAndSum();
+    Map<Object, Object> findStatusAndSum();
 }

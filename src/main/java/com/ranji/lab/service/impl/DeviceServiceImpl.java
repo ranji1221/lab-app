@@ -3,6 +3,7 @@ package com.ranji.lab.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.*;
+import com.ranji.lab.entity.Code;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.DeviceModel;
 import com.ranji.lab.mapper.DeviceMapper;
@@ -262,10 +263,12 @@ public class DeviceServiceImpl implements IDeviceService {
         for (DeviceAndDeviceTypeNameDto device : devices) {
             double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(device.getLaboratoryId());
             double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(device.getLaboratoryId(), device.getId());
-            if(endingProjectNum!=0&&endingDeviceNum!=0){
-                device.setUsageRate(endingDeviceNum/endingProjectNum);
-                UsageRate.add(device);
+            if (endingProjectNum != 0 && endingDeviceNum != 0) {
+                device.setUsageRate(endingDeviceNum / endingProjectNum);
+            } else {
+                device.setUsageRate(0);
             }
+            UsageRate.add(device);
         }
         Map<Object,Object> map = new HashMap<>();
         map.put("data",UsageRate);
@@ -281,13 +284,13 @@ public class DeviceServiceImpl implements IDeviceService {
         List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.findAllDevice();
         List<DeviceAndDeviceTypeNameDto> r = new ArrayList<>();
         for (DeviceAndDeviceTypeNameDto device : devices) {
-            double i = deviceMapper.deviceIdFindUseNum(device.getId())*2;
+            double i = deviceMapper.deviceIdFindUseNum(device.getId()) * 2;
             double x = device.getLifetime();
-            if(i!=0&&x!=0){
-                double ratio = i/x;
+            if (i != 0 && x != 0) {
+                double ratio = i / x;
                 device.setRatio(ratio);
-                r.add(device);
             }
+            r.add(device);
         }
         HashMap<Object, Object> map = new HashMap<>();
         map.put("data",r);
@@ -319,9 +322,12 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public List<BackStage3Dto> findStatusAndSum() {
+    public Map<Object, Object> findStatusAndSum() {
         List<BackStage3Dto> all = deviceMapper.findStatusAndSum();
-        return all;
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        map.put("data", all);
+        return map;
     }
 
 
