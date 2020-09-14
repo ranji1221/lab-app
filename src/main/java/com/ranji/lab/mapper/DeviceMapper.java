@@ -58,15 +58,21 @@ public interface DeviceMapper {
             " d.id like '%${like}%' or " +
             " dm.device_name like '%${like}%' or " +
             " dm.brand like '%${like}%' "
-            )
+    )
     List<DeviceAndDeviceTypeNameDto> likeFindDeviceAndDeviceName(String like);
+
     //智能分析
     @Select("SELECT d.id,dm.device_name,dm.brand,ld.status,count(*) count,l.laboratory_name,dm.unit_name unitName FROM device d JOIN device_model dm ON d.device_model_id=dm.id JOIN laboratory_device ld ON ld.device_id=d.id JOIN laboratory l ON l.id=ld.laboratory_id GROUP BY ld.laboratory_id,ld.STATUS")
     List<DeviceIntelligentAnalyzeDto> findIntelligentAnalyze();
 
     //按照设备型号，查询没有分配实验室的设备
     @Select("select * from device d  where d.device_model_id = #{deviceModelId} and d.id not in (select device_id id from laboratory_device) limit #{num}")
-    List<Device> findNoAllocationDevice(int deviceModelId,int num);
+    List<Device> findNoAllocationDevice(int deviceModelId, int num);
+
+
+    //按照设备型号，实验室id查询具体设备
+    @Select("select * from laboratory_device ld join device d on ld.device_id = d.id join device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} and dm.id = #{deviceModelId} limit #{num}")
+    List<DeviceAndDeviceTypeNameDto> findNoAllocationDeviceByLaboratoryId(int deviceModelId, int laboratoryId, int num);
 
     //没有分配实验室的设备的数量
     @Select("select dm.id,count(*) count,dm.device_name deviceName from device d left join device_model dm on dm.id = d.device_model_id where d.id not in (select device_id id from laboratory_device) GROUP BY device_model_id")
@@ -106,12 +112,12 @@ public interface DeviceMapper {
     LaboratoryDeviceNumDto findDeviceStatusNum(int laboratoryId,int deviceModelId,int status);
 
     //按照实验室id查询该实验室已完成的实验数量
-    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 2 and a.laboratory_id = #{laboratoryId}")
+    @Select("select count(*) from arrange a where where a.status = 2 and a.laboratory_id = #{laboratoryId}")
     int findEndingProjectNumByLaboratoryId(int laboratoryId);
 
     //按照实验室id、设备id查询该实验室使用到该设备的实验数量
-    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 2 and a.laboratory_id = #{laboratoryId} and pd.experiment_device_id = #{deviceId}")
-    int findEndingProjectNumByLaboratoryIdAndDeviceId(int laboratoryId, int deviceId);
+    @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 2 and pd.experiment_device_id = #{deviceId}")
+    int findEndingProjectNumByLaboratoryIdAndDeviceId(int deviceId);
 
     //通过设备查询该设备使用次数
     @Select("select count(*) from project_device pd where pd.experiment_device_id = #{deviceId}")
