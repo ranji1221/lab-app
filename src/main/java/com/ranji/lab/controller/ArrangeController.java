@@ -90,7 +90,7 @@ public class ArrangeController {
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String")
     })
     @GetMapping(value = "/pageFindAllArrange",produces = "text/plain;charset=utf-8")
-    public Object pageFindAllArrange(int page,int limit,Integer status) {
+    public String pageFindAllArrange(int page,int limit,Integer status) {
         Map<Object, Object> pageExperimentProject = iArrangeService.pageFindAllArrange(page, limit, status);
         pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return JSON.toJSONString(pageExperimentProject);
@@ -184,7 +184,7 @@ public class ArrangeController {
             @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     })
     @GetMapping(value = "/pageFindlikeFindArrange", produces = "text/plain;charset=utf-8")
-    public Object pageFindlikeFindArrange(String like, int page, int limit) {
+    public String pageFindlikeFindArrange(String like, int page, int limit) {
         Map<Object, Object> pageExperimentProject = iArrangeService.pageFindlikeFindArrange(page, limit, like);
         if (!pageExperimentProject.isEmpty()) {
             pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());

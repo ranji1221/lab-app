@@ -14,15 +14,22 @@ import java.util.Map;
 public class BackStageDtoMapperTests {
     @Resource
     private BackStageDtoMapper backStageDtoMapper;
-
     @Resource
     private IBackStageDtoService iBackStageDtoService;
 
 
     @Test
     public void findAllArrange(){
-        String nowAndLatestSevenDays = backStageDtoMapper.findNowDays(1);
+        String nowAndLatestSevenDays = backStageDtoMapper.findNowDays(0);
         System.out.println(nowAndLatestSevenDays);
+        int noCount = backStageDtoMapper.findNoCount(nowAndLatestSevenDays);
+        int finishedCount = backStageDtoMapper.findFinishedCount(nowAndLatestSevenDays);
+        int unfinishedCount = backStageDtoMapper.findUnfinishedCount(nowAndLatestSevenDays);
+        int allCount = backStageDtoMapper.findAllCount();
+        System.out.println("no"+noCount);
+        System.out.println("no"+finishedCount);
+        System.out.println("no"+unfinishedCount);
+        System.out.println("no"+allCount);
 
     }
     /*@Test
