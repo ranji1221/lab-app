@@ -30,7 +30,7 @@ public class Arrange implements Serializable {
     @NonNull
     private String responsibility;//预约项目负责人
     @NonNull
-    private String status;//预约状态
+    private int status;//预约状态
 
    /* public void setDate(String date){
         this.date = date;

@@ -52,10 +52,10 @@ public class ConsumeInformationAndPurchaseController {
         Map<Object,Object> insertConsumeInformMap = new HashMap<>();
         int i = iConsumeInformService.insertConsumeInform(consumeInformDto);
         if(i<1){
-            insertConsumeInformMap.put("status","failure");
+            insertConsumeInformMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(insertConsumeInformMap);
         }else{
-            insertConsumeInformMap.put("status","success");
+            insertConsumeInformMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(insertConsumeInformMap);
         }
     }
@@ -79,10 +79,10 @@ public class ConsumeInformationAndPurchaseController {
         Map<Object,Object> updateConsumeInformMap = new HashMap<>();
         int i = iConsumeInformService.updateConsumeInform(consumeInform);
         if(i<1){
-            updateConsumeInformMap.put("status","failure");
+            updateConsumeInformMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(updateConsumeInformMap);
         }else{
-            updateConsumeInformMap.put("status","success");
+            updateConsumeInformMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateConsumeInformMap);
         }
     }
@@ -148,7 +148,6 @@ public class ConsumeInformationAndPurchaseController {
     @PostMapping(value = "/insertconsumepurchase", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertConsumePurchase(ConsumePurchase consumePurchase, HttpServletRequest request) {
-        System.out.println("+++++++++++++++++++++++++" + request.getCookies());
         Map<Object, Object> insertConsumePurchaseMap = new HashMap<>();
         int i = iConsumePurchaseService.insertConsumePurchase(consumePurchase);
         if (i < 1) {
@@ -182,10 +181,10 @@ public class ConsumeInformationAndPurchaseController {
             }
         }
         if (i < 1) {
-            updateConsumePurchaseMap.put("status", "failure");
+            updateConsumePurchaseMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(updateConsumePurchaseMap);
         } else {
-            updateConsumePurchaseMap.put("status", "success");
+            updateConsumePurchaseMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(updateConsumePurchaseMap);
         }
 
@@ -386,24 +385,24 @@ public class ConsumeInformationAndPurchaseController {
     }
 
     //模糊查询耗材信息
-   /* @ApiOperation(value="分页模糊查询所有耗材和耗材类型", notes="查询所有耗材和耗材类型")
+    @ApiOperation(value = "分页模糊查询所有耗材和耗材类型", notes = "查询所有耗材和耗材类型")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     })
-    @GetMapping(value = "pageLikeFindConsumeAndConsumeName",produces = "text/plain;charset=utf-8")
-    public String pageLikeFindConsumeAndConsumeName(int page,int limit,String like){
+    @GetMapping(value = "pageLikeFindConsumeAndConsumeName", produces = "text/plain;charset=utf-8")
+    public String pageLikeFindConsumeAndConsumeName(int page, int limit, String like) {
         Map<Object, Object> objectObjectMap = iConsumeInformService.pageLikeFindConsumeAndConsumeName(page, limit, like);
-        if(!objectObjectMap.isEmpty()){
-            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        if (!objectObjectMap.isEmpty()) {
+            objectObjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(objectObjectMap);
-        }else{
-            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            objectObjectMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
         }
-    }*/
-    @ApiOperation(value="模糊查询所有耗材和耗材类型", notes="模糊查询所有耗材和耗材类型")
+    }
+    /*@ApiOperation(value="模糊查询所有耗材和耗材类型", notes="模糊查询所有耗材和耗材类型")
     @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     @GetMapping(value = "pageLikeFindConsumeAndConsumeName",produces = "text/plain;charset=utf-8")
     public String pageLikeFindConsumeAndConsumeName(String like){
@@ -415,28 +414,28 @@ public class ConsumeInformationAndPurchaseController {
             objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
         }
-    }
+    }*/
 
 
     //模糊查询购置信息
-    /*@ApiOperation(value="分页模糊查询购置信息", notes="分页模糊查询购置信息")
+    @ApiOperation(value = "分页模糊查询购置信息", notes = "分页模糊查询购置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
             @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     })
-    @GetMapping(value = "likeFindAllConsumePurchase",produces = "text/plain;charset=utf-8")
-    public String likeFindAll(int page,int limit,String like){
+    @GetMapping(value = "likeFindAllConsumePurchase", produces = "text/plain;charset=utf-8")
+    public String likeFindAll(int page, int limit, String like) {
         Map<Object, Object> objectObjectMap = iConsumePurchaseService.likeFindAll(page, limit, like);
-        if(!objectObjectMap.isEmpty()){
-            objectObjectMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+        if (!objectObjectMap.isEmpty()) {
+            objectObjectMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(objectObjectMap);
-        }else{
-            objectObjectMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            objectObjectMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
         }
-    }*/
-    @ApiOperation(value="模糊查询购置信息", notes="模糊查询购置信息")
+    }
+    /*@ApiOperation(value="模糊查询购置信息", notes="模糊查询购置信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
@@ -452,7 +451,7 @@ public class ConsumeInformationAndPurchaseController {
             objectObjectMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
         }
-    }
+    }*/
 
     @ApiOperation(value = "按照状态查询所有购置", notes = "按照状态查询所有购置")
     @ApiImplicitParams({

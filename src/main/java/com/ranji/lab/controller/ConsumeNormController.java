@@ -95,46 +95,4 @@ public class ConsumeNormController {
         return JSON.toJSONString(map);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*@ApiOperation(value="插入管理标准bug", notes="根据传过来的设备信息来插入管理标准")
-    @PostMapping(value = "/insertconsumenormbug",produces = "text/plain;charset=utf-8")
-    public String insertConsumeNormBug(ConsumeNormDto consumeNormDto){
-        Map<Object, Object> insertConsumeNormMap = new HashMap<>();
-        int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
-        if(i<1){
-            insertConsumeNormMap.put("status","failure");
-            return JSON.toJSONString(insertConsumeNormMap);
-        }else{
-            insertConsumeNormMap.put("status","success");
-            return JSON.toJSONString(insertConsumeNormMap);
-        }
-    }
-    @ApiOperation(value="更新管理标准bug", notes="根据传过来的设备信息来更新管理标准")
-    @PostMapping(value = "/updateconsumenormbug",produces = "text/plain;charset=utf-8")
-    public String updateConsumeNormBug(ConsumeNorm consumeNorm){
-        Map<Object, Object> updateConsumeNormMap = new HashMap<>();
-        int i = iConsumeNormService.updateConsumeNorm(consumeNorm);
-        if(i<1){
-            updateConsumeNormMap.put("status","failure");
-            return JSON.toJSONString(updateConsumeNormMap);
-        }else{
-            updateConsumeNormMap.put("status","success");
-            return JSON.toJSONString(updateConsumeNormMap);
-        }
-    }*/
 }

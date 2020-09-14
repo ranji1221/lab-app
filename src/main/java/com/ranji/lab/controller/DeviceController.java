@@ -323,22 +323,26 @@ public class DeviceController {
     /*
         按照实验室查询拥有设备数量
     */
-    @ApiOperation(value="按照实验室查询拥有设备数量", notes="查询没有分配实验室的设备的数量")
+    @ApiOperation(value = "按照实验室查询拥有设备数量", notes = "查询没有分配实验室的设备的数量")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "laboratoryId", value = "实验室id", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
-    @GetMapping(value = "/laboratoryIdFindDevice",produces = "text/plain;charset=utf-8")
-    public String laboratoryIdFindDevice(int laboratoryId){
+    @GetMapping(value = "/laboratoryIdFindDevice", produces = "text/plain;charset=utf-8")
+    public String laboratoryIdFindDevice(int laboratoryId, Integer status) {
 
-        List<LaboratoryDeviceNumDto> noAllocationDeviceTypeNum = iDeviceService.laboratoryIdFindDevice(laboratoryId, null);
-        if(!noAllocationDeviceTypeNum.isEmpty()) {
-            return JSON.toJSONString(noAllocationDeviceTypeNum);
-        }else{
-            return JSON.toJSONString(noAllocationDeviceTypeNum);
+        List<LaboratoryDeviceNumDto> noAllocationDeviceTypeNum = iDeviceService.laboratoryIdFindDevice(laboratoryId, status);
+        HashMap<String, Object> map = new HashMap<>();
+        if (!noAllocationDeviceTypeNum.isEmpty()) {
+            map.put("data", noAllocationDeviceTypeNum);
+            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(map);
+        } else {
+            map.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+            return JSON.toJSONString(map);
         }
     }
     /*
@@ -490,22 +494,22 @@ public class DeviceController {
     }
 
     //模糊查询所有设备信息
-    @ApiOperation(value="模糊查询所有设备信息", notes="按照关键词模糊查询所有设备信息")
+    @ApiOperation(value = "模糊查询所有设备信息", notes = "按照关键词模糊查询所有设备信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "like", value = "关键词", required = true, dataType = "String")
     })
     @ApiResponses({
-            @ApiResponse(code=200,message="成功"),
-            @ApiResponse(code=500,message="服务器错误")
+            @ApiResponse(code = 200, message = "成功"),
+            @ApiResponse(code = 500, message = "服务器错误")
     })
-    @GetMapping(value="/likefinddevice",produces = "text/plain;charset=utf-8")
-    public String likeFindDevice(String like){
-        Map<Object,Object> map = iDeviceService.likeFindDeviceAndDeviceName(like);
-        if(!map.isEmpty()) {
-            map.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+    @GetMapping(value = "/likefinddevice", produces = "text/plain;charset=utf-8")
+    public String likeFindDevice(int page, int limit, String like) {
+        Map<Object, Object> map = iDeviceService.likeFindDeviceAndDeviceName(page, limit, like);
+        if (!map.isEmpty()) {
+            map.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(map);
-        }else{
-            map.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            map.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(map);
         }
     }

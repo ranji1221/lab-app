@@ -76,6 +76,7 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
 
         BackStage2Dto backStage2Dto = new BackStage2Dto(allCount,allCountPercentage,finishedCount,finishedCountPercentage,unfinishedCount,unfinishedCountPercentage, noCount,noCountPercentage);
         System.out.println(backStage2Dto);
+        allMap.put("data", backStage2Dto);
         allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
 
         return allMap;

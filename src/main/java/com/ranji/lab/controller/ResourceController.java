@@ -53,7 +53,15 @@ public class ResourceController {
     public String downloadResourceDoc(HttpServletResponse response , int id) throws UnsupportedEncodingException {
         ResourceDoc resourceDoc = iResourceDocService.findResourceDocById(id);
         //获取文件地址
-        File fileResourceDoc = new File(resourceDoc.getUrl());
+        String rootDirectory = System.getProperty("user.dir");
+
+        String addr = resourceDoc.getUrl();
+
+        addr = addr.substring(resourceDoc.getUrl().lastIndexOf(File.separator) + 1);
+
+        String laboratoryAddr = rootDirectory + File.separator + "upload" + File.separator + "resourcedoc" + File.separator + addr;
+
+        File f = new File(laboratoryAddr);
 
         String name = new String(resourceDoc.getName().getBytes("UTF-8"), "ISO-8859-1");
 
@@ -61,14 +69,14 @@ public class ResourceController {
             //设置下载格式
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/force-download;charset=UTF8");
-            response.setHeader("Content-Disposition","attachment;filename=" + name);
+            response.setHeader("Content-Disposition", "attachment;filename=" + name);
             response.flushBuffer();
 
             //输出.Doc文件
             OutputStream os = null;
             byte[] buffer = new byte[1024];
             BufferedInputStream bis = null;
-            bis = new BufferedInputStream(new FileInputStream(fileResourceDoc));
+            bis = new BufferedInputStream(new FileInputStream(f));
             os = response.getOutputStream();
             int len = 0;
             while ((len=bis.read(buffer))!= -1) {
@@ -87,20 +95,28 @@ public class ResourceController {
 
         ResourcePdf resourcePdf = iResourcePdfService.findResourcePdfById(id);
         //获取文件地址
-        File fileResourcePdf = new File(resourcePdf.getUrl());
+        String rootDirectory = System.getProperty("user.dir");
+
+        String addr = resourcePdf.getUrl();
+
+        addr = addr.substring(resourcePdf.getUrl().lastIndexOf(File.separator) + 1);
+
+        String laboratoryAddr = rootDirectory + File.separator + "upload" + File.separator + "resourcedoc" + File.separator + addr;
+
+        File f = new File(laboratoryAddr);
 
         String name = new String(resourcePdf.getName().getBytes("UTF-8"), "ISO-8859-1");
         try {
             //设置下载格式
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/force-download;charset=UTF8");
-            response.setHeader("Content-Disposition","attachment;filename=" + name);
+            response.setHeader("Content-Disposition", "attachment;filename=" + name);
             response.flushBuffer();
             //输出.Pdf文件
             OutputStream os = null;
             byte[] buffer = new byte[1024];
             BufferedInputStream bis = null;
-            bis = new BufferedInputStream(new FileInputStream(fileResourcePdf));
+            bis = new BufferedInputStream(new FileInputStream(f));
             os = response.getOutputStream();
             int len = 0;
             while ((len=bis.read(buffer))!= -1) {

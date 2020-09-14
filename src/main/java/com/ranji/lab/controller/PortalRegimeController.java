@@ -192,17 +192,17 @@ public class PortalRegimeController {
         }
     }
 
-    @ApiOperation(value="模糊查找实验制度", notes="模糊查找实验制度")
+    @ApiOperation(value = "模糊查找实验制度", notes = "模糊查找实验制度")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "like", value = "模糊词", required = true, dataType = "String")
     })
-    @GetMapping(value = "/likeregime",produces = "text/plain;charset=utf-8")
-    public String findLikeRegime(String like){
-        Map<Object, Object> likeRegime = iRegimeService.findLikeRegime(like);
-        if(!likeRegime.isEmpty()){
-            likeRegime.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else{
-            likeRegime.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+    @GetMapping(value = "/likeregime", produces = "text/plain;charset=utf-8")
+    public String findLikeRegime(int page, int limit, String like) {
+        Map<Object, Object> likeRegime = iRegimeService.findLikeRegime(like, page, limit);
+        if (!likeRegime.isEmpty()) {
+            likeRegime.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else {
+            likeRegime.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         }
         return JSON.toJSONString(likeRegime);
     }

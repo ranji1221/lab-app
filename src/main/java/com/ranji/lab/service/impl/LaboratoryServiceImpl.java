@@ -6,8 +6,10 @@ import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ranji.lab.dto.*;
+import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.Laboratory;
 import com.ranji.lab.entity.LaboratoryDevice;
+import com.ranji.lab.mapper.DeviceMapper;
 import com.ranji.lab.mapper.LaboratoryDeviceMapper;
 import com.ranji.lab.mapper.LaboratoryMapper;
 import com.ranji.lab.service.prototype.ILaboratoryService;
@@ -27,18 +29,27 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     private LaboratoryMapper laboratoryMapper;
     @Resource
     private LaboratoryDeviceMapper laboratoryDeviceMapper;
+    @Resource
+    private DeviceMapper deviceMapper;
 
     @Override
     @Transactional
     public int insertLaboratory(LaboratoryDto laboratoryDto, String devices) {
         int i = laboratoryMapper.insertLaboratory(laboratoryDto);
-        List<LaboratoryDeviceDto> device = JSON.parseObject(devices, new TypeReference<ArrayList<LaboratoryDeviceDto>>() {});
+        List<LaboratoryDeviceDto> device = JSON.parseObject(devices, new TypeReference<ArrayList<LaboratoryDeviceDto>>() {
+        });
         for (LaboratoryDeviceDto laboratoryDeviceDto : device) {
-            LaboratoryDevice laboratoryDevice = new LaboratoryDevice();
-            laboratoryDevice.setDeviceId(laboratoryDeviceDto.getDeviceId());
-            laboratoryDevice.setLaboratoryId(laboratoryDto.getId());
-            laboratoryDevice.setStatus(0);
-            laboratoryDeviceMapper.insertLaboratoryDevice(laboratoryDevice);
+            List<Device> noAllocationDevice = deviceMapper.findNoAllocationDevice(laboratoryDeviceDto.getExperimentDeviceId(), laboratoryDeviceDto.getDeviceNum());
+            if (noAllocationDevice.size() < laboratoryDeviceDto.getDeviceNum()) {
+                return 0;
+            }
+            for (Device device1 : noAllocationDevice) {
+                LaboratoryDevice laboratoryDevice = new LaboratoryDevice();
+                laboratoryDevice.setDeviceId(device1.getId());
+                laboratoryDevice.setLaboratoryId(laboratoryDto.getId());
+                laboratoryDevice.setStatus(0);
+                laboratoryDeviceMapper.insertLaboratoryDevice(laboratoryDevice);
+            }
         }
         return i;
     }

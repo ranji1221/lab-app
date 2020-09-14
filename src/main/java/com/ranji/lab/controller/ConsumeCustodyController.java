@@ -195,16 +195,16 @@ public class ConsumeCustodyController {
     }*/
 
     //模糊查询
-    @ApiOperation(value="模糊查询保管领用", notes="根据传过来的设备信息来获得保管领用")
+    @ApiOperation(value = "模糊查询保管领用", notes = "根据传过来的设备信息来获得保管领用")
     @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
-    @GetMapping(value = "/likefindAll",produces = "text/plain;charset=utf-8")
-    public String likefindAll(String like){
-        Map<Object,Object> allConsumeCustodyMap = iConsumeCustodyService.likefindAll(like);
-        if(!allConsumeCustodyMap.isEmpty()){
-            allConsumeCustodyMap.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
+    @GetMapping(value = "/likefindAll", produces = "text/plain;charset=utf-8")
+    public String likefindAll(String like, int page, int limit) {
+        Map<Object, Object> allConsumeCustodyMap = iConsumeCustodyService.likefindAll(page, limit, like);
+        if (!allConsumeCustodyMap.isEmpty()) {
+            allConsumeCustodyMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
             return JSON.toJSONString(allConsumeCustodyMap);
-        }else{
-            allConsumeCustodyMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            allConsumeCustodyMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(allConsumeCustodyMap);
         }
     }
@@ -214,6 +214,7 @@ public class ConsumeCustodyController {
     @GetMapping(value = "/allconsumeandconsumenum",produces = "text/plain;charset=utf-8")
     public String allConsumeAndConsumenum(int id){
         Map<Object, Object> allConsumeAndConsumeNum = iConsumeCustodyService.findAllConsumeAndConsumeNum(id);
+        allConsumeAndConsumeNum.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return JSON.toJSONString(allConsumeAndConsumeNum);
     }
 }

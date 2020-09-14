@@ -187,17 +187,17 @@ public class PortalNewsController {
      */
 
     //模糊查找新闻
-    @ApiOperation(value="模糊查找新闻", notes="模糊查找新闻")
+    @ApiOperation(value = "模糊查找新闻", notes = "模糊查找新闻")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "like", value = "模糊词", required = true, dataType = "String")
     })
-    @GetMapping(value = "/likenews",produces = "text/plain;charset=utf-8")
-    public String findLikeNews(String like){
-        Map<Object, Object> likeNews = iNewsService.findLikeNews(like);
-        if(!likeNews.isEmpty()){
-            likeNews.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else{
-            likeNews.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+    @GetMapping(value = "/likenews", produces = "text/plain;charset=utf-8")
+    public String findLikeNews(int page, int limit, String like) {
+        Map<Object, Object> likeNews = iNewsService.findLikeNews(like, page, limit);
+        if (!likeNews.isEmpty()) {
+            likeNews.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else {
+            likeNews.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         }
         return JSON.toJSONString(likeNews);
     }

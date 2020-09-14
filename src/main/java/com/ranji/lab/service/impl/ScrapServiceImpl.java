@@ -93,11 +93,15 @@ public class ScrapServiceImpl implements IScrapService {
     }
 
     @Override
-    public Map<Object, Object> likeFindAll(String like) {
+    public Map<Object, Object> likeFindAll(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum, pageSize);
         List<ScrapDto> all = scrapMapper.likeFindAll(like);
         HashMap<Object, Object> allMap = new HashMap<>();
+        PageInfo<ScrapDto> info = new PageInfo<>(all);
+        long total = info.getTotal();
+
         allMap.put("data", all);
-        allMap.put("total", all.size());
+        allMap.put("total", total);
         allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
         return allMap;
     }

@@ -146,8 +146,8 @@ public class ScrapController {
     @ApiOperation(value = "模糊查询所有设备报废", notes = "模糊查询所有设备报废")
     @GetMapping(value = "/likeFindAll", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String likeFindAll(String like) {
-        Map<Object, Object> allMap = iScrapService.likeFindAll(like);
+    public String likeFindAll(int page, int limit, String like) {
+        Map<Object, Object> allMap = iScrapService.likeFindAll(page, limit, like);
         return JSON.toJSONString(allMap);
     }
 }

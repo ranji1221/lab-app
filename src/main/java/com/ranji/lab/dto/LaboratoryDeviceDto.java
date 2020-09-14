@@ -12,4 +12,9 @@ public class LaboratoryDeviceDto {
     private int id;
     @NonNull
     private int deviceId;
+
+    private int experimentDeviceId;
+
+    private int deviceNum;
+
 }

@@ -88,7 +88,7 @@ public class BannerController {
 
         addr = addr.substring(bannerImage.getImgAddr().lastIndexOf(File.separator)+1);
 
-        String imageAddr = rootDirectory+File.separator+"banner"+File.separator+addr;
+        String imageAddr = rootDirectory + File.separator + "upload" + File.separator + "banner" + File.separator + addr;
 
         File f = new File(imageAddr);
 

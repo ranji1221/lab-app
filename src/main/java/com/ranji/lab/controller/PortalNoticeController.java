@@ -176,22 +176,23 @@ public class PortalNoticeController {
         if(!noticeNextToNext.isEmpty()){
             noticeNextToNext.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
             return JSON.toJSONString(noticeNextToNext);
-        }else {
-            noticeNextToNext.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+        } else {
+            noticeNextToNext.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(noticeNextToNext);
         }
     }
-    @ApiOperation(value="模糊查找通知公告", notes="模糊查找通知公告")
+
+    @ApiOperation(value = "模糊查找通知公告", notes = "模糊查找通知公告")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "like", value = "模糊词", required = true, dataType = "String")
     })
-    @GetMapping(value = "/likenotice",produces = "text/plain;charset=utf-8")
-    public String findLikeNotice(String like){
-        Map<Object, Object> likeNotice = iNoticeService.findLikeNotice(like);
-        if(!likeNotice.isEmpty()){
-            likeNotice.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else{
-            likeNotice.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+    @GetMapping(value = "/likenotice", produces = "text/plain;charset=utf-8")
+    public String findLikeNotice(String like, int page, int limit) {
+        Map<Object, Object> likeNotice = iNoticeService.findLikeNotice(like, page, limit);
+        if (!likeNotice.isEmpty()) {
+            likeNotice.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else {
+            likeNotice.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         }
         return JSON.toJSONString(likeNotice);
     }

@@ -156,7 +156,8 @@ public class ArrangeServiceImpl implements IArrangeService {
     }
 
     @Override
-    public Map<Object, Object> pageFindlikeFindArrange(String like) {
+    public Map<Object, Object> pageFindlikeFindArrange(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum, pageSize);
         List<ArrangeDto> allArrange = arrangeMapper.likeFindArrange(like);
         for (ArrangeDto arrangeDto : allArrange) {
             StringBuffer consumes = new StringBuffer();
@@ -177,9 +178,11 @@ public class ArrangeServiceImpl implements IArrangeService {
 
             }
         }
-        Map<Object,Object> map = new HashMap<>();
-        map.put("data",allArrange);
-        map.put("tatol",allArrange.size());
+        PageInfo pageInfo = new PageInfo(allArrange);
+        long total = pageInfo.getTotal();
+        Map<Object, Object> map = new HashMap<>();
+        map.put("data", allArrange);
+        map.put("total", total);
         return map;
     }
 

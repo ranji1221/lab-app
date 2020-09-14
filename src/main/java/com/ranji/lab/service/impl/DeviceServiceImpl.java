@@ -302,15 +302,19 @@ public class DeviceServiceImpl implements IDeviceService {
 
     /**
      * 模糊查询
+     *
      * @param like
      * @return
      */
     @Override
-    public Map<Object, Object> likeFindDeviceAndDeviceName(String like) {
+    public Map<Object, Object> likeFindDeviceAndDeviceName(int pageNum, int pageSize, String like) {
+        PageHelper.startPage(pageNum, pageSize);
         List<DeviceAndDeviceTypeNameDto> deviceAndDeviceTypeNameDtos = deviceMapper.likeFindDeviceAndDeviceName(like);
         HashMap<Object, Object> allMap = new HashMap<>();
+        PageInfo pageInfo = new PageInfo(deviceAndDeviceTypeNameDtos);
+        long total = pageInfo.getTotal();
         allMap.put("data", deviceAndDeviceTypeNameDtos);
-        allMap.put("total", deviceAndDeviceTypeNameDtos.size());
+        allMap.put("total", total);
         return allMap;
     }
 

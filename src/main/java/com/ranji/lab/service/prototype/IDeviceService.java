@@ -66,7 +66,7 @@ public interface IDeviceService {
      * @param like
      * @return
      */
-    Map<Object, Object> likeFindDeviceAndDeviceName(String like);
+    Map<Object, Object> likeFindDeviceAndDeviceName(int pageNum, int pageSize, String like);
 
     List<BackStage3Dto> findStatusAndSum();
 }

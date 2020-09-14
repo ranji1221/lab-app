@@ -47,7 +47,7 @@ public class LaboratoryController {
         //-- 1. 获取项目的根目录
         String rootDirectory = System.getProperty("user.dir");
         //-- 2. 创建存放上传资源的目录
-        File resourceDirectory = new File(rootDirectory + File.separator + "upload" + File.separator + "image");
+        File resourceDirectory = new File(rootDirectory + File.separator + "upload");
         if (!resourceDirectory.exists()) resourceDirectory.mkdirs();
         String path = resourceDirectory.getAbsolutePath() + File.separator + file.getOriginalFilename();
         try {
@@ -118,7 +118,7 @@ public class LaboratoryController {
     }
 
     //分页模糊查询实验室
-    /*@ApiOperation(value="分页模糊查询所有实验室", notes="分页模糊查询所有实验室")
+    @ApiOperation(value = "分页模糊查询所有实验室", notes = "分页模糊查询所有实验室")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "第几页", required = true, dataType = "String"),
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
@@ -135,9 +135,9 @@ public class LaboratoryController {
             allLaboratory.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allLaboratory);
         }
-    }*/
+    }
 
-    @ApiOperation(value="模糊查询所有实验室", notes="分页模糊查询所有实验室")
+    /*@ApiOperation(value="模糊查询所有实验室", notes="分页模糊查询所有实验室")
     @ApiImplicitParam(name = "like", value = "关键字", required = true, dataType = "String")
     @GetMapping(value = "likeFindAllLaboratory",produces = "text/plain;charset=utf-8")
     @ResponseBody
@@ -150,5 +150,5 @@ public class LaboratoryController {
             allLaboratory.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(allLaboratory);
         }
-    }
+    }*/
 }

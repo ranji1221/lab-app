@@ -180,17 +180,17 @@ public class PortalStudyController {
     }
 
 
-    @ApiOperation(value="模糊查找教学科研", notes="模糊查找教学科研")
+    @ApiOperation(value = "模糊查找教学科研", notes = "模糊查找教学科研")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "like", value = "模糊词", required = true, dataType = "String")
     })
-    @GetMapping(value = "/likestudy",produces = "text/plain;charset=utf-8")
-    public String findLikeStudy(String like){
-        Map<Object, Object> likeStudy = iStudyService.findLikeStudy(like);
-        if(!likeStudy.isEmpty()){
-            likeStudy.put(Code.SUCCESS.getMsg(),Code.SUCCESS.getCode());
-        }else{
-            likeStudy.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
+    @GetMapping(value = "/likestudy", produces = "text/plain;charset=utf-8")
+    public String findLikeStudy(int page, int limit, String like) {
+        Map<Object, Object> likeStudy = iStudyService.findLikeStudy(like, page, limit);
+        if (!likeStudy.isEmpty()) {
+            likeStudy.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+        } else {
+            likeStudy.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
         }
         return JSON.toJSONString(likeStudy);
     }

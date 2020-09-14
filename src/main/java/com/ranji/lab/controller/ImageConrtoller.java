@@ -76,14 +76,21 @@ public class ImageConrtoller {
     @GetMapping(value = "/newsimage/{id}")
     public String getNewsImage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
         NewsImage newsImage = iNewsImageService.findNewsImageById(id);
+        String rootDirectory = System.getProperty("user.dir");
 
-        File f = new File(newsImage.getImageAddr());
+        String addr = newsImage.getImageAddr();
+
+        addr = addr.substring(newsImage.getImageAddr().lastIndexOf(File.separator) + 1);
+
+        String newsAddr = rootDirectory + File.separator + "upload" + File.separator + addr;
+
+        File f = new File(newsAddr);
         byte[] buffer = new byte[1024];
         BufferedInputStream bis = null;
         bis = new BufferedInputStream(new FileInputStream(f));
         OutputStream os = response.getOutputStream();
         int len = 0;
-        while ((len=bis.read(buffer))!= -1) {
+        while ((len = bis.read(buffer)) != -1) {
             os.write(buffer, 0, len);
         }
         bis.close();
@@ -132,14 +139,21 @@ public class ImageConrtoller {
     @GetMapping(value = "/studyimage/{id}")
     public String getStudyImage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
         StudyImage studyImage = iStudyImageService.findStudyImageById(id);
+        String rootDirectory = System.getProperty("user.dir");
 
-        File f = new File(studyImage.getImageAddr());
+        String addr = studyImage.getImageAddr();
+
+        addr = addr.substring(studyImage.getImageAddr().lastIndexOf(File.separator) + 1);
+
+        String newsAddr = rootDirectory + File.separator + "upload" + File.separator + addr;
+
+        File f = new File(newsAddr);
         byte[] buffer = new byte[1024];
         BufferedInputStream bis = null;
         bis = new BufferedInputStream(new FileInputStream(f));
         OutputStream os = response.getOutputStream();
         int len = 0;
-        while ((len=bis.read(buffer))!= -1) {
+        while ((len = bis.read(buffer)) != -1) {
             os.write(buffer, 0, len);
         }
         bis.close();
@@ -154,14 +168,21 @@ public class ImageConrtoller {
     @GetMapping(value = "/laboratoryimage/{id}")
     public String laboratoryimage(@PathVariable int id, HttpServletResponse response) throws IOException, FileNotFoundException {
         Laboratory laboratory = iLaboratoryImageService.findlaboratoryImageById(id);
+        String rootDirectory = System.getProperty("user.dir");
 
-        File f = new File(laboratory.getImageAddr());
+        String addr = laboratory.getImageAddr();
+
+        addr = addr.substring(laboratory.getImageAddr().lastIndexOf(File.separator) + 1);
+
+        String laboratoryAddr = rootDirectory + File.separator + "upload" + File.separator + addr;
+
+        File f = new File(laboratoryAddr);
         byte[] buffer = new byte[1024];
         BufferedInputStream bis = null;
         bis = new BufferedInputStream(new FileInputStream(f));
         OutputStream os = response.getOutputStream();
         int len = 0;
-        while ((len=bis.read(buffer))!= -1) {
+        while ((len = bis.read(buffer)) != -1) {
             os.write(buffer, 0, len);
         }
         bis.close();

@@ -55,7 +55,7 @@ public interface ArrangeMapper {
      * 根据时间判断修改状态在拦截器中使用
      * 修改预约项目状态到正在进行
      */
-    @Update("update arrange set status = '1' where date<=#{date} and time_stop <= #{time} and time_start >= #{time}")
+    @Update("update arrange set status = '1' where date<=#{date} and time_stop >= #{time} and time_start <= #{time}")
     void changeArrangeProjectToOngoing(String date, String time);
 
     /**

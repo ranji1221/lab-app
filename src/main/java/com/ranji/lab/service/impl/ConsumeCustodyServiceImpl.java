@@ -101,15 +101,26 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
 
     @Override
     public Map<Object, Object> likefindAll(int pageNum, int pageSize, String like) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.likefindAll(like);
-        PageInfo<ConsumeCustody> allConsumeCustodyPaging = new PageInfo<>(consumeCustodies);
-        long total = allConsumeCustodyPaging.getTotal();
+        PageHelper.startPage(pageNum, pageSize);
+        List<ConsumeCustody> all = consumeCustodyMapper.likefindAll(like);
+        for (ConsumeCustody consumeCustody : all) {
+            StringBuffer consumes = new StringBuffer();
+            List<ConsumeCustody> consumeCustodies = consumeCustodyMapper.projectIdFindAll(consumeCustody.getArrangeProjectId());
+            if (consumeCustodies != null) {
+                for (ConsumeCustody custody : consumeCustodies) {
+                    consumes.append(custody.getConsumeName() + ":" + custody.getCount() + custody.getUnitName() + "、");
+                }
+                consumeCustody.setConsumes(consumes.toString().substring(0, consumes.toString().length() - 1));
+            }
+        }
+        PageInfo pageInfo = new PageInfo(all);
+        long total = pageInfo.getTotal();
 
-        Map<Object, Object> allConsumeCustodyOnPaging = new HashMap<>();
-        allConsumeCustodyOnPaging.put("data",consumeCustodies);
-        allConsumeCustodyOnPaging.put("total",total);
-        return allConsumeCustodyOnPaging;
+        HashMap<Object, Object> allMap = new HashMap<>();
+        allMap.put("data", all);
+        allMap.put("total", total);
+
+        return allMap;
     }
 
     @Override
