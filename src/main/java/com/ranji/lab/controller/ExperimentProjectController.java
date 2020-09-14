@@ -88,7 +88,7 @@ public class ExperimentProjectController {
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
     })
     @GetMapping(value = "/pageExperimentProject",produces = "text/plain;charset=utf-8")
-    public Object pageExperimentProject(int page,int limit,Integer status){
+     public String pageExperimentProject(int page,int limit,Integer status){
         Map<Object, Object> pageExperimentProject = iExperimentProjectService.pageExperimentProject(page, limit,status);
         if(!pageExperimentProject.isEmpty()) {
             pageExperimentProject.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());

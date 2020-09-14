@@ -142,7 +142,7 @@ public class PortalNewsController {
             @ApiImplicitParam(name = "limit", value = "所需要的条数", required = true, dataType = "String"),
     })
     @GetMapping(value = "/allnewss",produces = "text/plain;charset=utf-8")
-    public Object allNewss(int page,int limit){
+    public String allNewss(int page,int limit){
         Map<Object, Object> allNewss = iNewsService.findAllNews(page, limit);
         if(!allNewss.isEmpty()) {
             allNewss.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
