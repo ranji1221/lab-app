@@ -5,10 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ranji.lab.dto.ArrangeDto;
-import com.ranji.lab.dto.LaboratoryDeviceNumDto;
-import com.ranji.lab.dto.ProjectConsumeDto;
-import com.ranji.lab.dto.ProjectDeviceDto;
+import com.ranji.lab.dto.*;
 import com.ranji.lab.entity.Arrange;
 import com.ranji.lab.entity.Device;
 import com.ranji.lab.entity.LaboratoryDevice;
@@ -51,8 +48,12 @@ public class ArrangeServiceImpl implements IArrangeService {
         });
         int i = arrangeMapper.insertArrange(arrange);
         for (ProjectDeviceDto projectDeviceDto : projectDeviceDtos) {
-            projectDeviceDto.setArrangeProjectId(arrange.getId());
-            projectDeviceMapper.insertProjectDevice(projectDeviceDto);
+            List<DeviceAndDeviceTypeNameDto> noAllocationDeviceByLaboratoryId = deviceMapper.findNoAllocationDeviceByLaboratoryId(projectDeviceDto.getExperimentDeviceId(), arrange.getLaboratoryId(), projectDeviceDto.getDeviceNum());
+            for (DeviceAndDeviceTypeNameDto device : noAllocationDeviceByLaboratoryId) {
+                projectDeviceDto.setArrangeProjectId(arrange.getId());
+                projectDeviceDto.setExperimentDeviceId(device.getDeviceId());
+                projectDeviceMapper.insertProjectDevice(projectDeviceDto);
+            }
         }
         for (ProjectConsumeDto projectConsumeDto : projectConsumeDtos) {
             projectConsumeDto.setArrangeProjectId(arrange.getId());

@@ -262,7 +262,7 @@ public class DeviceServiceImpl implements IDeviceService {
         List<DeviceAndDeviceTypeNameDto> UsageRate = new ArrayList<>();
         for (DeviceAndDeviceTypeNameDto device : devices) {
             double endingProjectNum = deviceMapper.findEndingProjectNumByLaboratoryId(device.getLaboratoryId());
-            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(device.getLaboratoryId(), device.getId());
+            double endingDeviceNum = deviceMapper.findEndingProjectNumByLaboratoryIdAndDeviceId(device.getId());
             if (endingProjectNum != 0 && endingDeviceNum != 0) {
                 device.setUsageRate(endingDeviceNum / endingProjectNum);
             } else {

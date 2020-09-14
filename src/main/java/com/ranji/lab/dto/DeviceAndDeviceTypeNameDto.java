@@ -43,6 +43,7 @@ public class DeviceAndDeviceTypeNameDto {
 
     private int laboratoryId;
 
+    private int deviceId;
 
     public void setFactime(String factime){
         this.factime=factime;
