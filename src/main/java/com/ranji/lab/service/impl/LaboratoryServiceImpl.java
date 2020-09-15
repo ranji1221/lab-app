@@ -35,13 +35,16 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
     @Override
     @Transactional
     public int insertLaboratory(LaboratoryDto laboratoryDto, String devices) {
-        int i = laboratoryMapper.insertLaboratory(laboratoryDto);
+        int i = 0;
         List<LaboratoryDeviceDto> device = JSON.parseObject(devices, new TypeReference<ArrayList<LaboratoryDeviceDto>>() {
         });
         for (LaboratoryDeviceDto laboratoryDeviceDto : device) {
             List<Device> noAllocationDevice = deviceMapper.findNoAllocationDevice(laboratoryDeviceDto.getExperimentDeviceId(), laboratoryDeviceDto.getDeviceNum());
             if (noAllocationDevice.size() < laboratoryDeviceDto.getDeviceNum()) {
                 return 0;
+            }
+            if (laboratoryDto.getId() != 0) {
+                i = laboratoryMapper.insertLaboratory(laboratoryDto);
             }
             for (Device device1 : noAllocationDevice) {
                 LaboratoryDevice laboratoryDevice = new LaboratoryDevice();
@@ -98,8 +101,9 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
         for (Laboratory laboratory : all) {
             StatusMonitoringDto statusMonitoringDto = new StatusMonitoringDto();
             statusMonitoringDto = laboratoryMapper.laboratoryStatusMonitoring(laboratory.getId());
-            if(statusMonitoringDto!=null){
-                list.add(statusMonitoringDto);}
+            if(statusMonitoringDto!=null) {
+                list.add(statusMonitoringDto);
+            }
         }
         return list;
     }
