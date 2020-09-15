@@ -41,19 +41,15 @@ public interface BackStageDtoMapper {
     @Select("select count(*) as all_count from laboratory")
     int findAllCount();
 
-    //已完成项目的实验
-    @Select("select count(*) as finished_count from (select count(*) count from arrange where status = 2 and date = #{date} group by laboratory_id) count")
-    int findFinishedCount(String date);
+    //今天已用过的实验室 = 正在使用的实验室数量 + 已完成的实验室数量
+    @Select("select count(*) finished_count from (select a.laboratory_id from arrange a where a.date = '2020-9-15' and status != 0 GROUP BY a.laboratory_id) count")
+    int findUseingCount(String date);
 
-    //正在进行的实验项目
-    @Select("select count(*) as unfinished_count from (select count(*) count from arrange where status = 1 and date = #{date} group by laboratory_id) count")
-    int findUnfinishedCount(String date);
+    //今天尚未使用的实验室数量
+    @Select("select count(*) from (select a.laboratory_id from arrange a where a.date = #{date} and status = 0 GROUP BY a.laboratory_id) count")
+    int findNoUseCount(String date);
 
-    //没有预约项目的实验
-    @Select("select count(*) no_count from laboratory l  where l.id not in ( select a.laboratory_id from arrange a where a.date = #{date} GROUP BY a.laboratory_id )")
-    int findNoCount(String date);
-
-    //有但是没有进行的项目
-    @Select("select count(*) from arrange where date = #{date} and status = 0")
-    int findHaveButNotUse(String date);
+    //今天要用到的实验室数量
+    @Select("select count(*) from (select a.laboratory_id from arrange a where a.date = #{date} GROUP BY a.laboratory_id) count")
+    int findWillUseCount(String date);
 }

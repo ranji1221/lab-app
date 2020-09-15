@@ -13,15 +13,15 @@ public class BackStage2Dto implements Serializable {
     @NonNull
     private double allCountPercentage;
     @NonNull
-    private double finishedCount;
+    private double useingCount;
     @NonNull
-    private double finishedCountPercentage;
+    private double useingCountPercentage;
     @NonNull
-    private double unfinishedCount;
+    private double noUseCount;
     @NonNull
-    private double unfinishedCountPercentage;
+    private double noUseCountPercentage;
     @NonNull
-    private double noCount;
+    private double willUseCount;
     @NonNull
-    private double noCountPercentage;
+    private double willUseCountPercentage;
 }

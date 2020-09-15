@@ -57,26 +57,29 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
 
         DecimalFormat df = new DecimalFormat("######0.00");
 
+        //查询全部实验室
         double allCount = backStageDtoMapper.findAllCount();
-        double finishedCount = backStageDtoMapper.findFinishedCount(nowDays);
-        double unfinishedCount = backStageDtoMapper.findUnfinishedCount(nowDays);
-        double noCount = backStageDtoMapper.findNoCount(nowDays);
-        double haveButNotUse = backStageDtoMapper.findHaveButNotUse(nowDays);
+        //今天已用过的实验室 = 正在使用的实验室数量 + 已完成的实验室数量
+        double useingCount = backStageDtoMapper.findUseingCount(nowDays);
+        //今天尚未使用的实验室数量
+        double noUseCount = backStageDtoMapper.findNoUseCount(nowDays);
+        //今天要用到的实验室数量
+        double willUseCount = backStageDtoMapper.findWillUseCount(nowDays);
 
-        double allCountPercentageClone = allCount/ allCount;
+        double allCountPercentageClone = allCount / allCount;
         double allCountPercentage = Double.parseDouble(df.format(allCountPercentageClone));
 
-        double finishedCountPercentageClone = finishedCount/ allCount;
-        double finishedCountPercentage = Double.parseDouble(df.format(finishedCountPercentageClone));
+        double useingCountPercentageClone = useingCount / allCount;
+        double useingCountPercentage = Double.parseDouble(df.format(useingCountPercentageClone));
 
-        double unfinishedCountPercentageClone = unfinishedCount/ allCount;
-        double unfinishedCountPercentage = Double.parseDouble(df.format(unfinishedCountPercentageClone));
+        double noUseCountPercentageClone = noUseCount / useingCount;
+        double noUseCountPercentage = Double.parseDouble(df.format(noUseCountPercentageClone));
 
-        double noCountPercentageClone = noCount/ allCount;
-        double noCountPercentage = Double.parseDouble(df.format(noCountPercentageClone));
+        double willUseCountPercentageClone = willUseCount / useingCount;
+        double willUseCountPercentage = Double.parseDouble(df.format(willUseCountPercentageClone));
 
-        BackStage2Dto backStage2Dto = new BackStage2Dto(allCount, allCountPercentage, finishedCount, finishedCountPercentage, unfinishedCount, unfinishedCountPercentage, noCount, noCountPercentage + haveButNotUse);
-        System.out.println(backStage2Dto);
+        BackStage2Dto backStage2Dto = new BackStage2Dto(allCount, allCountPercentage, useingCount, useingCountPercentage, noUseCount, noUseCountPercentage, willUseCount, willUseCountPercentage);
+
         allMap.put("data", backStage2Dto);
         allMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
 
