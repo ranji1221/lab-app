@@ -7,6 +7,7 @@ import com.ranji.lab.entity.NewsImage;
 import com.ranji.lab.entity.Slide;
 import com.ranji.lab.mapper.NewsMapper;
 import com.ranji.lab.service.prototype.INewsService;
+import io.swagger.annotations.Api;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.io.*;
 /**
  * 新闻控制器
  */
+@Api(tags = "新闻管理")
 @Controller
 public class NewsController {
     @Resource

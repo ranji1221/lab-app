@@ -46,9 +46,6 @@ server:
     context-path: /lab
   port: 8080
 
-# flowable workflow engine
-flowable:
-  async-executor-activate: false #关闭定时任务JOB
 
 
 

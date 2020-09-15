@@ -56,7 +56,7 @@ public class AuthController {
      */
     @ApiOperation(value="获取某人的所有权限", notes="该接口通过用户的登陆名获取到该用户的所有权限（按照分类给定所有的权限，方便前端做展示）")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataType = "String")
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataTypeClass = String.class)
     })
     @GetMapping(value = "/authssomeone",produces = "text/plain;charset=utf-8")
     public String getAuths(String userName){
@@ -116,8 +116,8 @@ public class AuthController {
 
     @ApiOperation(value="给某角色分配某项权限", notes="该接口主要通过角色ID和权限ID,实现给某角色分配某项权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleID", value = "角色ID", required = true),
-            @ApiImplicitParam(name = "authID", value = "权限ID", required = true)
+            @ApiImplicitParam(name = "roleID", value = "角色ID", required = true, dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "authID", value = "权限ID", required = true, dataTypeClass = Integer.class)
     })
     @PostMapping(value = "/assignauth", produces = "text/plain;charset=utf-8")
     public String assignAuth(int roleID, int authID){
@@ -129,8 +129,8 @@ public class AuthController {
 
     @ApiOperation(value="解除某角色分配某项权限", notes="该接口主要通过角色ID和权限ID,实现解除某角色的某项权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleID", value = "角色ID", required = true),
-            @ApiImplicitParam(name = "authID", value = "权限ID", required = true)
+            @ApiImplicitParam(name = "roleID", value = "角色ID", required = true, dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "authID", value = "权限ID", required = true, dataTypeClass = Integer.class)
     })
     @PostMapping(value = "/cancelauth", produces = "text/plain;charset=utf-8")
     public String cancelAuth(int roleID, int authID){
@@ -142,9 +142,9 @@ public class AuthController {
 
     @ApiOperation(value="增加用户并且给用户分配角色", notes="该接口主要通过用户信息和角色ID,实现增加用户并给用户分配角色")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "用户名", required = true),
-            @ApiImplicitParam(name = "password", value = "密码", required = true),
-            @ApiImplicitParam(name = "roleID", value = "角色ID", required = true)
+            @ApiImplicitParam(name = "name", value = "用户名", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "roleID", value = "角色ID", required = true, dataTypeClass = Integer.class)
     })
     @PostMapping(value="/adduserandassignrole",produces = "text/plain;charset=utf-8")
     public String assignRole(UserDTO userdto, int roleID){

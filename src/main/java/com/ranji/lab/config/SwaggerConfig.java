@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -16,7 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 
 @Configuration
-@EnableSwagger2
+@EnableOpenApi      //-- Swagger3的打开方式
 public class SwaggerConfig {
     /**
      * 创建API应用
@@ -38,7 +40,7 @@ public class SwaggerConfig {
 
     /**
      * 创建该API的基本信息（这些基本信息会展现在文档页面中）
-     * 访问地址：http://项目实际地址/swagger-ui.html
+     * 访问地址：http://项目实际地址/swagger-ui/index.html
      *
      * @return
      */
@@ -46,6 +48,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("高校实验室管理平台API文档")
                 .description("简单优雅的restful风格")
+                //.contact(new Contact("ranji","#","jiran1221@163.com"))
                 .version("1.0")
                 .build();
     }

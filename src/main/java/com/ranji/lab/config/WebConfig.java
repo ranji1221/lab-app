@@ -1,7 +1,10 @@
 package com.ranji.lab.config;
 
+import com.ranji.lab.security.JWTInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -16,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  *  @since jdk8
  */
 @Configuration
-public class CorsConfig extends WebMvcConfigurationSupport {
+public class WebConfig extends WebMvcConfigurationSupport {
     /**
      * 全局跨域处理
      * @param registry
@@ -44,14 +47,32 @@ public class CorsConfig extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/public/")
         ;
 
-
-        //-- 处理Swagger接口文档无法访问的问题
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        //-- swagger3的资源访问路径（切记和swagger2路径不同）
+        registry.addResourceHandler("/swagger-ui/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
 
         super.addResourceHandlers(registry);
     }
 
+    /**
+     * 添加jwt拦截器
+     * 排除了登陆，和swagger接口框架的验证
+     * @param registry
+     */
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login","/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**", "/swagger-ui/**");
+        super.addInterceptors(registry);
+    }
+
+    /**
+     * jwt拦截器
+     * @return
+     */
+    @Bean
+    public JWTInterceptor authInterceptor(){
+        return new JWTInterceptor();
+    }
 }

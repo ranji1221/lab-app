@@ -104,3 +104,16 @@ create table t_article_thumbnail(
     path varchar(500)    #这个字段其实是保存的图片的真实存储位置
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+# employee table 员工表 (使用户的信息更加的完善,和用户建立一对一的关系)
+drop table if exists t_employee;
+create table t_employee(
+    id int primary key,
+    realName varchar(100),  #姓名
+    gender tinyint,         #性别
+    birth  date,            #出生年日期
+    address varchar(250),    #住址
+    foreign key (id) references t_user(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into t_employee(id,realName,gender,birth,address) values(1,'王昭君',0,'2012-03-15','塞北高原岭上寒');
+insert into t_employee(id,realName,gender,birth,address) values(2,'项羽',1,'2010-02-15','江东父老水上行');

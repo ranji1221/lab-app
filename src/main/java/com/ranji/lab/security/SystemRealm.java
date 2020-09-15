@@ -3,6 +3,7 @@ package com.ranji.lab.security;
 import com.ranji.lab.entity.Role;
 import com.ranji.lab.entity.User;
 import com.ranji.lab.service.prototype.IUserService;
+import com.ranji.lab.util.JWTUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -38,23 +39,32 @@ public class SystemRealm extends AuthorizingRealm {
     private IUserService userService;
 
     /**
+     * 因为自定义了认证的实体，故而要重写此方法，否则报错
+     * @param token
+     * @return
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JWTToken;
+    }
+
+    /**
      * 用于为当前登录成功的用户授予权限和角色
      * @param principalCollection
      * @return
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //-- 编写授权代码
-        //-- 以下的代码是测试代码，假设所有的用户都会有"user:list"的权限
-        //-- 在实际的开发中，我们会自己写好user-role-permission模块，然后从数据库中查询，用户的权限
-        //-- 并可以赋予用户权限
-        //-- 由于下面保存的User，所以这里拿到的就是User,若下面只保存用户名，则这里拿到的就是字符串用户名
-        User user = (User)principalCollection.fromRealm(getName()).iterator().next();
+        //-- 1. 获取认证主体信息（即token,由于我们认证的时候保存的就是token字符串）
+        String token = principalCollection.toString();
+        //-- 2. 获取用户名
+        String userName = JWTUtil.getUsername(token);
+        //-- 3. 根据用户名获取该用户的角色或权限信息即可，这里我们先获取到用户的角色信息返回
         SimpleAuthorizationInfo info = null;
         List<Role> roles = null;
-        if(user != null) {
+        if(userName != null) {
             info = new SimpleAuthorizationInfo();
-            roles = userService.getRoles(user.getName());
+            roles = userService.getRoles(userName);
         }
         //-- 暂时不拿权限判断权限，只拿角色来判断
         //info.addStringPermission("user:list");
@@ -65,32 +75,24 @@ public class SystemRealm extends AuthorizingRealm {
     }
 
     /**
-     * 用于验证当前登录的用户，获取认证信息
+     * 通过Token进行认证
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        //-- 编写认证代码
-        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
-        //-- 1. 根据验证单填写的名字从后台查找该用户
-        Map<String,Object> params = new HashMap<String,Object>();
-        params.put("name",token.getUsername());
-        List<User> users = userService.getUsers(params);
-        User user = null;
-        if(users!=null && users.size()>0) user = users.get(0);
-
-        //-- 2. 返回认证材料信息
-        AuthenticationInfo  authenInfo = null;
-        if(user != null) {
-            //-- 这里直接把用户保存起来，以便更好的获取到用户的信息，先前只保存用户的名字，主要看第一个参数
-            //-- 其实用SecurityUtils.getSubject().getPrincipal()这个方法，返回的就是这里第一个参数的值，一般只保存用户名
-            //-- 而在做前后端分离的需要返回User
-            authenInfo = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
-            //-- authenInfo = new SimpleAuthenticationInfo(user.getName(), user.getPassword(), getName());
+        System.out.println("认证");
+        //-- 1. 获取认证实体（其实就是token）
+        String token = (String)authenticationToken.getCredentials();
+        //-- 2. 通过token获取到用户名
+        String userName = JWTUtil.getUsername(token);
+        //-- 3. 进行校验
+        if (userName == null || !JWTUtil.verifyToken(token, userName)) {
+            throw new AuthenticationException("token verify failure");
         }
-        return authenInfo;
+        //-- 4. 返回认证信息
+        return new SimpleAuthenticationInfo(token,token,this.getClass().getName());
     }
 
     public void clearCachedAuthorizationInfo(String principal){

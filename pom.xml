@@ -15,7 +15,6 @@
     <!--2. Properties Config -->
     <properties>
         <java.version>1.8</java.version>
-        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <!--3. Project Dependencies -->
@@ -98,22 +97,32 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--Swagger API Document -->
+        <!--
+            Swagger3 API Document
+            引入它自带的swagger-models，访问校验会报异常，所以这里引入了更高级版本的swagger-models
+            就目前看，高于1.5.20即可。
+        -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.24</version>
         </dependency>
-        <!-- Flowable Workflow Engine -->
+        <!-- JWT Token -->
         <dependency>
-            <groupId>org.flowable</groupId>
-            <artifactId>flowable-spring-boot-starter</artifactId>
-            <version>6.5.0</version>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.10.3</version>
         </dependency>
     </dependencies>
 

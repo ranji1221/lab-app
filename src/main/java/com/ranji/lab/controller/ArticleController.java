@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ranji.lab.entity.Article;
 import com.ranji.lab.entity.ArticleThumbnail;
 import com.ranji.lab.service.prototype.IArticleService;
+import io.swagger.annotations.Api;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.io.*;
 /**
  * 文章控制器
  */
+@Api(tags = "文章管理")
 @Controller
 public class ArticleController {
     @Resource

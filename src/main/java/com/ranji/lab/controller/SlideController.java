@@ -2,6 +2,7 @@ package com.ranji.lab.controller;
 
 import com.ranji.lab.entity.Slide;
 import com.ranji.lab.service.prototype.ISlideService;
+import io.swagger.annotations.Api;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.io.*;
  * 轮播图控制器
  * @RanJi
  */
+@Api(tags = "幻灯片管理")
 @Controller
 public class SlideController {
 
