@@ -27,17 +27,17 @@ public class ExceptionHanlder {
  * @return
 
  */
-    @ExceptionHandler(value = Exception.class)
-    public Object handleException(Exception e, HttpServletRequest request){
-        //-- 1. 日志输出
-        LOG.info("url {}, msg {}",request.getRequestURL(),e.getMessage());
-        //-- 2. 返回JSON对象，看前端怎么处理即可
-        JSONObject jo = new JSONObject();
-        jo.put("code",100);
-        jo.put("msg",e.getMessage());
-        jo.put("url",request.getRequestURL());
-        return jo.toJSONString();
-    }
+@ExceptionHandler(value = Exception.class)
+public String handleException(Exception e, HttpServletRequest request) {
+    //-- 1. 日志输出
+    LOG.info("url {}, msg {}", request.getRequestURL(), e.getMessage());
+    //-- 2. 返回JSON对象，看前端怎么处理即可
+    JSONObject jo = new JSONObject();
+    jo.put("code", 100);
+    jo.put("msg", e.getMessage());
+    jo.put("url", request.getRequestURL());
+    return jo.toJSONString();
+}
 
     /*
      * 处理自定义异常
@@ -47,14 +47,14 @@ public class ExceptionHanlder {
      */
 
     @ExceptionHandler(value = MyException.class)
-    public Object handleMyException(MyException e, HttpServletRequest request){
+    public String handleMyException(MyException e, HttpServletRequest request) {
         //-- 1. 日志输出
-        LOG.info("url {}, msg {}",request.getRequestURL(),e.getMessage());
+        LOG.info("url {}, msg {}", request.getRequestURL(), e.getMessage());
         //-- 2. 返回JSON对象，看前端怎么处理即可
         JSONObject jo = new JSONObject();
-        jo.put("code",e.getCode());
-        jo.put("msg",e.getMsg());
-        jo.put("url",request.getRequestURL());
+        jo.put("code", e.getCode());
+        jo.put("msg", e.getMsg());
+        jo.put("url", request.getRequestURL());
         return jo.toJSONString();
     }
 
