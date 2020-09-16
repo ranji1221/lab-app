@@ -42,7 +42,7 @@ public interface BackStageDtoMapper {
     int findAllCount();
 
     //今天已用过的实验室 = 正在使用的实验室数量 + 已完成的实验室数量
-    @Select("select count(*) finished_count from (select a.laboratory_id from arrange a where a.date = '2020-9-15' and status != 0 GROUP BY a.laboratory_id) count")
+    @Select("select count(*) finished_count from (select a.laboratory_id from arrange a where a.date = #{date} and status != 0 GROUP BY a.laboratory_id) count")
     int findUseingCount(String date);
 
     //今天尚未使用的实验室数量
