@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 public interface ConsumePurchaseMapper {
+
     @Insert("insert into consume_purchase (consume_id,num,date,applicant,status) values (#{consumeId},#{num},#{date},#{applicant},#{status})")
     int insertConsumePurchase(ConsumePurchase consumePurchase);
     @Update("<script>" +

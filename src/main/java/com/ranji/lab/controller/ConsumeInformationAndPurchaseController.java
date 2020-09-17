@@ -9,6 +9,7 @@ import com.ranji.lab.util.DateUtil;
 import io.swagger.annotations.*;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -50,6 +51,7 @@ public class ConsumeInformationAndPurchaseController {
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     public String insertConsumeInform(ConsumeInformDto consumeInformDto){
         Map<Object,Object> insertConsumeInformMap = new HashMap<>();
+        consumeInformDto.setStatus(0);
         int i = iConsumeInformService.insertConsumeInform(consumeInformDto);
         if(i<1){
             insertConsumeInformMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
@@ -468,6 +470,25 @@ public class ConsumeInformationAndPurchaseController {
         } else {
             objectObjectMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
             return JSON.toJSONString(objectObjectMap);
+        }
+    }
+
+    @PostMapping(value = "/insertconsumeinformandpurchase", produces = "text/plain;charset=utf-8")
+    //@RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
+    @Transactional
+    public String insertconsumeinformandpurchase(ConsumeInformDto consumeInformDto, ConsumePurchase consumePurchase) {
+        Map<Object, Object> insertConsumeInformMap = new HashMap<>();
+        consumeInformDto.setStatus(1);
+        consumeInformDto.setNum(0);
+        int i = iConsumeInformService.insertConsumeInform(consumeInformDto);
+        consumePurchase.setConsumeId(consumeInformDto.getId());
+        i = iConsumePurchaseService.insertConsumePurchase(consumePurchase);
+        if (i < 1) {
+            insertConsumeInformMap.put(Code.FAILURE.getMsg(), Code.FAILURE.getCode());
+            return JSON.toJSONString(insertConsumeInformMap);
+        } else {
+            insertConsumeInformMap.put(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+            return JSON.toJSONString(insertConsumeInformMap);
         }
     }
 }

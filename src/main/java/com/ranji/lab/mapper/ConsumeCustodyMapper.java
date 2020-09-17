@@ -21,7 +21,7 @@ public interface ConsumeCustodyMapper {
     List<ConsumeCustody> findAll();
 
     //通过id查询她所用到的耗材
-    @Select("select ci.name consumeName,pc.consume_num count,ci.unit_name from project_consume pc join consume_inform ci on pc.experiment_consume_id = ci.id where pc.arrange_project_id = #{projectId}")
+    @Select("select ci.id,ci.name consumeName,pc.consume_num count,ci.unit_name from project_consume pc join consume_inform ci on pc.experiment_consume_id = ci.id where pc.arrange_project_id = #{projectId}")
     List<ConsumeCustody> projectIdFindAll(int projectId);
 
 

@@ -190,7 +190,7 @@ public class ConsumeCustodyServiceImpl implements IConsumeCustodyService {
         ConsumeInform consumeInform = new ConsumeInform();
         for (ConsumeCustody consumeCustody : consumeCustodies) {
             consumeInform.setNum(-consumeCustody.getCount());
-            consumeInform.setId(consumeCustody.getArrangeProjectId());
+            consumeInform.setId(consumeCustody.getId());
             consumeInformMapper.updateConsumeInformNum(consumeInform);
         }
         return consumeCustodyMapper.updateConsumeCustodyStatus(consumeCustodyDto);

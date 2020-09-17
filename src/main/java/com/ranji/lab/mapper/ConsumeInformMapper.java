@@ -4,14 +4,17 @@ import com.ranji.lab.dto.ConsumeInformAndConsumeTypeNameDto;
 import com.ranji.lab.dto.ConsumeInformDto;
 import com.ranji.lab.entity.ConsumeInform;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
 public interface ConsumeInformMapper {
-    @Insert("insert into consume_inform (name,brand,num,facid,factime,proid,supid,type,unit_name) values (#{name},#{brand},#{num},#{facid},#{factime},#{proid},#{supid},#{type},#{unitName})")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+    @Insert("insert into consume_inform (name,brand,num,facid,factime,proid,supid,type,unit_name,status) values (#{name},#{brand},#{num},#{facid},#{factime},#{proid},#{supid},#{type},#{unitName},#{status})")
     int insertConsumeInform(ConsumeInformDto consumeInformDto);
+
     @Update("<script>" +
             "update consume_inform set " +
             "<if test = 'name != null '> " +
@@ -45,35 +48,35 @@ public interface ConsumeInformMapper {
             "</script>")
     int updateConsumeInform(ConsumeInform consumeInform);
 
-    @Select("select consume_inform.* from consume_inform")
+    @Select("select consume_inform.* from consume_inform where status != 1 ")
     List<ConsumeInform> findAll();
 
     //按照id查询耗材信息
-    @Select("select consume_inform.* from consume_inform where consume_inform.id = #{id}")
+    @Select("select consume_inform.* from consume_inform where consume_inform.id = #{id} and  status != 1")
     ConsumeInform findById(int id);
 
     //按照类型id查询耗材
-    @Select("select consume_inform.* from consume_inform where type = #{type}")
+    @Select("select consume_inform.* from consume_inform where type = #{type} and status != 1")
     List<ConsumeInformDto> findAllConsumeInformByTypeId(int type);
 
     //查询所有耗材
-    @Select("select ci.*,ct.type_name from consume_inform ci left join consume_type ct on ct.id = ci.type")
+    @Select("select ci.*,ct.type_name from consume_inform ci left join consume_type ct on ct.id = ci.type where ci.status != 1")
     List<ConsumeInformAndConsumeTypeNameDto> findConsumeAndConsumeName();
 
     //按照预约id查询实验耗材
-    @Select("select ci.* from consume_inform ci join project_consume pc on ci.id = pc.experiment_consume_id join arrange a on a.id = pc.arrange_project_id where a.project_id = #{arrangeProjectId}")
+    @Select("select ci.* from consume_inform ci join project_consume pc on ci.id = pc.experiment_consume_id join arrange a on a.id = pc.arrange_project_id where a.project_id = #{arrangeProjectId} and  ci.status != 1")
     List<ConsumeInform> arrangeProjectIdFindconsumeInform(int arrangeProjectId);
 
     //模糊查询耗材
     @Select("select ci.*,ct.type_name from consume_inform ci left join consume_type ct on ct.id = ci.type " +
-            " where 1 = 1 " +
+            " where ci.status != 1" +
             " and ci.name like '%${like}%' ")
     List<ConsumeInformAndConsumeTypeNameDto> likeFindConsumeAndConsumeName(String like);
 
     @Update("<script>" +
-            "update consume_inform set " +
+            "update consume_inform set status = 0" +
             "<if test = 'num != null '> " +
-            "num=#{num}+num" +
+            ",num=#{num}+num" +
             "</if>" +
             " where id =#{id}" +
             "</script>")

@@ -32,11 +32,14 @@ public class ConsumeInformDto {
     @NonNull
     private int type;
 
-    public void setFactime(String factime){
-        this.factime=factime;
+    private int status;
+
+    public void setFactime(String factime) {
+        this.factime = factime;
     }
-    public Date getFactime(){
-        return DateUtil.StringToDate(this.factime,"yyyy-MM-dd");
+
+    public Date getFactime() {
+        return DateUtil.StringToDate(this.factime, "yyyy-MM-dd");
     }
 
 }
