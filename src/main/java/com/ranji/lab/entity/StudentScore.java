@@ -18,5 +18,5 @@ public class StudentScore {
     @NonNull
     private int studentId;
     @NonNull
-    private int score;
+    private double score;
 }
