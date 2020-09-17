@@ -15,7 +15,7 @@ public interface ProjectConsumeMapper {
     @Insert("insert into project_consume (experiment_consume_id,arrange_project_id,consume_num,status) values (#{experimentConsumeId},#{arrangeProjectId},#{consumeNum},0)")
     int insertProjectConsume(ProjectConsumeDto projectConsumeDto);
     //projectId查询全部
-    @Select("select pc.*,ci.`name` consumeName,ci.unit_name unitName from project_consume pc LEFT JOIN consume_inform ci on pc.experiment_consume_id = ci.id where pc.arrange_project_id = #{arrangeProjectId} and status != 1")
+    @Select("select pc.*,ci.`name` consumeName,ci.unit_name unitName from project_consume pc LEFT JOIN consume_inform ci on pc.experiment_consume_id = ci.id where pc.arrange_project_id = #{arrangeProjectId}")
     List<ProjectConsumeDto> projectIdFindAllProjectConsume(int arrangeProjectId);
     //分类查询
     @Select("select pc.*,ci.`name` consumeName,ci.unit_name unitName from project_consume pc LEFT JOIN consume_inform ci on pc.experiment_consume_id = ci.id where pc.status = #{status}")
