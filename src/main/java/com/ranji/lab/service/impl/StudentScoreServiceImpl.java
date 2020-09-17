@@ -44,7 +44,7 @@ public class StudentScoreServiceImpl implements IStudentScoreService {
         PageHelper.startPage(pageNum, pageSize);
         List<StudentScoreDto> all = studentScoreMapper.findAll();
 
-        PageInfo pageInfo = new PageInfo();
+        PageInfo pageInfo = new PageInfo(all);
         long total = pageInfo.getTotal();
         HashMap<Object, Object> allMap = new HashMap<>();
         allMap.put("data", all);
