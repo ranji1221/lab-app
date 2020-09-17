@@ -120,8 +120,8 @@ public interface DeviceMapper {
     int findEndingProjectNumByLaboratoryIdAndDeviceId(int deviceId);
 
     //通过设备查询该设备使用时间
-    @Select("select sum(time) as count from (select pd.experiment_device_id,TIMESTAMPDIFF(MINUTE,a.time_start,a.time_stop)/60 as time from project_device pd join arrange a on pd.arrange_project_id = a.id where a.id = 1) count")
-    double deviceIdFindUseNum(int deviceId);
+    @Select("select sum(time) as count from (select TIMESTAMPDIFF(MINUTE,a.time_start,a.time_stop)/60 as time from project_device pd join arrange a on pd.arrange_project_id = a.id where pd.experiment_device_id = #{deviceId}) count")
+    Double deviceIdFindUseNum(int deviceId);
 
     //按照实验室分组
     @Select("select status,count(*) count from device GROUP BY status")
