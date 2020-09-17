@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +30,19 @@ public class BackStageDtoController {
     @GetMapping(value = "/findlinechart", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findLineChart() {
-        Map<Object,Object> allMap = iBackStageDtoService.findSevenDaysAgoData();
-        /**
-         * 演示数据demo，正常启动请注释
-         */
-        //Map<Object,Object> allMap = iBackStageDtoService.findSevenDaysAgoDataDemo();
+        boolean flag = false;
+
+        String rootDirectory = System.getProperty("user.dir");
+        File file = new File(rootDirectory+File.separator+"exhibition.copy");
+
+        if(file.exists())
+            flag = true;
+        Map<Object,Object> allMap = new HashMap<>();
+        if(flag)
+            allMap = iBackStageDtoService.findSevenDaysAgoDataDemo();
+        else
+            allMap = iBackStageDtoService.findSevenDaysAgoData();
+
         return JSON.toJSONString(allMap);
     }
 
@@ -40,7 +50,19 @@ public class BackStageDtoController {
     @GetMapping(value = "/findfourchart", produces = "text/plain;charset=utf-8")
     //@RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findFourChart() {
-        Map<Object, Object> allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountData();
+        boolean flag = false;
+
+        String rootDirectory = System.getProperty("user.dir");
+        File file = new File(rootDirectory+File.separator+"exhibition.copy");
+
+        if(file.exists())
+            flag = true;
+        Map<Object,Object> allMap = new HashMap<>();
+        if (flag)
+            allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountDataDemo();
+        else
+            allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountData();
+
         return JSON.toJSONString(allMap);
     }
 
