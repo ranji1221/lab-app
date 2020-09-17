@@ -28,7 +28,11 @@ public class BackStageDtoController {
     @GetMapping(value = "/findlinechart", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findLineChart() {
-        Map<Object, Object> allMap = iBackStageDtoService.findSevenDaysAgoData();
+        Map<Object,Object> allMap = iBackStageDtoService.findSevenDaysAgoData();
+        /**
+         * 演示数据demo，正常启动请注释
+         */
+        //Map<Object,Object> allMap = iBackStageDtoService.findSevenDaysAgoDataDemo();
         return JSON.toJSONString(allMap);
     }
 
