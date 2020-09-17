@@ -30,15 +30,19 @@ public class BackStageDtoController {
     @GetMapping(value = "/findlinechart", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findLineChart() {
+        /**
+         * 为了演示需求，临时做了个判断，可以删除
+         */
         boolean flag = false;
 
         String rootDirectory = System.getProperty("user.dir");
-        File file = new File(rootDirectory+File.separator+"exhibition.copy");
+        File file = new File(rootDirectory + File.separator + "exhibition.ini");
 
-        if(file.exists())
+        if (file.exists())
             flag = true;
-        Map<Object,Object> allMap = new HashMap<>();
-        if(flag)
+        Map<Object, Object> allMap = new HashMap<>();
+        if (flag)
+            //演示的方法，可以删除
             allMap = iBackStageDtoService.findSevenDaysAgoDataDemo();
         else
             allMap = iBackStageDtoService.findSevenDaysAgoData();
@@ -50,15 +54,18 @@ public class BackStageDtoController {
     @GetMapping(value = "/findfourchart", produces = "text/plain;charset=utf-8")
     //@RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findFourChart() {
+        /**
+         * 为了演示需求，临时做了个判断，可以删除
+         */
         boolean flag = false;
-
         String rootDirectory = System.getProperty("user.dir");
-        File file = new File(rootDirectory+File.separator+"exhibition.copy");
+        File file = new File(rootDirectory + File.separator + "exhibition.ini");
 
-        if(file.exists())
+        if (file.exists())
             flag = true;
-        Map<Object,Object> allMap = new HashMap<>();
+        Map<Object, Object> allMap = new HashMap<>();
         if (flag)
+            //演示的方法，可以删除
             allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountDataDemo();
         else
             allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountData();
