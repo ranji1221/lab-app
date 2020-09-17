@@ -109,7 +109,7 @@ public interface DeviceMapper {
     List<Integer> findDeviceModel(int laboratoryId);
     //按照设备状态、设备分类和实验室id查询数据
     @Select("select d.device_model_id id,dm.device_name deviceName,count(*) count from laboratory_device ld join device d on ld.device_id = d.id join device_model dm on d.device_model_id = dm.id where ld.laboratory_id = #{laboratoryId} and d.device_model_id = #{deviceModelId} and d.status = #{status}")
-    LaboratoryDeviceNumDto findDeviceStatusNum(int laboratoryId,int deviceModelId,int status);
+    LaboratoryDeviceNumDto findDeviceStatusNum(int laboratoryId, int deviceModelId, int status);
 
     //按照实验室id查询该实验室已完成的实验数量
     @Select("select count(*) from arrange a where a.status = 2 and a.laboratory_id = #{laboratoryId}")
@@ -119,9 +119,9 @@ public interface DeviceMapper {
     @Select("select count(*) from project_device pd join arrange a on pd.arrange_project_id = a.id where a.status = 2 and pd.experiment_device_id = #{deviceId}")
     int findEndingProjectNumByLaboratoryIdAndDeviceId(int deviceId);
 
-    //通过设备查询该设备使用次数
-    @Select("select count(*) from project_device pd where pd.experiment_device_id = #{deviceId}")
-    int deviceIdFindUseNum(int deviceId);
+    //通过设备查询该设备使用时间
+    @Select("select sum(time) as count from (select pd.experiment_device_id,TIMESTAMPDIFF(MINUTE,a.time_start,a.time_stop)/60 as time from project_device pd join arrange a on pd.arrange_project_id = a.id where a.id = 1) count")
+    double deviceIdFindUseNum(int deviceId);
 
     //按照实验室分组
     @Select("select status,count(*) count from device GROUP BY status")

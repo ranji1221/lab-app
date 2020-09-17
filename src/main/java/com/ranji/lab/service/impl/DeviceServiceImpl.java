@@ -284,7 +284,7 @@ public class DeviceServiceImpl implements IDeviceService {
         List<DeviceAndDeviceTypeNameDto> devices = deviceMapper.findAllDevice();
         List<DeviceAndDeviceTypeNameDto> r = new ArrayList<>();
         for (DeviceAndDeviceTypeNameDto device : devices) {
-            double i = deviceMapper.deviceIdFindUseNum(device.getId()) * 2;
+            double i = deviceMapper.deviceIdFindUseNum(device.getId());
             double x = device.getLifetime();
             if (i != 0 && x != 0) {
                 double ratio = i / x;
