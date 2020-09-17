@@ -36,9 +36,15 @@ public class ConsumeNormController {
     })*/
     @PostMapping(value = "/insertconsumenorm", produces = "text/plain;charset=utf-8")
     @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
-    public String insertConsumeNorm(ConsumeNormDto consumeNormDto){
+    public String insertConsumeNorm(ConsumeNorm consumeNorm){
         Map<Object, Object> insertConsumeNormMap = new HashMap<>();
-        int i = iConsumeNormService.insertConsumeNorm(consumeNormDto);
+        Map<Object, Object> allConsumeNormPaging = iConsumeNormService.findAllConsumeNormPaging(1, 100);
+        int i;
+        if(!allConsumeNormPaging.isEmpty()){
+            i = iConsumeNormService.updateConsumeNorm(consumeNorm);
+        }else{
+            i = iConsumeNormService.insertConsumeNorm(consumeNorm);
+        }
         if(i<1){
             insertConsumeNormMap.put(Code.FAILURE.getMsg(),Code.FAILURE.getCode());
             return JSON.toJSONString(insertConsumeNormMap);

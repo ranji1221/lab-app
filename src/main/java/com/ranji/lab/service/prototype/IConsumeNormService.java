@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface IConsumeNormService {
 
-    int insertConsumeNorm(ConsumeNormDto consumeNormDto);
+    int insertConsumeNorm(ConsumeNorm consumeNorm);
 
     int updateConsumeNorm(ConsumeNorm consumeNorm);
 

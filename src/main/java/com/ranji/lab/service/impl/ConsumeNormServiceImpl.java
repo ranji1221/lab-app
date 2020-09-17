@@ -19,8 +19,8 @@ public class ConsumeNormServiceImpl implements IConsumeNormService {
     private ConsumeNormMapper consumeNormMapper;
 
     @Override
-    public int insertConsumeNorm(ConsumeNormDto consumeNormDto) {
-        return consumeNormMapper.insertConsumeNorm(consumeNormDto);
+    public int insertConsumeNorm(ConsumeNorm consumeNorm) {
+        return consumeNormMapper.insertConsumeNorm(consumeNorm);
     }
 
     @Override
