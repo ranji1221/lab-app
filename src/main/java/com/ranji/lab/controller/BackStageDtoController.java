@@ -38,7 +38,7 @@ public class BackStageDtoController {
 
     @ApiOperation(value = "查询四格图", notes = "查询四格图")
     @GetMapping(value = "/findfourchart", produces = "text/plain;charset=utf-8")
-    @RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
+    //@RequiresRoles(value = {"laboratoryMgr", "admin", "teacher", "majorHead", "manager"}, logical = Logical.OR)
     public String findFourChart() {
         Map<Object, Object> allMap = iBackStageDtoService.findAllAndFinishedAndUnfinishedAndNoCountData();
         return JSON.toJSONString(allMap);

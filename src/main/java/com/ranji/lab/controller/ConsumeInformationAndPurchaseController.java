@@ -474,7 +474,7 @@ public class ConsumeInformationAndPurchaseController {
     }
 
     @PostMapping(value = "/insertconsumeinformandpurchase", produces = "text/plain;charset=utf-8")
-    //@RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
+    @RequiresRoles(value = {"laboratoryMgr", "admin", "majorHead"}, logical = Logical.OR)
     @Transactional
     public String insertconsumeinformandpurchase(ConsumeInformDto consumeInformDto, ConsumePurchase consumePurchase) {
         Map<Object, Object> insertConsumeInformMap = new HashMap<>();

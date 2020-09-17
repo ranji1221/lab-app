@@ -70,14 +70,22 @@ public class BackStageDtoServiceImpl implements IBackStageDtoService {
         double allCountPercentage = Double.parseDouble(df.format(allCountPercentageClone));
 
         double useingCountPercentageClone = useingCount / willUseCount;
-        double useingCountPercentage = Double.parseDouble(df.format(useingCountPercentageClone));
+        double useingCountPercentage = 0;
+        double noUseCountPercentage = 0;
+        double willUseCountPercentage = 0;
+        if (useingCountPercentageClone > 0) {
+            useingCountPercentage = Double.parseDouble(df.format(useingCountPercentageClone));
+        }
 
         double noUseCountPercentageClone = noUseCount / willUseCount;
-        double noUseCountPercentage = Double.parseDouble(df.format(noUseCountPercentageClone));
+        if (noUseCountPercentageClone > 0) {
+            noUseCountPercentage = Double.parseDouble(df.format(noUseCountPercentageClone));
+        }
 
         double willUseCountPercentageClone = willUseCount / allCount;
-        double willUseCountPercentage = Double.parseDouble(df.format(willUseCountPercentageClone));
-
+        if (willUseCountPercentageClone > 0) {
+            willUseCountPercentage = Double.parseDouble(df.format(willUseCountPercentageClone));
+        }
         BackStage2Dto backStage2Dto = new BackStage2Dto(allCount, allCountPercentage, useingCount, useingCountPercentage, noUseCount, noUseCountPercentage, willUseCount, willUseCountPercentage);
 
         allMap.put("data", backStage2Dto);
