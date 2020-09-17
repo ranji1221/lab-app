@@ -43,7 +43,7 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
             if (noAllocationDevice.size() < laboratoryDeviceDto.getDeviceNum()) {
                 return 0;
             }
-            if (laboratoryDto.getId() != 0) {
+            if (laboratoryDto.getId() == 0) {
                 i = laboratoryMapper.insertLaboratory(laboratoryDto);
             }
             for (Device device1 : noAllocationDevice) {
@@ -51,7 +51,7 @@ public class LaboratoryServiceImpl implements ILaboratoryService {
                 laboratoryDevice.setDeviceId(device1.getId());
                 laboratoryDevice.setLaboratoryId(laboratoryDto.getId());
                 laboratoryDevice.setStatus(0);
-                laboratoryDeviceMapper.insertLaboratoryDevice(laboratoryDevice);
+                i = laboratoryDeviceMapper.insertLaboratoryDevice(laboratoryDevice);
             }
         }
         return i;
