@@ -17,7 +17,7 @@ public class StudentScoreDto {
     @NonNull
     private int studentId;
     @NonNull
-    private int score;
+    private double score;
 
     private String projectName;
     private String studentName;
